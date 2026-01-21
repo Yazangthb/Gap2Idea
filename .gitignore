@@ -1,0 +1,86 @@
+# =========================
+# Python / venv
+# =========================
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+dist/
+build/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.cache/
+
+# =========================
+# IDEs
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# =========================
+# Jupyter / notebooks
+# =========================
+.ipynb_checkpoints/
+.notebook/
+jupyter_runtime/
+
+# =========================
+# OS junk
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Env / secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# Project outputs / large files
+# =========================
+data/pdfs/
+data/texts/
+*.pdf
+*.txt
+*.tsv
+*.jsonl
+*.json
+
+# extracted / intermediate corpora
+data/sections_extracted.jsonl
+data/sections_extracted.tsv
+data/arxiv_texts.jsonl
+
+# OpenAI outputs (keep if you want versioned; otherwise ignore)
+# data/gaps_openai.tsv
+# artifacts/ideas_openai.tsv
+
+# artifacts (usually reproducible)
+artifacts/
+*.npy
+
+# =========================
+# Local runtime / streamlit
+# =========================
+.streamlit/
+.streamlit/secrets.toml
