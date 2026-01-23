@@ -85,3 +85,5 @@ artifacts/
 # =========================
 .streamlit/
 .streamlit/secrets.toml
+
+!requirements.txt

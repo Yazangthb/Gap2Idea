@@ -1,0 +1,12 @@
+pandas
+tqdm
+requests
+streamlit
+plotly
+sentence-transformers
+hdbscan
+pymupdf
+python-dotenv
+openai
+numpy
+scikit-learn
