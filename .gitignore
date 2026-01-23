@@ -65,6 +65,7 @@ data/texts/
 *.tsv
 *.jsonl
 *.json
+*.png
 
 # extracted / intermediate corpora
 data/sections_extracted.jsonl
