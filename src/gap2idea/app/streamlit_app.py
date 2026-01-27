@@ -1,15 +1,38 @@
 import json
+import logging
+import sys
+from pathlib import Path
+from difflib import SequenceMatcher
+
 import numpy as np
 import pandas as pd
+import plotly.express as px
 import streamlit as st
+from sentence_transformers import SentenceTransformer
 from sklearn.manifold import TSNE
 from sklearn.metrics.pairwise import cosine_similarity
-from sentence_transformers import SentenceTransformer
-import plotly.express as px
-from pathlib import Path
-from gap2idea.pipeline.openai_ideas import generate_idea_for_pair
+
 import fitz  # pymupdf
-from difflib import SequenceMatcher
+
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    logging.basicConfig(level=logging.INFO)
+
+try:
+    from gap2idea.pipeline.openai_ideas import generate_idea_for_pair
+except ModuleNotFoundError as exc:
+    project_root = Path(__file__).resolve().parents[2]
+    logger.exception(
+        "Failed to import gap2idea; cwd=%s __file__=%s sys.path=%s project_root_contents=%s",
+        Path.cwd(),
+        Path(__file__).resolve(),
+        sys.path,
+        [p.name for p in project_root.iterdir()],
+    )
+    st.error(
+        "Failed to import the internal package 'gap2idea'. Check Docker PYTHONPATH or installation."
+    )
+    raise
 
 ART_DIR = "artifacts"
 
