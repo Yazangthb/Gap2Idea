@@ -1,0 +1,26 @@
+# Local Python environments
+.venv/
+.uv-venv/
+
+# Python cache artifacts
+__pycache__/
+*.py[cod]
+
+# Secrets / env files
+.env
+.env.*
+
+# Git + editor cruft
+.git
+.gitignore
+.ipynb_checkpoints/
+.vscode/
+
+# Large, host-mounted data that should not bloat the build context
+data/*
+!data/.gitkeep
+artifacts/*
+!artifacts/.gitkeep
+
+# Research notebooks stay on the host
+notebooks/

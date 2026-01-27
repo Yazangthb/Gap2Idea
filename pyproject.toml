@@ -1,0 +1,28 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.0", "wheel"]
+
+[project]
+dependencies = [
+  "pandas",
+  "tqdm",
+  "requests",
+  "streamlit",
+  "plotly",
+  "sentence-transformers",
+  "hdbscan",
+  "pymupdf",
+  "python-dotenv",
+  "openai",
+  "numpy",
+  "scikit-learn",
+]
+description = "Transforms research gaps from academic papers into research ideas."
+keywords = ["research", "gaps", "ideas", "streamlit"]
+name = "gap2idea"
+readme = "README.md"
+requires-python = ">=3.8"
+version = "0.1.0"
+
+[project.scripts]
+gap2idea = "gap2idea.cli:main"
