@@ -1,4 +1,3 @@
-
 # Gap2Idea
 
 Pipeline + Streamlit UI that clusters research gaps, labels the resulting themes, and expands promising combinations into concrete research ideas.
@@ -23,14 +22,6 @@ uv --version
    uv sync
    ```
 
-   This creates a virtual environment (default: `.venv`) and installs dependencies exactly as pinned in `uv.lock`.
-
-   > 💡 Windows / OneDrive tip (optional):
-   >
-   > ```bash
-   > UV_VENV_PATH=.uv-venv uv sync
-   > ```
-
 3. **Activate the environment** (so you don’t need `uv` in every command):
 
    **Windows (PowerShell / CMD):**
@@ -39,24 +30,16 @@ uv --version
    .venv\Scripts\activate
    ```
 
-   (or if you used `UV_VENV_PATH=.uv-venv`):
-
-   ```bash
-   .uv-venv\Scripts\activate
-   ```
-
    **macOS / Linux:**
 
    ```bash
    source .venv/bin/activate
    ```
-
 4. **Run the theme miner** on your TSV of gap sentences:
 
    ```bash
    gap2idea theme-mine --gaps-tsv data/gaps/raw_gaps.tsv
    ```
-
 5. **Explore clusters** in Streamlit:
 
    ```bash
@@ -81,7 +64,6 @@ You can ship the entire UI + pipeline stack via the provided [`Dockerfile`](Dock
    ```bash
    docker build -t gap2idea:latest -f Dockerfile .
    ```
-
 2. **Start the container** (ensure `data/` and `artifacts/` exist locally so the mounts work):
 
    ```bash
@@ -117,19 +99,108 @@ Streamlit will now be reachable at http://localhost:8501 while reading/writing t
 
 ## Data + artifacts in short
 
-| Path                               | Purpose                                                |
-| ---------------------------------- | ------------------------------------------------------ |
-| `data/pdfs/`                       | PDFs named `<paper_id>.pdf`; the UI links to them.     |
+| Path                                 | Purpose                                                    |
+| ------------------------------------ | ---------------------------------------------------------- |
+| `data/pdfs/`                       | PDFs named `<paper_id>.pdf`; the UI links to them.       |
 | `data/gaps/*.tsv`                  | Input TSV(s) with columns `paper_id`, `gap_text`, etc. |
-| `artifacts/gaps_with_clusters.tsv` | Each gap with its embedding + assigned cluster.        |
-| `artifacts/cluster_pairs.tsv`      | Similar cluster pairs that seed idea generation.       |
-| `artifacts/ideas_openai.tsv`       | Streamlit writes generated ideas here.                 |
+| `artifacts/gaps_with_clusters.tsv` | Each gap with its embedding + assigned cluster.            |
+| `artifacts/cluster_pairs.tsv`      | Similar cluster pairs that seed idea generation.           |
+| `artifacts/ideas_openai.tsv`       | Streamlit writes generated ideas here.                     |
+
+## Preparing data when you only have `arxiv-metadata-oai-snapshot.json`
+
+The repository assumes you eventually own a TSV of “gap” sentences (limitations, future work, outlooks, etc.). If the only asset you own today is the raw [`arxiv-metadata-oai-snapshot.json`](https://www.kaggle.com/datasets/Cornell-University/arxiv) JSONL dump, follow the steps below to bootstrap every intermediate file. Each step mirrors the notebooks under [`notebooks/`](notebooks/).
+
+### 0. Place the snapshot
+
+1. Download `arxiv-metadata-oai-snapshot.json` (≈4 GB compressed) from Kaggle.
+2. Decompress if needed and place/symlink it at `data/arxiv-metadata-oai-snapshot.json` (the Streamlit UI expects this relative location when it needs metadata).
+
+### 1. Select a manageable paper subset
+
+Start from the JSONL metadata and pick a slice that matches your domain, recency, and size constraints. Use the CLI command (no notebooks required):
+
+```bash
+uv run gap2idea select-arxiv \
+  --metadata data/arxiv-metadata-oai-snapshot.json \
+  --output data/papers_subset.tsv \
+  --categories cs.LG,stat.ML \
+  --min-year 2021 \
+  --n-papers 250
+```
+
+Or run everything in one command:
+
+```bash
+uv run gap2idea run-pipeline \
+  --metadata data/arxiv-metadata-oai-snapshot.json \
+  --categories cs.LG,stat.ML \
+  --min-year 2021 \
+  --n-papers 250 \
+  --model gpt-4.1-mini \
+  --max-papers 50
+```
+
+Outcome: `data/papers_subset.tsv` (or another path you choose) containing 3–4 columns per paper. The IDs here will drive every subsequent step.
+
+### 2. Download PDFs and extract lightweight text dumps
+
+Using the subset IDs, download PDFs to `data/pdfs/` and extract the first ~10–12 pages of text to `data/texts/` via the CLI:
+
+```bash
+uv run gap2idea fetch-pdfs --papers-tsv data/papers_subset.tsv
+```
+
+Expected directories afterwards:
+
+* `data/pdfs/<arxiv-id>.pdf`
+* `data/texts/<arxiv-id>.txt`
+
+### 3. Mine limitation / future-work sections → `sections_extracted.jsonl`
+
+Run the CLI to parse tail pages of each PDF, look for headings such as “Limitations”, “Future Work”, “Discussion”, and emit rows shaped as:
+
+```json
+{"id": "2503.17793", "section_type": "future_work", "heading": "Future Work", "section_text": "..."}
+```
+
+```bash
+uv run gap2idea extract-sections --output data/sections_extracted.jsonl
+```
+
+This structured JSONL is now the raw material for gap extraction.
+
+### 4. Convert sections → `data/gaps_openai.tsv`
+
+Use the OpenAI-backed extractor to convert sections into a TSV of gaps (expects `OPENAI_API_KEY` in `.env`):
+
+```bash
+uv run gap2idea extract-gaps \
+  --sections-jsonl data/sections_extracted.jsonl \
+  --output data/gaps_openai.tsv \
+  --model gpt-4.1-mini \
+  --max-papers 50
+```
+
+The output TSV contains: `id`, `gap_type`, `gap_sentence`, `paragraph_text`, `confidence`.
+
+### 5. Run the Gap2Idea pipeline + UI
+
+Once `data/gaps_openai.tsv` exists, the rest is the standard workflow already outlined above:
+
+```bash
+uv run gap2idea theme-mine --gaps-tsv data/gaps_openai.tsv
+uv run streamlit run src/gap2idea/app/streamlit_app.py
+```
+
+Artifacts (`artifacts/gaps_with_clusters.tsv`, `artifacts/cluster_pairs.tsv`, etc.) will populate, and the Streamlit dashboard will let you explore them immediately. If you later gather more metadata or PDFs, simply rerun steps 1–4 and re-execute the CLI.
 
 ## Commands you will actually use
 
-| Goal                                | Command                                           |
-| ----------------------------------- | ------------------------------------------------- |
+| Goal                                | Command                                             |
+| ----------------------------------- | --------------------------------------------------- |
 | Sync deps after pulling changes     | `uv sync`                                         |
+| Run full pipeline from metadata     | `gap2idea run-pipeline --metadata data/arxiv-metadata-oai-snapshot.json` |
 | Run the clustering/theme mining CLI | `gap2idea theme-mine --gaps-tsv <your_file.tsv>`  |
 | Launch the Streamlit dashboard      | `streamlit run src/gap2idea/app/streamlit_app.py` |
 
@@ -137,7 +208,7 @@ Additional internals worth knowing:
 
 * [`src/gap2idea/cli.py`](src/gap2idea/cli.py) wires the `gap2idea` console entry point.
 * [`src/gap2idea/app/streamlit_app.py`](src/gap2idea/app/streamlit_app.py) powers the dashboard experience.
-* Pipelines for gaps, embeddings, OpenAI calls, and clustering live under [`src/gap2idea/pipeline/`](src/gap2idea/pipeline/).
+* Pipelines for selection, PDF parsing, OpenAI calls, and clustering live under [`src/gap2idea/pipeline/`](src/gap2idea/pipeline/).
 
 ## License
 
