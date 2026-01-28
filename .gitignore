@@ -77,7 +77,8 @@ data/arxiv_texts.jsonl
 # artifacts/ideas_openai.tsv
 
 # artifacts (usually reproducible)
-artifacts/
+!artifacts/streamlit.png
+!artifacts/
 *.npy
 
 # =========================
@@ -87,3 +88,5 @@ artifacts/
 .streamlit/secrets.toml
 
 !requirements.txt
+*.csv
+*.index
