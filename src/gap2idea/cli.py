@@ -10,7 +10,7 @@ from gap2idea.pipeline.theme_mining import (
 from gap2idea.pipeline.arxiv_select import select_arxiv_subset
 from gap2idea.pipeline.pdf_text import load_ids_from_tsv, download_and_extract_texts
 from gap2idea.pipeline.sections import extract_sections_from_pdfs
-from gap2idea.pipeline.openai_gaps import extract_gaps_from_sections
+from gap2idea.pipeline.openai_gaps import extract_gaps_from_sections, extract_gaps_from_full_text
 
 
 def _normalize_max_papers(value: int | None) -> int | None:
@@ -103,6 +103,19 @@ def cmd_extract_gaps(args):
         model=args.model,
         max_papers=max_papers,
         flush_every=args.flush_every,
+    )
+    print(f"Gaps TSV rows: {len(df)} -> {args.output}")
+
+
+def cmd_extract_gaps_full(args):
+    max_papers = _normalize_max_papers(args.max_papers)
+    df = extract_gaps_from_full_text(
+        texts_dir=args.texts_dir,
+        out_tsv=args.output,
+        model=args.model,
+        max_papers=max_papers,
+        flush_every=args.flush_every,
+        max_chars=args.max_chars,
     )
     print(f"Gaps TSV rows: {len(df)} -> {args.output}")
 
@@ -200,6 +213,15 @@ def main():
     g.add_argument("--max-papers", type=int, default=50)
     g.add_argument("--flush-every", type=int, default=25)
     g.set_defaults(func=cmd_extract_gaps)
+
+    gf = sub.add_parser("extract-gaps-full")
+    gf.add_argument("--texts-dir", default="data/texts")
+    gf.add_argument("--output", default="data/gaps_openai_full.tsv")
+    gf.add_argument("--model", default="gpt-4.1-mini")
+    gf.add_argument("--max-papers", type=int, default=50)
+    gf.add_argument("--flush-every", type=int, default=25)
+    gf.add_argument("--max-chars", type=int, default=25000)
+    gf.set_defaults(func=cmd_extract_gaps_full)
 
     r = sub.add_parser("run-pipeline")
     r.add_argument("--root", default=".")

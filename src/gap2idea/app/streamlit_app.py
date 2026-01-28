@@ -2,7 +2,7 @@ import json
 import logging
 import sys
 from pathlib import Path
-from difflib import SequenceMatcher
+from typing import List, Tuple, Optional
 
 import numpy as np
 import pandas as pd
@@ -10,7 +10,6 @@ import plotly.express as px
 import streamlit as st
 from sentence_transformers import SentenceTransformer
 from sklearn.manifold import TSNE
-from sklearn.metrics.pairwise import cosine_similarity
 
 import fitz  # pymupdf
 
@@ -34,6 +33,12 @@ except ModuleNotFoundError as exc:
     )
     raise
 
+try:
+    from gap2idea.pipeline.semantic_search import SemanticSearch
+except ImportError:
+    SemanticSearch = None
+    logger.warning("SemanticSearch not available; falling back to string matching")
+
 ART_DIR = "artifacts"
 
 @st.cache_data
@@ -48,15 +53,37 @@ def load_embeddings(path):
 def load_embedder():
     return SentenceTransformer("all-MiniLM-L6-v2")
 
-@st.cache_data
-def load_metadata():
-    metadata = {}
-    with open("data/arxiv-metadata-oai-snapshot.json", "r") as f:
-        for line in f:
-            if line.strip():
-                item = json.loads(line)
-                metadata[item["id"]] = {"title": item.get("title", ""), "abstract": item.get("abstract", "")}
-    return metadata
+@st.cache_resource
+def load_search_engine():
+    """Load or build the semantic search engine."""
+    if SemanticSearch is None:
+        return None
+    
+    index_path = f"{ART_DIR}/paper_search.index"
+    metadata_path = f"{ART_DIR}/paper_search_metadata.json"
+    
+    # Try to load existing index
+    if Path(index_path).exists() and Path(metadata_path).exists():
+        try:
+            return SemanticSearch.load_index(index_path, metadata_path)
+        except Exception as e:
+            logger.warning(f"Failed to load search index: {e}")
+    
+    # Build index from arxiv metadata if available
+    arxiv_metadata = "data/arxiv-metadata-oai-snapshot.json"
+    if Path(arxiv_metadata).exists():
+        try:
+            from gap2idea.pipeline.semantic_search import load_arxiv_jsonl
+            papers = load_arxiv_jsonl(arxiv_metadata, limit=50000)
+            engine = SemanticSearch(use_precomputed_abstracts=False)
+            engine.fit(papers)
+            engine.save_index(index_path, metadata_path)
+            logger.info(f"Built search index with {len(papers)} papers")
+            return engine
+        except Exception as e:
+            logger.warning(f"Failed to build search index: {e}")
+    
+    return None
 
 @st.cache_data
 def compute_2d_embeddings(X):
@@ -114,33 +141,55 @@ except Exception:
 # Query input
 query = st.text_input("Enter a paper title to search", "")
 
-# Get paper titles and clusters
-paper_info = []
-unique_papers = gaps.drop_duplicates(subset="id")
-for _, paper in unique_papers.iterrows():
-    pdf_path = Path("data/pdfs") / f"{paper['id']}.pdf"
-    title = str(get_pdf_title(pdf_path) if pdf_path.exists() else paper['id'])
-    cluster = paper['cluster_id']
-    paper_info.append({"id": paper['id'], "title": title, "cluster": cluster})
-
 relevant_papers = []
 if query:
-    # Compute similarity
-    similarities = []
-    for p in paper_info:
-        sim = SequenceMatcher(None, query.lower(), p['title'].lower()).ratio()
-        similarities.append((p, sim))
-    # Sort by similarity descending
-    similarities.sort(key=lambda x: x[1], reverse=True)
-    relevant_papers = similarities[:5]  # top 5
+    # Get paper titles and clusters for fallback
+    paper_info = []
+    unique_papers = gaps.drop_duplicates(subset="id")
+    for _, paper in unique_papers.iterrows():
+        pdf_path = Path("data/pdfs") / f"{paper['id']}.pdf"
+        title = str(get_pdf_title(pdf_path) if pdf_path.exists() else paper['id'])
+        cluster = paper['cluster_id']
+        paper_info.append({"id": paper['id'], "title": title, "cluster": cluster})
+    
+    # Try semantic search first
+    search_engine = load_search_engine()
+    if search_engine is not None:
+        try:
+            hits = search_engine.search(query, top_k=10, stage1_candidates=100, w_title=0.4, w_abs=0.6)
+            # Map hits to paper_info format
+            for paper, score in hits:
+                # Find the paper info in gaps
+                paper_rows = gaps[gaps['id'] == paper.paper_id]
+                if not paper_rows.empty:
+                    cluster_id = int(paper_rows.iloc[0]['cluster_id'])
+                    relevant_papers.append({
+                        'id': paper.paper_id,
+                        'title': paper.title,
+                        'cluster': cluster_id,
+                        'score': score
+                    })
+            relevant_papers = relevant_papers[:5]
+        except Exception as e:
+            logger.warning(f"Semantic search failed: {e}")
+    
+    # Fallback to string matching if semantic search didn't return results
+    if not relevant_papers:
+        from difflib import SequenceMatcher
+        similarities = []
+        for p in paper_info:
+            sim = SequenceMatcher(None, query.lower(), p['title'].lower()).ratio()
+            similarities.append((p, sim))
+        similarities.sort(key=lambda x: x[1], reverse=True)
+        relevant_papers = [{**p, 'score': sim} for p, sim in similarities[:5]]
 
 if relevant_papers:
     st.subheader("Suggested Papers")
-    options = [f"{p['title']} (Cluster {p['cluster']})" for p, sim in relevant_papers]
+    options = [f"{p['title']} (Cluster {p['cluster']}) [{p['score']:.2f}]" for p in relevant_papers]
     selected_option = st.selectbox("Select a paper", options, key="paper_select")
     if selected_option:
         selected_index = options.index(selected_option)
-        selected_paper = relevant_papers[selected_index][0]
+        selected_paper = relevant_papers[selected_index]
         st.session_state['selected_cluster'] = int(selected_paper['cluster'])
         st.write(f"Selected cluster: {selected_paper['cluster']}")
 
