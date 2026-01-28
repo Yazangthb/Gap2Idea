@@ -211,8 +211,17 @@ class SemanticSearch:
         Returns:
             List of (Paper, score) tuples sorted by score descending
         """
+        import logging
+        logger = logging.getLogger(__name__)
+        
         if self.title_index is None:
             raise RuntimeError("Call fit() or load_index() first.")
+        
+        # DEBUG: Log state
+        logger.debug(f"title_vecs is None: {self.title_vecs is None}")
+        logger.debug(f"abs_vecs is None: {self.abs_vecs is None}")
+        logger.debug(f"title_index ntotal: {self.title_index.ntotal}")
+        logger.debug(f"papers count: {len(self.papers)}")
         
         # Embed query once
         q = self.model.encode([query], convert_to_numpy=True)
@@ -220,15 +229,30 @@ class SemanticSearch:
         
         # Stage 1: title retrieval using FAISS
         scores1, ids1 = self.title_index.search(q, stage1_candidates)
+        logger.debug(f"Stage 1 - scores1 shape: {scores1.shape}, ids1 shape: {ids1.shape}")
+        logger.debug(f"Stage 1 - ids1[0]: {ids1[0]}")
+        
         cand_ids = [i for i in ids1[0].tolist() if i != -1]
+        logger.debug(f"Candidate IDs (filtered): {cand_ids}")
         
         # Stage 2: rerank using weighted title+abstract similarity
         results = []
         for idx in cand_ids:
-            s_title = float(np.dot(q[0], self.title_vecs[idx]))
+            # Check bounds
+            if idx >= len(self.papers):
+                logger.warning(f"Index {idx} out of bounds for papers list (len={len(self.papers)})")
+                continue
+            
+            # Title similarity - use FAISS score if title_vecs not available
+            if self.title_vecs is not None and idx < len(self.title_vecs):
+                s_title = float(np.dot(q[0], self.title_vecs[idx]))
+            else:
+                # Fallback: use stage 1 score, normalized to [-1, 1] for cosine
+                s_title = float(scores1[0][list(ids1[0]).index(idx)]) if idx in ids1[0] else 0.0
+                logger.debug(f"Using FAISS score for idx {idx}: {s_title}")
             
             # Abstract similarity
-            if self.abs_vecs is not None:
+            if self.abs_vecs is not None and idx < len(self.abs_vecs):
                 s_abs = float(np.dot(q[0], self.abs_vecs[idx]))
             else:
                 # Compute abstract embedding on-the-fly

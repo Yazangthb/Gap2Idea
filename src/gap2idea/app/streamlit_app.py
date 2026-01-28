@@ -56,6 +56,8 @@ def load_embedder():
 @st.cache_resource
 def load_search_engine():
     """Load or build the semantic search engine."""
+    import time
+    start = time.time()
     if SemanticSearch is None:
         return None
     
@@ -65,7 +67,9 @@ def load_search_engine():
     # Try to load existing index
     if Path(index_path).exists() and Path(metadata_path).exists():
         try:
-            return SemanticSearch.load_index(index_path, metadata_path)
+            engine = SemanticSearch.load_index(index_path, metadata_path)
+            logger.info(f"Loaded search index in {time.time() - start:.2f}s")
+            return engine
         except Exception as e:
             logger.warning(f"Failed to load search index: {e}")
     
@@ -76,9 +80,10 @@ def load_search_engine():
             from gap2idea.pipeline.semantic_search import load_arxiv_jsonl
             papers = load_arxiv_jsonl(arxiv_metadata, limit=50000)
             engine = SemanticSearch(use_precomputed_abstracts=False)
+            logger.info(f"Building search index with {len(papers)} papers...")
             engine.fit(papers)
             engine.save_index(index_path, metadata_path)
-            logger.info(f"Built search index with {len(papers)} papers")
+            logger.info(f"Built and saved search index in {time.time() - start:.2f}s")
             return engine
         except Exception as e:
             logger.warning(f"Failed to build search index: {e}")
@@ -156,7 +161,11 @@ if query:
     search_engine = load_search_engine()
     if search_engine is not None:
         try:
-            hits = search_engine.search(query, top_k=10, stage1_candidates=100, w_title=0.4, w_abs=0.6)
+            # Use session state to cache results per query
+            cache_key = f"search_{query}"
+            if cache_key not in st.session_state:
+                st.session_state[cache_key] = search_engine.search(query, top_k=10, stage1_candidates=100, w_title=0.4, w_abs=0.6)
+            hits = st.session_state[cache_key]
             # Map hits to paper_info format
             for paper, score in hits:
                 # Find the paper info in gaps
