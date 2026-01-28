@@ -2,7 +2,7 @@
 
 Pipeline + Streamlit UI that clusters research gaps, labels the resulting themes, and expands promising combinations into concrete research ideas.
 
-![Streamlit App](artifacts/streamlit.png)
+![Streamlit App](artifacts/streamlit_image.png)
 
 ## Quick start (local dev)
 

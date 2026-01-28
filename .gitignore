@@ -77,7 +77,7 @@ data/arxiv_texts.jsonl
 # artifacts/ideas_openai.tsv
 
 # artifacts (usually reproducible)
-!artifacts/streamlit.png
+!artifacts/streamlit_image.png
 !artifacts/
 *.npy
 
