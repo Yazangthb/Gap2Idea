@@ -1,215 +1,246 @@
 # Gap2Idea
 
-Pipeline + Streamlit UI that clusters research gaps, labels the resulting themes, and expands promising combinations into concrete research ideas.
+**Gap2Idea** is an end-to-end pipeline that mines *research gaps* (Limitations, Future Work, Open Problems) from academic papers, clusters them into themes, and synthesises **novel, evidence-grounded research ideas** by bridging pairs of themes. Every generated idea is fact-checked against Semantic Scholar for novelty and scored by an LLM-as-judge rubric.
 
-## Quick start (local dev)
+## What's new (v0.2)
 
-1. **Install uv** (one time):
-   ```bash
-   python -m pip install --upgrade pip
-   python -m pip install --upgrade uv
-   ```
+- **Bridge-score pair selection** — replaces naive max-cosine pairing. Picks themes that are *related but distinct* (peaks at moderate similarity, penalises overlap), which is empirically what produces novel ideas rather than redundant restatements.
+- **LLM cluster labels** — short, human-readable theme names (e.g. "Long-Tail Generalisation in Vision Models") instead of TF-IDF keyword stuffing.
+- **Diverse evidence selection** — token-Jaccard-aware sampling so the LLM sees varied gap statements per cluster, not 3 paraphrases of the same gap.
+- **Novelty check via Semantic Scholar** — each generated idea's title + research-question is searched against S2; we report `novelty_score = 1 - max_cosine(idea, closest_S2_hit)`.
+- **LLM-as-judge evaluation** — every idea is scored on a 1-5 Likert rubric: *novelty / specificity / feasibility / evidence-grounding* with rationales.
+- **End-to-end CLI** — `gap2idea run-all` orchestrates extract-text → sections → gaps → themes → S2 metadata → ideas → evaluation in one command.
+- **Multi-tab Streamlit dashboard** — overview, theme explorer, bridge inspector, on-demand generation, ideas gallery with filters/exports, evaluation dashboard.
 
-Verify:
+## Architecture
 
-```bash
-uv --version
+```
+                       arxiv-metadata-oai-snapshot.json   OR   Semantic Scholar search
+                                            │
+                                            ▼
+                              select-papers ─► data/papers_subset.tsv
+                                            │
+                                            ▼
+                             download-pdfs ─► data/pdfs/*.pdf
+                                            │
+                                            ▼
+                              extract-text ─► data/paper_texts.jsonl
+                                            │
+                                            ▼ (regex headings + window fallback)
+                          extract-sections ─► data/sections_extracted.jsonl
+                                            │
+                                            ▼ (OpenAI structured outputs, verbatim only)
+                              extract-gaps ─► data/gaps.tsv
+                                            │
+                          ┌─────────────────┴────────────────┐
+                          ▼                                  ▼
+              theme-mine (KMeans/HDBSCAN,           fetch-metadata
+              LLM labels, bridge score)             (Semantic Scholar)
+                          │                                  │
+                          ▼                                  ▼
+                  artifacts/cluster_pairs.tsv      artifacts/papers_metadata.tsv
+                          │
+                          ▼ (diverse evidence + novelty check)
+                  generate-ideas ─► artifacts/{ideas.tsv, ideas_full.jsonl}
+                          │
+                          ▼ (LLM-as-judge, 4-axis rubric)
+                evaluate-ideas ─► artifacts/{idea_eval.tsv, evaluation_report.md}
 ```
 
-2. **Create and sync the environment** (from the repo root):
+## Methodology
 
-   ```bash
-   uv sync
-   ```
+### 1. Gap extraction
+We feed only the *Limitations / Future Work / Discussion* sections of each paper to the LLM, with strict JSON schema enforcement requiring **verbatim** sentences and paragraphs. This anchors every "gap" on textual provenance from the source paper, avoiding LLM hallucination of capabilities authors never claimed were missing.
 
-3. **Activate the environment** (so you don’t need `uv` in every command):
+All LLM calls are routed through **[OpenRouter](https://openrouter.ai/)** so you can swap providers (OpenAI · Anthropic · Google · Meta · open-source) by changing one CLI flag, e.g. `--model anthropic/claude-sonnet-4` or `--model google/gemini-2.5-flash`.
 
-   **Windows (PowerShell / CMD):**
+### 2. Theme mining
+Gaps are embedded with `all-MiniLM-L6-v2`, then clustered with KMeans (silhouette-tuned k) for small corpora or HDBSCAN for large ones. Each cluster gets two labels: an LLM-produced theme name (human-readable) and a TF-IDF keyword list (interpretable).
 
-   ```bash
-   .venv\Scripts\activate
-   ```
+### 3. Bridge-score pair selection
+For every cluster pair we compute
 
-   **macOS / Linux:**
+```
+bridge_score = peak(cosine_sim, 0.45)
+             × (1 - paper_overlap_jaccard)
+             × (0.5 + 0.5 × type_complementarity)
+```
 
-   ```bash
-   source .venv/bin/activate
-   ```
-4. **Run the theme miner** on your TSV of gap sentences:
+- `peak(s, 0.45)` is a triangular peak that maxes out at moderate cosine similarity (≈0.45) and decays to 0 at both 0 and 1. Pairs that are too similar produce restatements; pairs that are too far apart produce nonsense.
+- `paper_overlap` is the Jaccard overlap of source-paper IDs between the two clusters. Penalised because pairs from the same papers can't claim cross-pollination.
+- `type_complementarity` is the L1 distance between the two clusters' `gap_type` distributions, scaled to [0, 1]. A `limitation` cluster paired with a `future_work` cluster scores higher than two identical-type clusters.
 
-   ```bash
-   gap2idea theme-mine --gaps-tsv data/gaps/raw_gaps.tsv
-   ```
-5. **Explore clusters** in Streamlit:
+### 4. Idea synthesis — three modes
 
-   ```bash
-   streamlit run src/gap2idea/app/streamlit_app.py
-   ```
+Each mode shares: diverse-evidence sampling, strict-JSON LLM call, S2 novelty check, full TSV+JSONL provenance.
 
-### Alternative (no activation)
+**`--mode bridge`** *(default)* — pair two gap-clusters in the bridge-score sweet spot, ask the LLM to combine them. Encodes "novelty by recombining related-but-distinct themes." Works well when two themes are *adjacent* (e.g. continual-learning gaps × OOD-detection gaps); produces poor ideas when the two themes are merely *related by topic* (e.g. "ML" × "medical research").
 
-If you prefer not to activate the virtual environment, prefix commands with `uv run`:
+**`--mode within`** — for each gap-cluster, synthesise ONE idea from k=6+ diverse evidence rows in *that* cluster. A cluster represents a recurring research opportunity; the idea fills the opportunity. No pairing, no bridge formula. Simpler and more defensible when you can't justify the cross-pollination claim.
+
+**`--mode method-gap`** — explicit "X solves Y" structure. We run a second extraction pass (`extract-methods`) to mine method-claim sentences from abstracts/introductions. For each gap-cluster, we retrieve the top-K method statements whose cosine similarity to the cluster centroid falls in the **sweet spot** [0.30, 0.70] (configurable). Then the LLM applies the retrieved methods to the cluster's gaps. Every idea has explicit provenance: "*Apply method M (paper P1) to address gap G (paper P2).*" Requires `gap2idea extract-methods` to be run first.
+
+All three modes use the LLM (OpenRouter, default `openai/gpt-4.1-mini`) with a strict JSON schema requiring concrete `method_sketch`, `evaluation_plan` (named metric + baseline), and `evidence_used` (subset of input evidence with verbatim quotes).
+
+### 5. Novelty validation
+The idea's `title + research_question` is sent to Semantic Scholar's `/paper/search`. We embed the idea text and each hit's abstract with the same sentence-transformer and report:
+
+- `novelty_score = 1 − max_cosine(idea, S2_hit_abstract)` ∈ [0, 1]
+- `closest_paper` (paper ID, title, year, similarity) so reviewers can audit.
+
+### 6. Evaluation
+`evaluate-ideas` runs an LLM-as-judge that scores each idea 1-5 on **novelty / specificity / feasibility / evidence_grounding** with per-axis rationales. We separately compute a quantitative **`evidence_overlap`** — the fraction of `evidence_used` (paper_id, gap_sentence) pairs that actually appeared in the input — to catch hallucinated citations even when the judge is fooled.
+
+To mitigate self-evaluation bias, the **default judge model is from a different provider than the generator**: generation uses `openai/gpt-4.1-mini` and judging uses `anthropic/claude-sonnet-4`. Override either side with `--model` / `--judge-model` on the CLI.
+
+## Installation
+
+Three supported ways: `uv` (recommended), `pip`, or Docker.
+
+### With `uv` (recommended)
 
 ```bash
-uv run gap2idea theme-mine --gaps-tsv data/gaps/raw_gaps.tsv
+# one time
+python -m pip install --upgrade uv
+
+# from repo root
+uv sync                                        # creates .venv with all deps
+.venv/Scripts/activate                         # Windows; or `source .venv/bin/activate`
+cp .env.example .env                           # then edit OPENROUTER_API_KEY
+```
+
+Or, if you don't want to activate the env, prefix commands with `uv run`:
+
+```bash
+uv run gap2idea theme-mine --gaps-tsv data/gaps.tsv
 uv run streamlit run src/gap2idea/app/streamlit_app.py
 ```
 
-## Run with Docker
-
-You can ship the entire UI + pipeline stack via the provided [`Dockerfile`](Dockerfile), which now mirrors the `uv`-managed environment used locally:
-
-1. **Build the image** (once, it installs deps via `uv sync --frozen --no-dev`):
-
-   ```bash
-   docker build -t gap2idea:latest -f Dockerfile .
-   ```
-2. **Start the container** (ensure `data/` and `artifacts/` exist locally so the mounts work):
-
-   ```bash
-   docker run --rm -p 8501:8501 \
-     -v "$(pwd)/data:/app/data" \
-     -v "$(pwd)/artifacts:/app/artifacts" \
-     gap2idea:latest
-   ```
-
-   On Windows CMD/PowerShell, replace `$(pwd)` with `%cd%` (or run the command inside WSL).
-
-   **Windows PowerShell example:**
-
-   ```powershell
-   docker run --rm -p 8501:8501 `
-     -v "${PWD}\data:/app/data" `
-     -v "${PWD}\artifacts:/app/artifacts" `
-     gap2idea:latest
-   ```
-
-   **Windows CMD example:**
-
-   ```cmd
-   docker run --rm -p 8501:8501 ^
-     -v "%cd%\data:/app/data" ^
-     -v "%cd%\artifacts:/app/artifacts" ^
-     gap2idea:latest
-   ```
-
-Streamlit will now be reachable at http://localhost:8501 while reading/writing the same mounted folders as the local workflow.
-
-➡️ The Docker context is trimmed via [`.dockerignore`](.dockerignore) so local notebooks, caches, and mounted data are not copied into the image.
-
-## Data + artifacts in short
-
-| Path                                 | Purpose                                                    |
-| ------------------------------------ | ---------------------------------------------------------- |
-| `data/pdfs/`                       | PDFs named `<paper_id>.pdf`; the UI links to them.       |
-| `data/gaps/*.tsv`                  | Input TSV(s) with columns `paper_id`, `gap_text`, etc. |
-| `artifacts/gaps_with_clusters.tsv` | Each gap with its embedding + assigned cluster.            |
-| `artifacts/cluster_pairs.tsv`      | Similar cluster pairs that seed idea generation.           |
-| `artifacts/ideas_openai.tsv`       | Streamlit writes generated ideas here.                     |
-
-## Preparing data when you only have `arxiv-metadata-oai-snapshot.json`
-
-The repository assumes you eventually own a TSV of “gap” sentences (limitations, future work, outlooks, etc.). If the only asset you own today is the raw [`arxiv-metadata-oai-snapshot.json`](https://www.kaggle.com/datasets/Cornell-University/arxiv) JSONL dump, follow the steps below to bootstrap every intermediate file. Each step mirrors the notebooks under [`notebooks/`](notebooks/).
-
-### 0. Place the snapshot
-
-1. Download `arxiv-metadata-oai-snapshot.json` (≈4 GB compressed) from Kaggle.
-2. Decompress if needed and place/symlink it at `data/arxiv-metadata-oai-snapshot.json` (the Streamlit UI expects this relative location when it needs metadata).
-
-### 1. Select a manageable paper subset
-
-Start from the JSONL metadata and pick a slice that matches your domain, recency, and size constraints. Use the CLI command (no notebooks required):
+### With `pip`
 
 ```bash
-uv run gap2idea select-arxiv \
-  --metadata data/arxiv-metadata-oai-snapshot.json \
-  --output data/papers_subset.tsv \
-  --categories cs.LG,stat.ML \
-  --min-year 2021 \
-  --n-papers 250
+git clone <repo>
+cd Gap2Idea
+python -m venv .venv && .venv/Scripts/activate    # or source .venv/bin/activate
+pip install -e .
+cp .env.example .env                              # then edit OPENROUTER_API_KEY
 ```
 
-Or run everything in one command:
+### With Docker
+
+Ships the entire UI + pipeline stack via the provided `Dockerfile` (uses `uv sync --frozen --no-dev` under the hood):
 
 ```bash
-uv run gap2idea run-pipeline \
-  --metadata data/arxiv-metadata-oai-snapshot.json \
-  --categories cs.LG,stat.ML \
-  --min-year 2021 \
-  --n-papers 250 \
-  --model gpt-4.1-mini \
-  --max-papers 50
+docker build -t gap2idea:latest -f Dockerfile .
+docker run --rm -p 8501:8501 \
+  -v "$(pwd)/data:/app/data" \
+  -v "$(pwd)/artifacts:/app/artifacts" \
+  --env-file .env \
+  gap2idea:latest
 ```
 
-Outcome: `data/papers_subset.tsv` (or another path you choose) containing 3–4 columns per paper. The IDs here will drive every subsequent step.
+On Windows PowerShell, replace `$(pwd)` with `${PWD}` and use backticks for line continuation.
 
-### 2. Download PDFs and extract lightweight text dumps
+### Required env vars
 
-Using the subset IDs, download PDFs to `data/pdfs/` and extract the first ~10–12 pages of text to `data/texts/` via the CLI:
+| Variable | Status | What it does |
+|---|---|---|
+| `OPENROUTER_API_KEY` | **Required** | All LLM calls. Get one at <https://openrouter.ai/keys>. |
+| `S2_API_KEY` | Recommended | Lifts Semantic Scholar rate limit from ~100/5min unauth → much higher. |
+| `OPENAI_API_KEY` | Legacy fallback | Honoured only if `OPENROUTER_API_KEY` is unset. |
+
+### Choosing models
+
+All LLM-calling subcommands take `--model <openrouter_slug>`. Examples:
+
+| Use case | Suggested slug | Why |
+|---|---|---|
+| Fast, cheap, strict JSON | `openai/gpt-4.1-mini` (default) | Reliable structured outputs, low cost |
+| Higher-quality generation | `openai/gpt-4o` or `anthropic/claude-sonnet-4` | Better reasoning, higher cost |
+| Independent judge | `anthropic/claude-sonnet-4` (default judge) | Different provider from generator → less self-eval bias |
+| Open-source / local-equivalent | `meta-llama/llama-3.3-70b-instruct` | Free-tier on OpenRouter |
+
+Full model catalogue: <https://openrouter.ai/models>.
+
+## Usage
+
+### Option A — full pipeline from arXiv
+```bash
+gap2idea select-papers --source s2 --query "graph neural networks dynamic" --n 100
+gap2idea download-pdfs
+gap2idea run-all                       # extract-text → … → evaluate-ideas
+streamlit run src/gap2idea/app/streamlit_app.py
+```
+
+### Option B — already have `data/gaps.tsv`
+```bash
+gap2idea theme-mine --gaps-tsv data/gaps.tsv
+gap2idea fetch-metadata
+gap2idea generate-ideas --n-pairs 15
+gap2idea evaluate-ideas --judge-model gpt-4.1-mini
+streamlit run src/gap2idea/app/streamlit_app.py
+```
+
+### Per-stage commands
+```
+gap2idea select-papers      # corpus selection (S2 search OR arxiv snapshot)
+gap2idea download-pdfs      # parallel arxiv PDF download
+gap2idea extract-text       # PyMuPDF text extraction
+gap2idea extract-sections   # regex section parser + window fallback
+gap2idea extract-gaps       # LLM gap extraction from limitations/future-work
+gap2idea extract-methods    # LLM method-claim extraction from abstracts/intros
+gap2idea theme-mine         # embed → cluster → label → bridge-score pairs
+gap2idea fetch-metadata     # S2 enrichment for every paper id
+gap2idea generate-ideas     # idea synthesis + novelty check (3 modes — see below)
+gap2idea evaluate-ideas     # LLM-as-judge rubric + markdown report
+gap2idea run-all            # extract-text through evaluate-ideas
+```
+
+### Idea generation modes
 
 ```bash
-uv run gap2idea fetch-pdfs --papers-tsv data/papers_subset.tsv
+# Default — bridge two gap-clusters in the similarity sweet spot
+gap2idea generate-ideas --mode bridge --n-pairs 10
+
+# Synthesise one idea per cluster from its own gaps (no pairing)
+gap2idea generate-ideas --mode within --n-pairs 10
+
+# Apply retrieved methods to each gap-cluster (requires extract-methods first)
+gap2idea extract-methods
+gap2idea generate-ideas --mode method-gap --n-pairs 10 --sim-low 0.30 --sim-high 0.70
 ```
 
-Expected directories afterwards:
+Output schema is unified (`mode` column distinguishes them). You can run all three sequentially and compare in the **Ideas** tab of the Streamlit app.
 
-* `data/pdfs/<arxiv-id>.pdf`
-* `data/texts/<arxiv-id>.txt`
+## Project layout
 
-### 3. Mine limitation / future-work sections → `sections_extracted.jsonl`
-
-Run the CLI to parse tail pages of each PDF, look for headings such as “Limitations”, “Future Work”, “Discussion”, and emit rows shaped as:
-
-```json
-{"id": "2503.17793", "section_type": "future_work", "heading": "Future Work", "section_text": "..."}
+```
+src/gap2idea/
+  cli.py                       # all subcommands
+  config.py io.py utils.py
+  pipeline/
+    arxiv_select.py            # S2 search + arxiv snapshot + PDF download
+    pdf_text.py                # PyMuPDF
+    sections.py                # Limitations / Future Work finder
+    openai_gaps.py             # gap extraction (OpenAI strict JSON)
+    theme_mining.py            # embed/cluster/label + bridge-score pairs
+    semantic_scholar.py        # S2 Graph API client w/ 429 retry
+    openai_ideas.py            # idea synthesis + novelty check
+    evaluation.py              # LLM-as-judge + report writer
+  app/
+    streamlit_app.py           # tabbed dashboard
+artifacts/                     # generated outputs (gitignored)
+data/                          # raw inputs (gitignored)
+notebooks/                     # exploratory work
 ```
 
-```bash
-uv run gap2idea extract-sections --output data/sections_extracted.jsonl
-```
+## Requirements
 
-This structured JSONL is now the raw material for gap extraction.
-
-### 4. Convert sections → `data/gaps_openai.tsv`
-
-Use the OpenAI-backed extractor to convert sections into a TSV of gaps (expects `OPENAI_API_KEY` in `.env`):
-
-```bash
-uv run gap2idea extract-gaps \
-  --sections-jsonl data/sections_extracted.jsonl \
-  --output data/gaps_openai.tsv \
-  --model gpt-4.1-mini \
-  --max-papers 50
-```
-
-The output TSV contains: `id`, `gap_type`, `gap_sentence`, `paragraph_text`, `confidence`.
-
-### 5. Run the Gap2Idea pipeline + UI
-
-Once `data/gaps_openai.tsv` exists, the rest is the standard workflow already outlined above:
-
-```bash
-uv run gap2idea theme-mine --gaps-tsv data/gaps_openai.tsv
-uv run streamlit run src/gap2idea/app/streamlit_app.py
-```
-
-Artifacts (`artifacts/gaps_with_clusters.tsv`, `artifacts/cluster_pairs.tsv`, etc.) will populate, and the Streamlit dashboard will let you explore them immediately. If you later gather more metadata or PDFs, simply rerun steps 1–4 and re-execute the CLI.
-
-## Commands you will actually use
-
-| Goal                                | Command                                             |
-| ----------------------------------- | --------------------------------------------------- |
-| Sync deps after pulling changes     | `uv sync`                                         |
-| Run full pipeline from metadata     | `gap2idea run-pipeline --metadata data/arxiv-metadata-oai-snapshot.json` |
-| Run the clustering/theme mining CLI | `gap2idea theme-mine --gaps-tsv <your_file.tsv>`  |
-| Launch the Streamlit dashboard      | `streamlit run src/gap2idea/app/streamlit_app.py` |
-
-Additional internals worth knowing:
-
-* [`src/gap2idea/cli.py`](src/gap2idea/cli.py) wires the `gap2idea` console entry point.
-* [`src/gap2idea/app/streamlit_app.py`](src/gap2idea/app/streamlit_app.py) powers the dashboard experience.
-* Pipelines for selection, PDF parsing, OpenAI calls, and clustering live under [`src/gap2idea/pipeline/`](src/gap2idea/pipeline/).
+- Python ≥ 3.10
+- **OpenRouter** API key (`OPENROUTER_API_KEY`) — unifies access to OpenAI / Anthropic / Google / open-source models behind one key.
+- Optional: Semantic Scholar API key (`S2_API_KEY`) — strongly recommended for large corpora to avoid 429 rate limits.
+- Optional: `OPENAI_API_KEY` is honoured as a fallback if `OPENROUTER_API_KEY` is unset.
 
 ## License
 
-No license is declared yet. Please obtain the repository owner's permission before redistribution.
+MIT

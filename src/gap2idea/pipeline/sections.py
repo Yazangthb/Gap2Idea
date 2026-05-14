@@ -1,171 +1,144 @@
+"""Find Limitations / Future Work / Conclusion sections in extracted paper text.
+
+Three strategies, tried in order per paper:
+  1. **Structured headings** — numbered (`4 Limitations`), Roman (`IV. Future Work`),
+     or ALL-CAPS section headers. Cut at References/Bibliography.
+  2. **Window fallback** — first hit of any target keyword anywhere in the doc,
+     take a fixed-length token window after it.
+  3. **Tail fallback** — last 900 words of the (pre-references) text; future
+     work statements almost always live in the conclusion.
+
+Output is a DataFrame with one row per (paper, section_type) pair. We keep at
+most two rows per paper to bound downstream OpenAI cost.
+"""
 from __future__ import annotations
 
-import json
 import re
 from pathlib import Path
 
 import pandas as pd
-from tqdm import tqdm
-import fitz  # pymupdf
 
+from gap2idea.utils import get_logger
 
-MAX_TAIL_PAGES = 6
-MIN_SECTION_CHARS = 200
-TARGET_SECTION_COUNT = 2
-FALLBACK_MAX_WORDS = 900
+log = get_logger(__name__)
 
-REF_RE = re.compile(r"^\s*(references|bibliography)\s*$", re.IGNORECASE)
+REF_RE = re.compile(r"^\s*(references|bibliography)\s*$", re.IGNORECASE | re.MULTILINE)
 HEADING_RE = re.compile(
-    r"^\s*(?:\d+(?:\.\d+)*\s+|[IVXLC]+\.\s+)?([A-Z][A-Za-z0-9 &\-/,:]{2,80})\s*$"
+    r"^\s*(?:\d+(?:\.\d+)*\s+|[IVXLC]+\.\s+)?"
+    r"(?P<title>[A-Z][A-Za-z0-9 &\-/,:]{2,80})\s*$",
+    re.MULTILINE,
 )
 LIMITATION_HEAD_RE = re.compile(r"\b(limitations?|threats to validity|caveats?)\b", re.IGNORECASE)
 FUTURE_HEAD_RE = re.compile(r"\b(future work|future directions?|outlook|next steps?)\b", re.IGNORECASE)
-FALLBACK_START_RE = re.compile(
-    r"(conclusion(s)?\s*(and|&)\s*future work|future work|future directions|limitations?|threats to validity|discussion|conclusion(s)?)",
+DISCUSSION_HEAD_RE = re.compile(r"\b(discussion|conclusion(s)?)\b", re.IGNORECASE)
+
+FALLBACK_KEYWORDS_RE = re.compile(
+    r"\b(future work|future directions?|limitations?|threats to validity|"
+    r"open (?:problems?|questions?)|conclusion(?:s)?\s*(?:and|&)\s*future)\b",
     re.IGNORECASE,
 )
 
-
-def extract_tail_text_from_pdf(pdf_path: str | Path, tail_pages: int = MAX_TAIL_PAGES) -> str:
-    doc = fitz.open(str(pdf_path))
-    n = len(doc)
-    start = max(0, n - tail_pages)
-    chunks = []
-    for i in range(start, n):
-        chunks.append(doc[i].get_text("text"))
-    doc.close()
-    return "\n".join(chunks)
+MIN_BODY_CHARS = 200
+WINDOW_WORDS = 900
+MAX_SECTIONS_PER_PAPER = 2
 
 
-def cut_before_references(text: str) -> str:
-    lines = text.splitlines()
-    for i, line in enumerate(lines):
-        if REF_RE.match(line.strip()):
-            return "\n".join(lines[:i])
-    return text
+def _cut_before_references(text: str) -> str:
+    m = REF_RE.search(text)
+    return text[: m.start()] if m else text
 
 
-def find_headings(lines: list[str]) -> list[tuple[int, str]]:
-    headings = []
-    for i, line in enumerate(lines):
-        m = HEADING_RE.match(line)
-        if not m:
-            continue
-        title = m.group(1)
-        if not title:
-            continue
-        title = title.strip()
-        if len(title) < 3:
-            continue
-        if sum(c.islower() for c in title) > sum(c.isupper() for c in title) and " " in title:
-            if title.lower() not in {"conclusion", "conclusions", "discussion", "future work", "limitations"}:
-                continue
-        headings.append((i, title))
-    return headings
-
-
-def section_spans_from_headings(lines: list[str], headings: list[tuple[int, str]]) -> list[tuple[str, int, int]]:
-    spans = []
-    for k, (idx, title) in enumerate(headings):
-        start = idx + 1
-        end = headings[k + 1][0] if k + 1 < len(headings) else len(lines)
-        spans.append((title, start, end))
-    return spans
-
-
-def extract_target_sections_from_end(text: str, target_count: int = TARGET_SECTION_COUNT) -> list[dict]:
-    text = cut_before_references(text)
-    lines = [ln.rstrip() for ln in text.splitlines() if ln.strip()]
-    if not lines:
-        return []
-    headings = find_headings(lines)
-    if not headings:
-        return []
-
-    spans = section_spans_from_headings(lines, headings)
+def _structured_sections(text: str) -> list[dict]:
+    """Walk every plausible heading and pull the body between it and the next
+    heading. Keep only sections whose heading matches a target keyword."""
+    headings = list(HEADING_RE.finditer(text))
     found: list[dict] = []
-    for title, start, end in reversed(spans):
-        body = "\n".join(lines[start:end]).strip()
-        if len(body) < MIN_SECTION_CHARS:
+    for i, m in enumerate(headings):
+        title = m.group("title").strip()
+        nxt = headings[i + 1].start() if i + 1 < len(headings) else len(text)
+        body = text[m.end() : nxt].strip()
+        if len(body) < MIN_BODY_CHARS:
             continue
         if LIMITATION_HEAD_RE.search(title):
-            found.append({"section_type": "limitations", "heading": title, "text": body})
+            found.append({"section_type": "limitations", "heading": title, "section_text": body})
         elif FUTURE_HEAD_RE.search(title):
-            found.append({"section_type": "future_work", "heading": title, "text": body})
-        if len(found) >= target_count:
-            break
+            found.append({"section_type": "future_work", "heading": title, "section_text": body})
+        elif DISCUSSION_HEAD_RE.search(title):
+            found.append({"section_type": "discussion", "heading": title, "section_text": body})
+    # de-dup on (section_type, first 100 chars)
+    seen = set()
+    out = []
+    for s in found:
+        key = (s["section_type"], s["section_text"][:100])
+        if key not in seen:
+            seen.add(key)
+            out.append(s)
+    return out
 
-    return list(reversed(found))
 
-
-def fallback_extract_window(text: str, max_words: int = FALLBACK_MAX_WORDS) -> str | None:
-    t = cut_before_references(text)
-    m = FALLBACK_START_RE.search(t)
+def _window_fallback(text: str) -> dict | None:
+    m = FALLBACK_KEYWORDS_RE.search(text)
     if not m:
         return None
-    window = t[m.start():].strip()
-    words = window.split()
-    if len(words) > max_words:
-        window = " ".join(words[:max_words])
-    return window.strip()
+    after = text[m.start() :]
+    words = after.split()
+    window = " ".join(words[:WINDOW_WORDS])
+    if len(window) < MIN_BODY_CHARS:
+        return None
+    return {"section_type": "fallback", "heading": "fallback_window", "section_text": window}
 
 
-def extract_limitations_futurework(pdf_path: str | Path) -> dict:
-    tail = extract_tail_text_from_pdf(pdf_path, tail_pages=MAX_TAIL_PAGES)
-    sections = extract_target_sections_from_end(tail, target_count=TARGET_SECTION_COUNT)
-    if sections:
-        return {"sections": sections, "fallback_text": ""}
-
-    fb = fallback_extract_window(tail, max_words=FALLBACK_MAX_WORDS)
-    return {"sections": [], "fallback_text": fb or ""}
+def _tail_fallback(text: str) -> dict | None:
+    words = text.split()
+    if len(words) < 300:
+        return None
+    tail = " ".join(words[-WINDOW_WORDS:])
+    return {"section_type": "tail", "heading": "tail_window", "section_text": tail}
 
 
-def extract_sections_from_pdfs(
-    pdf_dir: str | Path,
-    output_jsonl: str | Path,
-    ids: list[str] | None = None,
-) -> pd.DataFrame:
-    pdf_dir = Path(pdf_dir)
-    output_jsonl = Path(output_jsonl)
-    output_jsonl.parent.mkdir(parents=True, exist_ok=True)
+def extract_sections_for_paper(paper_id: str, full_text: str) -> list[dict]:
+    pre_ref = _cut_before_references(full_text)
+    sections = _structured_sections(pre_ref)
 
-    pdf_paths = {
-        p.stem.replace("_", "/"): p
-        for p in pdf_dir.glob("*.pdf")
-        if p.is_file() and p.stat().st_size > 0
-    }
-    if ids is not None:
-        ids_set = set(str(i) for i in ids)
-        pdf_paths = {pid: p for pid, p in pdf_paths.items() if pid in ids_set}
+    if not sections:
+        win = _window_fallback(pre_ref)
+        if win:
+            sections.append(win)
 
-    rows = []
-    for arxiv_id, pdf_path in tqdm(pdf_paths.items(), total=len(pdf_paths)):
-        out = extract_limitations_futurework(pdf_path)
-        for s in out["sections"]:
-            rows.append(
-                {
-                    "id": arxiv_id,
-                    "section_type": s["section_type"],
-                    "heading": s["heading"],
-                    "section_text": s["text"],
-                }
-            )
-        if not out["sections"] and out["fallback_text"]:
-            rows.append(
-                {
-                    "id": arxiv_id,
-                    "section_type": "fallback",
-                    "heading": "fallback_window",
-                    "section_text": out["fallback_text"],
-                }
-            )
+    if not sections:
+        tail = _tail_fallback(pre_ref)
+        if tail:
+            sections.append(tail)
 
-    sec_df = pd.DataFrame(rows)
-    with output_jsonl.open("w", encoding="utf-8") as f:
-        for r in sec_df[["id", "section_type", "heading", "section_text"]].to_dict("records"):
-            r["id"] = str(r.get("id", ""))
-            r["section_type"] = "" if pd.isna(r.get("section_type")) else str(r.get("section_type"))
-            r["heading"] = "" if pd.isna(r.get("heading")) else str(r.get("heading"))
-            r["section_text"] = "" if pd.isna(r.get("section_text")) else str(r.get("section_text"))
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    return sec_df
+    # Prefer limitations & future_work; cap at MAX_SECTIONS_PER_PAPER
+    priority = {"limitations": 0, "future_work": 1, "discussion": 2, "fallback": 3, "tail": 4}
+    sections.sort(key=lambda s: priority.get(s["section_type"], 9))
+    sections = sections[:MAX_SECTIONS_PER_PAPER]
+    for s in sections:
+        s["id"] = paper_id
+    return sections
+
+
+def extract_all_sections(texts_jsonl: Path, out_jsonl: Path) -> pd.DataFrame:
+    # dtype=False so arxiv IDs that look like floats stay as strings.
+    texts = pd.read_json(texts_jsonl, lines=True, dtype=False)
+    texts["id"] = texts["id"].astype(str)
+    log.info("Splitting sections for %d papers", len(texts))
+    all_rows: list[dict] = []
+    for _, r in texts.iterrows():
+        rows = extract_sections_for_paper(str(r["id"]), str(r["text"]))
+        all_rows.extend(rows)
+    df = pd.DataFrame(all_rows)
+    if df.empty:
+        log.warning("No sections found across corpus!")
+        df = pd.DataFrame(columns=["id", "section_type", "heading", "section_text"])
+    else:
+        log.info(
+            "Found %d sections (%s)",
+            len(df),
+            ", ".join(f"{k}:{v}" for k, v in df["section_type"].value_counts().items()),
+        )
+    out_jsonl.parent.mkdir(parents=True, exist_ok=True)
+    df.to_json(out_jsonl, orient="records", lines=True, force_ascii=False)
+    log.info("Wrote %s", out_jsonl)
+    return df

@@ -10,3 +10,5 @@ python-dotenv
 openai
 numpy
 scikit-learn
+# Semantic Scholar lookups use `requests` above. No new deps.
+

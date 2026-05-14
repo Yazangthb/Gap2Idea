@@ -27,6 +27,7 @@ htmlcov/
 .vscode/
 .idea/
 *.iml
+.claude/
 
 # =========================
 # Jupyter / notebooks
