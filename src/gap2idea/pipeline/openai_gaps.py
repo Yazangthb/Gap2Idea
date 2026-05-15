@@ -18,6 +18,7 @@ The output `gaps.tsv` is the entry point to `theme-mine`.
 """
 from __future__ import annotations
 
+import concurrent.futures
 import json
 import time
 from pathlib import Path
@@ -94,10 +95,28 @@ def _section_text_for_paper(sections_df: pd.DataFrame, paper_id: str) -> str:
     return joined[:MAX_INPUT_CHARS]
 
 
-@retry(tries=4, base_delay=2.0)
-def _call_openai(client: OpenAI, paper_id: str, text: str) -> dict:
-    """One structured call. Retries on transient errors."""
-    resp = client.chat.completions.create(
+CALL_TIMEOUT_SECONDS = 60  # bound per-paper wall time at 1 minute
+
+# Module-scope executor — we keep a single worker thread alive for the
+# lifetime of the process. If an LLM call hangs, future.result(timeout=N)
+# raises TimeoutError and we move on; the orphaned thread leaks but does
+# nothing harmful (it eventually returns or the process exits). We do NOT
+# use `with ... as ex:` because that calls shutdown(wait=True) on exit,
+# which would block waiting for the hung call — defeating the timeout.
+_EXECUTOR: concurrent.futures.ThreadPoolExecutor | None = None
+
+
+def _get_executor() -> concurrent.futures.ThreadPoolExecutor:
+    global _EXECUTOR
+    if _EXECUTOR is None or _EXECUTOR._shutdown:
+        # max_workers=4 so a stale thread doesn't block the next call
+        _EXECUTOR = concurrent.futures.ThreadPoolExecutor(max_workers=4,
+                                                          thread_name_prefix="oai")
+    return _EXECUTOR
+
+
+def _do_call(client: OpenAI, paper_id: str, text: str):
+    return client.chat.completions.create(
         model=MODEL,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
@@ -108,8 +127,38 @@ def _call_openai(client: OpenAI, paper_id: str, text: str) -> dict:
             "json_schema": {"name": "gap_extraction", "schema": GAP_SCHEMA, "strict": True},
         },
         temperature=0.0,
+        timeout=CALL_TIMEOUT_SECONDS,
     )
-    return parse_json_response(resp.choices[0].message.content)
+
+
+@retry(tries=2, base_delay=2.0)
+def _api_call(client: OpenAI, paper_id: str, text: str):
+    """Hard wall-clock timeout via a long-lived ThreadPoolExecutor.
+
+    OpenAI SDK's own `timeout=` is not enforced reliably on Windows/httpx
+    when the upstream keeps the TCP socket alive but does not deliver
+    bytes. We submit to a module-scope executor and bound the wait on the
+    future; if the call hangs we abandon the worker thread (cannot kill
+    it from outside, but the next call uses a different worker).
+    """
+    future = _get_executor().submit(_do_call, client, paper_id, text)
+    try:
+        return future.result(timeout=CALL_TIMEOUT_SECONDS)
+    except concurrent.futures.TimeoutError:
+        # Don't try to cancel — running threads can't be cancelled in Python.
+        # The worker leaks; next call uses a fresh worker.
+        raise TimeoutError(f"LLM call timed out after {CALL_TIMEOUT_SECONDS}s")
+
+
+def _call_openai(client: OpenAI, paper_id: str, text: str) -> dict:
+    """One structured call. Network errors retry; JSON-parse failures skip
+    (same input → same broken output, so retrying just wastes minutes)."""
+    resp = _api_call(client, paper_id, text)
+    try:
+        return parse_json_response(resp.choices[0].message.content)
+    except ValueError as e:
+        log.warning("  %s: parse error, skipping (%s)", paper_id, str(e)[:120])
+        return {"paper_id": paper_id, "items": []}
 
 
 def _flatten(record: dict, paper_id: str) -> list[dict]:
@@ -155,8 +204,15 @@ def extract_gaps(
     todo = [pid for pid in paper_ids if pid not in done_ids]
     log.info("Calling OpenAI (%s) for %d papers", model, len(todo))
 
+    out_tsv.parent.mkdir(parents=True, exist_ok=True)
+    # Incremental save: load anything already on disk so a fresh batch appends.
+    if out_tsv.exists() and resume:
+        accumulated = pd.read_csv(out_tsv, sep="\t", dtype={"id": str})
+    else:
+        accumulated = pd.DataFrame(columns=["id", "gap_type", "gap_sentence",
+                                            "paragraph_text", "confidence"])
+
     client = get_llm_client()
-    new_rows: list[dict] = []
     for i, pid in enumerate(todo, 1):
         text = _section_text_for_paper(sections_df, pid)
         if len(text) < 200:
@@ -165,26 +221,22 @@ def extract_gaps(
         try:
             rec = _call_openai(client, pid, text)
             rows = _flatten(rec, pid)
-            new_rows.extend(rows)
             log.info("  [%d/%d] %s: %d gaps", i, len(todo), pid, len(rows))
         except Exception as e:
             log.error("  [%d/%d] %s FAILED: %s", i, len(todo), pid, e)
+            rows = []
+        if rows:
+            accumulated = pd.concat([accumulated, pd.DataFrame(rows)], ignore_index=True)
+            # Flush after every paper so a kill keeps work.
+            accumulated.to_csv(out_tsv, sep="\t", index=False)
         if sleep_between:
             time.sleep(sleep_between)
 
-    new_df = pd.DataFrame(new_rows)
-    if out_tsv.exists() and resume:
-        existing = pd.read_csv(out_tsv, sep="\t")
-        df = pd.concat([existing, new_df], ignore_index=True)
-    else:
-        df = new_df
-
-    # Post-process: dedupe + min thresholds
-    df = df[df["gap_sentence"].str.len() >= MIN_GAP_LEN]
+    # Final post-process: dedupe + min thresholds
+    df = accumulated.copy()
+    df = df[df["gap_sentence"].astype(str).str.len() >= MIN_GAP_LEN]
     df = df[df["confidence"] >= MIN_CONFIDENCE]
     df = df.drop_duplicates(subset=["id", "gap_sentence"]).reset_index(drop=True)
-
-    out_tsv.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(out_tsv, sep="\t", index=False)
     log.info("Wrote %d gaps to %s", len(df), out_tsv)
     return df

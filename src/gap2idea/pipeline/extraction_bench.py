@@ -265,7 +265,7 @@ def run_pipeline(out_dir: Path, paper_texts_jsonl: Path, skip_llm: bool) -> tupl
     if not skip_llm:
         from gap2idea.pipeline.openai_gaps import extract_gaps
         gaps_path = out_dir / "gaps.tsv"
-        extract_gaps(sections_path, gaps_path, resume=False)
+        extract_gaps(sections_path, gaps_path, resume=True)
     return sections_path, gaps_path
 
 

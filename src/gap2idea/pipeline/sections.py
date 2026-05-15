@@ -53,6 +53,19 @@ MIN_BODY_CHARS = 200
 WINDOW_WORDS = 900
 MAX_SECTIONS_PER_PAPER = 2
 
+# A section whose body is dominated by dot-leaders / whitespace / digits is
+# almost always a LaTeX table-of-contents entry, not the real section.
+# Reject any candidate where this ratio exceeds MAX_NOISE_FRAC.
+TOC_NOISE_RE = re.compile(r"[\s.…·\-_]")
+MAX_TOC_NOISE_FRAC = 0.45
+
+
+def _is_toc_noise(body: str) -> bool:
+    if not body:
+        return True
+    noise = sum(1 for c in body if TOC_NOISE_RE.match(c))
+    return noise / len(body) > MAX_TOC_NOISE_FRAC
+
 
 def _cut_before_references(text: str) -> str:
     m = REF_RE.search(text)
@@ -68,7 +81,7 @@ def _structured_sections(text: str) -> list[dict]:
         title = m.group("title").strip()
         nxt = headings[i + 1].start() if i + 1 < len(headings) else len(text)
         body = text[m.end() : nxt].strip()
-        if len(body) < MIN_BODY_CHARS:
+        if len(body) < MIN_BODY_CHARS or _is_toc_noise(body):
             continue
         if LIMITATION_HEAD_RE.search(title):
             found.append({"section_type": "limitations", "heading": title, "section_text": body})
