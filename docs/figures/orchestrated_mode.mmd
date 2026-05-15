@@ -2,10 +2,16 @@
 %% Reflects pipeline/orchestrator.py + pipeline/agents.py on master
 
 flowchart TD
-    IN["theme evidence<br/>cluster gaps, paper metadata<br/>methods.tsv optional"] --> SYN
+    IN1["theme evidence<br/>cluster gaps"]
+    IN2["paper metadata"]
+    IN3["methods.tsv<br/>optional"]
+
+    IN1 --> SYN
+    IN2 --> SYN
+    IN3 --> SYN
 
     subgraph LOOP["per-pair or per-cluster loop"]
-        SYN["Synthesiser agent<br/>OpenRouter, strict JSON"]
+        SYN["Synthesiser agent"]
         SYN -->|"draft idea"| CR
         CR["Critic agent"]
         CR -->|"tool calls"| TOOLS
@@ -28,11 +34,17 @@ flowchart TD
         J3["Judge C<br/>e.g. Gemini"]
     end
 
-    J1 --> AGG["aggregate scores<br/>plus inter-judge agreement"]
-    J2 --> AGG
-    J3 --> AGG
+    J1 --> AGG1
+    J2 --> AGG1
+    J3 --> AGG1
 
-    AGG --> OUT["artifacts/<br/>ideas.tsv  flat row, mode=orchestrated<br/>ideas_full.jsonl  prompt, critiques, panel<br/>idea_eval.tsv  panel-judged scores"]
+    AGG1["aggregate scores"]
+    AGG2["inter-judge agreement"]
+    AGG1 --> AGG2
+
+    AGG2 --> OUT1["ideas.tsv<br/>flat row, mode=orchestrated"]
+    AGG2 --> OUT2["ideas_full.jsonl<br/>prompt, critiques, panel"]
+    AGG2 --> OUT3["idea_eval.tsv<br/>panel-judged scores"]
 
     classDef agent fill:#e7f0ff,stroke:#2b5fa6,color:#0e2c52;
     classDef tool fill:#fff7e0,stroke:#aa7700,color:#553300;
@@ -40,5 +52,5 @@ flowchart TD
     classDef decision fill:#fdf,stroke:#a3a,color:#222;
     class SYN,CR,J1,J2,J3 agent;
     class T1,T2,T3 tool;
-    class IN,FINAL,OUT,AGG artifact;
+    class IN1,IN2,IN3,FINAL,AGG1,AGG2,OUT1,OUT2,OUT3 artifact;
     class REV decision;
