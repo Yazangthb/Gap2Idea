@@ -19,9 +19,11 @@ from gap2idea.utils import get_logger
 log = get_logger(__name__)
 
 DEFAULT_VARIANTS = [
-    ("v1",  Path("data/bench")),
-    ("v2a", Path("data/bench_v2a")),
-    ("v2b", Path("data/bench_v2b")),
+    ("v1 N=10",   Path("data/bench")),
+    ("v2a N=10",  Path("data/bench_v2a")),
+    ("v2b N=10",  Path("data/bench_v2b")),
+    ("v2a N=100", Path("data/bench_n100_v2a")),
+    ("v2b N=100", Path("data/bench_n100")),
 ]
 
 
