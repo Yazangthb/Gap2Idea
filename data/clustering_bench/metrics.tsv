@@ -1,0 +1,145 @@
+clusterer	embedder	extra	metric	value
+kmeans	all-MiniLM-L6-v2	k=5	n_clusters	5.0
+kmeans	all-MiniLM-L6-v2	k=5	n_noise	0.0
+kmeans	all-MiniLM-L6-v2	k=5	silhouette	0.16576211154460907
+kmeans	all-MiniLM-L6-v2	k=5	davies_bouldin	1.392760737872731
+kmeans	all-MiniLM-L6-v2	k=5	calinski_harabasz	1.6040505430499188
+kmeans	all-MiniLM-L6-v2	k=5	npmi	0.866404859505703
+kmeans	all-MiniLM-L6-v2	k=5	bootstrap_mean_ari	0.6263537984533245
+kmeans	all-MiniLM-L6-v2	k=5	bootstrap_std_ari	0.22005975766648694
+kmeans	all-MiniLM-L6-v2	k=5	bootstrap_n_runs	10.0
+agglomerative	all-MiniLM-L6-v2	k=5	n_clusters	5.0
+agglomerative	all-MiniLM-L6-v2	k=5	n_noise	0.0
+agglomerative	all-MiniLM-L6-v2	k=5	silhouette	0.15497784316539764
+agglomerative	all-MiniLM-L6-v2	k=5	davies_bouldin	1.144515614402005
+agglomerative	all-MiniLM-L6-v2	k=5	calinski_harabasz	1.5632609352820745
+agglomerative	all-MiniLM-L6-v2	k=5	npmi	0.9043212934360196
+agglomerative	all-MiniLM-L6-v2	k=5	bootstrap_mean_ari	0.863333923878702
+agglomerative	all-MiniLM-L6-v2	k=5	bootstrap_std_ari	0.2268243851159753
+agglomerative	all-MiniLM-L6-v2	k=5	bootstrap_n_runs	10.0
+hdbscan	all-MiniLM-L6-v2	min_cluster_size=2	n_clusters	2.0
+hdbscan	all-MiniLM-L6-v2	min_cluster_size=2	n_noise	6.0
+hdbscan	all-MiniLM-L6-v2	min_cluster_size=2	silhouette	0.06944858282804489
+hdbscan	all-MiniLM-L6-v2	min_cluster_size=2	davies_bouldin	1.5319138913561248
+hdbscan	all-MiniLM-L6-v2	min_cluster_size=2	calinski_harabasz	1.182970528448803
+hdbscan	all-MiniLM-L6-v2	min_cluster_size=2	npmi	0.8434123446787549
+hdbscan	all-MiniLM-L6-v2	min_cluster_size=2	bootstrap_mean_ari	0.22518939389592713
+hdbscan	all-MiniLM-L6-v2	min_cluster_size=2	bootstrap_std_ari	0.36074670474116277
+hdbscan	all-MiniLM-L6-v2	min_cluster_size=2	bootstrap_n_runs	10.0
+bertopic	all-MiniLM-L6-v2		n_clusters	2.0
+bertopic	all-MiniLM-L6-v2		n_noise	1.0
+bertopic	all-MiniLM-L6-v2		silhouette	0.12188713252544403
+bertopic	all-MiniLM-L6-v2		davies_bouldin	2.097989385447384
+bertopic	all-MiniLM-L6-v2		calinski_harabasz	1.6990990111238695
+bertopic	all-MiniLM-L6-v2		npmi	0.8629175816962928
+bertopic	all-MiniLM-L6-v2		bootstrap_mean_ari	0.43918066687500873
+bertopic	all-MiniLM-L6-v2		bootstrap_std_ari	0.3434810446374973
+bertopic	all-MiniLM-L6-v2		bootstrap_n_runs	10.0
+kmeans	all-mpnet-base-v2	k=4	n_clusters	4.0
+kmeans	all-mpnet-base-v2	k=4	n_noise	0.0
+kmeans	all-mpnet-base-v2	k=4	silhouette	0.17322947084903717
+kmeans	all-mpnet-base-v2	k=4	davies_bouldin	1.3835932500262391
+kmeans	all-mpnet-base-v2	k=4	calinski_harabasz	1.6738453088383558
+kmeans	all-mpnet-base-v2	k=4	npmi	0.8949449790956718
+kmeans	all-mpnet-base-v2	k=4	bootstrap_mean_ari	0.7469746765102802
+kmeans	all-mpnet-base-v2	k=4	bootstrap_std_ari	0.3260929129904482
+kmeans	all-mpnet-base-v2	k=4	bootstrap_n_runs	10.0
+agglomerative	all-mpnet-base-v2	k=4	n_clusters	4.0
+agglomerative	all-mpnet-base-v2	k=4	n_noise	0.0
+agglomerative	all-mpnet-base-v2	k=4	silhouette	0.17322947084903717
+agglomerative	all-mpnet-base-v2	k=4	davies_bouldin	1.3835932500262391
+agglomerative	all-mpnet-base-v2	k=4	calinski_harabasz	1.6738453088383558
+agglomerative	all-mpnet-base-v2	k=4	npmi	0.8949449790956718
+agglomerative	all-mpnet-base-v2	k=4	bootstrap_mean_ari	0.868803827751196
+agglomerative	all-mpnet-base-v2	k=4	bootstrap_std_ari	0.23765158656367472
+agglomerative	all-mpnet-base-v2	k=4	bootstrap_n_runs	10.0
+hdbscan	all-mpnet-base-v2	min_cluster_size=2	n_clusters	0.0
+hdbscan	all-mpnet-base-v2	min_cluster_size=2	n_noise	11.0
+hdbscan	all-mpnet-base-v2	min_cluster_size=2	silhouette	
+hdbscan	all-mpnet-base-v2	min_cluster_size=2	davies_bouldin	
+hdbscan	all-mpnet-base-v2	min_cluster_size=2	calinski_harabasz	
+hdbscan	all-mpnet-base-v2	min_cluster_size=2	npmi	
+hdbscan	all-mpnet-base-v2	min_cluster_size=2	bootstrap_mean_ari	0.5
+hdbscan	all-mpnet-base-v2	min_cluster_size=2	bootstrap_std_ari	0.5
+hdbscan	all-mpnet-base-v2	min_cluster_size=2	bootstrap_n_runs	10.0
+bertopic	all-mpnet-base-v2		n_clusters	3.0
+bertopic	all-mpnet-base-v2		n_noise	0.0
+bertopic	all-mpnet-base-v2		silhouette	0.16015663743019104
+bertopic	all-mpnet-base-v2		davies_bouldin	1.7478659061344237
+bertopic	all-mpnet-base-v2		calinski_harabasz	1.777331894391824
+bertopic	all-mpnet-base-v2		npmi	0.9157268689413627
+bertopic	all-mpnet-base-v2		bootstrap_mean_ari	0.6227786703852249
+bertopic	all-mpnet-base-v2		bootstrap_std_ari	0.2658047677950544
+bertopic	all-mpnet-base-v2		bootstrap_n_runs	10.0
+kmeans	intfloat/e5-base-v2	k=3	n_clusters	3.0
+kmeans	intfloat/e5-base-v2	k=3	n_noise	0.0
+kmeans	intfloat/e5-base-v2	k=3	silhouette	0.1121864765882492
+kmeans	intfloat/e5-base-v2	k=3	davies_bouldin	1.8958777463230636
+kmeans	intfloat/e5-base-v2	k=3	calinski_harabasz	1.614874936690833
+kmeans	intfloat/e5-base-v2	k=3	npmi	0.8683351384473714
+kmeans	intfloat/e5-base-v2	k=3	bootstrap_mean_ari	0.4613170886303843
+kmeans	intfloat/e5-base-v2	k=3	bootstrap_std_ari	0.25266108913992713
+kmeans	intfloat/e5-base-v2	k=3	bootstrap_n_runs	10.0
+agglomerative	intfloat/e5-base-v2	k=3	n_clusters	3.0
+agglomerative	intfloat/e5-base-v2	k=3	n_noise	0.0
+agglomerative	intfloat/e5-base-v2	k=3	silhouette	0.1121864765882492
+agglomerative	intfloat/e5-base-v2	k=3	davies_bouldin	1.8958777463230636
+agglomerative	intfloat/e5-base-v2	k=3	calinski_harabasz	1.614874936690833
+agglomerative	intfloat/e5-base-v2	k=3	npmi	0.8683351384473714
+agglomerative	intfloat/e5-base-v2	k=3	bootstrap_mean_ari	0.5320698391099747
+agglomerative	intfloat/e5-base-v2	k=3	bootstrap_std_ari	0.26055061763048715
+agglomerative	intfloat/e5-base-v2	k=3	bootstrap_n_runs	10.0
+hdbscan	intfloat/e5-base-v2	min_cluster_size=2	n_clusters	0.0
+hdbscan	intfloat/e5-base-v2	min_cluster_size=2	n_noise	11.0
+hdbscan	intfloat/e5-base-v2	min_cluster_size=2	silhouette	
+hdbscan	intfloat/e5-base-v2	min_cluster_size=2	davies_bouldin	
+hdbscan	intfloat/e5-base-v2	min_cluster_size=2	calinski_harabasz	
+hdbscan	intfloat/e5-base-v2	min_cluster_size=2	npmi	
+hdbscan	intfloat/e5-base-v2	min_cluster_size=2	bootstrap_mean_ari	0.7
+hdbscan	intfloat/e5-base-v2	min_cluster_size=2	bootstrap_std_ari	0.45825756949558394
+hdbscan	intfloat/e5-base-v2	min_cluster_size=2	bootstrap_n_runs	10.0
+bertopic	intfloat/e5-base-v2		n_clusters	2.0
+bertopic	intfloat/e5-base-v2		n_noise	0.0
+bertopic	intfloat/e5-base-v2		silhouette	0.11410389095544815
+bertopic	intfloat/e5-base-v2		davies_bouldin	2.1906108089352867
+bertopic	intfloat/e5-base-v2		calinski_harabasz	1.6864088366671905
+bertopic	intfloat/e5-base-v2		npmi	0.8152369744515022
+bertopic	intfloat/e5-base-v2		bootstrap_mean_ari	0.1894739176680924
+bertopic	intfloat/e5-base-v2		bootstrap_std_ari	0.2898351473942246
+bertopic	intfloat/e5-base-v2		bootstrap_n_runs	10.0
+kmeans	BAAI/bge-small-en-v1.5	k=2	n_clusters	2.0
+kmeans	BAAI/bge-small-en-v1.5	k=2	n_noise	0.0
+kmeans	BAAI/bge-small-en-v1.5	k=2	silhouette	0.16169115900993347
+kmeans	BAAI/bge-small-en-v1.5	k=2	davies_bouldin	2.054702481992103
+kmeans	BAAI/bge-small-en-v1.5	k=2	calinski_harabasz	2.092463062883615
+kmeans	BAAI/bge-small-en-v1.5	k=2	npmi	0.8788813274097247
+kmeans	BAAI/bge-small-en-v1.5	k=2	bootstrap_mean_ari	0.2963073778624636
+kmeans	BAAI/bge-small-en-v1.5	k=2	bootstrap_std_ari	0.18985708806099566
+kmeans	BAAI/bge-small-en-v1.5	k=2	bootstrap_n_runs	10.0
+agglomerative	BAAI/bge-small-en-v1.5	k=2	n_clusters	2.0
+agglomerative	BAAI/bge-small-en-v1.5	k=2	n_noise	0.0
+agglomerative	BAAI/bge-small-en-v1.5	k=2	silhouette	0.16817998886108398
+agglomerative	BAAI/bge-small-en-v1.5	k=2	davies_bouldin	0.7506138477286151
+agglomerative	BAAI/bge-small-en-v1.5	k=2	calinski_harabasz	1.446253339075429
+agglomerative	BAAI/bge-small-en-v1.5	k=2	npmi	0.8754630439484643
+agglomerative	BAAI/bge-small-en-v1.5	k=2	bootstrap_mean_ari	0.2348858387760257
+agglomerative	BAAI/bge-small-en-v1.5	k=2	bootstrap_std_ari	0.2735730453171347
+agglomerative	BAAI/bge-small-en-v1.5	k=2	bootstrap_n_runs	10.0
+hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=2	n_clusters	0.0
+hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=2	n_noise	11.0
+hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=2	silhouette	
+hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=2	davies_bouldin	
+hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=2	calinski_harabasz	
+hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=2	npmi	
+hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=2	bootstrap_mean_ari	0.8
+hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=2	bootstrap_std_ari	0.4
+hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=2	bootstrap_n_runs	10.0
+bertopic	BAAI/bge-small-en-v1.5		n_clusters	2.0
+bertopic	BAAI/bge-small-en-v1.5		n_noise	1.0
+bertopic	BAAI/bge-small-en-v1.5		silhouette	0.1735398918390274
+bertopic	BAAI/bge-small-en-v1.5		davies_bouldin	1.7674874698331364
+bertopic	BAAI/bge-small-en-v1.5		calinski_harabasz	1.9633672401746185
+bertopic	BAAI/bge-small-en-v1.5		npmi	0.8670061957191425
+bertopic	BAAI/bge-small-en-v1.5		bootstrap_mean_ari	0.1188069260221752
+bertopic	BAAI/bge-small-en-v1.5		bootstrap_std_ari	0.15218077956331352
+bertopic	BAAI/bge-small-en-v1.5		bootstrap_n_runs	10.0
