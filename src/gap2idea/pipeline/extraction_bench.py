@@ -269,6 +269,31 @@ def run_pipeline(out_dir: Path, paper_texts_jsonl: Path, skip_llm: bool) -> tupl
     return sections_path, gaps_path
 
 
+def generate_oracle_gaps(papers: list[BenchPaper], out_dir: Path) -> Path:
+    """Feed the gold section text from unarXive straight into openai_gaps.
+
+    Builds a synthetic sections.jsonl where each row's `section_text` is the
+    paper's gold section (skipping Stage 1 entirely), then runs the same
+    `extract_gaps` LLM call. The output `oracle_gaps.tsv` has the same schema
+    as `gaps.tsv` so downstream code can treat it uniformly.
+    """
+    from gap2idea.pipeline.openai_gaps import extract_gaps
+
+    oracle_sections_path = out_dir / "oracle_sections.jsonl"
+    oracle_gaps_path = out_dir / "oracle_gaps.tsv"
+    with oracle_sections_path.open("w", encoding="utf-8") as f:
+        for bp in papers:
+            f.write(json.dumps({
+                "id": bp.paper_id,
+                "section_type": "gold",
+                "heading": ", ".join(bp.gold_section_titles) or "gold",
+                "section_text": bp.gold_section_text,
+            }, ensure_ascii=False) + "\n")
+    log.info("Generating oracle gaps from gold sections (%d papers)…", len(papers))
+    extract_gaps(oracle_sections_path, oracle_gaps_path, resume=False)
+    return oracle_gaps_path
+
+
 # ----------------------------------------------------------------------
 # 3. Metrics
 # ----------------------------------------------------------------------
@@ -304,8 +329,16 @@ def compute_metrics(
     sections_jsonl: Path,
     gaps_tsv: Path | None,
     taus: tuple[float, ...] = (0.5, 0.6, 0.7),
+    oracle_gaps_tsv: Path | None = None,
 ) -> pd.DataFrame:
-    """Per-paper metric table (long format)."""
+    """Per-paper metric table (long format).
+
+    When `oracle_gaps_tsv` is provided, also report:
+      pipeline_vs_oracle.recovery_at_τ   — fraction of pipeline gaps whose
+                                            max cosine to any oracle gap ≥ τ
+      pipeline_vs_oracle.coverage_at_τ   — fraction of oracle gaps that some
+                                            pipeline gap matches at ≥ τ
+    """
     from sentence_transformers import SentenceTransformer  # type: ignore
 
     sections_df = pd.read_json(sections_jsonl, lines=True, dtype=False)
@@ -314,6 +347,10 @@ def compute_metrics(
     gaps_df = None
     if gaps_tsv is not None and gaps_tsv.exists():
         gaps_df = pd.read_csv(gaps_tsv, sep="\t", dtype={"id": str})
+
+    oracle_df = None
+    if oracle_gaps_tsv is not None and oracle_gaps_tsv.exists():
+        oracle_df = pd.read_csv(oracle_gaps_tsv, sep="\t", dtype={"id": str})
 
     log.info("Loading sentence-transformer (all-MiniLM-L6-v2)…")
     embedder = SentenceTransformer("all-MiniLM-L6-v2")
@@ -383,6 +420,39 @@ def compute_metrics(
                     "value": halluc, "extra": "",
                 })
 
+            # --- pipeline_vs_oracle: gap-to-gap comparison ---
+            if oracle_df is not None:
+                oracle_sents = oracle_df.loc[oracle_df["id"] == pid, "gap_sentence"].astype(str).tolist()
+                oracle_vecs = _embed(embedder, oracle_sents)
+                pipe_to_oracle = _max_cosine(gap_vecs, oracle_vecs)         # per pipeline gap
+                oracle_to_pipe = _max_cosine(oracle_vecs, gap_vecs)         # per oracle gap
+
+                rows.append({
+                    "id": pid, "stage": "pipeline_vs_oracle", "metric": "n_oracle_gaps",
+                    "value": float(len(oracle_sents)), "extra": "",
+                })
+                rows.append({
+                    "id": pid, "stage": "pipeline_vs_oracle", "metric": "mean_sim_pipe_to_oracle",
+                    "value": float(pipe_to_oracle.mean()) if len(pipe_to_oracle) else 0.0,
+                    "extra": "",
+                })
+                rows.append({
+                    "id": pid, "stage": "pipeline_vs_oracle", "metric": "mean_sim_oracle_to_pipe",
+                    "value": float(oracle_to_pipe.mean()) if len(oracle_to_pipe) else 0.0,
+                    "extra": "",
+                })
+                for tau in taus:
+                    rec_p = float((pipe_to_oracle >= tau).mean()) if len(pipe_to_oracle) else 0.0
+                    cov_o = float((oracle_to_pipe >= tau).mean()) if len(oracle_to_pipe) else 0.0
+                    rows.append({
+                        "id": pid, "stage": "pipeline_vs_oracle",
+                        "metric": f"recovery_at_{tau}", "value": rec_p, "extra": "",
+                    })
+                    rows.append({
+                        "id": pid, "stage": "pipeline_vs_oracle",
+                        "metric": f"coverage_at_{tau}", "value": cov_o, "extra": "",
+                    })
+
     return pd.DataFrame(rows)
 
 
@@ -420,6 +490,7 @@ def run_benchmark(
     max_scan: int = 20000,
     use_pdf: bool = False,
     pdf_dir: Path | None = None,
+    oracle: bool = False,
 ) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -436,8 +507,14 @@ def run_benchmark(
     # 2. run pipeline
     sections_path, gaps_path = run_pipeline(out_dir, out_dir / "paper_texts.jsonl", skip_llm=skip_llm)
 
+    # 2b. optional oracle: feed gold section straight to the LLM
+    oracle_gaps_path: Path | None = None
+    if oracle and not skip_llm:
+        oracle_gaps_path = generate_oracle_gaps(papers, out_dir)
+
     # 3. metrics
-    metrics = compute_metrics(papers, sections_path, gaps_path)
+    metrics = compute_metrics(papers, sections_path, gaps_path,
+                              oracle_gaps_tsv=oracle_gaps_path)
     metrics_path = out_dir / "metrics.tsv"
     metrics.to_csv(metrics_path, sep="\t", index=False)
     log.info("Wrote %s", metrics_path)

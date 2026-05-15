@@ -54,6 +54,26 @@ def main(out_md: Path) -> None:
         lines.append(f"| {label} | {c['n_gaps']:.2f} | {c['mean_sim_to_gold']:.3f} | "
                      f"{c['recovery_at_0.6']:.3f} | {c['hallucination_at_0.6']:.3f} |")
 
+    # Stage 2 oracle comparison — only v2b has it (we ran --oracle there)
+    p = Path("data/bench_v2b/metrics.tsv")
+    if p.exists():
+        df = pd.read_csv(p, sep="\t")
+        sub = df[df["stage"] == "pipeline_vs_oracle"]
+        if not sub.empty:
+            lines.append("\n## Pipeline gaps vs Oracle gaps (gold section fed straight to LLM)\n")
+            lines.append("Two systems, same Stage-2 LLM. Oracle skips Stage 1.\n")
+            lines.append("| metric | mean | meaning |")
+            lines.append("|---|---:|---|")
+            for m, meaning in [
+                ("n_oracle_gaps",              "gaps the LLM produces on the gold section"),
+                ("mean_sim_pipe_to_oracle",    "avg cosine: each pipeline gap → closest oracle gap"),
+                ("mean_sim_oracle_to_pipe",    "avg cosine: each oracle gap → closest pipeline gap"),
+                ("recovery_at_0.6",            "fraction of pipeline gaps that match an oracle gap"),
+                ("coverage_at_0.6",            "fraction of oracle gaps the pipeline reproduced"),
+            ]:
+                v = sub[sub["metric"] == m]["value"].mean()
+                lines.append(f"| {m} | {v:.3f} | {meaning} |")
+
     # Per-paper diff between v1 and v2b
     if (Path("data/bench/metrics.tsv").exists()
             and Path("data/bench_v2b/metrics.tsv").exists()):

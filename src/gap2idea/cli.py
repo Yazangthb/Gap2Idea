@@ -276,6 +276,7 @@ def cmd_bench_extraction(args):
         tarball_path=args.tarball,
         max_scan=args.max_scan,
         use_pdf=args.use_pdf,
+        oracle=args.oracle,
     )
 
 
@@ -425,6 +426,9 @@ def main():
                     help="Download arxiv PDFs for the sampled papers and feed the "
                          "style-aware block extractor (PyMuPDF). When omitted, the "
                          "bench feeds unarXive's already-parsed plain text.")
+    be.add_argument("--oracle", action="store_true",
+                    help="Also feed the gold section text directly to openai_gaps "
+                         "and report pipeline_vs_oracle gap-to-gap metrics.")
     be.set_defaults(func=cmd_bench_extraction)
 
     # bench-plots

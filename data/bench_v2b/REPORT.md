@@ -22,13 +22,22 @@ Reference: author-titled `future work` / `limitations` sections from unarXive 20
 |---|---|---:|---:|---:|
 | llm_gap | hallucination_at_0.5 | 0.050 | 0.158 | 10 |
 | llm_gap | hallucination_at_0.6 | 0.150 | 0.337 | 10 |
-| llm_gap | hallucination_at_0.7 | 0.150 | 0.337 | 10 |
-| llm_gap | mean_sim_to_full | 0.917 | 0.159 | 10 |
-| llm_gap | mean_sim_to_gold | 0.739 | 0.245 | 10 |
+| llm_gap | hallucination_at_0.7 | 0.200 | 0.350 | 10 |
+| llm_gap | mean_sim_to_full | 0.897 | 0.163 | 10 |
+| llm_gap | mean_sim_to_gold | 0.757 | 0.228 | 10 |
 | llm_gap | n_gaps | 1.700 | 0.483 | 10 |
 | llm_gap | recovery_at_0.5 | 0.800 | 0.350 | 10 |
-| llm_gap | recovery_at_0.6 | 0.650 | 0.412 | 10 |
+| llm_gap | recovery_at_0.6 | 0.700 | 0.422 | 10 |
 | llm_gap | recovery_at_0.7 | 0.650 | 0.412 | 10 |
+| pipeline_vs_oracle | coverage_at_0.5 | 0.600 | 0.459 | 10 |
+| pipeline_vs_oracle | coverage_at_0.6 | 0.600 | 0.459 | 10 |
+| pipeline_vs_oracle | coverage_at_0.7 | 0.500 | 0.471 | 10 |
+| pipeline_vs_oracle | mean_sim_oracle_to_pipe | 0.700 | 0.296 | 10 |
+| pipeline_vs_oracle | mean_sim_pipe_to_oracle | 0.652 | 0.278 | 10 |
+| pipeline_vs_oracle | n_oracle_gaps | 1.700 | 0.483 | 10 |
+| pipeline_vs_oracle | recovery_at_0.5 | 0.600 | 0.459 | 10 |
+| pipeline_vs_oracle | recovery_at_0.6 | 0.600 | 0.459 | 10 |
+| pipeline_vs_oracle | recovery_at_0.7 | 0.500 | 0.471 | 10 |
 | regex_section | pred_chars | 5411.200 | 3815.419 | 10 |
 | regex_section | rouge1_f | 0.459 | 0.275 | 10 |
 | regex_section | rouge2_f | 0.359 | 0.296 | 10 |
