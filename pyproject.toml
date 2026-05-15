@@ -23,10 +23,14 @@ dependencies = [
   "python-dotenv",
   "requests",
   "tqdm",
+  # Multi-agent / MCP / export
+  "mcp>=1.0",         # Anthropic Model Context Protocol Python SDK
+  "jinja2",           # LaTeX + HTML templating
+  "reportlab",        # Pure-Python PDF generation (no system deps)
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "pytest-cov", "ruff"]
+dev = ["pytest", "pytest-cov", "ruff", "pytest-asyncio"]
 
 [project.scripts]
 gap2idea = "gap2idea.cli:main"
@@ -34,6 +38,13 @@ gap2idea = "gap2idea.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"gap2idea.templates" = ["*.j2"]
+
 [tool.ruff]
 line-length = 110
 target-version = "py310"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

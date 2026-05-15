@@ -1,0 +1,92 @@
+% !TEX TS-program = pdflatex
+% Gap2Idea — auto-generated paper starter from a synthesised research idea.
+% This is NOT an evaluated result. The method, evaluation plan, and
+% expected contribution are LLM-generated drafts intended as a starting
+% point for the author. Treat all claims as hypotheses to be validated.
+
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{microtype}
+
+\hypersetup{colorlinks=true, urlcolor=blue!60!black, linkcolor=black, citecolor=blue!60!black}
+
+\title{ {{ title | escape_tex }} }
+\author{
+  \textit{Auto-generated draft via Gap2Idea}\\
+  {\small Themes: {{ label_a | escape_tex }}{% if label_b %} $\times$ {{ label_b | escape_tex }}{% endif %} }
+}
+\date{ {{ date }} }
+
+\begin{document}
+\maketitle
+
+\begin{tcolorbox}[colback=yellow!8, colframe=yellow!50!orange, sharp corners=south]
+\textbf{Disclaimer.} This document is a \emph{starter template} produced by
+the Gap2Idea pipeline. The method, evaluation plan, and expected
+contribution are LLM-synthesised drafts grounded in the cited evidence
+gaps but \emph{not validated} by experiment, peer review, or even careful
+human inspection. Treat every claim as a hypothesis. Generation mode:
+\texttt{ {{ mode }} }.{% if novelty_score is not none %}\ Estimated novelty
+({{ "%.2f"|format(novelty_score) }}; 1 = no prior work found, 0 = exact
+match): the closest prior work was \emph{ {{ closest_paper_title or "—" }} }
+({{ closest_paper_year or "—" }}).{% endif %}
+\end{tcolorbox}
+
+\begin{abstract}
+{{ research_question }}
+\end{abstract}
+
+\section{Introduction}
+\textit{Author note: expand with literature framing, motivation, and contributions.}
+
+The recurring research gaps motivating this work are summarised below.
+
+\begin{itemize}[leftmargin=*]
+{%- for ev in evidence_used %}
+  \item \textbf{From paper \texttt{ {{ ev.paper_id }} }:} {{ ev.gap_sentence | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\section{Research question}
+{{ research_question | escape_tex }}
+
+\section{Method}
+{{ method_sketch | escape_tex }}
+
+\section{Evaluation plan}
+{{ evaluation_plan | escape_tex }}
+
+\section{Expected contribution}
+{{ expected_contribution | escape_tex }}
+
+\section{Assumptions and risks}
+{{ assumptions_and_risks | escape_tex }}
+
+{% if panel_consensus -%}
+\section*{LLM judge-panel scores}
+\begin{itemize}[leftmargin=*]
+  \item Composite: {{ "%.2f"|format(panel_consensus.composite) }} / 5
+  \item Novelty:   {{ "%.2f"|format(panel_consensus.novelty) }}
+  \item Specificity: {{ "%.2f"|format(panel_consensus.specificity) }}
+  \item Feasibility: {{ "%.2f"|format(panel_consensus.feasibility) }}
+  \item Evidence grounding: {{ "%.2f"|format(panel_consensus.evidence_grounding) }}
+  \item Inter-judge agreement: {{ "%.2f"|format(panel_consensus.agreement) }}
+  \item Judges: {{ panel_consensus.n_judges }}
+\end{itemize}
+{%- endif %}
+
+\section*{Bibliography stub}
+\textit{Author note: replace these arXiv IDs with full BibTeX entries.}
+\begin{itemize}[leftmargin=*]
+{%- for ev in evidence_used %}
+  \item arXiv:\texttt{ {{ ev.paper_id }} } — \url{https://arxiv.org/abs/ {{- ev.paper_id }} }
+{%- endfor %}
+\end{itemize}
+
+\end{document}

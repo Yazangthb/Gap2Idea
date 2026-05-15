@@ -18,7 +18,9 @@ the final thesis numbers — pass --judge-model gpt-4o or similar.
 """
 from __future__ import annotations
 
+import asyncio
 import json
+import statistics
 from pathlib import Path
 
 import pandas as pd
@@ -30,6 +32,13 @@ from gap2idea.utils import get_logger, retry
 log = get_logger(__name__)
 
 JUDGE_MODEL = DEFAULT_JUDGE_MODEL
+
+# Default panel for cross-provider consensus. Override at the call site.
+DEFAULT_JUDGE_PANEL: list[str] = [
+    "anthropic/claude-sonnet-4",
+    "openai/gpt-4o",
+    "google/gemini-2.5-flash",
+]
 
 RUBRIC = """\
 You are a critical research reviewer. Score the proposed research idea on four
@@ -257,3 +266,123 @@ def write_report(eval_df: pd.DataFrame, ideas_df: pd.DataFrame, out_md: Path) ->
     out_md.parent.mkdir(parents=True, exist_ok=True)
     out_md.write_text("\n".join(lines), encoding="utf-8")
     log.info("Wrote report %s", out_md)
+
+
+# ===========================================================================
+# Phase 3: Multi-judge panel
+# ===========================================================================
+
+def _agreement(scores_per_axis: dict[str, list[int]]) -> float:
+    """Mean inter-judge agreement across axes: 1 - (mean of per-axis std / 4).
+    Returns a number in [0, 1]; 1 = perfect agreement, 0 = max disagreement.
+    """
+    stds = []
+    for axis, vs in scores_per_axis.items():
+        if len(vs) >= 2:
+            stds.append(statistics.pstdev(vs))
+    if not stds:
+        return 1.0
+    return max(0.0, 1.0 - (sum(stds) / len(stds)) / 4.0)
+
+
+def _aggregate_panel(panel_results: list[tuple[str, dict]]) -> dict:
+    """Aggregate per-judge scores into a consensus row.
+
+    panel_results: [(judge_model, normalised_scores), ...]
+    """
+    axes = ["novelty", "specificity", "feasibility", "evidence_grounding"]
+    per_axis: dict[str, list[int]] = {a: [] for a in axes}
+    for _, s in panel_results:
+        for a in axes:
+            try:
+                per_axis[a].append(int(s.get(a, 0)))
+            except (TypeError, ValueError):
+                pass
+
+    consensus: dict[str, float] = {}
+    for a in axes:
+        consensus[a] = statistics.mean(per_axis[a]) if per_axis[a] else 0.0
+    consensus["composite"] = statistics.mean(consensus[a] for a in axes)
+    consensus["agreement"] = _agreement(per_axis)
+    consensus["n_judges"] = len(panel_results)
+
+    # Pull a representative critique (longest)
+    critiques = [(s.get("overall_critique", ""), m) for m, s in panel_results]
+    critiques.sort(key=lambda x: -len(x[0]))
+    consensus["consensus_critique"] = critiques[0][0] if critiques else ""
+
+    return consensus
+
+
+def evaluate_ideas_panel(
+    ideas_jsonl: Path,
+    out_tsv: Path,
+    judge_models: list[str] | None = None,
+) -> pd.DataFrame:
+    """Score every idea with a panel of N judges (different providers).
+
+    For each idea x judge we run `_call_judge` -> `_normalise_judge_scores`.
+    The output TSV has consensus columns + per-judge columns (judge_N_*).
+    """
+    judge_models = judge_models or DEFAULT_JUDGE_PANEL
+    log.info("Evaluating with %d-judge panel: %s", len(judge_models), judge_models)
+
+    client = get_llm_client()
+    with open(ideas_jsonl, "r", encoding="utf-8") as f:
+        records = [json.loads(line) for line in f if line.strip()]
+    log.info("  %d ideas to score", len(records))
+
+    rows: list[dict] = []
+    for i, rec in enumerate(records, 1):
+        idea = rec.get("idea", {})
+        panel_results: list[tuple[str, dict]] = []
+        for judge_model in judge_models:
+            try:
+                raw = _call_judge(client, idea, model=judge_model)
+                scores = _normalise_judge_scores(raw)
+                panel_results.append((judge_model, scores))
+            except Exception as e:
+                log.error("Judge %s failed on idea %d: %s", judge_model, i, e)
+                continue
+
+        if not panel_results:
+            log.error("All judges failed on idea %d, skipping", i)
+            continue
+
+        consensus = _aggregate_panel(panel_results)
+        overlap = _evidence_overlap(rec)
+
+        row = {
+            "title": idea.get("title", ""),
+            "cluster_a": rec.get("pair", {}).get("cluster_a"),
+            "cluster_b": rec.get("pair", {}).get("cluster_b"),
+            "mode": rec.get("mode", "bridge"),
+            "novelty": consensus["novelty"],
+            "specificity": consensus["specificity"],
+            "feasibility": consensus["feasibility"],
+            "evidence_grounding": consensus["evidence_grounding"],
+            "composite": consensus["composite"],
+            "agreement": consensus["agreement"],
+            "n_judges": consensus["n_judges"],
+            "consensus_critique": consensus["consensus_critique"],
+            "evidence_overlap": overlap,
+            "s2_novelty_score": (rec.get("novelty") or {}).get("novelty_score"),
+        }
+        # Per-judge columns
+        for judge_model, scores in panel_results:
+            slug = judge_model.replace("/", "__")
+            for axis in ["novelty", "specificity", "feasibility", "evidence_grounding"]:
+                row[f"{slug}__{axis}"] = scores.get(axis)
+
+        rows.append(row)
+        log.info(
+            "  [%d/%d] %s  consensus=%.2f  agreement=%.2f  judges=%d",
+            i, len(records), idea.get("title", "")[:50],
+            consensus["composite"], consensus["agreement"], consensus["n_judges"],
+        )
+
+    df = pd.DataFrame(rows)
+    out_tsv.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(out_tsv, sep="\t", index=False)
+    log.info("Wrote panel evaluation to %s", out_tsv)
+    return df

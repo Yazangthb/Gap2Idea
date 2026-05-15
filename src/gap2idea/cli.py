@@ -13,7 +13,12 @@ Stages:
                     cluster_summary, cluster_pairs}.* using bridge-scoring
   fetch-metadata    enrich every paper ID with Semantic Scholar metadata
   generate-ideas    cluster_pairs + gaps -> artifacts/{ideas.tsv, ideas_full.jsonl}
+                    --mode {bridge,within,method-gap,orchestrated}
+                    --use-critic            (single critique-revise loop)
   evaluate-ideas    ideas_full.jsonl -> artifacts/idea_eval.tsv + report.md
+                    --judges <comma-list>   (multi-judge panel)
+  export-ideas      ideas.tsv -> artifacts/exports/*.tex or library.pdf
+  serve-mcp         expose corpus + ops as an MCP server (stdio)
   run-all           orchestrate every stage from `extract-text` onwards
 """
 from __future__ import annotations
@@ -182,11 +187,51 @@ def cmd_fetch_metadata(args):
 # ---------- generate-ideas ----------
 
 def cmd_generate_ideas(args):
+    import asyncio
+
     paths = get_paths(args.root)
     gaps = read_tsv(paths.artifacts / "gaps_with_clusters.tsv")
     labels = read_tsv(paths.artifacts / "cluster_labels.tsv")
     out_tsv = paths.artifacts / "ideas.tsv"
     out_jsonl = paths.artifacts / "ideas_full.jsonl"
+
+    # Orchestrated mode: full multi-agent (critic + revise + judge panel)
+    if args.mode == "orchestrated":
+        from gap2idea.pipeline.orchestrator import orchestrate_batch
+
+        gap_emb_path = paths.artifacts / "gap_embeddings.npy"
+        gap_embeddings = np.load(gap_emb_path) if gap_emb_path.exists() else None
+        methods_tsv = paths.data / "methods.tsv"
+        methods = read_tsv(methods_tsv) if methods_tsv.exists() else None
+
+        method_embeddings = None
+        if methods is not None and not methods.empty:
+            meth_emb_path = paths.artifacts / "method_embeddings.npy"
+            if meth_emb_path.exists() and len(np.load(meth_emb_path)) == len(methods):
+                method_embeddings = np.load(meth_emb_path)
+            else:
+                from gap2idea.pipeline.theme_mining import embed_sentences
+                method_embeddings = embed_sentences(methods["method_sentence"].tolist())
+                np.save(meth_emb_path, method_embeddings)
+
+        pairs = read_tsv(paths.artifacts / "cluster_pairs.tsv") if args.orchestrate_mode == "bridge" else None
+
+        asyncio.run(orchestrate_batch(
+            gaps=gaps, cluster_labels=labels,
+            out_tsv=out_tsv, out_jsonl=out_jsonl,
+            mode=args.orchestrate_mode,
+            pairs=pairs,
+            gap_embeddings=gap_embeddings,
+            methods=methods, method_embeddings=method_embeddings,
+            n=args.n_pairs, model=args.model,
+            critic_model=args.critic_model,
+            judge_panel=args.judges.split(",") if args.judges else None,
+            max_critic_iterations=args.max_critic_iter,
+            k_evidence=args.k_evidence, k_methods=args.k_methods,
+            sim_low=args.sim_low, sim_high=args.sim_high,
+            check_novelty=not args.no_novelty,
+        ))
+        return
 
     if args.mode == "bridge":
         from gap2idea.pipeline.openai_ideas import generate_ideas_batch
@@ -246,20 +291,120 @@ def cmd_generate_ideas(args):
 # ---------- evaluate-ideas ----------
 
 def cmd_evaluate_ideas(args):
-    from gap2idea.pipeline.evaluation import evaluate_ideas, write_report
+    from gap2idea.pipeline.evaluation import (
+        evaluate_ideas, evaluate_ideas_panel, write_report,
+    )
 
     paths = get_paths(args.root)
-    eval_df = evaluate_ideas(
-        ideas_jsonl=paths.artifacts / "ideas_full.jsonl",
-        out_tsv=paths.artifacts / "idea_eval.tsv",
-        judge_model=args.judge_model,
-    )
+
+    if args.judges:
+        judge_models = [m.strip() for m in args.judges.split(",") if m.strip()]
+        eval_df = evaluate_ideas_panel(
+            ideas_jsonl=paths.artifacts / "ideas_full.jsonl",
+            out_tsv=paths.artifacts / "idea_eval.tsv",
+            judge_models=judge_models,
+        )
+    else:
+        eval_df = evaluate_ideas(
+            ideas_jsonl=paths.artifacts / "ideas_full.jsonl",
+            out_tsv=paths.artifacts / "idea_eval.tsv",
+            judge_model=args.judge_model,
+        )
+
     ideas_df = pd.DataFrame()
     try:
         ideas_df = read_tsv(paths.artifacts / "ideas.tsv")
     except Exception:
         pass
     write_report(eval_df, ideas_df, paths.artifacts / "evaluation_report.md")
+
+
+# ---------- export-ideas ----------
+
+def cmd_export_ideas(args):
+    from gap2idea.pipeline.export import (
+        BUNDLED_TEMPLATES,
+        LatexCompilationError,
+        LatexCompilerNotFound,
+        compile_latex_to_pdf,
+        idea_to_latex,
+        write_idea_latex,
+        write_ideas_pdf,
+    )
+
+    paths = get_paths(args.root)
+    ideas = read_tsv(paths.artifacts / "ideas.tsv")
+    if ideas.empty:
+        raise SystemExit("No ideas in artifacts/ideas.tsv. Generate some first.")
+
+    out_dir = paths.artifacts / "exports"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Resolve template choice
+    template_source: str | None = None
+    if args.template_file:
+        path = Path(args.template_file)
+        if not path.exists():
+            raise SystemExit(f"--template-file not found: {path}")
+        template_source = path.read_text(encoding="utf-8")
+        log.info("Using custom template from %s", path)
+    elif args.template not in BUNDLED_TEMPLATES:
+        raise SystemExit(
+            f"--template must be one of {list(BUNDLED_TEMPLATES)} (or use --template-file)."
+        )
+
+    def _stem(i: int, row) -> str:
+        safe = "".join(c if c.isalnum() else "_" for c in str(row.get("title", "")))[:40]
+        return f"{i:03d}_{safe}" if safe else f"idea_{i:03d}"
+
+    if args.format == "library-pdf":
+        # Single consolidated reportlab-based PDF summary (no LaTeX needed).
+        out = out_dir / "idea_library.pdf"
+        write_ideas_pdf(ideas, out)
+        log.info("Wrote %s", out)
+        return
+
+    if args.format == "latex":
+        for i, row in ideas.iterrows():
+            out_path = out_dir / f"{_stem(i, row)}.tex"
+            write_idea_latex(
+                row.to_dict(), out_path,
+                template=args.template, template_source=template_source,
+            )
+        log.info("Wrote %d .tex files to %s (template=%s)", len(ideas), out_dir,
+                 "custom" if template_source else args.template)
+        return
+
+    if args.format == "rendered-pdf":
+        # Compile every idea's LaTeX to PDF (tectonic / pdflatex required).
+        ok = fail = 0
+        for i, row in ideas.iterrows():
+            stem = _stem(i, row)
+            tex = idea_to_latex(
+                row.to_dict(),
+                template=args.template, template_source=template_source,
+            )
+            (out_dir / f"{stem}.tex").write_text(tex, encoding="utf-8")
+            try:
+                pdf = compile_latex_to_pdf(tex)
+                (out_dir / f"{stem}.pdf").write_bytes(pdf)
+                ok += 1
+            except LatexCompilerNotFound as e:
+                raise SystemExit(str(e))
+            except LatexCompilationError as e:
+                log.error("[%d] compile failed for %s: %s", i, stem, str(e)[:200])
+                fail += 1
+        log.info("Rendered %d PDFs (failed %d) into %s", ok, fail, out_dir)
+        return
+
+    raise SystemExit(f"unknown --format: {args.format}")
+
+
+# ---------- serve-mcp ----------
+
+def cmd_serve_mcp(args):
+    from gap2idea.mcp_server import run_stdio
+    run_stdio(args.root)
 
 
 # ---------- run-all ----------
@@ -355,11 +500,12 @@ def main():
     # generate-ideas
     gi = sub.add_parser("generate-ideas", help="Generate research ideas with novelty check")
     gi.add_argument(
-        "--mode", choices=["bridge", "within", "method-gap"], default="bridge",
+        "--mode", choices=["bridge", "within", "method-gap", "orchestrated"], default="bridge",
         help=(
             "bridge: pair gap-clusters in the bridge-score sweet spot (default). "
             "within: synthesise one idea per cluster from its gaps. "
-            "method-gap: apply retrieved methods (data/methods.tsv) to each gap-cluster."
+            "method-gap: apply retrieved methods (data/methods.tsv) to each gap-cluster. "
+            "orchestrated: full multi-agent pipeline (synthesiser + critic-revise + judge panel)."
         ),
     )
     gi.add_argument("--n-pairs", type=int, default=10,
@@ -375,13 +521,54 @@ def main():
                     help="(method-gap only) lower bound of method <-> gap-cluster similarity sweet spot")
     gi.add_argument("--sim-high", type=float, default=0.70,
                     help="(method-gap only) upper bound of method <-> gap-cluster similarity sweet spot")
+    # Orchestrated-mode extras
+    gi.add_argument("--orchestrate-mode", choices=["bridge", "within", "method-gap"], default="within",
+                    help="(orchestrated only) underlying generation mode wrapped by the agentic loop")
+    gi.add_argument("--critic-model", default="anthropic/claude-sonnet-4",
+                    help="(orchestrated only) model used by the critic agent")
+    gi.add_argument("--judges", default="",
+                    help="(orchestrated only) comma-separated judge models. Empty = use default panel.")
+    gi.add_argument("--max-critic-iter", type=int, default=2,
+                    help="(orchestrated only) max critique-revise iterations per idea")
     gi.set_defaults(func=cmd_generate_ideas)
 
     # evaluate-ideas
-    ev = sub.add_parser("evaluate-ideas", help="LLM-as-judge rubric scoring")
+    ev = sub.add_parser("evaluate-ideas", help="LLM-as-judge rubric scoring (single judge or panel)")
     ev.add_argument("--judge-model", default="anthropic/claude-sonnet-4",
-                    help="OpenRouter model slug for the judge. Default differs from generator to mitigate self-eval bias.")
+                    help="Single judge model. Used when --judges is empty.")
+    ev.add_argument("--judges", default="",
+                    help="Comma-separated panel of judge models for multi-judge consensus, "
+                         "e.g. 'anthropic/claude-sonnet-4,openai/gpt-4o,google/gemini-2.5-flash'. "
+                         "When set, --judge-model is ignored and panel aggregation is used.")
     ev.set_defaults(func=cmd_evaluate_ideas)
+
+    # export-ideas
+    ex = sub.add_parser(
+        "export-ideas",
+        help="Render the idea library to LaTeX, server-rendered PDFs, or a consolidated summary PDF.",
+    )
+    ex.add_argument(
+        "--format", choices=["latex", "rendered-pdf", "library-pdf"], default="library-pdf",
+        help=(
+            "latex:         one .tex per idea using the chosen template. "
+            "rendered-pdf:  compile each .tex to PDF via tectonic/pdflatex. "
+            "library-pdf:   single consolidated reportlab-based summary (no LaTeX needed)."
+        ),
+    )
+    ex.add_argument(
+        "--template", default="standard",
+        help="Bundled template name: minimal | standard | ieee.",
+    )
+    ex.add_argument(
+        "--template-file", default="",
+        help="Path to a custom .tex.j2 template (Jinja2). Overrides --template.",
+    )
+    ex.set_defaults(func=cmd_export_ideas)
+
+    # serve-mcp
+    mc = sub.add_parser("serve-mcp", help="Run the Model Context Protocol server (stdio transport) "
+                                          "so Claude Desktop / Cursor / etc. can query the corpus")
+    mc.set_defaults(func=cmd_serve_mcp)
 
     # run-all
     ra = sub.add_parser("run-all", help="Run extract-text through evaluate-ideas")

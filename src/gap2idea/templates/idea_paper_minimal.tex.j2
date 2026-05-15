@@ -1,0 +1,66 @@
+% !TEX TS-program = pdflatex
+% Gap2Idea — minimal article template. Compiles with stock TeX Live or tectonic;
+% no exotic packages, no two-column layout. Best when you want a clean draft
+% you'll restructure later.
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,urlcolor=blue!60!black,linkcolor=black}
+
+\title{ {{ title | escape_tex }} }
+\author{ \textit{Auto-generated draft \textemdash{} Gap2Idea} }
+\date{ {{ date }} }
+
+\begin{document}
+\maketitle
+
+\noindent\textit{This is a Gap2Idea starter draft, not a peer-reviewed result.
+Generation mode: \texttt{ {{ mode }} }.{% if novelty_score is not none %}\ Estimated novelty {{ "%.2f"|format(novelty_score) }}.{% endif %}}
+
+\section*{Abstract}
+{{ research_question | escape_tex }}
+
+\section{Background and motivating gaps}
+This work is motivated by recurring research gaps across multiple papers
+({{ label_a | escape_tex }}{% if label_b %} $\times$ {{ label_b | escape_tex }}{% endif %}):
+\begin{itemize}[leftmargin=*]
+{%- for ev in evidence_used %}
+  \item \textbf{[{{ ev.paper_id }}]} {{ ev.gap_sentence | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\section{Method}
+{{ method_sketch | escape_tex }}
+
+\section{Evaluation}
+{{ evaluation_plan | escape_tex }}
+
+\section{Contribution}
+{{ expected_contribution | escape_tex }}
+
+\section{Assumptions and risks}
+{{ assumptions_and_risks | escape_tex }}
+
+{% if panel_consensus %}
+\section*{Automated review scores}
+Composite {{ "%.2f"|format(panel_consensus.composite) }} / 5 across
+{{ panel_consensus.n_judges }} independent judges
+(novelty {{ "%.2f"|format(panel_consensus.novelty) }},
+specificity {{ "%.2f"|format(panel_consensus.specificity) }},
+feasibility {{ "%.2f"|format(panel_consensus.feasibility) }},
+grounding {{ "%.2f"|format(panel_consensus.evidence_grounding) }};
+inter-judge agreement {{ "%.2f"|format(panel_consensus.agreement) }}).
+{% endif %}
+
+\section*{Source papers}
+\begin{itemize}[leftmargin=*]
+{%- for ev in evidence_used %}
+  \item arXiv:\texttt{ {{ ev.paper_id }} } \textemdash{} \url{https://arxiv.org/abs/{{ ev.paper_id }}}
+{%- endfor %}
+\end{itemize}
+
+\end{document}

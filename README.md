@@ -2,15 +2,24 @@
 
 **Gap2Idea** is an end-to-end pipeline that mines *research gaps* (Limitations, Future Work, Open Problems) from academic papers, clusters them into themes, and synthesises **novel, evidence-grounded research ideas** by bridging pairs of themes. Every generated idea is fact-checked against Semantic Scholar for novelty and scored by an LLM-as-judge rubric.
 
-## What's new (v0.2)
+## What's new (v0.3)
 
-- **Bridge-score pair selection** — replaces naive max-cosine pairing. Picks themes that are *related but distinct* (peaks at moderate similarity, penalises overlap), which is empirically what produces novel ideas rather than redundant restatements.
-- **LLM cluster labels** — short, human-readable theme names (e.g. "Long-Tail Generalisation in Vision Models") instead of TF-IDF keyword stuffing.
-- **Diverse evidence selection** — token-Jaccard-aware sampling so the LLM sees varied gap statements per cluster, not 3 paraphrases of the same gap.
-- **Novelty check via Semantic Scholar** — each generated idea's title + research-question is searched against S2; we report `novelty_score = 1 - max_cosine(idea, closest_S2_hit)`.
-- **LLM-as-judge evaluation** — every idea is scored on a 1-5 Likert rubric: *novelty / specificity / feasibility / evidence-grounding* with rationales.
-- **End-to-end CLI** — `gap2idea run-all` orchestrates extract-text → sections → gaps → themes → S2 metadata → ideas → evaluation in one command.
-- **Multi-tab Streamlit dashboard** — overview, theme explorer, bridge inspector, on-demand generation, ideas gallery with filters/exports, evaluation dashboard.
+**Multi-agent + MCP + exports.** Everything from v0.2 plus:
+
+- **Three idea-generation modes** — `bridge` (pair gap-clusters), `within` (synthesise one idea per cluster), `method-gap` (apply retrieved method-claims to a cluster).
+- **Method library** — new `extract-methods` stage mines method-claim sentences from abstracts/intros, embedded for sweet-spot retrieval against gap clusters.
+- **Multi-agent orchestrator** — `--mode orchestrated`: synthesiser drafts → critic agent inspects (with tool access for novelty + evidence overlap) → revisor edits → up to N iterations → judge panel scores.
+- **Critic agent** — separate Anthropic-by-default model that picks specific weaknesses on novelty/specificity/feasibility/evidence-grounding and proposes concrete fixes.
+- **Multi-judge panel** — `evaluate-ideas --judges <comma-list>` runs 3+ models in parallel and reports per-axis consensus + inter-judge agreement (1 − mean std / 4).
+- **MCP server** — `gap2idea serve-mcp` exposes the corpus + ops over the Model Context Protocol so Claude Desktop / Cursor / any MCP client can query your literature directly.
+- **LaTeX paper export** — per-idea `.tex` file with a starter template (title, RQ, method, evaluation, contribution, risks, bibliography stub, disclaimer banner). Compile with `pdflatex`.
+- **PDF library export** — one consolidated PDF summary of the whole idea library, rendered with ReportLab (pure Python, no system deps).
+
+**From v0.2, still here:**
+
+- **Bridge-score pair selection** — peaks at moderate similarity, penalises paper-overlap, rewards gap-type complementarity.
+- **LLM cluster labels** + **diverse evidence picking** + **S2 novelty check**.
+- **Multi-tab Streamlit dashboard** with sidebar nav, per-idea LaTeX export, library PDF/TSV/MD export.
 
 ## Architecture
 
@@ -208,9 +217,84 @@ gap2idea generate-ideas --mode within --n-pairs 10
 # Apply retrieved methods to each gap-cluster (requires extract-methods first)
 gap2idea extract-methods
 gap2idea generate-ideas --mode method-gap --n-pairs 10 --sim-low 0.30 --sim-high 0.70
+
+# Multi-agent: synthesiser + critic-revise loop + judge panel
+gap2idea generate-ideas --mode orchestrated \
+    --orchestrate-mode within \
+    --critic-model anthropic/claude-sonnet-4 \
+    --judges "anthropic/claude-sonnet-4,openai/gpt-4o,google/gemini-2.5-flash" \
+    --max-critic-iter 2 --n-pairs 5
 ```
 
-Output schema is unified (`mode` column distinguishes them). You can run all three sequentially and compare in the **Ideas** tab of the Streamlit app.
+Output schema is unified (`mode` column distinguishes them). You can run all four sequentially and compare in the **Ideas** tab of the Streamlit app.
+
+### Multi-judge evaluation
+
+```bash
+gap2idea evaluate-ideas \
+    --judges "anthropic/claude-sonnet-4,openai/gpt-4o,google/gemini-2.5-flash"
+```
+
+Produces `artifacts/idea_eval.tsv` with consensus scores per axis + per-judge breakdown + an `agreement` score in [0, 1] indicating inter-judge consistency.
+
+### Idea export
+
+```bash
+# One .tex per idea using a bundled template (minimal | standard | ieee)
+gap2idea export-ideas --format latex --template standard
+
+# Server-render every .tex to PDF (requires tectonic or pdflatex on PATH)
+gap2idea export-ideas --format rendered-pdf --template ieee
+
+# Single consolidated PDF summary — no LaTeX install needed (reportlab)
+gap2idea export-ideas --format library-pdf
+
+# Use your own template (Jinja2 LaTeX)
+gap2idea export-ideas --format latex --template-file path/to/mine.tex.j2
+```
+
+**Three bundled templates**:
+
+| Name | Best for | Notes |
+|---|---|---|
+| `minimal`  | A clean draft you'll restructure later | Stock `article` class, no exotic packages |
+| `standard` *(default)* | NeurIPS-style starter | Single column, tcolorbox disclaimer |
+| `ieee`     | IEEE conference look | Two-column via `multicol`, fits in stock TeX Live |
+
+**Custom templates** — pass a Jinja2 `.tex.j2` file via `--template-file`. The
+template receives every variable in `gap2idea.pipeline.export.TEMPLATE_VARIABLES`
+plus an `escape_tex` filter (use it on every user-supplied string field).
+
+**Streamlit equivalents** — the Ideas page has a template dropdown + a "Custom (upload)" file uploader, plus a per-card "📄 Download .tex" and "📑 Render & download PDF" (the latter only enabled when a LaTeX compiler is found).
+
+### Optional: install a LaTeX compiler
+
+The `rendered-pdf` format and the Streamlit "Render & download PDF" button both need either:
+- **[Tectonic](https://tectonic-typesetting.github.io/)** — recommended, single binary, auto-fetches packages on first compile.
+- **TeX Live / MiKTeX** — full suite, includes `pdflatex`.
+
+If neither is installed, you can still use `--format latex` to produce `.tex` files and compile them yourself or via Overleaf.
+
+### MCP server (Claude Desktop integration)
+
+```bash
+gap2idea serve-mcp                     # runs on stdio
+```
+
+Then add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "gap2idea": {
+      "command": "gap2idea",
+      "args": ["serve-mcp", "--root", "C:/path/to/Gap2Idea"]
+    }
+  }
+}
+```
+
+Claude can now call `list_themes`, `get_theme`, `get_evidence`, `retrieve_methods`, `search_prior_art`, `score_novelty`, `check_evidence_overlap`, `list_ideas`, `get_idea`, and `save_idea` against your corpus.
 
 ## Project layout
 
@@ -218,20 +302,31 @@ Output schema is unified (`mode` column distinguishes them). You can run all thr
 src/gap2idea/
   cli.py                       # all subcommands
   config.py io.py utils.py
+  tools.py                     # NEW: shared agentic tool surface (also used by MCP)
+  mcp_server.py                # NEW: Model Context Protocol server (stdio)
   pipeline/
     arxiv_select.py            # S2 search + arxiv snapshot + PDF download
     pdf_text.py                # PyMuPDF
     sections.py                # Limitations / Future Work finder
-    openai_gaps.py             # gap extraction (OpenAI strict JSON)
+    openai_gaps.py             # gap extraction (LLM strict JSON)
+    openai_methods.py          # NEW: method-claim extraction
     theme_mining.py            # embed/cluster/label + bridge-score pairs
     semantic_scholar.py        # S2 Graph API client w/ 429 retry
-    openai_ideas.py            # idea synthesis + novelty check
-    evaluation.py              # LLM-as-judge + report writer
+    openai_ideas.py            # idea synthesis (3 modes) + novelty check
+    agents.py                  # NEW: critic + revisor + critique-revise loop
+    orchestrator.py            # NEW: full multi-agent end-to-end pipeline
+    evaluation.py              # LLM-as-judge + multi-judge panel + report
+    export.py                  # NEW: LaTeX + PDF rendering
+    llm.py                     # OpenRouter client factory + JSON parser
+  templates/
+    idea_paper.tex.j2          # NEW: per-idea LaTeX starter template
   app/
-    streamlit_app.py           # tabbed dashboard
+    streamlit_app.py           # tabbed dashboard (with export buttons)
 artifacts/                     # generated outputs (gitignored)
+  exports/                     # NEW: LaTeX + PDF deliverables
 data/                          # raw inputs (gitignored)
 notebooks/                     # exploratory work
+tests/                         # 100+ unit + mocked-integration tests
 ```
 
 ## Requirements

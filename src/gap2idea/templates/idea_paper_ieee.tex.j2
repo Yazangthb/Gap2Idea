@@ -1,0 +1,85 @@
+% !TEX TS-program = pdflatex
+% Gap2Idea — IEEE conference style starter. Falls back to article class
+% if IEEEtran is not installed, so it always compiles on a fresh tectonic
+% or TeX Live install.
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,margin=0.75in]{geometry}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true,urlcolor=blue!60!black,linkcolor=black,citecolor=blue!60!black}
+\titleformat*{\section}{\large\bfseries\sffamily}
+\titleformat*{\subsection}{\normalsize\bfseries\sffamily}
+
+\title{\sffamily\bfseries\Large {{ title | escape_tex }} }
+\author{
+  \textit{Auto-generated draft via Gap2Idea}\\
+  \small Themes: {{ label_a | escape_tex }}{% if label_b %} $\times$ {{ label_b | escape_tex }}{% endif %}
+}
+\date{ {{ date }} }
+
+\begin{document}
+\maketitle
+
+\noindent\fbox{\parbox{0.97\textwidth}{\small
+\textbf{Disclaimer.}\ \ This document is an LLM-generated starter draft.
+The method, evaluation, and contribution sections are hypotheses to be
+validated, not findings. Mode: \texttt{ {{ mode }} }.{% if novelty_score is not none %}\ Estimated novelty {{ "%.2f"|format(novelty_score) }}.{% endif %}}}
+
+\begin{multicols}{2}
+
+\begin{abstract}
+\noindent {{ research_question | escape_tex }}
+\end{abstract}
+
+\section{Introduction}
+We synthesise an actionable research direction by combining recurring
+gap statements across multiple papers
+({{ label_a | escape_tex }}{% if label_b %} $\times$ {{ label_b | escape_tex }}{% endif %}).
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+{%- for ev in evidence_used %}
+  \item [{{ ev.paper_id }}] {{ ev.gap_sentence | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\section{Proposed method}
+{{ method_sketch | escape_tex }}
+
+\section{Evaluation plan}
+{{ evaluation_plan | escape_tex }}
+
+\section{Expected contribution}
+{{ expected_contribution | escape_tex }}
+
+\section{Assumptions and risks}
+{{ assumptions_and_risks | escape_tex }}
+
+{% if panel_consensus %}
+\section{LLM judge-panel scores}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+  \item Composite: {{ "%.2f"|format(panel_consensus.composite) }} / 5
+  \item Novelty: {{ "%.2f"|format(panel_consensus.novelty) }}
+  \item Specificity: {{ "%.2f"|format(panel_consensus.specificity) }}
+  \item Feasibility: {{ "%.2f"|format(panel_consensus.feasibility) }}
+  \item Grounding: {{ "%.2f"|format(panel_consensus.evidence_grounding) }}
+  \item Agreement: {{ "%.2f"|format(panel_consensus.agreement) }}
+  \item Judges: {{ panel_consensus.n_judges }}
+\end{itemize}
+{% endif %}
+
+\section{Source bibliography}
+\textit{Replace these arXiv IDs with full BibTeX entries:}
+\begin{itemize}[leftmargin=*,itemsep=1pt,fontsize=\footnotesize]
+{%- for ev in evidence_used %}
+  \item arXiv:\texttt{ {{ ev.paper_id }} } \textemdash{} \url{https://arxiv.org/abs/{{ ev.paper_id }}}
+{%- endfor %}
+\end{itemize}
+
+\end{multicols}
+\end{document}
