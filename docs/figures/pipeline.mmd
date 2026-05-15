@@ -1,0 +1,36 @@
+%% Gap2Idea — end-to-end pipeline (thesis Figure 1)
+%% Render: mmdc -i pipeline.mmd -o pipeline.pdf  (or paste into mermaid.live)
+
+flowchart TD
+    A[arXiv metadata snapshot<br/>or Semantic Scholar query] -->|select-papers| B[papers_subset.tsv]
+    B -->|download-pdfs| C[(data/pdfs/*.pdf)]
+    C -->|extract-text<br/>PyMuPDF| D[paper_texts.jsonl]
+    D -->|extract-sections<br/>regex + fallbacks| E[sections_extracted.jsonl]
+    D -->|extract-methods<br/>LLM, strict JSON| M[methods.tsv]
+    E -->|extract-gaps<br/>LLM, strict JSON, verbatim| F[gaps.tsv]
+    F -->|theme-mine<br/>embed · cluster · label| G["artifacts/<br/>gap_embeddings.npy<br/>cluster_labels.tsv<br/>cluster_pairs.tsv"]
+
+    G -->|generate-ideas| H{mode}
+    M --> H
+    F --> H
+
+    H -->|bridge| I1[pair-based ideas]
+    H -->|within| I2[per-cluster ideas]
+    H -->|method-gap| I3[method × gap ideas]
+    H -->|orchestrated| I4[multi-agent ideas]
+
+    I1 --> J[ideas.tsv<br/>ideas_full.jsonl]
+    I2 --> J
+    I3 --> J
+    I4 --> J
+
+    J -->|S2 novelty check| J
+    J -->|evaluate-ideas<br/>LLM-as-judge | K[idea_eval.tsv<br/>evaluation_report.md]
+    J -->|export-ideas| L[exports/*.tex<br/>library.pdf]
+
+    classDef artifact fill:#eef,stroke:#669,color:#223;
+    classDef stage fill:#fff,stroke:#444,color:#111;
+    classDef decision fill:#fdf,stroke:#a3a,color:#222;
+    class B,C,D,E,F,G,J,K,L,M,I1,I2,I3,I4 artifact;
+    class A stage;
+    class H decision;

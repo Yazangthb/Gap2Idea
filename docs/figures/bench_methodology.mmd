@@ -1,0 +1,31 @@
+%% Gap2Idea — extraction-quality benchmark (thesis Figure 4, optional inset)
+%% Pipeline-vs-gold against unarXive 2023 author-titled sections.
+
+flowchart LR
+    UA["unarXive 2023 open subset<br/>(.tar.xz, Zenodo 7752615)"] -->|stream + filter<br/>FW / Limitations<br/>/ Open Problems titles| SAMP[N=10 papers]
+
+    SAMP -->|body_text concat| FULL[full_text]
+    SAMP -->|labeled sections concat| GOLD["gold_section_text<br/>(reference)"]
+
+    FULL -->|sections.py| PRED1["predicted section span"]
+    PRED1 -->|openai_gaps.py| PRED2["LLM gap sentences"]
+
+    GOLD --> R1{ROUGE-1/2/L}
+    PRED1 --> R1
+
+    GOLD --> R2{embedding cosine}
+    FULL --> R2
+    PRED2 --> R2
+
+    R1 --> M1[regex_section · ROUGE]
+    R2 --> M2[llm_gap · recovery_at_τ<br/>llm_gap · hallucination_at_τ]
+
+    M1 --> OUT[metrics.tsv · REPORT.md · plots/]
+    M2 --> OUT
+
+    classDef artifact fill:#eef,stroke:#669,color:#223;
+    classDef stage fill:#fff,stroke:#444,color:#111;
+    classDef metric fill:#e9f7e9,stroke:#487048,color:#223;
+    class UA,SAMP,FULL,GOLD,PRED1,PRED2,OUT artifact;
+    class R1,R2 stage;
+    class M1,M2 metric;
