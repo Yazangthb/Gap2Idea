@@ -2,37 +2,37 @@
 %% Reflects pipeline/orchestrator.py + pipeline/agents.py on master
 
 flowchart TD
-    IN[theme evidence<br/>cluster gaps · paper metadata<br/>methods.tsv ·optional·] --> SYN
+    IN["theme evidence<br/>cluster gaps, paper metadata<br/>methods.tsv optional"] --> SYN
 
-    subgraph LOOP[per-pair / per-cluster loop]
-        SYN[Synthesiser agent<br/>OpenRouter · strict JSON]
-        SYN -->|draft idea| CR
-        CR[Critic agent]
-        CR -->|tool calls| TOOLS
-        CR -->|critique + revision targets| REV{accept?}
-        REV -- no, revise --> SYN
-        REV -- yes --> FINAL[final idea draft]
+    subgraph LOOP["per-pair or per-cluster loop"]
+        SYN["Synthesiser agent<br/>OpenRouter, strict JSON"]
+        SYN -->|"draft idea"| CR
+        CR["Critic agent"]
+        CR -->|"tool calls"| TOOLS
+        CR -->|"critique and revision targets"| REV{"accept?"}
+        REV -->|"no, revise"| SYN
+        REV -->|"yes"| FINAL["final idea draft"]
     end
 
-    subgraph TOOLS[tool surface]
-        T1[S2 novelty search]
-        T2[evidence-overlap check]
-        T3[corpus retrieval]
+    subgraph TOOLS["tool surface"]
+        T1["S2 novelty search"]
+        T2["evidence-overlap check"]
+        T3["corpus retrieval"]
     end
 
     FINAL --> JP
 
-    subgraph JP[JudgePanel · N independent judges]
-        J1[Judge A<br/>e.g. Claude Sonnet]
-        J2[Judge B<br/>e.g. GPT-4o]
-        J3[Judge C<br/>e.g. Gemini]
+    subgraph JP["JudgePanel: N independent judges"]
+        J1["Judge A<br/>e.g. Claude Sonnet"]
+        J2["Judge B<br/>e.g. GPT-4o"]
+        J3["Judge C<br/>e.g. Gemini"]
     end
 
-    J1 --> AGG[aggregate scores<br/>+ inter-judge agreement]
+    J1 --> AGG["aggregate scores<br/>plus inter-judge agreement"]
     J2 --> AGG
     J3 --> AGG
 
-    AGG --> OUT["artifacts/<br/>ideas.tsv  (flat row, mode=orchestrated)<br/>ideas_full.jsonl  (prompt + critiques + panel)<br/>idea_eval.tsv  (panel-judged scores)"]
+    AGG --> OUT["artifacts/<br/>ideas.tsv  flat row, mode=orchestrated<br/>ideas_full.jsonl  prompt, critiques, panel<br/>idea_eval.tsv  panel-judged scores"]
 
     classDef agent fill:#e7f0ff,stroke:#2b5fa6,color:#0e2c52;
     classDef tool fill:#fff7e0,stroke:#aa7700,color:#553300;

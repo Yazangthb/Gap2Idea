@@ -2,25 +2,25 @@
 %% Pipeline-vs-gold against unarXive 2023 author-titled sections.
 
 flowchart LR
-    UA["unarXive 2023 open subset<br/>(.tar.xz, Zenodo 7752615)"] -->|stream + filter<br/>FW / Limitations<br/>/ Open Problems titles| SAMP[N=10 papers]
+    UA["unarXive 2023 open subset<br/>tar.xz, Zenodo 7752615"] -->|"stream and filter<br/>FW, Limitations,<br/>Open Problems titles"| SAMP["N=10 papers"]
 
-    SAMP -->|body_text concat| FULL[full_text]
-    SAMP -->|labeled sections concat| GOLD["gold_section_text<br/>(reference)"]
+    SAMP -->|"body_text concat"| FULL["full_text"]
+    SAMP -->|"labeled sections concat"| GOLD["gold_section_text<br/>reference"]
 
-    FULL -->|sections.py| PRED1["predicted section span"]
-    PRED1 -->|openai_gaps.py| PRED2["LLM gap sentences"]
+    FULL -->|"sections.py"| PRED1["predicted section span"]
+    PRED1 -->|"openai_gaps.py"| PRED2["LLM gap sentences"]
 
-    GOLD --> R1{ROUGE-1/2/L}
+    GOLD --> R1{"ROUGE-1, ROUGE-2, ROUGE-L"}
     PRED1 --> R1
 
-    GOLD --> R2{embedding cosine}
+    GOLD --> R2{"embedding cosine"}
     FULL --> R2
     PRED2 --> R2
 
-    R1 --> M1[regex_section · ROUGE]
-    R2 --> M2[llm_gap · recovery_at_τ<br/>llm_gap · hallucination_at_τ]
+    R1 --> M1["regex_section ROUGE"]
+    R2 --> M2["llm_gap recovery_at_tau<br/>llm_gap hallucination_at_tau"]
 
-    M1 --> OUT[metrics.tsv · REPORT.md · plots/]
+    M1 --> OUT["metrics.tsv, REPORT.md, plots/"]
     M2 --> OUT
 
     classDef artifact fill:#eef,stroke:#669,color:#223;

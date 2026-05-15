@@ -2,29 +2,29 @@
 %% Composition: bridge_score = peak(s, 0.45) × (1 − overlap) × (0.5 + 0.5 × complementarity)
 
 flowchart LR
-    subgraph IN[Inputs per cluster pair]
-        S["cosine sim s ∈ 0..1<br/>between cluster centroids"]
-        O["paper overlap j ∈ 0..1<br/>Jaccard of source paper IDs"]
-        T["type complementarity c ∈ 0..1<br/>L1 dist of gap-type distributions"]
+    subgraph IN["Inputs per cluster pair"]
+        S["cosine sim s in 0..1<br/>between cluster centroids"]
+        O["paper overlap j in 0..1<br/>Jaccard of source paper IDs"]
+        T["type complementarity c in 0..1<br/>L1 dist of gap-type distributions"]
     end
 
-    S -->|peak(s, 0.45)<br/>triangular, max at s=0.45| P1["semantic-fit term ∈ 0..1"]
-    O -->|1 − j| P2["distinctness term ∈ 0..1"]
-    T -->|0.5 + 0.5·c| P3["type-mix term ∈ 0.5..1"]
+    S -->|"peak of s at 0.45<br/>triangular, max at s = 0.45"| P1["semantic-fit term in 0..1"]
+    O -->|"1 minus j"| P2["distinctness term in 0..1"]
+    T -->|"0.5 + 0.5 times c"| P3["type-mix term in 0.5..1"]
 
-    P1 --> X((×))
+    P1 --> X(("multiply"))
     P2 --> X
     P3 --> X
-    X --> B[bridge_score ∈ 0..1]
+    X --> B["bridge_score in 0..1"]
 
-    B -->|top-K by score| K[selected cluster pairs<br/>feed generate-ideas --mode bridge]
+    B -->|"top-K by score"| K["selected cluster pairs<br/>feed generate-ideas --mode bridge"]
 
-    subgraph WHY[Design intent]
+    subgraph WHY["Design intent"]
         direction TB
-        W1[peak penalises s≈0<br/>nonsense pairing]:::why
-        W2[peak penalises s≈1<br/>redundant restatement]:::why
-        W3[overlap penalty kills<br/>same-papers pairs]:::why
-        W4[type term rewards<br/>limitation × future-work]:::why
+        W1["peak penalises s near 0<br/>nonsense pairing"]
+        W2["peak penalises s near 1<br/>redundant restatement"]
+        W3["overlap penalty kills<br/>same-papers pairs"]
+        W4["type term rewards<br/>limitation x future-work"]
     end
 
     classDef why fill:#fff7e0,stroke:#aa7700,color:#553300;
@@ -32,3 +32,4 @@ flowchart LR
     classDef term fill:#e9f7e9,stroke:#487048;
     class S,O,T input;
     class P1,P2,P3 term;
+    class W1,W2,W3,W4 why;
