@@ -288,6 +288,14 @@ def cmd_bench_plots(args):
     make_all_plots(bench_dir)
 
 
+def cmd_bench_ablation_plots(args):
+    from gap2idea.pipeline.extraction_bench_ablation_plots import make_all_plots
+
+    paths = get_paths(args.root)
+    out_dir = Path(args.out_dir) if args.out_dir else (paths.data / "bench_ablation_plots")
+    make_all_plots(out_dir=out_dir)
+
+
 # ---------- run-all ----------
 
 def cmd_run_all(args):
@@ -436,6 +444,13 @@ def main():
                         help="Regenerate plots from an existing data/bench/metrics.tsv")
     bp.add_argument("--bench-dir", default=None)
     bp.set_defaults(func=cmd_bench_plots)
+
+    # bench-ablation-plots
+    bap = sub.add_parser("bench-ablation-plots",
+                         help="Cross-variant ablation plots (v1/v2a/v2b + oracle)")
+    bap.add_argument("--out-dir", default=None,
+                     help="Default: <root>/data/bench_ablation_plots")
+    bap.set_defaults(func=cmd_bench_ablation_plots)
 
     # run-all
     ra = sub.add_parser("run-all", help="Run extract-text through evaluate-ideas")
