@@ -95,8 +95,10 @@ artifacts/
 !data/bench/*.md
 !data/bench/plots/
 !data/bench/plots/*.png
+# but never the 4.8GB unarXive tarball or other raw inputs
 data/bench/raw/
 
+# Clustering-quality benchmark outputs (same whitelist pattern)
 !data/clustering_bench/*.tsv
 !data/clustering_bench/*.md
 !data/clustering_bench/plots/

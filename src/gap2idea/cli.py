@@ -445,7 +445,7 @@ def cmd_serve_mcp(args):
     run_stdio(args.root)
 
 
-# ---------- bench-clustering ----------
+# ---------- bench-clustering (from origin/experments/clustering_quality) ----------
 
 def cmd_bench_clustering(args):
     from gap2idea.pipeline.clustering_bench import run_benchmark
@@ -468,6 +468,30 @@ def cmd_bench_clustering_plots(args):
 
     paths = get_paths(args.root)
     bench_dir = Path(args.bench_dir) if args.bench_dir else (paths.data / "clustering_bench")
+    make_all_plots(bench_dir)
+
+
+# ---------- bench-extraction (from origin/experments/extraction_quality) ----------
+
+def cmd_bench_extraction(args):
+    from gap2idea.pipeline.extraction_bench import run_benchmark
+
+    paths = get_paths(args.root)
+    out_dir = Path(args.out_dir) if args.out_dir else (paths.data / "bench")
+    run_benchmark(
+        n=args.n,
+        out_dir=out_dir,
+        skip_llm=args.skip_llm,
+        tarball_path=args.tarball,
+        max_scan=args.max_scan,
+    )
+
+
+def cmd_bench_plots(args):
+    from gap2idea.pipeline.extraction_bench_plots import make_all_plots
+
+    paths = get_paths(args.root)
+    bench_dir = Path(args.bench_dir) if args.bench_dir else (paths.data / "bench")
     make_all_plots(bench_dir)
 
 
@@ -654,7 +678,7 @@ def main():
                                           "so Claude Desktop / Cursor / etc. can query the corpus")
     mc.set_defaults(func=cmd_serve_mcp)
 
-    # bench-clustering
+    # bench-clustering (from origin/experments/clustering_quality)
     bc = sub.add_parser("bench-clustering",
                         help="Benchmark clustering quality (clusterer x embedder grid)")
     bc.add_argument("--gaps-tsv", default="data/bench/gaps.tsv",
@@ -672,6 +696,27 @@ def main():
                          help="Regenerate plots from clustering_bench/metrics.tsv")
     bcp.add_argument("--bench-dir", default=None)
     bcp.set_defaults(func=cmd_bench_clustering_plots)
+
+    # bench-extraction (from origin/experments/extraction_quality)
+    be = sub.add_parser(
+        "bench-extraction",
+        help="Benchmark our extraction pipeline against unarXive's labeled sections",
+    )
+    be.add_argument("--n", type=int, default=10)
+    be.add_argument("--out-dir", default=None, help="Default: <root>/data/bench")
+    be.add_argument("--tarball", default="data/bench/raw/unarxive_open_subset.tar.xz",
+                    help="Path to the unarXive open-subset .tar.xz from Zenodo record 7752615")
+    be.add_argument("--max-scan", type=int, default=20000,
+                    help="Cap on records scanned before giving up")
+    be.add_argument("--skip-llm", action="store_true",
+                    help="Evaluate the regex stage only; skip openai_gaps (no API key needed)")
+    be.set_defaults(func=cmd_bench_extraction)
+
+    # bench-plots (extraction benchmark plots)
+    bp = sub.add_parser("bench-plots",
+                        help="Regenerate plots from an existing data/bench/metrics.tsv")
+    bp.add_argument("--bench-dir", default=None)
+    bp.set_defaults(func=cmd_bench_plots)
 
     # run-all
     ra = sub.add_parser("run-all", help="Run extract-text through evaluate-ideas")
