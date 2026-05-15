@@ -319,7 +319,13 @@ def cmd_bench_clustering_plots(args):
 
     paths = get_paths(args.root)
     bench_dir = Path(args.bench_dir) if args.bench_dir else (paths.data / "clustering_bench")
-    make_all_plots(bench_dir)
+    gaps_tsv = Path(args.gaps_tsv) if args.gaps_tsv else None
+    showcase = None
+    if args.showcase:
+        c, e = args.showcase.split(":", 1)
+        showcase = (c.strip(), e.strip())
+    make_all_plots(bench_dir, gaps_tsv=gaps_tsv, showcase=showcase,
+                   grid_embedder=args.grid_embedder)
 
 
 # ---------- run-all ----------
@@ -492,8 +498,16 @@ def main():
     bc.set_defaults(func=cmd_bench_clustering)
 
     bcp = sub.add_parser("bench-clustering-plots",
-                         help="Regenerate clustering plots")
+                         help="Regenerate clustering plots (optionally with 2-D cluster scatters)")
     bcp.add_argument("--bench-dir", default=None)
+    bcp.add_argument("--gaps-tsv", default=None,
+                     help="If set, also draw 2-D cluster scatters using these gap sentences.")
+    bcp.add_argument("--showcase", default=None,
+                     help="`<clusterer>:<embedder>` to highlight as the single big plot. "
+                          "Default: agglomerative:BAAI/bge-small-en-v1.5")
+    bcp.add_argument("--grid-embedder", default=None,
+                     help="Embedder to use for the all-clusterers comparison grid. "
+                          "Default: same as showcase embedder.")
     bcp.set_defaults(func=cmd_bench_clustering_plots)
 
     # run-all
