@@ -34,6 +34,9 @@ def _heatmap(ax, pivot: pd.DataFrame, title: str, cmap: str = "viridis", fmt: st
 
 
 def plot_heatmap_grid(metrics: pd.DataFrame, out_path: Path) -> None:
+    """Heatmap grid. Per-metric, drop rows that contain any NaN — those
+    clusterers don't have meaningful values to compare across embedders
+    (e.g. raw HDBSCAN returns 0 clusters → silhouette undefined)."""
     import matplotlib.pyplot as plt
 
     panels = [
@@ -49,6 +52,12 @@ def plot_heatmap_grid(metrics: pd.DataFrame, out_path: Path) -> None:
             ax.set_visible(False)
             continue
         pivot = sub.pivot(index="clusterer", columns="embedder", values="value")
+        # Drop rows where every cell is NaN, then rows where any cell is NaN
+        pivot = pivot.dropna(how="any")
+        if pivot.empty:
+            ax.set_title(f"{metric} (all rows NaN)")
+            ax.axis("off")
+            continue
         _heatmap(ax, pivot, metric, cmap=cmap, fmt=fmt)
     fig.suptitle("Clustering benchmark — metric heatmaps (rows: clusterer, cols: embedder)")
     fig.tight_layout()
