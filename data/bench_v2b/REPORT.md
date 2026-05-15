@@ -20,6 +20,15 @@ Reference: author-titled `future work` / `limitations` sections from unarXive 20
 
 | stage | metric | mean | std | n |
 |---|---|---:|---:|---:|
+| llm_gap | hallucination_at_0.5 | 0.050 | 0.158 | 10 |
+| llm_gap | hallucination_at_0.6 | 0.150 | 0.337 | 10 |
+| llm_gap | hallucination_at_0.7 | 0.150 | 0.337 | 10 |
+| llm_gap | mean_sim_to_full | 0.917 | 0.159 | 10 |
+| llm_gap | mean_sim_to_gold | 0.739 | 0.245 | 10 |
+| llm_gap | n_gaps | 1.700 | 0.483 | 10 |
+| llm_gap | recovery_at_0.5 | 0.800 | 0.350 | 10 |
+| llm_gap | recovery_at_0.6 | 0.650 | 0.412 | 10 |
+| llm_gap | recovery_at_0.7 | 0.650 | 0.412 | 10 |
 | regex_section | pred_chars | 5411.200 | 3815.419 | 10 |
 | regex_section | rouge1_f | 0.459 | 0.275 | 10 |
 | regex_section | rouge2_f | 0.359 | 0.296 | 10 |

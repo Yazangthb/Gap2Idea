@@ -27,12 +27,32 @@ def main(out_md: Path) -> None:
 
     lines: list[str] = []
     lines.append("# Extraction-bench ablation (N=10 papers, unarXive gold)\n")
-    lines.append("Regex stage only. Lower-is-better → none here (all higher-is-better).\n")
-    lines.append("\n| variant | rouge1_f | rouge2_f | rougeL_f |")
+    lines.append("\n## Stage 1 — regex section parser (higher is better)\n")
+    lines.append("| variant | rouge1_f | rouge2_f | rougeL_f |")
     lines.append("|---|---:|---:|---:|")
     for _, label in LABELS:
         c = cells[label]
         lines.append(f"| {label} | {c['rouge1_f']:.3f} | {c['rouge2_f']:.3f} | {c['rougeL_f']:.3f} |")
+
+    # Stage 2 — LLM gap extraction. Pull from same metrics.tsv files if rows exist.
+    llm_metrics = ["n_gaps", "mean_sim_to_gold", "recovery_at_0.6", "hallucination_at_0.6"]
+    llm_cells: dict[str, dict[str, float]] = {}
+    for path, label in LABELS:
+        p = Path(path) / "metrics.tsv"
+        if not p.exists():
+            llm_cells[label] = {m: float("nan") for m in llm_metrics}
+            continue
+        df = pd.read_csv(p, sep="\t")
+        sub = df[df["stage"] == "llm_gap"]
+        llm_cells[label] = {m: float(sub[sub["metric"] == m]["value"].mean()) for m in llm_metrics}
+
+    lines.append("\n## Stage 2 — LLM gap extraction (recovery higher better, hallucination lower better)\n")
+    lines.append("| variant | n_gaps | mean_sim_to_gold | recovery@0.6 | hallucination@0.6 |")
+    lines.append("|---|---:|---:|---:|---:|")
+    for _, label in LABELS:
+        c = llm_cells[label]
+        lines.append(f"| {label} | {c['n_gaps']:.2f} | {c['mean_sim_to_gold']:.3f} | "
+                     f"{c['recovery_at_0.6']:.3f} | {c['hallucination_at_0.6']:.3f} |")
 
     # Per-paper diff between v1 and v2b
     if (Path("data/bench/metrics.tsv").exists()

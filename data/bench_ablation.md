@@ -1,13 +1,21 @@
 # Extraction-bench ablation (N=10 papers, unarXive gold)
 
-Regex stage only. Lower-is-better → none here (all higher-is-better).
 
+## Stage 1 — regex section parser (higher is better)
 
 | variant | rouge1_f | rouge2_f | rougeL_f |
 |---|---:|---:|---:|
 | v1 (text + old regex) | 0.246 | 0.125 | 0.158 |
 | v2a (text + new vocab) | 0.246 | 0.125 | 0.158 |
 | v2b (PDF + style + new vocab) | 0.459 | 0.359 | 0.411 |
+
+## Stage 2 — LLM gap extraction (recovery higher better, hallucination lower better)
+
+| variant | n_gaps | mean_sim_to_gold | recovery@0.6 | hallucination@0.6 |
+|---|---:|---:|---:|---:|
+| v1 (text + old regex) | 1.10 | 0.515 | 0.400 | 0.100 |
+| v2a (text + new vocab) | nan | nan | nan | nan |
+| v2b (PDF + style + new vocab) | 1.70 | 0.739 | 0.650 | 0.150 |
 
 ## Per-paper rouge1_f, v1 → v2b
 
