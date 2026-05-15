@@ -35,6 +35,24 @@ For the production theme-mining stage on a corpus this size:
   produces lower-coherence topics on average.
 - Don't reach for HDBSCAN/BERTopic without fixing the cluster-size floor.
 
+## What dimensionality reduction (UMAP) buys us
+
+Adding `hdbscan_umap` (UMAP → 10-d, cosine; then HDBSCAN with `min_cluster_size=5`)
+populates all 4 cells where raw HDBSCAN failed:
+
+| metric | raw HDBSCAN | hdbscan_umap | note |
+|---|---|---|---|
+| n_clusters | 0 (all 4 embedders) | **6–7 (all 4 embedders)** | curse-of-dimensionality solved |
+| silhouette | n/a | 0.07–0.13 | comparable to agglomerative |
+| NPMI | n/a | **0.47–0.52** | competitive with agglomerative |
+| bootstrap ARI | n/a | 0.06–0.23 | lower — UMAP is stochastic across resamples |
+
+Reading: density-based methods are not unusable on 384–768d embeddings, they
+just need a dim-reduction step. After UMAP, HDBSCAN produces more clusters
+(6–7) than the partition-based methods (2–4) — these are finer-grained topics.
+The tradeoff is stability: UMAP's stochasticity makes per-bootstrap clusters
+different enough that mean ARI drops vs the deterministic partition methods.
+
 ## Honest limitations of this run
 
 - N=161 is still small; ARI std (0.06–0.46) is wide, so single-run rankings

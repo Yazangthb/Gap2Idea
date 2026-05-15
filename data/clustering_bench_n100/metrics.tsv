@@ -26,6 +26,15 @@ hdbscan	all-MiniLM-L6-v2	min_cluster_size=5	npmi
 hdbscan	all-MiniLM-L6-v2	min_cluster_size=5	bootstrap_mean_ari	0.2
 hdbscan	all-MiniLM-L6-v2	min_cluster_size=5	bootstrap_std_ari	0.4000000000000001
 hdbscan	all-MiniLM-L6-v2	min_cluster_size=5	bootstrap_n_runs	10.0
+hdbscan_umap	all-MiniLM-L6-v2	umap_dim=10 min_cluster_size=5	n_clusters	7.0
+hdbscan_umap	all-MiniLM-L6-v2	umap_dim=10 min_cluster_size=5	n_noise	76.0
+hdbscan_umap	all-MiniLM-L6-v2	umap_dim=10 min_cluster_size=5	silhouette	0.12372060865163803
+hdbscan_umap	all-MiniLM-L6-v2	umap_dim=10 min_cluster_size=5	davies_bouldin	2.646418578296457
+hdbscan_umap	all-MiniLM-L6-v2	umap_dim=10 min_cluster_size=5	calinski_harabasz	3.8997029064914397
+hdbscan_umap	all-MiniLM-L6-v2	umap_dim=10 min_cluster_size=5	npmi	0.5176457079657941
+hdbscan_umap	all-MiniLM-L6-v2	umap_dim=10 min_cluster_size=5	bootstrap_mean_ari	0.115454624329465
+hdbscan_umap	all-MiniLM-L6-v2	umap_dim=10 min_cluster_size=5	bootstrap_std_ari	0.05930803283315082
+hdbscan_umap	all-MiniLM-L6-v2	umap_dim=10 min_cluster_size=5	bootstrap_n_runs	10.0
 bertopic	all-MiniLM-L6-v2		n_clusters	0.0
 bertopic	all-MiniLM-L6-v2		n_noise	161.0
 bertopic	all-MiniLM-L6-v2		silhouette	
@@ -62,6 +71,15 @@ hdbscan	all-mpnet-base-v2	min_cluster_size=5	npmi
 hdbscan	all-mpnet-base-v2	min_cluster_size=5	bootstrap_mean_ari	0.0
 hdbscan	all-mpnet-base-v2	min_cluster_size=5	bootstrap_std_ari	0.0
 hdbscan	all-mpnet-base-v2	min_cluster_size=5	bootstrap_n_runs	10.0
+hdbscan_umap	all-mpnet-base-v2	umap_dim=10 min_cluster_size=5	n_clusters	6.0
+hdbscan_umap	all-mpnet-base-v2	umap_dim=10 min_cluster_size=5	n_noise	43.0
+hdbscan_umap	all-mpnet-base-v2	umap_dim=10 min_cluster_size=5	silhouette	0.08999548107385635
+hdbscan_umap	all-mpnet-base-v2	umap_dim=10 min_cluster_size=5	davies_bouldin	2.9182301147891256
+hdbscan_umap	all-mpnet-base-v2	umap_dim=10 min_cluster_size=5	calinski_harabasz	4.565881916165947
+hdbscan_umap	all-mpnet-base-v2	umap_dim=10 min_cluster_size=5	npmi	0.46716131239632647
+hdbscan_umap	all-mpnet-base-v2	umap_dim=10 min_cluster_size=5	bootstrap_mean_ari	0.23336932664175106
+hdbscan_umap	all-mpnet-base-v2	umap_dim=10 min_cluster_size=5	bootstrap_std_ari	0.13370434695268246
+hdbscan_umap	all-mpnet-base-v2	umap_dim=10 min_cluster_size=5	bootstrap_n_runs	10.0
 bertopic	all-mpnet-base-v2		n_clusters	3.0
 bertopic	all-mpnet-base-v2		n_noise	62.0
 bertopic	all-mpnet-base-v2		silhouette	0.08595434576272964
@@ -98,6 +116,15 @@ hdbscan	intfloat/e5-base-v2	min_cluster_size=5	npmi
 hdbscan	intfloat/e5-base-v2	min_cluster_size=5	bootstrap_mean_ari	0.3
 hdbscan	intfloat/e5-base-v2	min_cluster_size=5	bootstrap_std_ari	0.45825756949558405
 hdbscan	intfloat/e5-base-v2	min_cluster_size=5	bootstrap_n_runs	10.0
+hdbscan_umap	intfloat/e5-base-v2	umap_dim=10 min_cluster_size=5	n_clusters	7.0
+hdbscan_umap	intfloat/e5-base-v2	umap_dim=10 min_cluster_size=5	n_noise	57.0
+hdbscan_umap	intfloat/e5-base-v2	umap_dim=10 min_cluster_size=5	silhouette	0.07317272573709488
+hdbscan_umap	intfloat/e5-base-v2	umap_dim=10 min_cluster_size=5	davies_bouldin	3.0151260344044273
+hdbscan_umap	intfloat/e5-base-v2	umap_dim=10 min_cluster_size=5	calinski_harabasz	3.7677249433485946
+hdbscan_umap	intfloat/e5-base-v2	umap_dim=10 min_cluster_size=5	npmi	0.48522729349263166
+hdbscan_umap	intfloat/e5-base-v2	umap_dim=10 min_cluster_size=5	bootstrap_mean_ari	0.15984076663530775
+hdbscan_umap	intfloat/e5-base-v2	umap_dim=10 min_cluster_size=5	bootstrap_std_ari	0.09793455130868621
+hdbscan_umap	intfloat/e5-base-v2	umap_dim=10 min_cluster_size=5	bootstrap_n_runs	10.0
 bertopic	intfloat/e5-base-v2		n_clusters	0.0
 bertopic	intfloat/e5-base-v2		n_noise	161.0
 bertopic	intfloat/e5-base-v2		silhouette	
@@ -134,6 +161,15 @@ hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=5	npmi
 hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=5	bootstrap_mean_ari	0.5
 hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=5	bootstrap_std_ari	0.5
 hdbscan	BAAI/bge-small-en-v1.5	min_cluster_size=5	bootstrap_n_runs	10.0
+hdbscan_umap	BAAI/bge-small-en-v1.5	umap_dim=10 min_cluster_size=5	n_clusters	6.0
+hdbscan_umap	BAAI/bge-small-en-v1.5	umap_dim=10 min_cluster_size=5	n_noise	79.0
+hdbscan_umap	BAAI/bge-small-en-v1.5	umap_dim=10 min_cluster_size=5	silhouette	0.10530121624469757
+hdbscan_umap	BAAI/bge-small-en-v1.5	umap_dim=10 min_cluster_size=5	davies_bouldin	2.7674137332182824
+hdbscan_umap	BAAI/bge-small-en-v1.5	umap_dim=10 min_cluster_size=5	calinski_harabasz	4.5377742301324835
+hdbscan_umap	BAAI/bge-small-en-v1.5	umap_dim=10 min_cluster_size=5	npmi	0.5243787460570293
+hdbscan_umap	BAAI/bge-small-en-v1.5	umap_dim=10 min_cluster_size=5	bootstrap_mean_ari	0.055811804740546464
+hdbscan_umap	BAAI/bge-small-en-v1.5	umap_dim=10 min_cluster_size=5	bootstrap_std_ari	0.10416075205440832
+hdbscan_umap	BAAI/bge-small-en-v1.5	umap_dim=10 min_cluster_size=5	bootstrap_n_runs	10.0
 bertopic	BAAI/bge-small-en-v1.5		n_clusters	0.0
 bertopic	BAAI/bge-small-en-v1.5		n_noise	161.0
 bertopic	BAAI/bge-small-en-v1.5		silhouette	

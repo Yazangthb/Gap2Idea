@@ -483,7 +483,8 @@ def main():
                         help="Benchmark clustering quality (clusterer x embedder grid)")
     bc.add_argument("--gaps-tsv", default="data/bench/gaps.tsv")
     bc.add_argument("--out-dir", default=None)
-    bc.add_argument("--clusterers", default="kmeans,agglomerative,hdbscan,bertopic")
+    bc.add_argument("--clusterers",
+                    default="kmeans,agglomerative,hdbscan,hdbscan_umap,bertopic")
     bc.add_argument("--embedders",
                     default="all-MiniLM-L6-v2,all-mpnet-base-v2,"
                             "intfloat/e5-base-v2,BAAI/bge-small-en-v1.5")
