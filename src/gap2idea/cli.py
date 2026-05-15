@@ -720,25 +720,6 @@ def main():
                                           "so Claude Desktop / Cursor / etc. can query the corpus")
     mc.set_defaults(func=cmd_serve_mcp)
 
-    # bench-clustering (from origin/experments/clustering_quality)
-    bc = sub.add_parser("bench-clustering",
-                        help="Benchmark clustering quality (clusterer x embedder grid)")
-    bc.add_argument("--gaps-tsv", default="data/bench/gaps.tsv",
-                    help="Path to a gaps.tsv produced by extract-gaps")
-    bc.add_argument("--out-dir", default=None,
-                    help="Default: <root>/data/clustering_bench")
-    bc.add_argument("--clusterers", default="kmeans,agglomerative,hdbscan,bertopic")
-    bc.add_argument("--embedders",
-                    default="all-MiniLM-L6-v2,all-mpnet-base-v2,"
-                            "intfloat/e5-base-v2,BAAI/bge-small-en-v1.5")
-    bc.add_argument("--n-bootstrap", type=int, default=10)
-    bc.set_defaults(func=cmd_bench_clustering)
-
-    bcp = sub.add_parser("bench-clustering-plots",
-                         help="Regenerate plots from clustering_bench/metrics.tsv")
-    bcp.add_argument("--bench-dir", default=None)
-    bcp.set_defaults(func=cmd_bench_clustering_plots)
-
     # bench-extraction (from origin/experments/extraction_quality)
     be = sub.add_parser(
         "bench-extraction",
