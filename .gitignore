@@ -95,12 +95,39 @@ artifacts/
 !data/bench/*.md
 !data/bench/plots/
 !data/bench/plots/*.png
-# but never the 4.8GB unarXive tarball or other raw inputs
-data/bench/raw/
+!data/bench_v2a/*.tsv
+!data/bench_v2a/*.jsonl
+!data/bench_v2a/*.md
+!data/bench_v2a/plots/
+!data/bench_v2a/plots/*.png
+!data/bench_v2b/*.tsv
+!data/bench_v2b/*.jsonl
+!data/bench_v2b/*.md
+!data/bench_v2b/plots/
+!data/bench_v2b/plots/*.png
+!data/bench_ablation.md
+!data/bench_ablation_plots/
+!data/bench_ablation_plots/*.png
+!data/bench_n100/*.tsv
+!data/bench_n100/*.jsonl
+!data/bench_n100/*.md
+!data/bench_n100/plots/
+!data/bench_n100/plots/*.png
 
 # Clustering-quality benchmark outputs (same whitelist pattern)
 !data/clustering_bench/*.tsv
 !data/clustering_bench/*.md
 !data/clustering_bench/plots/
 !data/clustering_bench/plots/*.png
+!data/clustering_bench_n100/*.tsv
+!data/clustering_bench_n100/*.md
+!data/clustering_bench_n100/plots/
+!data/clustering_bench_n100/plots/*.png
+
+# but never the 4.8GB unarXive tarball, the downloaded arxiv PDFs, or
+# embedding cache directories
+data/bench/raw/
+data/bench_v2b/pdfs/
+data/bench_n100/pdfs/
 data/clustering_bench/embeddings/
+data/clustering_bench_n100/embeddings/

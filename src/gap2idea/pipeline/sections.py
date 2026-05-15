@@ -28,19 +28,43 @@ HEADING_RE = re.compile(
     r"(?P<title>[A-Z][A-Za-z0-9 &\-/,:]{2,80})\s*$",
     re.MULTILINE,
 )
-LIMITATION_HEAD_RE = re.compile(r"\b(limitations?|threats to validity|caveats?)\b", re.IGNORECASE)
-FUTURE_HEAD_RE = re.compile(r"\b(future work|future directions?|outlook|next steps?)\b", re.IGNORECASE)
+LIMITATION_HEAD_RE = re.compile(
+    r"\b(limitations?|threats to validity|caveats?|shortcomings?|"
+    r"weaknesses?|drawbacks?)\b",
+    re.IGNORECASE,
+)
+FUTURE_HEAD_RE = re.compile(
+    r"\b(future work|future directions?|future research|outlook|next steps?|"
+    r"further work|further research|open (?:problems?|questions?|issues?)|"
+    r"extensions?|what['']?s next)\b",
+    re.IGNORECASE,
+)
 DISCUSSION_HEAD_RE = re.compile(r"\b(discussion|conclusion(s)?)\b", re.IGNORECASE)
 
 FALLBACK_KEYWORDS_RE = re.compile(
-    r"\b(future work|future directions?|limitations?|threats to validity|"
-    r"open (?:problems?|questions?)|conclusion(?:s)?\s*(?:and|&)\s*future)\b",
+    r"\b(future work|future directions?|future research|limitations?|"
+    r"threats to validity|further work|"
+    r"open (?:problems?|questions?|issues?)|"
+    r"conclusion(?:s)?\s*(?:and|&)\s*(?:future|open))\b",
     re.IGNORECASE,
 )
 
 MIN_BODY_CHARS = 200
 WINDOW_WORDS = 900
 MAX_SECTIONS_PER_PAPER = 2
+
+# A section whose body is dominated by dot-leaders / whitespace / digits is
+# almost always a LaTeX table-of-contents entry, not the real section.
+# Reject any candidate where this ratio exceeds MAX_NOISE_FRAC.
+TOC_NOISE_RE = re.compile(r"[\s.…·\-_]")
+MAX_TOC_NOISE_FRAC = 0.45
+
+
+def _is_toc_noise(body: str) -> bool:
+    if not body:
+        return True
+    noise = sum(1 for c in body if TOC_NOISE_RE.match(c))
+    return noise / len(body) > MAX_TOC_NOISE_FRAC
 
 
 def _cut_before_references(text: str) -> str:
@@ -57,7 +81,7 @@ def _structured_sections(text: str) -> list[dict]:
         title = m.group("title").strip()
         nxt = headings[i + 1].start() if i + 1 < len(headings) else len(text)
         body = text[m.end() : nxt].strip()
-        if len(body) < MIN_BODY_CHARS:
+        if len(body) < MIN_BODY_CHARS or _is_toc_noise(body):
             continue
         if LIMITATION_HEAD_RE.search(title):
             found.append({"section_type": "limitations", "heading": title, "section_text": body})
@@ -96,19 +120,68 @@ def _tail_fallback(text: str) -> dict | None:
     return {"section_type": "tail", "heading": "tail_window", "section_text": tail}
 
 
-def extract_sections_for_paper(paper_id: str, full_text: str) -> list[dict]:
-    pre_ref = _cut_before_references(full_text)
-    sections = _structured_sections(pre_ref)
+def _styled_sections(blocks: list[dict]) -> list[dict]:
+    """Walk style-aware blocks; cut a section at every heading whose title
+    matches a target keyword. The section body is every following non-heading
+    block up to the next heading."""
+    # Find indices of "heading" blocks
+    heads = [i for i, b in enumerate(blocks) if b.get("role") == "heading"]
+    found: list[dict] = []
+    for k, hi in enumerate(heads):
+        title = blocks[hi]["text"].strip()
+        # Stop walking past References
+        if REF_RE.search(title):
+            break
+        end = heads[k + 1] if k + 1 < len(heads) else len(blocks)
+        body_lines = [b["text"] for b in blocks[hi + 1 : end] if b.get("role") == "body"]
+        body = "\n".join(body_lines).strip()
+        if len(body) < MIN_BODY_CHARS:
+            continue
+        section_type = None
+        if LIMITATION_HEAD_RE.search(title):
+            section_type = "limitations"
+        elif FUTURE_HEAD_RE.search(title):
+            section_type = "future_work"
+        elif DISCUSSION_HEAD_RE.search(title):
+            section_type = "discussion"
+        if section_type is None:
+            continue
+        found.append({"section_type": section_type, "heading": title, "section_text": body})
+    # de-dup
+    seen, out = set(), []
+    for s in found:
+        key = (s["section_type"], s["section_text"][:100])
+        if key not in seen:
+            seen.add(key)
+            out.append(s)
+    return out
 
-    if not sections:
-        win = _window_fallback(pre_ref)
-        if win:
-            sections.append(win)
 
+def extract_sections_for_paper(
+    paper_id: str,
+    full_text: str,
+    blocks: list[dict] | None = None,
+) -> list[dict]:
+    sections: list[dict] = []
+
+    # Prefer style-aware path when we have block metadata
+    if blocks:
+        sections = _styled_sections(blocks)
+
+    # Fall back to plain-text heading regex if styled path found nothing
     if not sections:
-        tail = _tail_fallback(pre_ref)
-        if tail:
-            sections.append(tail)
+        pre_ref = _cut_before_references(full_text)
+        sections = _structured_sections(pre_ref)
+
+        if not sections:
+            win = _window_fallback(pre_ref)
+            if win:
+                sections.append(win)
+
+        if not sections:
+            tail = _tail_fallback(pre_ref)
+            if tail:
+                sections.append(tail)
 
     # Prefer limitations & future_work; cap at MAX_SECTIONS_PER_PAPER
     priority = {"limitations": 0, "future_work": 1, "discussion": 2, "fallback": 3, "tail": 4}
@@ -124,9 +197,11 @@ def extract_all_sections(texts_jsonl: Path, out_jsonl: Path) -> pd.DataFrame:
     texts = pd.read_json(texts_jsonl, lines=True, dtype=False)
     texts["id"] = texts["id"].astype(str)
     log.info("Splitting sections for %d papers", len(texts))
+    has_blocks = "blocks" in texts.columns
     all_rows: list[dict] = []
     for _, r in texts.iterrows():
-        rows = extract_sections_for_paper(str(r["id"]), str(r["text"]))
+        blocks = r["blocks"] if has_blocks and isinstance(r.get("blocks"), list) else None
+        rows = extract_sections_for_paper(str(r["id"]), str(r["text"]), blocks=blocks)
         all_rows.extend(rows)
     df = pd.DataFrame(all_rows)
     if df.empty:

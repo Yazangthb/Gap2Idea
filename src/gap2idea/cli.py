@@ -484,6 +484,8 @@ def cmd_bench_extraction(args):
         skip_llm=args.skip_llm,
         tarball_path=args.tarball,
         max_scan=args.max_scan,
+        use_pdf=args.use_pdf,
+        oracle=args.oracle,
     )
 
 
@@ -493,6 +495,46 @@ def cmd_bench_plots(args):
     paths = get_paths(args.root)
     bench_dir = Path(args.bench_dir) if args.bench_dir else (paths.data / "bench")
     make_all_plots(bench_dir)
+
+
+def cmd_bench_ablation_plots(args):
+    from gap2idea.pipeline.extraction_bench_ablation_plots import make_all_plots
+
+    paths = get_paths(args.root)
+    out_dir = Path(args.out_dir) if args.out_dir else (paths.data / "bench_ablation_plots")
+    make_all_plots(out_dir=out_dir)
+
+
+# ---------- bench-clustering ----------
+
+def cmd_bench_clustering(args):
+    from gap2idea.pipeline.clustering_bench import run_benchmark
+
+    paths = get_paths(args.root)
+    out_dir = Path(args.out_dir) if args.out_dir else (paths.data / "clustering_bench")
+    clusterers = [c.strip() for c in args.clusterers.split(",") if c.strip()]
+    embedders = [e.strip() for e in args.embedders.split(",") if e.strip()]
+    run_benchmark(
+        gaps_tsv=Path(args.gaps_tsv),
+        out_dir=out_dir,
+        clusterers=clusterers,
+        embedders=embedders,
+        n_bootstrap=args.n_bootstrap,
+    )
+
+
+def cmd_bench_clustering_plots(args):
+    from gap2idea.pipeline.clustering_bench_plots import make_all_plots
+
+    paths = get_paths(args.root)
+    bench_dir = Path(args.bench_dir) if args.bench_dir else (paths.data / "clustering_bench")
+    gaps_tsv = Path(args.gaps_tsv) if args.gaps_tsv else None
+    showcase = None
+    if args.showcase:
+        c, e = args.showcase.split(":", 1)
+        showcase = (c.strip(), e.strip())
+    make_all_plots(bench_dir, gaps_tsv=gaps_tsv, showcase=showcase,
+                   grid_embedder=args.grid_embedder)
 
 
 # ---------- run-all ----------
@@ -710,6 +752,13 @@ def main():
                     help="Cap on records scanned before giving up")
     be.add_argument("--skip-llm", action="store_true",
                     help="Evaluate the regex stage only; skip openai_gaps (no API key needed)")
+    be.add_argument("--use-pdf", action="store_true",
+                    help="Download arxiv PDFs for the sampled papers and feed the "
+                         "style-aware block extractor (PyMuPDF). When omitted, the "
+                         "bench feeds unarXive's already-parsed plain text.")
+    be.add_argument("--oracle", action="store_true",
+                    help="Also feed the gold section text directly to openai_gaps "
+                         "and report pipeline_vs_oracle gap-to-gap metrics.")
     be.set_defaults(func=cmd_bench_extraction)
 
     # bench-plots (extraction benchmark plots)
@@ -717,6 +766,39 @@ def main():
                         help="Regenerate plots from an existing data/bench/metrics.tsv")
     bp.add_argument("--bench-dir", default=None)
     bp.set_defaults(func=cmd_bench_plots)
+
+    # bench-ablation-plots
+    bap = sub.add_parser("bench-ablation-plots",
+                         help="Cross-variant ablation plots (v1/v2a/v2b + oracle)")
+    bap.add_argument("--out-dir", default=None,
+                     help="Default: <root>/data/bench_ablation_plots")
+    bap.set_defaults(func=cmd_bench_ablation_plots)
+
+    # bench-clustering
+    bc = sub.add_parser("bench-clustering",
+                        help="Benchmark clustering quality (clusterer x embedder grid)")
+    bc.add_argument("--gaps-tsv", default="data/bench/gaps.tsv")
+    bc.add_argument("--out-dir", default=None)
+    bc.add_argument("--clusterers",
+                    default="kmeans,agglomerative,hdbscan,hdbscan_umap,bertopic")
+    bc.add_argument("--embedders",
+                    default="all-MiniLM-L6-v2,all-mpnet-base-v2,"
+                            "intfloat/e5-base-v2,BAAI/bge-small-en-v1.5")
+    bc.add_argument("--n-bootstrap", type=int, default=10)
+    bc.set_defaults(func=cmd_bench_clustering)
+
+    bcp = sub.add_parser("bench-clustering-plots",
+                         help="Regenerate clustering plots (optionally with 2-D cluster scatters)")
+    bcp.add_argument("--bench-dir", default=None)
+    bcp.add_argument("--gaps-tsv", default=None,
+                     help="If set, also draw 2-D cluster scatters using these gap sentences.")
+    bcp.add_argument("--showcase", default=None,
+                     help="`<clusterer>:<embedder>` to highlight as the single big plot. "
+                          "Default: agglomerative:BAAI/bge-small-en-v1.5")
+    bcp.add_argument("--grid-embedder", default=None,
+                     help="Embedder to use for the all-clusterers comparison grid. "
+                          "Default: same as showcase embedder.")
+    bcp.set_defaults(func=cmd_bench_clustering_plots)
 
     # run-all
     ra = sub.add_parser("run-all", help="Run extract-text through evaluate-ideas")

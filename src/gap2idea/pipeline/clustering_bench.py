@@ -37,7 +37,7 @@ DEFAULT_EMBEDDERS = (
     "intfloat/e5-base-v2",
     "BAAI/bge-small-en-v1.5",
 )
-DEFAULT_CLUSTERERS = ("kmeans", "agglomerative", "hdbscan", "bertopic")
+DEFAULT_CLUSTERERS = ("kmeans", "agglomerative", "hdbscan", "hdbscan_umap", "bertopic")
 TOPIC_TOP_N = 10
 TOKEN_RE = re.compile(r"[A-Za-z][A-Za-z\-]{2,}")
 
@@ -133,6 +133,24 @@ def fit_clusters(X: np.ndarray, texts: list[str], method: str) -> tuple[np.ndarr
         clusterer = hdbscan.HDBSCAN(min_cluster_size=mcs, metric="euclidean")
         labels = clusterer.fit_predict(X)
         notes.append(f"min_cluster_size={mcs}")
+
+    elif method == "hdbscan_umap":
+        # Mitigate the curse of dimensionality: UMAP to ~10d first, then HDBSCAN.
+        # Standard recipe from the BERTopic/HDBSCAN documentation.
+        import hdbscan
+        from umap import UMAP
+        umap_n_components = min(10, max(2, n - 1))
+        umap_n_neighbors = max(2, min(15, n - 1))
+        try:
+            X_low = UMAP(n_neighbors=umap_n_neighbors, n_components=umap_n_components,
+                         metric="cosine", random_state=0).fit_transform(X)
+            mcs = max(2, min(5, n // 4))
+            labels = hdbscan.HDBSCAN(min_cluster_size=mcs, metric="euclidean") \
+                            .fit_predict(X_low)
+            notes.append(f"umap_dim={umap_n_components} min_cluster_size={mcs}")
+        except Exception as e:  # noqa: BLE001
+            notes.append(f"hdbscan_umap failed: {e}")
+            labels = np.full((n,), -1)
 
     elif method == "bertopic":
         from bertopic import BERTopic

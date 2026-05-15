@@ -1,0 +1,1301 @@
+id	stage	metric	value	extra
+quant-ph/0402095	regex_section	rouge1_f	0.4724091520861373	future_work,limitations
+quant-ph/0402095	regex_section	rouge2_f	0.3833726018175699	future_work,limitations
+quant-ph/0402095	regex_section	rougeL_f	0.44717362045760434	future_work,limitations
+quant-ph/0402095	regex_section	pred_chars	11612.0	
+quant-ph/0402095	llm_gap	n_gaps	2.0	
+quant-ph/0402095	llm_gap	mean_sim_to_gold	0.5378639698028564	
+quant-ph/0402095	llm_gap	mean_sim_to_full	0.5433603525161743	
+quant-ph/0402095	llm_gap	recovery_at_0.5	1.0	
+quant-ph/0402095	llm_gap	hallucination_at_0.5	0.0	
+quant-ph/0402095	llm_gap	recovery_at_0.6	0.0	
+quant-ph/0402095	llm_gap	hallucination_at_0.6	1.0	
+quant-ph/0402095	llm_gap	recovery_at_0.7	0.0	
+quant-ph/0402095	llm_gap	hallucination_at_0.7	1.0	
+cs/0610128	regex_section	rouge1_f	0.8579710144927537	fallback
+cs/0610128	regex_section	rouge2_f	0.7930029154518949	fallback
+cs/0610128	regex_section	rougeL_f	0.8579710144927537	fallback
+cs/0610128	regex_section	pred_chars	1126.0	
+cs/0610128	llm_gap	n_gaps	1.0	
+cs/0610128	llm_gap	mean_sim_to_gold	1.0	
+cs/0610128	llm_gap	mean_sim_to_full	1.0	
+cs/0610128	llm_gap	recovery_at_0.5	1.0	
+cs/0610128	llm_gap	hallucination_at_0.5	0.0	
+cs/0610128	llm_gap	recovery_at_0.6	1.0	
+cs/0610128	llm_gap	hallucination_at_0.6	0.0	
+cs/0610128	llm_gap	recovery_at_0.7	1.0	
+cs/0610128	llm_gap	hallucination_at_0.7	0.0	
+0803.2303	regex_section	rouge1_f	0.23013698630136983	discussion,future_work
+0803.2303	regex_section	rouge2_f	0.18181818181818182	discussion,future_work
+0803.2303	regex_section	rougeL_f	0.23013698630136983	discussion,future_work
+0803.2303	regex_section	pred_chars	1226.0	
+0803.2303	llm_gap	n_gaps	1.0	
+0803.2303	llm_gap	mean_sim_to_gold	1.0	
+0803.2303	llm_gap	mean_sim_to_full	1.0	
+0803.2303	llm_gap	recovery_at_0.5	1.0	
+0803.2303	llm_gap	hallucination_at_0.5	0.0	
+0803.2303	llm_gap	recovery_at_0.6	1.0	
+0803.2303	llm_gap	hallucination_at_0.6	0.0	
+0803.2303	llm_gap	recovery_at_0.7	1.0	
+0803.2303	llm_gap	hallucination_at_0.7	0.0	
+0805.3456	regex_section	rouge1_f	0.13659793814432988	future_work
+0805.3456	regex_section	rouge2_f	0.12774193548387097	future_work
+0805.3456	regex_section	rougeL_f	0.13659793814432988	future_work
+0805.3456	regex_section	pred_chars	7688.0	
+0805.3456	llm_gap	n_gaps	2.0	
+0805.3456	llm_gap	mean_sim_to_gold	0.44671690464019775	
+0805.3456	llm_gap	mean_sim_to_full	1.0	
+0805.3456	llm_gap	recovery_at_0.5	0.5	
+0805.3456	llm_gap	hallucination_at_0.5	0.0	
+0805.3456	llm_gap	recovery_at_0.6	0.5	
+0805.3456	llm_gap	hallucination_at_0.6	0.0	
+0805.3456	llm_gap	recovery_at_0.7	0.5	
+0805.3456	llm_gap	hallucination_at_0.7	0.0	
+0806.2938	regex_section	rouge1_f	0.8926654740608229	future_work
+0806.2938	regex_section	rouge2_f	0.8207885304659499	future_work
+0806.2938	regex_section	rougeL_f	0.8926654740608229	future_work
+0806.2938	regex_section	pred_chars	3316.0	
+0806.2938	llm_gap	n_gaps	2.0	
+0806.2938	llm_gap	mean_sim_to_gold	0.9911149144172668	
+0806.2938	llm_gap	mean_sim_to_full	0.9911149144172668	
+0806.2938	llm_gap	recovery_at_0.5	1.0	
+0806.2938	llm_gap	hallucination_at_0.5	0.0	
+0806.2938	llm_gap	recovery_at_0.6	1.0	
+0806.2938	llm_gap	hallucination_at_0.6	0.0	
+0806.2938	llm_gap	recovery_at_0.7	1.0	
+0806.2938	llm_gap	hallucination_at_0.7	0.0	
+0807.1134	regex_section	rouge1_f	0.32493483927019984	fallback
+0807.1134	regex_section	rouge2_f	0.2959094865100087	fallback
+0807.1134	regex_section	rougeL_f	0.3231972198088619	fallback
+0807.1134	regex_section	pred_chars	5400.0	
+0807.1134	llm_gap	n_gaps	2.0	
+0807.1134	llm_gap	mean_sim_to_gold	0.36795932054519653	
+0807.1134	llm_gap	mean_sim_to_full	1.0	
+0807.1134	llm_gap	recovery_at_0.5	0.0	
+0807.1134	llm_gap	hallucination_at_0.5	0.0	
+0807.1134	llm_gap	recovery_at_0.6	0.0	
+0807.1134	llm_gap	hallucination_at_0.6	0.0	
+0807.1134	llm_gap	recovery_at_0.7	0.0	
+0807.1134	llm_gap	hallucination_at_0.7	0.0	
+0807.0023	regex_section	rouge1_f	0.31362007168458783	discussion,future_work
+0807.0023	regex_section	rouge2_f	0.20807174887892377	discussion,future_work
+0807.0023	regex_section	rougeL_f	0.22939068100358423	discussion,future_work
+0807.0023	regex_section	pred_chars	11182.0	
+0807.0023	llm_gap	n_gaps	3.0	
+0807.0023	llm_gap	mean_sim_to_gold	0.8537115454673767	
+0807.0023	llm_gap	mean_sim_to_full	0.8537115454673767	
+0807.0023	llm_gap	recovery_at_0.5	1.0	
+0807.0023	llm_gap	hallucination_at_0.5	0.0	
+0807.0023	llm_gap	recovery_at_0.6	0.6666666666666666	
+0807.0023	llm_gap	hallucination_at_0.6	0.3333333333333333	
+0807.0023	llm_gap	recovery_at_0.7	0.6666666666666666	
+0807.0023	llm_gap	hallucination_at_0.7	0.3333333333333333	
+0808.2057	regex_section	rouge1_f	0.3468917881811205	fallback
+0808.2057	regex_section	rouge2_f	0.06456571867794005	fallback
+0808.2057	regex_section	rougeL_f	0.13507290867229468	fallback
+0808.2057	regex_section	pred_chars	4950.0	
+0808.2057	llm_gap	n_gaps	1.0	
+0808.2057	llm_gap	mean_sim_to_gold	0.7161424160003662	
+0808.2057	llm_gap	mean_sim_to_full	1.0	
+0808.2057	llm_gap	recovery_at_0.5	1.0	
+0808.2057	llm_gap	hallucination_at_0.5	0.0	
+0808.2057	llm_gap	recovery_at_0.6	1.0	
+0808.2057	llm_gap	hallucination_at_0.6	0.0	
+0808.2057	llm_gap	recovery_at_0.7	1.0	
+0808.2057	llm_gap	hallucination_at_0.7	0.0	
+0811.2508	regex_section	rouge1_f	0.26186579378068736	fallback
+0811.2508	regex_section	rouge2_f	0.05081967213114754	fallback
+0811.2508	regex_section	rougeL_f	0.10147299509001638	fallback
+0811.2508	regex_section	pred_chars	5861.0	
+0811.2508	llm_gap	n_gaps	2.0	
+0811.2508	llm_gap	mean_sim_to_gold	0.6181535720825195	
+0811.2508	llm_gap	mean_sim_to_full	0.927898645401001	
+0811.2508	llm_gap	recovery_at_0.5	1.0	
+0811.2508	llm_gap	hallucination_at_0.5	0.0	
+0811.2508	llm_gap	recovery_at_0.6	0.5	
+0811.2508	llm_gap	hallucination_at_0.6	0.0	
+0811.2508	llm_gap	recovery_at_0.7	0.5	
+0811.2508	llm_gap	hallucination_at_0.7	0.0	
+0811.3859	regex_section	rouge1_f	0.7569141193595342	future_work
+0811.3859	regex_section	rouge2_f	0.6627737226277373	future_work
+0811.3859	regex_section	rougeL_f	0.7569141193595342	future_work
+0811.3859	regex_section	pred_chars	1751.0	
+0811.3859	llm_gap	n_gaps	3.0	
+0811.3859	llm_gap	mean_sim_to_gold	0.7741158604621887	
+0811.3859	llm_gap	mean_sim_to_full	0.774116039276123	
+0811.3859	llm_gap	recovery_at_0.5	0.6666666666666666	
+0811.3859	llm_gap	hallucination_at_0.5	0.3333333333333333	
+0811.3859	llm_gap	recovery_at_0.6	0.6666666666666666	
+0811.3859	llm_gap	hallucination_at_0.6	0.3333333333333333	
+0811.3859	llm_gap	recovery_at_0.7	0.6666666666666666	
+0811.3859	llm_gap	hallucination_at_0.7	0.3333333333333333	
+0902.0196	regex_section	rouge1_f	0.43727598566308246	future_work
+0902.0196	regex_section	rouge2_f	0.3032490974729242	future_work
+0902.0196	regex_section	rougeL_f	0.37275985663082434	future_work
+0902.0196	regex_section	pred_chars	773.0	
+0902.0196	llm_gap	n_gaps	0.0	
+0902.0196	llm_gap	mean_sim_to_gold	0.0	
+0902.0196	llm_gap	mean_sim_to_full	0.0	
+0902.0196	llm_gap	recovery_at_0.5	0.0	
+0902.0196	llm_gap	hallucination_at_0.5	0.0	
+0902.0196	llm_gap	recovery_at_0.6	0.0	
+0902.0196	llm_gap	hallucination_at_0.6	0.0	
+0902.0196	llm_gap	recovery_at_0.7	0.0	
+0902.0196	llm_gap	hallucination_at_0.7	0.0	
+0902.2504	regex_section	rouge1_f	0.13464696223316913	fallback
+0902.2504	regex_section	rouge2_f	0.009884678747940693	fallback
+0902.2504	regex_section	rougeL_f	0.062397372742200335	fallback
+0902.2504	regex_section	pred_chars	2642.0	
+0902.2504	llm_gap	n_gaps	0.0	
+0902.2504	llm_gap	mean_sim_to_gold	0.0	
+0902.2504	llm_gap	mean_sim_to_full	0.0	
+0902.2504	llm_gap	recovery_at_0.5	0.0	
+0902.2504	llm_gap	hallucination_at_0.5	0.0	
+0902.2504	llm_gap	recovery_at_0.6	0.0	
+0902.2504	llm_gap	hallucination_at_0.6	0.0	
+0902.2504	llm_gap	recovery_at_0.7	0.0	
+0902.2504	llm_gap	hallucination_at_0.7	0.0	
+0902.4012	regex_section	rouge1_f	0.27380952380952384	fallback
+0902.4012	regex_section	rouge2_f	0.046199701937406856	fallback
+0902.4012	regex_section	rougeL_f	0.11607142857142856	fallback
+0902.4012	regex_section	pred_chars	4173.0	
+0902.4012	llm_gap	n_gaps	3.0	
+0902.4012	llm_gap	mean_sim_to_gold	0.45764055848121643	
+0902.4012	llm_gap	mean_sim_to_full	0.7212961316108704	
+0902.4012	llm_gap	recovery_at_0.5	0.6666666666666666	
+0902.4012	llm_gap	hallucination_at_0.5	0.0	
+0902.4012	llm_gap	recovery_at_0.6	0.3333333333333333	
+0902.4012	llm_gap	hallucination_at_0.6	0.3333333333333333	
+0902.4012	llm_gap	recovery_at_0.7	0.0	
+0902.4012	llm_gap	hallucination_at_0.7	0.3333333333333333	
+0902.3986	regex_section	rouge1_f	0.8398384925975775	limitations
+0902.3986	regex_section	rouge2_f	0.7908232118758434	limitations
+0902.3986	regex_section	rougeL_f	0.8398384925975775	limitations
+0902.3986	regex_section	pred_chars	2046.0	
+0902.3986	llm_gap	n_gaps	1.0	
+0902.3986	llm_gap	mean_sim_to_gold	1.0	
+0902.3986	llm_gap	mean_sim_to_full	1.0	
+0902.3986	llm_gap	recovery_at_0.5	1.0	
+0902.3986	llm_gap	hallucination_at_0.5	0.0	
+0902.3986	llm_gap	recovery_at_0.6	1.0	
+0902.3986	llm_gap	hallucination_at_0.6	0.0	
+0902.3986	llm_gap	recovery_at_0.7	1.0	
+0902.3986	llm_gap	hallucination_at_0.7	0.0	
+0902.3485	regex_section	rouge1_f	0.6666666666666666	discussion,future_work
+0902.3485	regex_section	rouge2_f	0.642166344294004	discussion,future_work
+0902.3485	regex_section	rougeL_f	0.6666666666666666	discussion,future_work
+0902.3485	regex_section	pred_chars	1971.0	
+0902.3485	llm_gap	n_gaps	2.0	
+0902.3485	llm_gap	mean_sim_to_gold	0.824080228805542	
+0902.3485	llm_gap	mean_sim_to_full	0.824080228805542	
+0902.3485	llm_gap	recovery_at_0.5	1.0	
+0902.3485	llm_gap	hallucination_at_0.5	0.0	
+0902.3485	llm_gap	recovery_at_0.6	1.0	
+0902.3485	llm_gap	hallucination_at_0.6	0.0	
+0902.3485	llm_gap	recovery_at_0.7	0.5	
+0902.3485	llm_gap	hallucination_at_0.7	0.5	
+0903.0843	regex_section	rouge1_f	0.9255813953488373	future_work
+0903.0843	regex_section	rouge2_f	0.897196261682243	future_work
+0903.0843	regex_section	rougeL_f	0.9209302325581395	future_work
+0903.0843	regex_section	pred_chars	1362.0	
+0903.0843	llm_gap	n_gaps	1.0	
+0903.0843	llm_gap	mean_sim_to_gold	1.0	
+0903.0843	llm_gap	mean_sim_to_full	1.0	
+0903.0843	llm_gap	recovery_at_0.5	1.0	
+0903.0843	llm_gap	hallucination_at_0.5	0.0	
+0903.0843	llm_gap	recovery_at_0.6	1.0	
+0903.0843	llm_gap	hallucination_at_0.6	0.0	
+0903.0843	llm_gap	recovery_at_0.7	1.0	
+0903.0843	llm_gap	hallucination_at_0.7	0.0	
+0903.5444	regex_section	rouge1_f	0.37951807228915657	fallback
+0903.5444	regex_section	rouge2_f	0.0925553319919517	fallback
+0903.5444	regex_section	rougeL_f	0.1506024096385542	fallback
+0903.5444	regex_section	pred_chars	4968.0	
+0903.5444	llm_gap	n_gaps	2.0	
+0903.5444	llm_gap	mean_sim_to_gold	0.5785627365112305	
+0903.5444	llm_gap	mean_sim_to_full	0.8993731141090393	
+0903.5444	llm_gap	recovery_at_0.5	1.0	
+0903.5444	llm_gap	hallucination_at_0.5	0.0	
+0903.5444	llm_gap	recovery_at_0.6	0.0	
+0903.5444	llm_gap	hallucination_at_0.6	0.0	
+0903.5444	llm_gap	recovery_at_0.7	0.0	
+0903.5444	llm_gap	hallucination_at_0.7	0.0	
+0903.4559	regex_section	rouge1_f	0.48145896656534953	fallback
+0903.4559	regex_section	rouge2_f	0.1898965307364577	fallback
+0903.4559	regex_section	rougeL_f	0.2030395136778115	fallback
+0903.4559	regex_section	pred_chars	5368.0	
+0903.4559	llm_gap	n_gaps	2.0	
+0903.4559	llm_gap	mean_sim_to_gold	1.0	
+0903.4559	llm_gap	mean_sim_to_full	1.0	
+0903.4559	llm_gap	recovery_at_0.5	1.0	
+0903.4559	llm_gap	hallucination_at_0.5	0.0	
+0903.4559	llm_gap	recovery_at_0.6	1.0	
+0903.4559	llm_gap	hallucination_at_0.6	0.0	
+0903.4559	llm_gap	recovery_at_0.7	1.0	
+0903.4559	llm_gap	hallucination_at_0.7	0.0	
+0904.4143	regex_section	rouge1_f	0.17045454545454544	fallback
+0904.4143	regex_section	rouge2_f	0.025056947608200455	fallback
+0904.4143	regex_section	rougeL_f	0.09999999999999999	fallback
+0904.4143	regex_section	pred_chars	3523.0	
+0904.4143	llm_gap	n_gaps	0.0	
+0904.4143	llm_gap	mean_sim_to_gold	0.0	
+0904.4143	llm_gap	mean_sim_to_full	0.0	
+0904.4143	llm_gap	recovery_at_0.5	0.0	
+0904.4143	llm_gap	hallucination_at_0.5	0.0	
+0904.4143	llm_gap	recovery_at_0.6	0.0	
+0904.4143	llm_gap	hallucination_at_0.6	0.0	
+0904.4143	llm_gap	recovery_at_0.7	0.0	
+0904.4143	llm_gap	hallucination_at_0.7	0.0	
+0905.0808	regex_section	rouge1_f	0.5810635538261998	future_work
+0905.0808	regex_section	rouge2_f	0.4135240572171651	future_work
+0905.0808	regex_section	rougeL_f	0.4357976653696498	future_work
+0905.0808	regex_section	pred_chars	2629.0	
+0905.0808	llm_gap	n_gaps	4.0	
+0905.0808	llm_gap	mean_sim_to_gold	0.9971492886543274	
+0905.0808	llm_gap	mean_sim_to_full	0.9971493482589722	
+0905.0808	llm_gap	recovery_at_0.5	1.0	
+0905.0808	llm_gap	hallucination_at_0.5	0.0	
+0905.0808	llm_gap	recovery_at_0.6	1.0	
+0905.0808	llm_gap	hallucination_at_0.6	0.0	
+0905.0808	llm_gap	recovery_at_0.7	1.0	
+0905.0808	llm_gap	hallucination_at_0.7	0.0	
+0905.0794	regex_section	rouge1_f	0.5646437994722956	future_work
+0905.0794	regex_section	rouge2_f	0.47745358090185674	future_work
+0905.0794	regex_section	rougeL_f	0.5646437994722956	future_work
+0905.0794	regex_section	pred_chars	943.0	
+0905.0794	llm_gap	n_gaps	3.0	
+0905.0794	llm_gap	mean_sim_to_gold	0.7747864127159119	
+0905.0794	llm_gap	mean_sim_to_full	0.7747864127159119	
+0905.0794	llm_gap	recovery_at_0.5	1.0	
+0905.0794	llm_gap	hallucination_at_0.5	0.0	
+0905.0794	llm_gap	recovery_at_0.6	1.0	
+0905.0794	llm_gap	hallucination_at_0.6	0.0	
+0905.0794	llm_gap	recovery_at_0.7	1.0	
+0905.0794	llm_gap	hallucination_at_0.7	0.0	
+0905.2459	regex_section	rouge1_f	0.13836477987421383	fallback
+0905.2459	regex_section	rouge2_f	0.016842105263157894	fallback
+0905.2459	regex_section	rougeL_f	0.05870020964360587	fallback
+0905.2459	regex_section	pred_chars	2075.0	
+0905.2459	llm_gap	n_gaps	2.0	
+0905.2459	llm_gap	mean_sim_to_gold	0.27264901995658875	
+0905.2459	llm_gap	mean_sim_to_full	0.27864158153533936	
+0905.2459	llm_gap	recovery_at_0.5	0.0	
+0905.2459	llm_gap	hallucination_at_0.5	1.0	
+0905.2459	llm_gap	recovery_at_0.6	0.0	
+0905.2459	llm_gap	hallucination_at_0.6	1.0	
+0905.2459	llm_gap	recovery_at_0.7	0.0	
+0905.2459	llm_gap	hallucination_at_0.7	1.0	
+0905.2248	regex_section	rouge1_f	0.42287694974003465	fallback
+0905.2248	regex_section	rouge2_f	0.33333333333333337	fallback
+0905.2248	regex_section	rougeL_f	0.3275563258232235	fallback
+0905.2248	regex_section	pred_chars	4748.0	
+0905.2248	llm_gap	n_gaps	2.0	
+0905.2248	llm_gap	mean_sim_to_gold	1.0	
+0905.2248	llm_gap	mean_sim_to_full	1.0	
+0905.2248	llm_gap	recovery_at_0.5	1.0	
+0905.2248	llm_gap	hallucination_at_0.5	0.0	
+0905.2248	llm_gap	recovery_at_0.6	1.0	
+0905.2248	llm_gap	hallucination_at_0.6	0.0	
+0905.2248	llm_gap	recovery_at_0.7	1.0	
+0905.2248	llm_gap	hallucination_at_0.7	0.0	
+0905.1425	regex_section	rouge1_f	0.6533742331288344	future_work,limitations
+0905.1425	regex_section	rouge2_f	0.5784615384615384	future_work,limitations
+0905.1425	regex_section	rougeL_f	0.638036809815951	future_work,limitations
+0905.1425	regex_section	pred_chars	1749.0	
+0905.1425	llm_gap	n_gaps	2.0	
+0905.1425	llm_gap	mean_sim_to_gold	0.9484656453132629	
+0905.1425	llm_gap	mean_sim_to_full	0.9484657645225525	
+0905.1425	llm_gap	recovery_at_0.5	1.0	
+0905.1425	llm_gap	hallucination_at_0.5	0.0	
+0905.1425	llm_gap	recovery_at_0.6	1.0	
+0905.1425	llm_gap	hallucination_at_0.6	0.0	
+0905.1425	llm_gap	recovery_at_0.7	1.0	
+0905.1425	llm_gap	hallucination_at_0.7	0.0	
+0905.4068	regex_section	rouge1_f	0.7535410764872521	fallback
+0905.4068	regex_section	rouge2_f	0.6951566951566951	fallback
+0905.4068	regex_section	rougeL_f	0.7535410764872521	fallback
+0905.4068	regex_section	pred_chars	1042.0	
+0905.4068	llm_gap	n_gaps	2.0	
+0905.4068	llm_gap	mean_sim_to_gold	0.6280233860015869	
+0905.4068	llm_gap	mean_sim_to_full	0.638092577457428	
+0905.4068	llm_gap	recovery_at_0.5	0.5	
+0905.4068	llm_gap	hallucination_at_0.5	0.5	
+0905.4068	llm_gap	recovery_at_0.6	0.5	
+0905.4068	llm_gap	hallucination_at_0.6	0.5	
+0905.4068	llm_gap	recovery_at_0.7	0.5	
+0905.4068	llm_gap	hallucination_at_0.7	0.5	
+0906.2512	regex_section	rouge1_f	0.007751937984496126	fallback
+0906.2512	regex_section	rouge2_f	0.0	fallback
+0906.2512	regex_section	rougeL_f	0.007751937984496126	fallback
+0906.2512	regex_section	pred_chars	317.0	
+0906.2512	llm_gap	n_gaps	1.0	
+0906.2512	llm_gap	mean_sim_to_gold	0.3851560652256012	
+0906.2512	llm_gap	mean_sim_to_full	0.3851560652256012	
+0906.2512	llm_gap	recovery_at_0.5	0.0	
+0906.2512	llm_gap	hallucination_at_0.5	1.0	
+0906.2512	llm_gap	recovery_at_0.6	0.0	
+0906.2512	llm_gap	hallucination_at_0.6	1.0	
+0906.2512	llm_gap	recovery_at_0.7	0.0	
+0906.2512	llm_gap	hallucination_at_0.7	1.0	
+0906.2447	regex_section	rouge1_f	0.030927835051546396	fallback
+0906.2447	regex_section	rouge2_f	0.005181347150259067	fallback
+0906.2447	regex_section	rougeL_f	0.025773195876288665	fallback
+0906.2447	regex_section	pred_chars	210.0	
+0906.2447	llm_gap	n_gaps	0.0	
+0906.2447	llm_gap	mean_sim_to_gold	0.0	
+0906.2447	llm_gap	mean_sim_to_full	0.0	
+0906.2447	llm_gap	recovery_at_0.5	0.0	
+0906.2447	llm_gap	hallucination_at_0.5	0.0	
+0906.2447	llm_gap	recovery_at_0.6	0.0	
+0906.2447	llm_gap	hallucination_at_0.6	0.0	
+0906.2447	llm_gap	recovery_at_0.7	0.0	
+0906.2447	llm_gap	hallucination_at_0.7	0.0	
+0906.4409	regex_section	rouge1_f	0.10848400556328233	fallback
+0906.4409	regex_section	rouge2_f	0.04184100418410042	fallback
+0906.4409	regex_section	rougeL_f	0.07232267037552156	fallback
+0906.4409	regex_section	pred_chars	3213.0	
+0906.4409	llm_gap	n_gaps	1.0	
+0906.4409	llm_gap	mean_sim_to_gold	0.545382022857666	
+0906.4409	llm_gap	mean_sim_to_full	0.8773868680000305	
+0906.4409	llm_gap	recovery_at_0.5	1.0	
+0906.4409	llm_gap	hallucination_at_0.5	0.0	
+0906.4409	llm_gap	recovery_at_0.6	0.0	
+0906.4409	llm_gap	hallucination_at_0.6	0.0	
+0906.4409	llm_gap	recovery_at_0.7	0.0	
+0906.4409	llm_gap	hallucination_at_0.7	0.0	
+0907.2315	regex_section	rouge1_f	0.17627118644067793	fallback
+0907.2315	regex_section	rouge2_f	0.07927519818799547	fallback
+0907.2315	regex_section	rougeL_f	0.12203389830508474	fallback
+0907.2315	regex_section	pred_chars	4318.0	
+0907.2315	llm_gap	n_gaps	3.0	
+0907.2315	llm_gap	mean_sim_to_gold	0.5756160616874695	
+0907.2315	llm_gap	mean_sim_to_full	0.9662154316902161	
+0907.2315	llm_gap	recovery_at_0.5	1.0	
+0907.2315	llm_gap	hallucination_at_0.5	0.0	
+0907.2315	llm_gap	recovery_at_0.6	0.3333333333333333	
+0907.2315	llm_gap	hallucination_at_0.6	0.0	
+0907.2315	llm_gap	recovery_at_0.7	0.0	
+0907.2315	llm_gap	hallucination_at_0.7	0.0	
+0907.2640	regex_section	rouge1_f	0.15983606557377053	fallback
+0907.2640	regex_section	rouge2_f	0.01646090534979424	fallback
+0907.2640	regex_section	rougeL_f	0.06967213114754099	fallback
+0907.2640	regex_section	pred_chars	2846.0	
+0907.2640	llm_gap	n_gaps	1.0	
+0907.2640	llm_gap	mean_sim_to_gold	0.38379180431365967	
+0907.2640	llm_gap	mean_sim_to_full	0.6000277996063232	
+0907.2640	llm_gap	recovery_at_0.5	0.0	
+0907.2640	llm_gap	hallucination_at_0.5	0.0	
+0907.2640	llm_gap	recovery_at_0.6	0.0	
+0907.2640	llm_gap	hallucination_at_0.6	0.0	
+0907.2640	llm_gap	recovery_at_0.7	0.0	
+0907.2640	llm_gap	hallucination_at_0.7	1.0	
+0908.1769	regex_section	rouge1_f	0.9087779690189329	future_work
+0908.1769	regex_section	rouge2_f	0.8601036269430054	future_work
+0908.1769	regex_section	rougeL_f	0.9087779690189329	future_work
+0908.1769	regex_section	pred_chars	1833.0	
+0908.1769	llm_gap	n_gaps	2.0	
+0908.1769	llm_gap	mean_sim_to_gold	0.9820079207420349	
+0908.1769	llm_gap	mean_sim_to_full	0.9820079207420349	
+0908.1769	llm_gap	recovery_at_0.5	1.0	
+0908.1769	llm_gap	hallucination_at_0.5	0.0	
+0908.1769	llm_gap	recovery_at_0.6	1.0	
+0908.1769	llm_gap	hallucination_at_0.6	0.0	
+0908.1769	llm_gap	recovery_at_0.7	1.0	
+0908.1769	llm_gap	hallucination_at_0.7	0.0	
+0908.3653	regex_section	rouge1_f	0.5149700598802396	discussion,future_work
+0908.3653	regex_section	rouge2_f	0.49397590361445787	discussion,future_work
+0908.3653	regex_section	rougeL_f	0.5149700598802396	discussion,future_work
+0908.3653	regex_section	pred_chars	1307.0	
+0908.3653	llm_gap	n_gaps	2.0	
+0908.3653	llm_gap	mean_sim_to_gold	0.7658990025520325	
+0908.3653	llm_gap	mean_sim_to_full	0.9999999403953552	
+0908.3653	llm_gap	recovery_at_0.5	1.0	
+0908.3653	llm_gap	hallucination_at_0.5	0.0	
+0908.3653	llm_gap	recovery_at_0.6	0.5	
+0908.3653	llm_gap	hallucination_at_0.6	0.0	
+0908.3653	llm_gap	recovery_at_0.7	0.5	
+0908.3653	llm_gap	hallucination_at_0.7	0.0	
+0909.5313	regex_section	rouge1_f	0.41536863966770504	fallback
+0909.5313	regex_section	rouge2_f	0.32882414151925077	fallback
+0909.5313	regex_section	rougeL_f	0.4132917964693666	fallback
+0909.5313	regex_section	pred_chars	2894.0	
+0909.5313	llm_gap	n_gaps	2.0	
+0909.5313	llm_gap	mean_sim_to_gold	0.6576647758483887	
+0909.5313	llm_gap	mean_sim_to_full	0.7960649132728577	
+0909.5313	llm_gap	recovery_at_0.5	1.0	
+0909.5313	llm_gap	hallucination_at_0.5	0.0	
+0909.5313	llm_gap	recovery_at_0.6	0.5	
+0909.5313	llm_gap	hallucination_at_0.6	0.0	
+0909.5313	llm_gap	recovery_at_0.7	0.5	
+0909.5313	llm_gap	hallucination_at_0.7	0.0	
+0910.0670	regex_section	rouge1_f	0.17847533632286994	future_work
+0910.0670	regex_section	rouge2_f	0.1561938958707361	future_work
+0910.0670	regex_section	rougeL_f	0.1757847533632287	future_work
+0910.0670	regex_section	pred_chars	1403.0	
+0910.0670	llm_gap	n_gaps	0.0	
+0910.0670	llm_gap	mean_sim_to_gold	0.0	
+0910.0670	llm_gap	mean_sim_to_full	0.0	
+0910.0670	llm_gap	recovery_at_0.5	0.0	
+0910.0670	llm_gap	hallucination_at_0.5	0.0	
+0910.0670	llm_gap	recovery_at_0.6	0.0	
+0910.0670	llm_gap	hallucination_at_0.6	0.0	
+0910.0670	llm_gap	recovery_at_0.7	0.0	
+0910.0670	llm_gap	hallucination_at_0.7	0.0	
+0910.1692	regex_section	rouge1_f	0.9662162162162162	future_work
+0910.1692	regex_section	rouge2_f	0.9387755102040818	future_work
+0910.1692	regex_section	rougeL_f	0.9662162162162162	future_work
+0910.1692	regex_section	pred_chars	917.0	
+0910.1692	llm_gap	n_gaps	1.0	
+0910.1692	llm_gap	mean_sim_to_gold	0.9999999403953552	
+0910.1692	llm_gap	mean_sim_to_full	0.9999999403953552	
+0910.1692	llm_gap	recovery_at_0.5	1.0	
+0910.1692	llm_gap	hallucination_at_0.5	0.0	
+0910.1692	llm_gap	recovery_at_0.6	1.0	
+0910.1692	llm_gap	hallucination_at_0.6	0.0	
+0910.1692	llm_gap	recovery_at_0.7	1.0	
+0910.1692	llm_gap	hallucination_at_0.7	0.0	
+0910.5055	regex_section	rouge1_f	0.41876629018245004	fallback
+0910.5055	regex_section	rouge2_f	0.3481288076588338	fallback
+0910.5055	regex_section	rougeL_f	0.41529105125977417	fallback
+0910.5055	regex_section	pred_chars	4809.0	
+0910.5055	llm_gap	n_gaps	3.0	
+0910.5055	llm_gap	mean_sim_to_gold	0.9194068908691406	
+0910.5055	llm_gap	mean_sim_to_full	0.9194067120552063	
+0910.5055	llm_gap	recovery_at_0.5	1.0	
+0910.5055	llm_gap	hallucination_at_0.5	0.0	
+0910.5055	llm_gap	recovery_at_0.6	1.0	
+0910.5055	llm_gap	hallucination_at_0.6	0.0	
+0910.5055	llm_gap	recovery_at_0.7	1.0	
+0910.5055	llm_gap	hallucination_at_0.7	0.0	
+0912.0270	regex_section	rouge1_f	0.017391304347826087	fallback
+0912.0270	regex_section	rouge2_f	0.0	fallback
+0912.0270	regex_section	rougeL_f	0.011594202898550725	fallback
+0912.0270	regex_section	pred_chars	270.0	
+0912.0270	llm_gap	n_gaps	0.0	
+0912.0270	llm_gap	mean_sim_to_gold	0.0	
+0912.0270	llm_gap	mean_sim_to_full	0.0	
+0912.0270	llm_gap	recovery_at_0.5	0.0	
+0912.0270	llm_gap	hallucination_at_0.5	0.0	
+0912.0270	llm_gap	recovery_at_0.6	0.0	
+0912.0270	llm_gap	hallucination_at_0.6	0.0	
+0912.0270	llm_gap	recovery_at_0.7	0.0	
+0912.0270	llm_gap	hallucination_at_0.7	0.0	
+0912.1200	regex_section	rouge1_f	0.6976744186046512	future_work
+0912.1200	regex_section	rouge2_f	0.611764705882353	future_work
+0912.1200	regex_section	rougeL_f	0.6976744186046512	future_work
+0912.1200	regex_section	pred_chars	625.0	
+0912.1200	llm_gap	n_gaps	2.0	
+0912.1200	llm_gap	mean_sim_to_gold	0.9832668304443359	
+0912.1200	llm_gap	mean_sim_to_full	0.9832668900489807	
+0912.1200	llm_gap	recovery_at_0.5	1.0	
+0912.1200	llm_gap	hallucination_at_0.5	0.0	
+0912.1200	llm_gap	recovery_at_0.6	1.0	
+0912.1200	llm_gap	hallucination_at_0.6	0.0	
+0912.1200	llm_gap	recovery_at_0.7	1.0	
+0912.1200	llm_gap	hallucination_at_0.7	0.0	
+0912.2625	regex_section	rouge1_f	0.8414239482200647	future_work
+0912.2625	regex_section	rouge2_f	0.762214983713355	future_work
+0912.2625	regex_section	rougeL_f	0.8414239482200647	future_work
+0912.2625	regex_section	pred_chars	878.0	
+0912.2625	llm_gap	n_gaps	2.0	
+0912.2625	llm_gap	mean_sim_to_gold	0.8377086520195007	
+0912.2625	llm_gap	mean_sim_to_full	0.8377086520195007	
+0912.2625	llm_gap	recovery_at_0.5	1.0	
+0912.2625	llm_gap	hallucination_at_0.5	0.0	
+0912.2625	llm_gap	recovery_at_0.6	1.0	
+0912.2625	llm_gap	hallucination_at_0.6	0.0	
+0912.2625	llm_gap	recovery_at_0.7	0.5	
+0912.2625	llm_gap	hallucination_at_0.7	0.5	
+0912.4184	regex_section	rouge1_f	0.4091530054644809	discussion,future_work
+0912.4184	regex_section	rouge2_f	0.3834586466165414	discussion,future_work
+0912.4184	regex_section	rougeL_f	0.40710382513661203	discussion,future_work
+0912.4184	regex_section	pred_chars	12353.0	
+0912.4184	llm_gap	n_gaps	1.0	
+0912.4184	llm_gap	mean_sim_to_gold	0.6358303427696228	
+0912.4184	llm_gap	mean_sim_to_full	0.9937469959259033	
+0912.4184	llm_gap	recovery_at_0.5	1.0	
+0912.4184	llm_gap	hallucination_at_0.5	0.0	
+0912.4184	llm_gap	recovery_at_0.6	1.0	
+0912.4184	llm_gap	hallucination_at_0.6	0.0	
+0912.4184	llm_gap	recovery_at_0.7	0.0	
+0912.4184	llm_gap	hallucination_at_0.7	0.0	
+0912.5353	regex_section	rouge1_f	0.4127423822714682	fallback
+0912.5353	regex_section	rouge2_f	0.27461858529819694	fallback
+0912.5353	regex_section	rougeL_f	0.2479224376731302	fallback
+0912.5353	regex_section	pred_chars	4218.0	
+0912.5353	llm_gap	n_gaps	1.0	
+0912.5353	llm_gap	mean_sim_to_gold	0.9541540741920471	
+0912.5353	llm_gap	mean_sim_to_full	0.9541540741920471	
+0912.5353	llm_gap	recovery_at_0.5	1.0	
+0912.5353	llm_gap	hallucination_at_0.5	0.0	
+0912.5353	llm_gap	recovery_at_0.6	1.0	
+0912.5353	llm_gap	hallucination_at_0.6	0.0	
+0912.5353	llm_gap	recovery_at_0.7	1.0	
+0912.5353	llm_gap	hallucination_at_0.7	0.0	
+1001.0315	regex_section	rouge1_f	0.7790262172284644	future_work
+1001.0315	regex_section	rouge2_f	0.6954887218045114	future_work
+1001.0315	regex_section	rougeL_f	0.7752808988764045	future_work
+1001.0315	regex_section	pred_chars	1423.0	
+1001.0315	llm_gap	n_gaps	2.0	
+1001.0315	llm_gap	mean_sim_to_gold	0.9593136310577393	
+1001.0315	llm_gap	mean_sim_to_full	0.9593136310577393	
+1001.0315	llm_gap	recovery_at_0.5	1.0	
+1001.0315	llm_gap	hallucination_at_0.5	0.0	
+1001.0315	llm_gap	recovery_at_0.6	1.0	
+1001.0315	llm_gap	hallucination_at_0.6	0.0	
+1001.0315	llm_gap	recovery_at_0.7	1.0	
+1001.0315	llm_gap	hallucination_at_0.7	0.0	
+1001.1460	regex_section	rouge1_f	0.5151079136690647	fallback
+1001.1460	regex_section	rouge2_f	0.2377521613832853	fallback
+1001.1460	regex_section	rougeL_f	0.16690647482014387	fallback
+1001.1460	regex_section	pred_chars	3852.0	
+1001.1460	llm_gap	n_gaps	3.0	
+1001.1460	llm_gap	mean_sim_to_gold	0.45619097352027893	
+1001.1460	llm_gap	mean_sim_to_full	0.8295574188232422	
+1001.1460	llm_gap	recovery_at_0.5	0.6666666666666666	
+1001.1460	llm_gap	hallucination_at_0.5	0.0	
+1001.1460	llm_gap	recovery_at_0.6	0.0	
+1001.1460	llm_gap	hallucination_at_0.6	0.3333333333333333	
+1001.1460	llm_gap	recovery_at_0.7	0.0	
+1001.1460	llm_gap	hallucination_at_0.7	0.3333333333333333	
+1002.1751	regex_section	rouge1_f	0.5952380952380952	future_work
+1002.1751	regex_section	rouge2_f	0.4730538922155688	future_work
+1002.1751	regex_section	rougeL_f	0.5178571428571429	future_work
+1002.1751	regex_section	pred_chars	856.0	
+1002.1751	llm_gap	n_gaps	0.0	
+1002.1751	llm_gap	mean_sim_to_gold	0.0	
+1002.1751	llm_gap	mean_sim_to_full	0.0	
+1002.1751	llm_gap	recovery_at_0.5	0.0	
+1002.1751	llm_gap	hallucination_at_0.5	0.0	
+1002.1751	llm_gap	recovery_at_0.6	0.0	
+1002.1751	llm_gap	hallucination_at_0.6	0.0	
+1002.1751	llm_gap	recovery_at_0.7	0.0	
+1002.1751	llm_gap	hallucination_at_0.7	0.0	
+1003.1682	regex_section	rouge1_f	0.9272727272727271	future_work
+1003.1682	regex_section	rouge2_f	0.8807339449541284	future_work
+1003.1682	regex_section	rougeL_f	0.9272727272727271	future_work
+1003.1682	regex_section	pred_chars	704.0	
+1003.1682	llm_gap	n_gaps	1.0	
+1003.1682	llm_gap	mean_sim_to_gold	0.9225989580154419	
+1003.1682	llm_gap	mean_sim_to_full	0.9225988388061523	
+1003.1682	llm_gap	recovery_at_0.5	1.0	
+1003.1682	llm_gap	hallucination_at_0.5	0.0	
+1003.1682	llm_gap	recovery_at_0.6	1.0	
+1003.1682	llm_gap	hallucination_at_0.6	0.0	
+1003.1682	llm_gap	recovery_at_0.7	1.0	
+1003.1682	llm_gap	hallucination_at_0.7	0.0	
+1003.3684	regex_section	rouge1_f	0.973630831643002	future_work
+1003.3684	regex_section	rouge2_f	0.9531568228105906	future_work
+1003.3684	regex_section	rougeL_f	0.973630831643002	future_work
+1003.3684	regex_section	pred_chars	1558.0	
+1003.3684	llm_gap	n_gaps	2.0	
+1003.3684	llm_gap	mean_sim_to_gold	1.0	
+1003.3684	llm_gap	mean_sim_to_full	1.0	
+1003.3684	llm_gap	recovery_at_0.5	1.0	
+1003.3684	llm_gap	hallucination_at_0.5	0.0	
+1003.3684	llm_gap	recovery_at_0.6	1.0	
+1003.3684	llm_gap	hallucination_at_0.6	0.0	
+1003.3684	llm_gap	recovery_at_0.7	1.0	
+1003.3684	llm_gap	hallucination_at_0.7	0.0	
+1003.5621	regex_section	rouge1_f	0.7320754716981133	future_work
+1003.5621	regex_section	rouge2_f	0.6590909090909092	future_work
+1003.5621	regex_section	rougeL_f	0.7283018867924528	future_work
+1003.5621	regex_section	pred_chars	1382.0	
+1003.5621	llm_gap	n_gaps	2.0	
+1003.5621	llm_gap	mean_sim_to_gold	0.9576523303985596	
+1003.5621	llm_gap	mean_sim_to_full	0.9576523303985596	
+1003.5621	llm_gap	recovery_at_0.5	1.0	
+1003.5621	llm_gap	hallucination_at_0.5	0.0	
+1003.5621	llm_gap	recovery_at_0.6	1.0	
+1003.5621	llm_gap	hallucination_at_0.6	0.0	
+1003.5621	llm_gap	recovery_at_0.7	1.0	
+1003.5621	llm_gap	hallucination_at_0.7	0.0	
+1004.4402	regex_section	rouge1_f	0.9486652977412731	future_work
+1004.4402	regex_section	rouge2_f	0.911340206185567	future_work
+1004.4402	regex_section	rougeL_f	0.9486652977412731	future_work
+1004.4402	regex_section	pred_chars	1607.0	
+1004.4402	llm_gap	n_gaps	2.0	
+1004.4402	llm_gap	mean_sim_to_gold	0.9609317183494568	
+1004.4402	llm_gap	mean_sim_to_full	0.960931658744812	
+1004.4402	llm_gap	recovery_at_0.5	1.0	
+1004.4402	llm_gap	hallucination_at_0.5	0.0	
+1004.4402	llm_gap	recovery_at_0.6	1.0	
+1004.4402	llm_gap	hallucination_at_0.6	0.0	
+1004.4402	llm_gap	recovery_at_0.7	1.0	
+1004.4402	llm_gap	hallucination_at_0.7	0.0	
+1004.5186	regex_section	rouge1_f	0.8338907469342253	future_work
+1004.5186	regex_section	rouge2_f	0.7553072625698323	future_work
+1004.5186	regex_section	rougeL_f	0.8338907469342253	future_work
+1004.5186	regex_section	pred_chars	2620.0	
+1004.5186	llm_gap	n_gaps	2.0	
+1004.5186	llm_gap	mean_sim_to_gold	0.7158248424530029	
+1004.5186	llm_gap	mean_sim_to_full	0.7158248424530029	
+1004.5186	llm_gap	recovery_at_0.5	0.5	
+1004.5186	llm_gap	hallucination_at_0.5	0.5	
+1004.5186	llm_gap	recovery_at_0.6	0.5	
+1004.5186	llm_gap	hallucination_at_0.6	0.5	
+1004.5186	llm_gap	recovery_at_0.7	0.5	
+1004.5186	llm_gap	hallucination_at_0.7	0.5	
+1005.0398	regex_section	rouge1_f	0.3994878361075544	fallback
+1005.0398	regex_section	rouge2_f	0.0858974358974359	fallback
+1005.0398	regex_section	rougeL_f	0.11907810499359796	fallback
+1005.0398	regex_section	pred_chars	5021.0	
+1005.0398	llm_gap	n_gaps	2.0	
+1005.0398	llm_gap	mean_sim_to_gold	0.5881331562995911	
+1005.0398	llm_gap	mean_sim_to_full	0.6861366629600525	
+1005.0398	llm_gap	recovery_at_0.5	1.0	
+1005.0398	llm_gap	hallucination_at_0.5	0.0	
+1005.0398	llm_gap	recovery_at_0.6	0.5	
+1005.0398	llm_gap	hallucination_at_0.6	0.5	
+1005.0398	llm_gap	recovery_at_0.7	0.0	
+1005.0398	llm_gap	hallucination_at_0.7	0.5	
+1005.2442	regex_section	rouge1_f	0.21804511278195488	fallback
+1005.2442	regex_section	rouge2_f	0.09811320754716982	fallback
+1005.2442	regex_section	rougeL_f	0.09398496240601503	fallback
+1005.2442	regex_section	pred_chars	2742.0	
+1005.2442	llm_gap	n_gaps	1.0	
+1005.2442	llm_gap	mean_sim_to_gold	1.0000001192092896	
+1005.2442	llm_gap	mean_sim_to_full	1.0000001192092896	
+1005.2442	llm_gap	recovery_at_0.5	1.0	
+1005.2442	llm_gap	hallucination_at_0.5	0.0	
+1005.2442	llm_gap	recovery_at_0.6	1.0	
+1005.2442	llm_gap	hallucination_at_0.6	0.0	
+1005.2442	llm_gap	recovery_at_0.7	1.0	
+1005.2442	llm_gap	hallucination_at_0.7	0.0	
+1005.4752	regex_section	rouge1_f	0.39242685025817553	future_work
+1005.4752	regex_section	rouge2_f	0.3741379310344828	future_work
+1005.4752	regex_section	rougeL_f	0.3855421686746988	future_work
+1005.4752	regex_section	pred_chars	5746.0	
+1005.4752	llm_gap	n_gaps	0.0	
+1005.4752	llm_gap	mean_sim_to_gold	0.0	
+1005.4752	llm_gap	mean_sim_to_full	0.0	
+1005.4752	llm_gap	recovery_at_0.5	0.0	
+1005.4752	llm_gap	hallucination_at_0.5	0.0	
+1005.4752	llm_gap	recovery_at_0.6	0.0	
+1005.4752	llm_gap	hallucination_at_0.6	0.0	
+1005.4752	llm_gap	recovery_at_0.7	0.0	
+1005.4752	llm_gap	hallucination_at_0.7	0.0	
+1006.1944	regex_section	rouge1_f	0.19095477386934673	fallback
+1006.1944	regex_section	rouge2_f	0.030211480362537766	fallback
+1006.1944	regex_section	rougeL_f	0.10050251256281406	fallback
+1006.1944	regex_section	pred_chars	4130.0	
+1006.1944	llm_gap	n_gaps	1.0	
+1006.1944	llm_gap	mean_sim_to_gold	0.30303388833999634	
+1006.1944	llm_gap	mean_sim_to_full	0.6239359378814697	
+1006.1944	llm_gap	recovery_at_0.5	0.0	
+1006.1944	llm_gap	hallucination_at_0.5	0.0	
+1006.1944	llm_gap	recovery_at_0.6	0.0	
+1006.1944	llm_gap	hallucination_at_0.6	0.0	
+1006.1944	llm_gap	recovery_at_0.7	0.0	
+1006.1944	llm_gap	hallucination_at_0.7	1.0	
+1006.4128	regex_section	rouge1_f	0.18219749652294853	discussion,limitations
+1006.4128	regex_section	rouge2_f	0.1022964509394572	discussion,limitations
+1006.4128	regex_section	rougeL_f	0.14812239221140472	discussion,limitations
+1006.4128	regex_section	pred_chars	2639.0	
+1006.4128	llm_gap	n_gaps	1.0	
+1006.4128	llm_gap	mean_sim_to_gold	0.6575023531913757	
+1006.4128	llm_gap	mean_sim_to_full	1.0	
+1006.4128	llm_gap	recovery_at_0.5	1.0	
+1006.4128	llm_gap	hallucination_at_0.5	0.0	
+1006.4128	llm_gap	recovery_at_0.6	1.0	
+1006.4128	llm_gap	hallucination_at_0.6	0.0	
+1006.4128	llm_gap	recovery_at_0.7	0.0	
+1006.4128	llm_gap	hallucination_at_0.7	0.0	
+1006.4925	regex_section	rouge1_f	0.945337620578778	future_work
+1006.4925	regex_section	rouge2_f	0.9193548387096774	future_work
+1006.4925	regex_section	rougeL_f	0.945337620578778	future_work
+1006.4925	regex_section	pred_chars	2038.0	
+1006.4925	llm_gap	n_gaps	2.0	
+1006.4925	llm_gap	mean_sim_to_gold	1.0	
+1006.4925	llm_gap	mean_sim_to_full	1.0	
+1006.4925	llm_gap	recovery_at_0.5	1.0	
+1006.4925	llm_gap	hallucination_at_0.5	0.0	
+1006.4925	llm_gap	recovery_at_0.6	1.0	
+1006.4925	llm_gap	hallucination_at_0.6	0.0	
+1006.4925	llm_gap	recovery_at_0.7	1.0	
+1006.4925	llm_gap	hallucination_at_0.7	0.0	
+1007.0920	regex_section	rouge1_f	0.4879725085910653	future_work
+1007.0920	regex_section	rouge2_f	0.47058823529411764	future_work
+1007.0920	regex_section	rougeL_f	0.4810996563573883	future_work
+1007.0920	regex_section	pred_chars	444.0	
+1007.0920	llm_gap	n_gaps	1.0	
+1007.0920	llm_gap	mean_sim_to_gold	1.0000001192092896	
+1007.0920	llm_gap	mean_sim_to_full	1.0000001192092896	
+1007.0920	llm_gap	recovery_at_0.5	1.0	
+1007.0920	llm_gap	hallucination_at_0.5	0.0	
+1007.0920	llm_gap	recovery_at_0.6	1.0	
+1007.0920	llm_gap	hallucination_at_0.6	0.0	
+1007.0920	llm_gap	recovery_at_0.7	1.0	
+1007.0920	llm_gap	hallucination_at_0.7	0.0	
+1007.1253	regex_section	rouge1_f	0.24146341463414636	tail
+1007.1253	regex_section	rouge2_f	0.18092909535452323	tail
+1007.1253	regex_section	rougeL_f	0.23414634146341465	tail
+1007.1253	regex_section	pred_chars	3297.0	
+1007.1253	llm_gap	n_gaps	2.0	
+1007.1253	llm_gap	mean_sim_to_gold	0.5511021614074707	
+1007.1253	llm_gap	mean_sim_to_full	0.5511021614074707	
+1007.1253	llm_gap	recovery_at_0.5	0.5	
+1007.1253	llm_gap	hallucination_at_0.5	0.5	
+1007.1253	llm_gap	recovery_at_0.6	0.5	
+1007.1253	llm_gap	hallucination_at_0.6	0.5	
+1007.1253	llm_gap	recovery_at_0.7	0.0	
+1007.1253	llm_gap	hallucination_at_0.7	1.0	
+1008.3977	regex_section	rouge1_f	0.9527665317139002	future_work
+1008.3977	regex_section	rouge2_f	0.9255751014884979	future_work
+1008.3977	regex_section	rougeL_f	0.9527665317139002	future_work
+1008.3977	regex_section	pred_chars	2259.0	
+1008.3977	llm_gap	n_gaps	2.0	
+1008.3977	llm_gap	mean_sim_to_gold	0.9568008184432983	
+1008.3977	llm_gap	mean_sim_to_full	0.9568008184432983	
+1008.3977	llm_gap	recovery_at_0.5	1.0	
+1008.3977	llm_gap	hallucination_at_0.5	0.0	
+1008.3977	llm_gap	recovery_at_0.6	1.0	
+1008.3977	llm_gap	hallucination_at_0.6	0.0	
+1008.3977	llm_gap	recovery_at_0.7	1.0	
+1008.3977	llm_gap	hallucination_at_0.7	0.0	
+1009.2123	regex_section	rouge1_f	0.33877551020408164	fallback
+1009.2123	regex_section	rouge2_f	0.14986376021798364	fallback
+1009.2123	regex_section	rougeL_f	0.13333333333333336	fallback
+1009.2123	regex_section	pred_chars	4648.0	
+1009.2123	llm_gap	n_gaps	2.0	
+1009.2123	llm_gap	mean_sim_to_gold	1.0	
+1009.2123	llm_gap	mean_sim_to_full	1.0	
+1009.2123	llm_gap	recovery_at_0.5	1.0	
+1009.2123	llm_gap	hallucination_at_0.5	0.0	
+1009.2123	llm_gap	recovery_at_0.6	1.0	
+1009.2123	llm_gap	hallucination_at_0.6	0.0	
+1009.2123	llm_gap	recovery_at_0.7	1.0	
+1009.2123	llm_gap	hallucination_at_0.7	0.0	
+1010.1307	regex_section	rouge1_f	0.43445692883895126	future_work
+1010.1307	regex_section	rouge2_f	0.4075471698113207	future_work
+1010.1307	regex_section	rougeL_f	0.43445692883895126	future_work
+1010.1307	regex_section	pred_chars	392.0	
+1010.1307	llm_gap	n_gaps	1.0	
+1010.1307	llm_gap	mean_sim_to_gold	1.0000001192092896	
+1010.1307	llm_gap	mean_sim_to_full	1.0000001192092896	
+1010.1307	llm_gap	recovery_at_0.5	1.0	
+1010.1307	llm_gap	hallucination_at_0.5	0.0	
+1010.1307	llm_gap	recovery_at_0.6	1.0	
+1010.1307	llm_gap	hallucination_at_0.6	0.0	
+1010.1307	llm_gap	recovery_at_0.7	1.0	
+1010.1307	llm_gap	hallucination_at_0.7	0.0	
+1010.2511	regex_section	rouge1_f	0.22863741339491916	discussion
+1010.2511	regex_section	rouge2_f	0.2222222222222222	discussion
+1010.2511	regex_section	rougeL_f	0.22863741339491916	discussion
+1010.2511	regex_section	pred_chars	4684.0	
+1010.2511	llm_gap	n_gaps	2.0	
+1010.2511	llm_gap	mean_sim_to_gold	0.6307666301727295	
+1010.2511	llm_gap	mean_sim_to_full	0.9537238478660583	
+1010.2511	llm_gap	recovery_at_0.5	0.5	
+1010.2511	llm_gap	hallucination_at_0.5	0.0	
+1010.2511	llm_gap	recovery_at_0.6	0.5	
+1010.2511	llm_gap	hallucination_at_0.6	0.0	
+1010.2511	llm_gap	recovery_at_0.7	0.5	
+1010.2511	llm_gap	hallucination_at_0.7	0.0	
+1010.2783	regex_section	rouge1_f	0.32247557003257327	fallback
+1010.2783	regex_section	rouge2_f	0.061990212071778135	fallback
+1010.2783	regex_section	rougeL_f	0.14657980456026057	fallback
+1010.2783	regex_section	pred_chars	4550.0	
+1010.2783	llm_gap	n_gaps	1.0	
+1010.2783	llm_gap	mean_sim_to_gold	0.43108242750167847	
+1010.2783	llm_gap	mean_sim_to_full	0.8528544306755066	
+1010.2783	llm_gap	recovery_at_0.5	0.0	
+1010.2783	llm_gap	hallucination_at_0.5	0.0	
+1010.2783	llm_gap	recovery_at_0.6	0.0	
+1010.2783	llm_gap	hallucination_at_0.6	0.0	
+1010.2783	llm_gap	recovery_at_0.7	0.0	
+1010.2783	llm_gap	hallucination_at_0.7	0.0	
+1011.3603	regex_section	rouge1_f	0.0	
+1011.3603	regex_section	rouge2_f	0.0	
+1011.3603	regex_section	rougeL_f	0.0	
+1011.3603	regex_section	pred_chars	0.0	
+1011.3603	llm_gap	n_gaps	0.0	
+1011.3603	llm_gap	mean_sim_to_gold	0.0	
+1011.3603	llm_gap	mean_sim_to_full	0.0	
+1011.3603	llm_gap	recovery_at_0.5	0.0	
+1011.3603	llm_gap	hallucination_at_0.5	0.0	
+1011.3603	llm_gap	recovery_at_0.6	0.0	
+1011.3603	llm_gap	hallucination_at_0.6	0.0	
+1011.3603	llm_gap	recovery_at_0.7	0.0	
+1011.3603	llm_gap	hallucination_at_0.7	0.0	
+1011.6627	regex_section	rouge1_f	0.7595959595959595	future_work
+1011.6627	regex_section	rouge2_f	0.6896551724137931	future_work
+1011.6627	regex_section	rougeL_f	0.7595959595959595	future_work
+1011.6627	regex_section	pred_chars	1492.0	
+1011.6627	llm_gap	n_gaps	2.0	
+1011.6627	llm_gap	mean_sim_to_gold	0.8825744986534119	
+1011.6627	llm_gap	mean_sim_to_full	0.8825744986534119	
+1011.6627	llm_gap	recovery_at_0.5	1.0	
+1011.6627	llm_gap	hallucination_at_0.5	0.0	
+1011.6627	llm_gap	recovery_at_0.6	1.0	
+1011.6627	llm_gap	hallucination_at_0.6	0.0	
+1011.6627	llm_gap	recovery_at_0.7	1.0	
+1011.6627	llm_gap	hallucination_at_0.7	0.0	
+1011.6516	regex_section	rouge1_f	0.6074766355140188	future_work
+1011.6516	regex_section	rouge2_f	0.5058548009367682	future_work
+1011.6516	regex_section	rougeL_f	0.4065420560747663	future_work
+1011.6516	regex_section	pred_chars	1960.0	
+1011.6516	llm_gap	n_gaps	2.0	
+1011.6516	llm_gap	mean_sim_to_gold	0.9585447311401367	
+1011.6516	llm_gap	mean_sim_to_full	0.9585447311401367	
+1011.6516	llm_gap	recovery_at_0.5	1.0	
+1011.6516	llm_gap	hallucination_at_0.5	0.0	
+1011.6516	llm_gap	recovery_at_0.6	1.0	
+1011.6516	llm_gap	hallucination_at_0.6	0.0	
+1011.6516	llm_gap	recovery_at_0.7	1.0	
+1011.6516	llm_gap	hallucination_at_0.7	0.0	
+1012.0821	regex_section	rouge1_f	0.9019607843137255	limitations
+1012.0821	regex_section	rouge2_f	0.8539709649871905	limitations
+1012.0821	regex_section	rougeL_f	0.9019607843137255	limitations
+1012.0821	regex_section	pred_chars	3200.0	
+1012.0821	llm_gap	n_gaps	2.0	
+1012.0821	llm_gap	mean_sim_to_gold	0.7130466103553772	
+1012.0821	llm_gap	mean_sim_to_full	0.7259528636932373	
+1012.0821	llm_gap	recovery_at_0.5	1.0	
+1012.0821	llm_gap	hallucination_at_0.5	0.0	
+1012.0821	llm_gap	recovery_at_0.6	1.0	
+1012.0821	llm_gap	hallucination_at_0.6	0.0	
+1012.0821	llm_gap	recovery_at_0.7	0.5	
+1012.0821	llm_gap	hallucination_at_0.7	0.0	
+1012.5636	regex_section	rouge1_f	0.4398467432950192	future_work
+1012.5636	regex_section	rouge2_f	0.26093630084420566	future_work
+1012.5636	regex_section	rougeL_f	0.26053639846743293	future_work
+1012.5636	regex_section	pred_chars	2413.0	
+1012.5636	llm_gap	n_gaps	2.0	
+1012.5636	llm_gap	mean_sim_to_gold	0.8786240220069885	
+1012.5636	llm_gap	mean_sim_to_full	0.8786240220069885	
+1012.5636	llm_gap	recovery_at_0.5	1.0	
+1012.5636	llm_gap	hallucination_at_0.5	0.0	
+1012.5636	llm_gap	recovery_at_0.6	1.0	
+1012.5636	llm_gap	hallucination_at_0.6	0.0	
+1012.5636	llm_gap	recovery_at_0.7	1.0	
+1012.5636	llm_gap	hallucination_at_0.7	0.0	
+1102.3285	regex_section	rouge1_f	0.83206106870229	future_work
+1102.3285	regex_section	rouge2_f	0.7615384615384615	future_work
+1102.3285	regex_section	rougeL_f	0.83206106870229	future_work
+1102.3285	regex_section	pred_chars	805.0	
+1102.3285	llm_gap	n_gaps	2.0	
+1102.3285	llm_gap	mean_sim_to_gold	0.987089216709137	
+1102.3285	llm_gap	mean_sim_to_full	0.9870891571044922	
+1102.3285	llm_gap	recovery_at_0.5	1.0	
+1102.3285	llm_gap	hallucination_at_0.5	0.0	
+1102.3285	llm_gap	recovery_at_0.6	1.0	
+1102.3285	llm_gap	hallucination_at_0.6	0.0	
+1102.3285	llm_gap	recovery_at_0.7	1.0	
+1102.3285	llm_gap	hallucination_at_0.7	0.0	
+1103.0927	regex_section	rouge1_f	0.7374631268436578	discussion,future_work
+1103.0927	regex_section	rouge2_f	0.6943620178041543	discussion,future_work
+1103.0927	regex_section	rougeL_f	0.7374631268436578	discussion,future_work
+1103.0927	regex_section	pred_chars	1269.0	
+1103.0927	llm_gap	n_gaps	2.0	
+1103.0927	llm_gap	mean_sim_to_gold	0.6728450655937195	
+1103.0927	llm_gap	mean_sim_to_full	0.9391450881958008	
+1103.0927	llm_gap	recovery_at_0.5	0.5	
+1103.0927	llm_gap	hallucination_at_0.5	0.0	
+1103.0927	llm_gap	recovery_at_0.6	0.5	
+1103.0927	llm_gap	hallucination_at_0.6	0.0	
+1103.0927	llm_gap	recovery_at_0.7	0.5	
+1103.0927	llm_gap	hallucination_at_0.7	0.0	
+1103.3506	regex_section	rouge1_f	0.14193548387096774	fallback
+1103.3506	regex_section	rouge2_f	0.019480519480519484	fallback
+1103.3506	regex_section	rougeL_f	0.05806451612903227	fallback
+1103.3506	regex_section	pred_chars	1357.0	
+1103.3506	llm_gap	n_gaps	2.0	
+1103.3506	llm_gap	mean_sim_to_gold	0.25565004348754883	
+1103.3506	llm_gap	mean_sim_to_full	0.7395156621932983	
+1103.3506	llm_gap	recovery_at_0.5	0.0	
+1103.3506	llm_gap	hallucination_at_0.5	0.0	
+1103.3506	llm_gap	recovery_at_0.6	0.0	
+1103.3506	llm_gap	hallucination_at_0.6	0.0	
+1103.3506	llm_gap	recovery_at_0.7	0.0	
+1103.3506	llm_gap	hallucination_at_0.7	0.0	
+1103.4521	regex_section	rouge1_f	1.0	future_work
+1103.4521	regex_section	rouge2_f	1.0	future_work
+1103.4521	regex_section	rougeL_f	1.0	future_work
+1103.4521	regex_section	pred_chars	288.0	
+1103.4521	llm_gap	n_gaps	2.0	
+1103.4521	llm_gap	mean_sim_to_gold	0.9996920824050903	
+1103.4521	llm_gap	mean_sim_to_full	0.9996920824050903	
+1103.4521	llm_gap	recovery_at_0.5	1.0	
+1103.4521	llm_gap	hallucination_at_0.5	0.0	
+1103.4521	llm_gap	recovery_at_0.6	1.0	
+1103.4521	llm_gap	hallucination_at_0.6	0.0	
+1103.4521	llm_gap	recovery_at_0.7	1.0	
+1103.4521	llm_gap	hallucination_at_0.7	0.0	
+1103.5169	regex_section	rouge1_f	0.5093457943925234	future_work
+1103.5169	regex_section	rouge2_f	0.4867394695787831	future_work
+1103.5169	regex_section	rougeL_f	0.5077881619937694	future_work
+1103.5169	regex_section	pred_chars	5455.0	
+1103.5169	llm_gap	n_gaps	2.0	
+1103.5169	llm_gap	mean_sim_to_gold	0.9545038938522339	
+1103.5169	llm_gap	mean_sim_to_full	0.9545038938522339	
+1103.5169	llm_gap	recovery_at_0.5	1.0	
+1103.5169	llm_gap	hallucination_at_0.5	0.0	
+1103.5169	llm_gap	recovery_at_0.6	1.0	
+1103.5169	llm_gap	hallucination_at_0.6	0.0	
+1103.5169	llm_gap	recovery_at_0.7	1.0	
+1103.5169	llm_gap	hallucination_at_0.7	0.0	
+1103.5071	regex_section	rouge1_f	1.0	future_work
+1103.5071	regex_section	rouge2_f	1.0	future_work
+1103.5071	regex_section	rougeL_f	1.0	future_work
+1103.5071	regex_section	pred_chars	503.0	
+1103.5071	llm_gap	n_gaps	2.0	
+1103.5071	llm_gap	mean_sim_to_gold	1.0	
+1103.5071	llm_gap	mean_sim_to_full	0.8015995025634766	
+1103.5071	llm_gap	recovery_at_0.5	1.0	
+1103.5071	llm_gap	hallucination_at_0.5	0.0	
+1103.5071	llm_gap	recovery_at_0.6	1.0	
+1103.5071	llm_gap	hallucination_at_0.6	0.0	
+1103.5071	llm_gap	recovery_at_0.7	1.0	
+1103.5071	llm_gap	hallucination_at_0.7	0.5	
+1104.1580	regex_section	rouge1_f	0.21598639455782312	tail
+1104.1580	regex_section	rouge2_f	0.034071550255536626	tail
+1104.1580	regex_section	rougeL_f	0.12244897959183675	tail
+1104.1580	regex_section	pred_chars	5498.0	
+1104.1580	llm_gap	n_gaps	2.0	
+1104.1580	llm_gap	mean_sim_to_gold	0.3551407754421234	
+1104.1580	llm_gap	mean_sim_to_full	0.5021461248397827	
+1104.1580	llm_gap	recovery_at_0.5	0.0	
+1104.1580	llm_gap	hallucination_at_0.5	0.5	
+1104.1580	llm_gap	recovery_at_0.6	0.0	
+1104.1580	llm_gap	hallucination_at_0.6	1.0	
+1104.1580	llm_gap	recovery_at_0.7	0.0	
+1104.1580	llm_gap	hallucination_at_0.7	1.0	
+1104.3784	regex_section	rouge1_f	0.4981949458483754	discussion,limitations
+1104.3784	regex_section	rouge2_f	0.4818840579710145	discussion,limitations
+1104.3784	regex_section	rougeL_f	0.4981949458483754	discussion,limitations
+1104.3784	regex_section	pred_chars	2724.0	
+1104.3784	llm_gap	n_gaps	1.0	
+1104.3784	llm_gap	mean_sim_to_gold	0.9951349496841431	
+1104.3784	llm_gap	mean_sim_to_full	0.6840463876724243	
+1104.3784	llm_gap	recovery_at_0.5	1.0	
+1104.3784	llm_gap	hallucination_at_0.5	0.0	
+1104.3784	llm_gap	recovery_at_0.6	1.0	
+1104.3784	llm_gap	hallucination_at_0.6	0.0	
+1104.3784	llm_gap	recovery_at_0.7	1.0	
+1104.3784	llm_gap	hallucination_at_0.7	1.0	
+1105.1534	regex_section	rouge1_f	0.170873786407767	discussion
+1105.1534	regex_section	rouge2_f	0.03118908382066277	discussion
+1105.1534	regex_section	rougeL_f	0.09320388349514563	discussion
+1105.1534	regex_section	pred_chars	487.0	
+1105.1534	llm_gap	n_gaps	1.0	
+1105.1534	llm_gap	mean_sim_to_gold	0.47975337505340576	
+1105.1534	llm_gap	mean_sim_to_full	1.0	
+1105.1534	llm_gap	recovery_at_0.5	0.0	
+1105.1534	llm_gap	hallucination_at_0.5	0.0	
+1105.1534	llm_gap	recovery_at_0.6	0.0	
+1105.1534	llm_gap	hallucination_at_0.6	0.0	
+1105.1534	llm_gap	recovery_at_0.7	0.0	
+1105.1534	llm_gap	hallucination_at_0.7	0.0	
+1105.2968	regex_section	rouge1_f	0.7545126353790614	discussion,future_work
+1105.2968	regex_section	rouge2_f	0.681159420289855	discussion,future_work
+1105.2968	regex_section	rougeL_f	0.7545126353790614	discussion,future_work
+1105.2968	regex_section	pred_chars	1782.0	
+1105.2968	llm_gap	n_gaps	2.0	
+1105.2968	llm_gap	mean_sim_to_gold	0.9239491820335388	
+1105.2968	llm_gap	mean_sim_to_full	0.9239491820335388	
+1105.2968	llm_gap	recovery_at_0.5	1.0	
+1105.2968	llm_gap	hallucination_at_0.5	0.0	
+1105.2968	llm_gap	recovery_at_0.6	1.0	
+1105.2968	llm_gap	hallucination_at_0.6	0.0	
+1105.2968	llm_gap	recovery_at_0.7	1.0	
+1105.2968	llm_gap	hallucination_at_0.7	0.0	
+1105.4058	regex_section	rouge1_f	0.746227709190672	discussion,future_work
+1105.4058	regex_section	rouge2_f	0.7152682255845942	discussion,future_work
+1105.4058	regex_section	rougeL_f	0.746227709190672	discussion,future_work
+1105.4058	regex_section	pred_chars	2774.0	
+1105.4058	llm_gap	n_gaps	2.0	
+1105.4058	llm_gap	mean_sim_to_gold	0.9221782088279724	
+1105.4058	llm_gap	mean_sim_to_full	0.9221782088279724	
+1105.4058	llm_gap	recovery_at_0.5	1.0	
+1105.4058	llm_gap	hallucination_at_0.5	0.0	
+1105.4058	llm_gap	recovery_at_0.6	1.0	
+1105.4058	llm_gap	hallucination_at_0.6	0.0	
+1105.4058	llm_gap	recovery_at_0.7	1.0	
+1105.4058	llm_gap	hallucination_at_0.7	0.0	
+1105.5509	regex_section	rouge1_f	0.2511013215859031	discussion
+1105.5509	regex_section	rouge2_f	0.2433628318584071	discussion
+1105.5509	regex_section	rougeL_f	0.2511013215859031	discussion
+1105.5509	regex_section	pred_chars	388.0	
+1105.5509	llm_gap	n_gaps	1.0	
+1105.5509	llm_gap	mean_sim_to_gold	0.5609564781188965	
+1105.5509	llm_gap	mean_sim_to_full	0.5720289945602417	
+1105.5509	llm_gap	recovery_at_0.5	1.0	
+1105.5509	llm_gap	hallucination_at_0.5	0.0	
+1105.5509	llm_gap	recovery_at_0.6	0.0	
+1105.5509	llm_gap	hallucination_at_0.6	1.0	
+1105.5509	llm_gap	recovery_at_0.7	0.0	
+1105.5509	llm_gap	hallucination_at_0.7	1.0	
+1106.0776	regex_section	rouge1_f	0.8645276292335117	future_work
+1106.0776	regex_section	rouge2_f	0.7875	future_work
+1106.0776	regex_section	rougeL_f	0.857397504456328	future_work
+1106.0776	regex_section	pred_chars	3610.0	
+1106.0776	llm_gap	n_gaps	2.0	
+1106.0776	llm_gap	mean_sim_to_gold	1.0	
+1106.0776	llm_gap	mean_sim_to_full	1.0	
+1106.0776	llm_gap	recovery_at_0.5	1.0	
+1106.0776	llm_gap	hallucination_at_0.5	0.0	
+1106.0776	llm_gap	recovery_at_0.6	1.0	
+1106.0776	llm_gap	hallucination_at_0.6	0.0	
+1106.0776	llm_gap	recovery_at_0.7	1.0	
+1106.0776	llm_gap	hallucination_at_0.7	0.0	
+1106.2440	regex_section	rouge1_f	0.774193548387097	discussion,future_work
+1106.2440	regex_section	rouge2_f	0.7344110854503464	discussion,future_work
+1106.2440	regex_section	rougeL_f	0.774193548387097	discussion,future_work
+1106.2440	regex_section	pred_chars	3309.0	
+1106.2440	llm_gap	n_gaps	2.0	
+1106.2440	llm_gap	mean_sim_to_gold	0.9680334329605103	
+1106.2440	llm_gap	mean_sim_to_full	0.9680333137512207	
+1106.2440	llm_gap	recovery_at_0.5	1.0	
+1106.2440	llm_gap	hallucination_at_0.5	0.0	
+1106.2440	llm_gap	recovery_at_0.6	1.0	
+1106.2440	llm_gap	hallucination_at_0.6	0.0	
+1106.2440	llm_gap	recovery_at_0.7	1.0	
+1106.2440	llm_gap	hallucination_at_0.7	0.0	
+1106.3736	regex_section	rouge1_f	0.5982404692082112	future_work
+1106.3736	regex_section	rouge2_f	0.46868884540117417	future_work
+1106.3736	regex_section	rougeL_f	0.5483870967741934	future_work
+1106.3736	regex_section	pred_chars	5262.0	
+1106.3736	llm_gap	n_gaps	2.0	
+1106.3736	llm_gap	mean_sim_to_gold	0.7248491644859314	
+1106.3736	llm_gap	mean_sim_to_full	0.7248491644859314	
+1106.3736	llm_gap	recovery_at_0.5	1.0	
+1106.3736	llm_gap	hallucination_at_0.5	0.0	
+1106.3736	llm_gap	recovery_at_0.6	1.0	
+1106.3736	llm_gap	hallucination_at_0.6	0.0	
+1106.3736	llm_gap	recovery_at_0.7	0.5	
+1106.3736	llm_gap	hallucination_at_0.7	0.5	
+1106.3478	regex_section	rouge1_f	0.9758454106280192	future_work
+1106.3478	regex_section	rouge2_f	0.9560975609756097	future_work
+1106.3478	regex_section	rougeL_f	0.9758454106280192	future_work
+1106.3478	regex_section	pred_chars	655.0	
+1106.3478	llm_gap	n_gaps	2.0	
+1106.3478	llm_gap	mean_sim_to_gold	0.9796559810638428	
+1106.3478	llm_gap	mean_sim_to_full	0.9796559810638428	
+1106.3478	llm_gap	recovery_at_0.5	1.0	
+1106.3478	llm_gap	hallucination_at_0.5	0.0	
+1106.3478	llm_gap	recovery_at_0.6	1.0	
+1106.3478	llm_gap	hallucination_at_0.6	0.0	
+1106.3478	llm_gap	recovery_at_0.7	1.0	
+1106.3478	llm_gap	hallucination_at_0.7	0.0	
+1106.5178	regex_section	rouge1_f	0.3158742949234488	fallback
+1106.5178	regex_section	rouge2_f	0.08716707021791767	fallback
+1106.5178	regex_section	rougeL_f	0.13537469782433523	fallback
+1106.5178	regex_section	pred_chars	5767.0	
+1106.5178	llm_gap	n_gaps	2.0	
+1106.5178	llm_gap	mean_sim_to_gold	0.6258293986320496	
+1106.5178	llm_gap	mean_sim_to_full	0.8723442554473877	
+1106.5178	llm_gap	recovery_at_0.5	1.0	
+1106.5178	llm_gap	hallucination_at_0.5	0.0	
+1106.5178	llm_gap	recovery_at_0.6	0.5	
+1106.5178	llm_gap	hallucination_at_0.6	0.0	
+1106.5178	llm_gap	recovery_at_0.7	0.5	
+1106.5178	llm_gap	hallucination_at_0.7	0.0	
+1107.3226	regex_section	rouge1_f	0.9401408450704226	discussion
+1107.3226	regex_section	rouge2_f	0.9081272084805654	discussion
+1107.3226	regex_section	rougeL_f	0.9401408450704226	discussion
+1107.3226	regex_section	pred_chars	1692.0	
+1107.3226	llm_gap	n_gaps	2.0	
+1107.3226	llm_gap	mean_sim_to_gold	1.0	
+1107.3226	llm_gap	mean_sim_to_full	1.0	
+1107.3226	llm_gap	recovery_at_0.5	1.0	
+1107.3226	llm_gap	hallucination_at_0.5	0.0	
+1107.3226	llm_gap	recovery_at_0.6	1.0	
+1107.3226	llm_gap	hallucination_at_0.6	0.0	
+1107.3226	llm_gap	recovery_at_0.7	1.0	
+1107.3226	llm_gap	hallucination_at_0.7	0.0	
+1107.4661	regex_section	rouge1_f	0.564437194127243	future_work
+1107.4661	regex_section	rouge2_f	0.4026186579378069	future_work
+1107.4661	regex_section	rougeL_f	0.401305057096248	future_work
+1107.4661	regex_section	pred_chars	1342.0	
+1107.4661	llm_gap	n_gaps	1.0	
+1107.4661	llm_gap	mean_sim_to_gold	0.6028176546096802	
+1107.4661	llm_gap	mean_sim_to_full	1.0000001192092896	
+1107.4661	llm_gap	recovery_at_0.5	1.0	
+1107.4661	llm_gap	hallucination_at_0.5	0.0	
+1107.4661	llm_gap	recovery_at_0.6	1.0	
+1107.4661	llm_gap	hallucination_at_0.6	0.0	
+1107.4661	llm_gap	recovery_at_0.7	0.0	
+1107.4661	llm_gap	hallucination_at_0.7	0.0	
+1107.5474	regex_section	rouge1_f	0.7676470588235295	future_work
+1107.5474	regex_section	rouge2_f	0.6663395485770363	future_work
+1107.5474	regex_section	rougeL_f	0.5598039215686275	future_work
+1107.5474	regex_section	pred_chars	7174.0	
+1107.5474	llm_gap	n_gaps	2.0	
+1107.5474	llm_gap	mean_sim_to_gold	0.8159403204917908	
+1107.5474	llm_gap	mean_sim_to_full	0.8159403204917908	
+1107.5474	llm_gap	recovery_at_0.5	1.0	
+1107.5474	llm_gap	hallucination_at_0.5	0.0	
+1107.5474	llm_gap	recovery_at_0.6	1.0	
+1107.5474	llm_gap	hallucination_at_0.6	0.0	
+1107.5474	llm_gap	recovery_at_0.7	0.5	
+1107.5474	llm_gap	hallucination_at_0.7	0.5	
+1108.3915	regex_section	rouge1_f	0.16774193548387098	discussion,future_work
+1108.3915	regex_section	rouge2_f	0.022653721682847898	discussion,future_work
+1108.3915	regex_section	rougeL_f	0.10322580645161289	discussion,future_work
+1108.3915	regex_section	pred_chars	549.0	
+1108.3915	llm_gap	n_gaps	1.0	
+1108.3915	llm_gap	mean_sim_to_gold	0.48649001121520996	
+1108.3915	llm_gap	mean_sim_to_full	0.5353211164474487	
+1108.3915	llm_gap	recovery_at_0.5	0.0	
+1108.3915	llm_gap	hallucination_at_0.5	0.0	
+1108.3915	llm_gap	recovery_at_0.6	0.0	
+1108.3915	llm_gap	hallucination_at_0.6	1.0	
+1108.3915	llm_gap	recovery_at_0.7	0.0	
+1108.3915	llm_gap	hallucination_at_0.7	1.0	
+1108.5985	regex_section	rouge1_f	0.6116071428571428	future_work
+1108.5985	regex_section	rouge2_f	0.5816554809843402	future_work
+1108.5985	regex_section	rougeL_f	0.6071428571428571	future_work
+1108.5985	regex_section	pred_chars	1597.0	
+1108.5985	llm_gap	n_gaps	2.0	
+1108.5985	llm_gap	mean_sim_to_gold	0.8917615413665771	
+1108.5985	llm_gap	mean_sim_to_full	0.8917615413665771	
+1108.5985	llm_gap	recovery_at_0.5	1.0	
+1108.5985	llm_gap	hallucination_at_0.5	0.0	
+1108.5985	llm_gap	recovery_at_0.6	1.0	
+1108.5985	llm_gap	hallucination_at_0.6	0.0	
+1108.5985	llm_gap	recovery_at_0.7	1.0	
+1108.5985	llm_gap	hallucination_at_0.7	0.0	
+1109.0470	regex_section	rouge1_f	0.9266409266409267	future_work
+1109.0470	regex_section	rouge2_f	0.8871595330739299	future_work
+1109.0470	regex_section	rougeL_f	0.9266409266409267	future_work
+1109.0470	regex_section	pred_chars	848.0	
+1109.0470	llm_gap	n_gaps	1.0	
+1109.0470	llm_gap	mean_sim_to_gold	0.8710265159606934	
+1109.0470	llm_gap	mean_sim_to_full	0.8710263967514038	
+1109.0470	llm_gap	recovery_at_0.5	1.0	
+1109.0470	llm_gap	hallucination_at_0.5	0.0	
+1109.0470	llm_gap	recovery_at_0.6	1.0	
+1109.0470	llm_gap	hallucination_at_0.6	0.0	
+1109.0470	llm_gap	recovery_at_0.7	1.0	
+1109.0470	llm_gap	hallucination_at_0.7	0.0	
+1109.0217	regex_section	rouge1_f	0.21863117870722432	fallback
+1109.0217	regex_section	rouge2_f	0.06857142857142857	fallback
+1109.0217	regex_section	rougeL_f	0.10266159695817492	fallback
+1109.0217	regex_section	pred_chars	5048.0	
+1109.0217	llm_gap	n_gaps	1.0	
+1109.0217	llm_gap	mean_sim_to_gold	0.46108850836753845	
+1109.0217	llm_gap	mean_sim_to_full	0.7990842461585999	
+1109.0217	llm_gap	recovery_at_0.5	0.0	
+1109.0217	llm_gap	hallucination_at_0.5	0.0	
+1109.0217	llm_gap	recovery_at_0.6	0.0	
+1109.0217	llm_gap	hallucination_at_0.6	0.0	
+1109.0217	llm_gap	recovery_at_0.7	0.0	
+1109.0217	llm_gap	hallucination_at_0.7	0.0	
+1111.1497	regex_section	rouge1_f	0.4759825327510917	future_work
+1111.1497	regex_section	rouge2_f	0.3114035087719298	future_work
+1111.1497	regex_section	rougeL_f	0.3275109170305677	future_work
+1111.1497	regex_section	pred_chars	979.0	
+1111.1497	llm_gap	n_gaps	1.0	
+1111.1497	llm_gap	mean_sim_to_gold	0.3126315474510193	
+1111.1497	llm_gap	mean_sim_to_full	1.0	
+1111.1497	llm_gap	recovery_at_0.5	0.0	
+1111.1497	llm_gap	hallucination_at_0.5	0.0	
+1111.1497	llm_gap	recovery_at_0.6	0.0	
+1111.1497	llm_gap	hallucination_at_0.6	0.0	
+1111.1497	llm_gap	recovery_at_0.7	0.0	
+1111.1497	llm_gap	hallucination_at_0.7	0.0	
+1111.3083	regex_section	rouge1_f	0.29543735820519285	discussion
+1111.3083	regex_section	rouge2_f	0.1926860025220681	discussion
+1111.3083	regex_section	rougeL_f	0.15427275018905973	discussion
+1111.3083	regex_section	pred_chars	17295.0	
+1111.3083	llm_gap	n_gaps	2.0	
+1111.3083	llm_gap	mean_sim_to_gold	0.7683345079421997	
+1111.3083	llm_gap	mean_sim_to_full	0.8489505052566528	
+1111.3083	llm_gap	recovery_at_0.5	1.0	
+1111.3083	llm_gap	hallucination_at_0.5	0.0	
+1111.3083	llm_gap	recovery_at_0.6	0.5	
+1111.3083	llm_gap	hallucination_at_0.6	0.0	
+1111.3083	llm_gap	recovery_at_0.7	0.5	
+1111.3083	llm_gap	hallucination_at_0.7	0.0	
+1112.0343	regex_section	rouge1_f	0.36095764272559855	future_work
+1112.0343	regex_section	rouge2_f	0.3512014787430684	future_work
+1112.0343	regex_section	rougeL_f	0.36095764272559855	future_work
+1112.0343	regex_section	pred_chars	2854.0	
+1112.0343	llm_gap	n_gaps	2.0	
+1112.0343	llm_gap	mean_sim_to_gold	1.0	
+1112.0343	llm_gap	mean_sim_to_full	1.0	
+1112.0343	llm_gap	recovery_at_0.5	1.0	
+1112.0343	llm_gap	hallucination_at_0.5	0.0	
+1112.0343	llm_gap	recovery_at_0.6	1.0	
+1112.0343	llm_gap	hallucination_at_0.6	0.0	
+1112.0343	llm_gap	recovery_at_0.7	1.0	
+1112.0343	llm_gap	hallucination_at_0.7	0.0	
+1112.3187	regex_section	rouge1_f	0.3837882547559967	fallback
+1112.3187	regex_section	rouge2_f	0.28831814415907203	fallback
+1112.3187	regex_section	rougeL_f	0.37055417700578996	fallback
+1112.3187	regex_section	pred_chars	2795.0	
+1112.3187	llm_gap	n_gaps	2.0	
+1112.3187	llm_gap	mean_sim_to_gold	0.4523699879646301	
+1112.3187	llm_gap	mean_sim_to_full	0.513495922088623	
+1112.3187	llm_gap	recovery_at_0.5	0.5	
+1112.3187	llm_gap	hallucination_at_0.5	0.5	
+1112.3187	llm_gap	recovery_at_0.6	0.5	
+1112.3187	llm_gap	hallucination_at_0.6	0.5	
+1112.3187	llm_gap	recovery_at_0.7	0.0	
+1112.3187	llm_gap	hallucination_at_0.7	1.0	
+1201.2501	regex_section	rouge1_f	0.6070460704607047	future_work
+1201.2501	regex_section	rouge2_f	0.5613079019073569	future_work
+1201.2501	regex_section	rougeL_f	0.6070460704607047	future_work
+1201.2501	regex_section	pred_chars	797.0	
+1201.2501	llm_gap	n_gaps	2.0	
+1201.2501	llm_gap	mean_sim_to_gold	0.7873369455337524	
+1201.2501	llm_gap	mean_sim_to_full	0.7873369455337524	
+1201.2501	llm_gap	recovery_at_0.5	1.0	
+1201.2501	llm_gap	hallucination_at_0.5	0.0	
+1201.2501	llm_gap	recovery_at_0.6	0.5	
+1201.2501	llm_gap	hallucination_at_0.6	0.5	
+1201.2501	llm_gap	recovery_at_0.7	0.5	
+1201.2501	llm_gap	hallucination_at_0.7	0.5	
+1202.0667	regex_section	rouge1_f	0.741444866920152	future_work
+1202.0667	regex_section	rouge2_f	0.6717557251908397	future_work
+1202.0667	regex_section	rougeL_f	0.741444866920152	future_work
+1202.0667	regex_section	pred_chars	1341.0	
+1202.0667	llm_gap	n_gaps	2.0	
+1202.0667	llm_gap	mean_sim_to_gold	1.000000238418579	
+1202.0667	llm_gap	mean_sim_to_full	1.000000238418579	
+1202.0667	llm_gap	recovery_at_0.5	1.0	
+1202.0667	llm_gap	hallucination_at_0.5	0.0	
+1202.0667	llm_gap	recovery_at_0.6	1.0	
+1202.0667	llm_gap	hallucination_at_0.6	0.0	
+1202.0667	llm_gap	recovery_at_0.7	1.0	
+1202.0667	llm_gap	hallucination_at_0.7	0.0	
+1202.1054	regex_section	rouge1_f	0.18562874251497005	future_work
+1202.1054	regex_section	rouge2_f	0.1686746987951807	future_work
+1202.1054	regex_section	rougeL_f	0.11976047904191617	future_work
+1202.1054	regex_section	pred_chars	240.0	
+1202.1054	llm_gap	n_gaps	1.0	
+1202.1054	llm_gap	mean_sim_to_gold	0.7942567467689514	
+1202.1054	llm_gap	mean_sim_to_full	0.7942568063735962	
+1202.1054	llm_gap	recovery_at_0.5	1.0	
+1202.1054	llm_gap	hallucination_at_0.5	0.0	
+1202.1054	llm_gap	recovery_at_0.6	1.0	
+1202.1054	llm_gap	hallucination_at_0.6	0.0	
+1202.1054	llm_gap	recovery_at_0.7	1.0	
+1202.1054	llm_gap	hallucination_at_0.7	0.0	
+1202.1331	regex_section	rouge1_f	0.35294117647058826	future_work
+1202.1331	regex_section	rouge2_f	0.2926829268292683	future_work
+1202.1331	regex_section	rougeL_f	0.35294117647058826	future_work
+1202.1331	regex_section	pred_chars	393.0	
+1202.1331	llm_gap	n_gaps	1.0	
+1202.1331	llm_gap	mean_sim_to_gold	0.29502445459365845	
+1202.1331	llm_gap	mean_sim_to_full	0.4193246364593506	
+1202.1331	llm_gap	recovery_at_0.5	0.0	
+1202.1331	llm_gap	hallucination_at_0.5	1.0	
+1202.1331	llm_gap	recovery_at_0.6	0.0	
+1202.1331	llm_gap	hallucination_at_0.6	1.0	
+1202.1331	llm_gap	recovery_at_0.7	0.0	
+1202.1331	llm_gap	hallucination_at_0.7	1.0	
+1202.2591	regex_section	rouge1_f	0.0	
+1202.2591	regex_section	rouge2_f	0.0	
+1202.2591	regex_section	rougeL_f	0.0	
+1202.2591	regex_section	pred_chars	0.0	
+1202.2591	llm_gap	n_gaps	0.0	
+1202.2591	llm_gap	mean_sim_to_gold	0.0	
+1202.2591	llm_gap	mean_sim_to_full	0.0	
+1202.2591	llm_gap	recovery_at_0.5	0.0	
+1202.2591	llm_gap	hallucination_at_0.5	0.0	
+1202.2591	llm_gap	recovery_at_0.6	0.0	
+1202.2591	llm_gap	hallucination_at_0.6	0.0	
+1202.2591	llm_gap	recovery_at_0.7	0.0	
+1202.2591	llm_gap	hallucination_at_0.7	0.0	

@@ -197,6 +197,59 @@ def save_bench_inputs(papers: list[BenchPaper], out_dir: Path) -> tuple[Path, Pa
     return bench_path, texts_path
 
 
+def save_bench_inputs_from_pdfs(
+    papers: list[BenchPaper], out_dir: Path, pdf_dir: Path,
+) -> tuple[Path, Path]:
+    """PDF variant: for each paper download arxiv.org/pdf/<id>.pdf and run
+    PyMuPDF's style-aware block extractor. Writes:
+       - bench_papers.jsonl              (unchanged — gold still comes from unarXive)
+       - paper_texts.jsonl               (id, text, blocks)
+    """
+    import requests
+
+    from gap2idea.pipeline.pdf_text import blocks_to_text, extract_pdf_blocks
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    pdf_dir.mkdir(parents=True, exist_ok=True)
+    bench_path = out_dir / "bench_papers.jsonl"
+    texts_path = out_dir / "paper_texts.jsonl"
+
+    with bench_path.open("w", encoding="utf-8") as fb, texts_path.open("w", encoding="utf-8") as ft:
+        for bp in papers:
+            # Persist the gold (text-side) record
+            fb.write(json.dumps(bp.to_dict(), ensure_ascii=False) + "\n")
+
+            pdf_path = pdf_dir / f"{bp.paper_id.replace('/', '_')}.pdf"
+            if not pdf_path.exists():
+                url = f"https://arxiv.org/pdf/{bp.paper_id}.pdf"
+                log.info("  downloading %s", url)
+                try:
+                    r = requests.get(url, timeout=60)
+                    r.raise_for_status()
+                    pdf_path.write_bytes(r.content)
+                except Exception as e:  # noqa: BLE001
+                    log.warning("  download failed for %s: %s — falling back to unarXive text",
+                                bp.paper_id, e)
+                    ft.write(json.dumps({"id": bp.paper_id, "text": bp.full_text},
+                                        ensure_ascii=False) + "\n")
+                    continue
+
+            blocks = extract_pdf_blocks(pdf_path)
+            if not blocks:
+                log.warning("  PyMuPDF returned no blocks for %s — falling back", bp.paper_id)
+                ft.write(json.dumps({"id": bp.paper_id, "text": bp.full_text},
+                                    ensure_ascii=False) + "\n")
+                continue
+            text = blocks_to_text(blocks)
+            n_head = sum(1 for b in blocks if b.get("role") == "heading")
+            log.info("  %s: %d blocks (%d headings, %d chars)",
+                     bp.paper_id, len(blocks), n_head, len(text))
+            ft.write(json.dumps({"id": bp.paper_id, "text": text, "blocks": blocks},
+                                ensure_ascii=False) + "\n")
+    log.info("Wrote %s and %s", bench_path, texts_path)
+    return bench_path, texts_path
+
+
 # ----------------------------------------------------------------------
 # 2. Run our pipeline
 # ----------------------------------------------------------------------
@@ -212,8 +265,33 @@ def run_pipeline(out_dir: Path, paper_texts_jsonl: Path, skip_llm: bool) -> tupl
     if not skip_llm:
         from gap2idea.pipeline.openai_gaps import extract_gaps
         gaps_path = out_dir / "gaps.tsv"
-        extract_gaps(sections_path, gaps_path, resume=False)
+        extract_gaps(sections_path, gaps_path, resume=True)
     return sections_path, gaps_path
+
+
+def generate_oracle_gaps(papers: list[BenchPaper], out_dir: Path) -> Path:
+    """Feed the gold section text from unarXive straight into openai_gaps.
+
+    Builds a synthetic sections.jsonl where each row's `section_text` is the
+    paper's gold section (skipping Stage 1 entirely), then runs the same
+    `extract_gaps` LLM call. The output `oracle_gaps.tsv` has the same schema
+    as `gaps.tsv` so downstream code can treat it uniformly.
+    """
+    from gap2idea.pipeline.openai_gaps import extract_gaps
+
+    oracle_sections_path = out_dir / "oracle_sections.jsonl"
+    oracle_gaps_path = out_dir / "oracle_gaps.tsv"
+    with oracle_sections_path.open("w", encoding="utf-8") as f:
+        for bp in papers:
+            f.write(json.dumps({
+                "id": bp.paper_id,
+                "section_type": "gold",
+                "heading": ", ".join(bp.gold_section_titles) or "gold",
+                "section_text": bp.gold_section_text,
+            }, ensure_ascii=False) + "\n")
+    log.info("Generating oracle gaps from gold sections (%d papers)…", len(papers))
+    extract_gaps(oracle_sections_path, oracle_gaps_path, resume=False)
+    return oracle_gaps_path
 
 
 # ----------------------------------------------------------------------
@@ -251,8 +329,16 @@ def compute_metrics(
     sections_jsonl: Path,
     gaps_tsv: Path | None,
     taus: tuple[float, ...] = (0.5, 0.6, 0.7),
+    oracle_gaps_tsv: Path | None = None,
 ) -> pd.DataFrame:
-    """Per-paper metric table (long format)."""
+    """Per-paper metric table (long format).
+
+    When `oracle_gaps_tsv` is provided, also report:
+      pipeline_vs_oracle.recovery_at_τ   — fraction of pipeline gaps whose
+                                            max cosine to any oracle gap ≥ τ
+      pipeline_vs_oracle.coverage_at_τ   — fraction of oracle gaps that some
+                                            pipeline gap matches at ≥ τ
+    """
     from sentence_transformers import SentenceTransformer  # type: ignore
 
     sections_df = pd.read_json(sections_jsonl, lines=True, dtype=False)
@@ -261,6 +347,10 @@ def compute_metrics(
     gaps_df = None
     if gaps_tsv is not None and gaps_tsv.exists():
         gaps_df = pd.read_csv(gaps_tsv, sep="\t", dtype={"id": str})
+
+    oracle_df = None
+    if oracle_gaps_tsv is not None and oracle_gaps_tsv.exists():
+        oracle_df = pd.read_csv(oracle_gaps_tsv, sep="\t", dtype={"id": str})
 
     log.info("Loading sentence-transformer (all-MiniLM-L6-v2)…")
     embedder = SentenceTransformer("all-MiniLM-L6-v2")
@@ -330,6 +420,39 @@ def compute_metrics(
                     "value": halluc, "extra": "",
                 })
 
+            # --- pipeline_vs_oracle: gap-to-gap comparison ---
+            if oracle_df is not None:
+                oracle_sents = oracle_df.loc[oracle_df["id"] == pid, "gap_sentence"].astype(str).tolist()
+                oracle_vecs = _embed(embedder, oracle_sents)
+                pipe_to_oracle = _max_cosine(gap_vecs, oracle_vecs)         # per pipeline gap
+                oracle_to_pipe = _max_cosine(oracle_vecs, gap_vecs)         # per oracle gap
+
+                rows.append({
+                    "id": pid, "stage": "pipeline_vs_oracle", "metric": "n_oracle_gaps",
+                    "value": float(len(oracle_sents)), "extra": "",
+                })
+                rows.append({
+                    "id": pid, "stage": "pipeline_vs_oracle", "metric": "mean_sim_pipe_to_oracle",
+                    "value": float(pipe_to_oracle.mean()) if len(pipe_to_oracle) else 0.0,
+                    "extra": "",
+                })
+                rows.append({
+                    "id": pid, "stage": "pipeline_vs_oracle", "metric": "mean_sim_oracle_to_pipe",
+                    "value": float(oracle_to_pipe.mean()) if len(oracle_to_pipe) else 0.0,
+                    "extra": "",
+                })
+                for tau in taus:
+                    rec_p = float((pipe_to_oracle >= tau).mean()) if len(pipe_to_oracle) else 0.0
+                    cov_o = float((oracle_to_pipe >= tau).mean()) if len(oracle_to_pipe) else 0.0
+                    rows.append({
+                        "id": pid, "stage": "pipeline_vs_oracle",
+                        "metric": f"recovery_at_{tau}", "value": rec_p, "extra": "",
+                    })
+                    rows.append({
+                        "id": pid, "stage": "pipeline_vs_oracle",
+                        "metric": f"coverage_at_{tau}", "value": cov_o, "extra": "",
+                    })
+
     return pd.DataFrame(rows)
 
 
@@ -365,6 +488,9 @@ def run_benchmark(
     skip_llm: bool = False,
     tarball_path: Path | str = DEFAULT_UNARXIVE_TARBALL,
     max_scan: int = 20000,
+    use_pdf: bool = False,
+    pdf_dir: Path | None = None,
+    oracle: bool = False,
 ) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -372,13 +498,23 @@ def run_benchmark(
     papers = sample_unarxive_papers(n=n, tarball_path=tarball_path, max_scan=max_scan)
     if not papers:
         raise RuntimeError("No qualifying papers found in unarXive stream")
-    save_bench_inputs(papers, out_dir)
+    if use_pdf:
+        pdf_dir = pdf_dir or (out_dir / "pdfs")
+        save_bench_inputs_from_pdfs(papers, out_dir, pdf_dir)
+    else:
+        save_bench_inputs(papers, out_dir)
 
     # 2. run pipeline
     sections_path, gaps_path = run_pipeline(out_dir, out_dir / "paper_texts.jsonl", skip_llm=skip_llm)
 
+    # 2b. optional oracle: feed gold section straight to the LLM
+    oracle_gaps_path: Path | None = None
+    if oracle and not skip_llm:
+        oracle_gaps_path = generate_oracle_gaps(papers, out_dir)
+
     # 3. metrics
-    metrics = compute_metrics(papers, sections_path, gaps_path)
+    metrics = compute_metrics(papers, sections_path, gaps_path,
+                              oracle_gaps_tsv=oracle_gaps_path)
     metrics_path = out_dir / "metrics.tsv"
     metrics.to_csv(metrics_path, sep="\t", index=False)
     log.info("Wrote %s", metrics_path)
