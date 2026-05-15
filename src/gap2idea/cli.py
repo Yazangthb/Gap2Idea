@@ -322,6 +322,7 @@ def cmd_evaluate_ideas(args):
 # ---------- export-ideas ----------
 
 def cmd_export_ideas(args):
+    import json as _json
     from gap2idea.pipeline.export import (
         BUNDLED_TEMPLATES,
         LatexCompilationError,
@@ -339,6 +340,9 @@ def cmd_export_ideas(args):
 
     out_dir = paths.artifacts / "exports"
     out_dir.mkdir(parents=True, exist_ok=True)
+    paper_cache_dir = paths.artifacts / "paper_drafts"
+    if args.full_paper:
+        paper_cache_dir.mkdir(parents=True, exist_ok=True)
 
     # Resolve template choice
     template_source: str | None = None
@@ -357,6 +361,29 @@ def cmd_export_ideas(args):
         safe = "".join(c if c.isalnum() else "_" for c in str(row.get("title", "")))[:40]
         return f"{i:03d}_{safe}" if safe else f"idea_{i:03d}"
 
+    def _full_paper_for(stem: str, idea: dict) -> dict | None:
+        """Return a full_paper dict if --full-paper is on. On-disk cache at
+        artifacts/paper_drafts/<stem>.json so we never re-call the LLM."""
+        if not args.full_paper:
+            return None
+        cache = paper_cache_dir / f"{stem}.json"
+        if cache.exists() and not args.refresh_drafts:
+            return _json.loads(cache.read_text(encoding="utf-8"))
+        from gap2idea.pipeline.paper_drafter import draft_full_paper
+        prior_art = None
+        if args.with_prior_art:
+            from gap2idea.pipeline.semantic_scholar import S2Client
+            try:
+                q = f"{idea.get('title','')}. {idea.get('research_question','')}"
+                prior_art = S2Client().search(q, limit=8)
+            except Exception as e:
+                log.warning("S2 prior-art lookup failed for %s: %s", stem, e)
+                prior_art = []
+        data = draft_full_paper(idea, prior_art=prior_art, model=args.drafter_model)
+        cache.write_text(_json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+        log.info("Cached paper draft -> %s", cache)
+        return data
+
     if args.format == "library-pdf":
         # Single consolidated reportlab-based PDF summary (no LaTeX needed).
         out = out_dir / "idea_library.pdf"
@@ -366,13 +393,21 @@ def cmd_export_ideas(args):
 
     if args.format == "latex":
         for i, row in ideas.iterrows():
-            out_path = out_dir / f"{_stem(i, row)}.tex"
+            stem = _stem(i, row)
+            idea_dict = row.to_dict()
+            full_paper = _full_paper_for(stem, idea_dict)
+            out_path = out_dir / f"{stem}.tex"
             write_idea_latex(
-                row.to_dict(), out_path,
+                idea_dict, out_path,
                 template=args.template, template_source=template_source,
+                full_paper=full_paper,
             )
-        log.info("Wrote %d .tex files to %s (template=%s)", len(ideas), out_dir,
-                 "custom" if template_source else args.template)
+        log.info(
+            "Wrote %d .tex files to %s  (template=%s%s)",
+            len(ideas), out_dir,
+            "custom" if template_source else args.template,
+            ", full-paper drafts" if args.full_paper else "",
+        )
         return
 
     if args.format == "rendered-pdf":
@@ -380,9 +415,12 @@ def cmd_export_ideas(args):
         ok = fail = 0
         for i, row in ideas.iterrows():
             stem = _stem(i, row)
+            idea_dict = row.to_dict()
+            full_paper = _full_paper_for(stem, idea_dict)
             tex = idea_to_latex(
-                row.to_dict(),
+                idea_dict,
                 template=args.template, template_source=template_source,
+                full_paper=full_paper,
             )
             (out_dir / f"{stem}.tex").write_text(tex, encoding="utf-8")
             try:
@@ -588,6 +626,26 @@ def main():
     ex.add_argument(
         "--template-file", default="",
         help="Path to a custom .tex.j2 template (Jinja2). Overrides --template.",
+    )
+    ex.add_argument(
+        "--full-paper", action="store_true",
+        help="Before rendering, run the paper-drafter LLM on each idea to expand "
+             "it into a full paper plan (abstract, related work, method "
+             "subsections, experimental plan with TODO markers, discussion, "
+             "conclusion). Result is cached at artifacts/paper_drafts/<stem>.json.",
+    )
+    ex.add_argument(
+        "--refresh-drafts", action="store_true",
+        help="With --full-paper, ignore the on-disk cache and re-call the LLM.",
+    )
+    ex.add_argument(
+        "--with-prior-art", action="store_true",
+        help="With --full-paper, run a Semantic Scholar search per idea so the "
+             "drafter can populate the Related Work section with real papers.",
+    )
+    ex.add_argument(
+        "--drafter-model", default="openai/gpt-4.1-mini",
+        help="OpenRouter model used by the paper drafter when --full-paper is set.",
     )
     ex.set_defaults(func=cmd_export_ideas)
 

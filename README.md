@@ -2,6 +2,10 @@
 
 **Gap2Idea** is an end-to-end pipeline that mines *research gaps* (Limitations, Future Work, Open Problems) from academic papers, clusters them into themes, and synthesises **novel, evidence-grounded research ideas** by bridging pairs of themes. Every generated idea is fact-checked against Semantic Scholar for novelty and scored by an LLM-as-judge rubric.
 
+## What's new (v0.4)
+
+**Paper drafter + rendered PDFs.** Each idea card now has a "Draft as full paper" button (Streamlit) / `--full-paper` flag (CLI) that runs one extra LLM call to expand the one-paragraph idea into a full conference-paper plan: abstract, related work cited from the evidence + retrieved prior art, expanded method subsections, experimental setup with a `Human work required` callout box, expected results (qualitative), discussion, conclusion. Result is JSON-cached on disk so re-rendering is free. Compiles to PDF via `tectonic` or `pdflatex` when one is installed.
+
 ## What's new (v0.3)
 
 **Multi-agent + MCP + exports.** Everything from v0.2 plus:
@@ -251,7 +255,34 @@ gap2idea export-ideas --format library-pdf
 
 # Use your own template (Jinja2 LaTeX)
 gap2idea export-ideas --format latex --template-file path/to/mine.tex.j2
+
+# Full paper draft (LLM expands every idea into a complete plan with
+# abstract, related work, expanded method, experimental plan, etc.)
+# JSON cached in artifacts/paper_drafts/ — re-runs are free.
+gap2idea export-ideas --format rendered-pdf --full-paper --template standard
+
+# Same, but also pull real prior art from Semantic Scholar for related work
+gap2idea export-ideas --format rendered-pdf --full-paper --with-prior-art
+
+# Refresh the cached drafts (re-call LLM)
+gap2idea export-ideas --format latex --full-paper --refresh-drafts
 ```
+
+**Full paper mode.** Without `--full-paper` the templates render a quick
+skeleton from the idea fields (RQ / method sketch / evaluation plan / risks).
+With `--full-paper` an extra LLM call expands each idea into a structured
+paper plan:
+
+| Section | What the LLM writes | What you write |
+|---|---|---|
+| Abstract | 150-220 words | – |
+| Introduction | Motivation paragraphs + 3-5 named contributions + paper structure | – |
+| Related Work | 3-8 entries citing only papers in evidence + retrieved prior art (hallucinated IDs are filtered post-hoc) | – |
+| Method | Overview + approach + architecture/algorithm + training setup, four subsections | – |
+| Experimental Setup | Named datasets, baselines, metrics; implementation notes | **All experiments. Code. Hyperparameter tuning. Manual analysis.** Explicitly listed in a `Human work required` callout box in the rendered PDF. |
+| Expected Results | Qualitative pattern expected (no numbers) | Actual measured results |
+| Discussion | Limitations, ethical considerations, future work | – |
+| Conclusion | Short paragraph | – |
 
 **Three bundled templates**:
 
@@ -273,7 +304,26 @@ The `rendered-pdf` format and the Streamlit "Render & download PDF" button both 
 - **[Tectonic](https://tectonic-typesetting.github.io/)** — recommended, single binary, auto-fetches packages on first compile.
 - **TeX Live / MiKTeX** — full suite, includes `pdflatex`.
 
-If neither is installed, you can still use `--format latex` to produce `.tex` files and compile them yourself or via Overleaf.
+#### Quick install (Windows)
+
+```powershell
+scoop install tectonic            # if you have scoop (recommended, no admin)
+# OR
+winget install Tectonic            # if you have winget
+# OR
+choco install tectonic             # if you have chocolatey
+```
+
+The first compile downloads required LaTeX packages on demand (~50 MB), subsequent compiles are fast.
+
+#### macOS / Linux
+
+```bash
+brew install tectonic              # macOS
+cargo install tectonic             # if you have Rust
+```
+
+If neither is installed, `--format latex` still works (produces `.tex` files you can compile yourself or upload to Overleaf).
 
 ### MCP server (Claude Desktop integration)
 

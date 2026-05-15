@@ -81,6 +81,14 @@ TEMPLATE_VARIABLES: dict[str, str] = {
     "date":                  "str — YYYY-MM-DD UTC",
     "panel_consensus":       "dict | None — {composite, novelty, specificity, "
                              "feasibility, evidence_grounding, agreement, n_judges}",
+    "full_paper":            "dict | None — full paper draft produced by "
+                             "paper_drafter.draft_full_paper. Has keys: abstract, "
+                             "introduction{motivation,contributions,paper_structure}, "
+                             "related_work[{paper_id,title,relevance,how_we_differ}], "
+                             "method{overview,approach,architecture_or_algorithm,training_setup}, "
+                             "experimental_setup{datasets,baselines,metrics,implementation_notes,"
+                             "human_work_required}, expected_results, "
+                             "discussion{limitations,ethical_considerations,future_work}, conclusion.",
     "(filter) escape_tex":   "callable — escape LaTeX special chars in any value",
 }
 
@@ -139,7 +147,11 @@ def list_templates() -> list[str]:
 # LaTeX
 # ===========================================================================
 
-def _idea_render_context(idea: dict, panel_consensus: dict | None) -> dict:
+def _idea_render_context(
+    idea: dict,
+    panel_consensus: dict | None,
+    full_paper: dict | None = None,
+) -> dict:
     """Build the variable dict passed to any LaTeX template."""
     evidence_used: list[dict] = []
     raw = idea.get("evidence_used_json") or idea.get("evidence_used")
@@ -173,6 +185,7 @@ def _idea_render_context(idea: dict, panel_consensus: dict | None) -> dict:
         closest_paper_year=idea.get("closest_paper_year") or "",
         date=datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         panel_consensus=panel_consensus,
+        full_paper=full_paper,
     )
 
 
@@ -182,6 +195,7 @@ def idea_to_latex(
     template: str = DEFAULT_TEMPLATE,
     template_source: str | None = None,
     panel_consensus: dict | None = None,
+    full_paper: dict | None = None,
 ) -> str:
     """Render one idea into LaTeX.
 
@@ -190,11 +204,17 @@ def idea_to_latex(
                        Ignored if `template_source` is given.
       template_source: raw Jinja template string. Wins over `template`.
                        Useful for user-uploaded templates.
+      panel_consensus: optional dict from multi-judge eval; templates may
+                       render an "automated review scores" block when present.
+      full_paper:      optional dict from `paper_drafter.draft_full_paper`.
+                       When present, templates render a full paper draft
+                       (abstract, related work, expanded method/experiments,
+                       discussion, conclusion) instead of the skeleton view.
 
     The template receives the variables documented in `TEMPLATE_VARIABLES`
     plus the `escape_tex` filter.
     """
-    ctx = _idea_render_context(idea, panel_consensus)
+    ctx = _idea_render_context(idea, panel_consensus, full_paper=full_paper)
 
     if template_source is not None:
         env = _build_env(extra_templates={"__custom__": template_source})
@@ -217,12 +237,13 @@ def write_idea_latex(
     template: str = DEFAULT_TEMPLATE,
     template_source: str | None = None,
     panel_consensus: dict | None = None,
+    full_paper: dict | None = None,
 ) -> Path:
     """Convenience: render and write a .tex file."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
         idea_to_latex(idea, template=template, template_source=template_source,
-                       panel_consensus=panel_consensus),
+                       panel_consensus=panel_consensus, full_paper=full_paper),
         encoding="utf-8",
     )
     return out_path
@@ -308,14 +329,44 @@ def render_idea_to_pdf(
     template: str = DEFAULT_TEMPLATE,
     template_source: str | None = None,
     panel_consensus: dict | None = None,
+    full_paper: dict | None = None,
     timeout_s: int = 60,
 ) -> bytes:
     """Convenience: render LaTeX + compile to PDF in one call."""
     tex = idea_to_latex(
         idea, template=template, template_source=template_source,
-        panel_consensus=panel_consensus,
+        panel_consensus=panel_consensus, full_paper=full_paper,
     )
     return compile_latex_to_pdf(tex, timeout_s=timeout_s)
+
+
+def draft_and_render_paper(
+    idea: dict,
+    *,
+    template: str = DEFAULT_TEMPLATE,
+    template_source: str | None = None,
+    panel_consensus: dict | None = None,
+    evidence: list[dict] | None = None,
+    prior_art: list[dict] | None = None,
+    drafter_model: str | None = None,
+) -> tuple[str, dict]:
+    """One-call helper: draft a full paper for `idea` (via LLM), then render
+    LaTeX. Returns (tex_source, full_paper_dict) so callers can cache the
+    expensive LLM output to disk and re-render fast.
+    """
+    from gap2idea.pipeline.paper_drafter import (
+        DEFAULT_DRAFT_MODEL,
+        draft_full_paper,
+    )
+    full_paper = draft_full_paper(
+        idea, evidence=evidence, prior_art=prior_art,
+        model=drafter_model or DEFAULT_DRAFT_MODEL,
+    )
+    tex = idea_to_latex(
+        idea, template=template, template_source=template_source,
+        panel_consensus=panel_consensus, full_paper=full_paper,
+    )
+    return tex, full_paper
 
 
 # ===========================================================================

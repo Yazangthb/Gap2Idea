@@ -1,8 +1,8 @@
 % !TEX TS-program = pdflatex
-% Gap2Idea — auto-generated paper starter from a synthesised research idea.
-% This is NOT an evaluated result. The method, evaluation plan, and
-% expected contribution are LLM-generated drafts intended as a starting
-% point for the author. Treat all claims as hypotheses to be validated.
+% Gap2Idea — paper draft. When `full_paper` is provided, this template
+% renders a full plan (abstract, related work, expanded method, experimental
+% plan with TODOs, discussion, conclusion). Otherwise it renders a brief
+% skeleton from the idea fields alone.
 
 \documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
@@ -13,8 +13,15 @@
 \usepackage{tcolorbox}
 \usepackage{enumitem}
 \usepackage{microtype}
+\usepackage{parskip}
 
 \hypersetup{colorlinks=true, urlcolor=blue!60!black, linkcolor=black, citecolor=blue!60!black}
+\tcbset{
+  todo/.style={colback=orange!8, colframe=orange!60!red, sharp corners=south,
+               left=6pt,right=6pt,top=4pt,bottom=4pt},
+  meta/.style={colback=yellow!8, colframe=yellow!50!orange, sharp corners=south,
+               left=6pt,right=6pt,top=4pt,bottom=4pt},
+}
 
 \title{ {{ title | escape_tex }} }
 \author{
@@ -26,27 +33,123 @@
 \begin{document}
 \maketitle
 
-\begin{tcolorbox}[colback=yellow!8, colframe=yellow!50!orange, sharp corners=south]
-\textbf{Disclaimer.} This document is a \emph{starter template} produced by
-the Gap2Idea pipeline. The method, evaluation plan, and expected
-contribution are LLM-synthesised drafts grounded in the cited evidence
-gaps but \emph{not validated} by experiment, peer review, or even careful
-human inspection. Treat every claim as a hypothesis. Generation mode:
-\texttt{ {{ mode }} }.{% if novelty_score is not none %}\ Estimated novelty
-({{ "%.2f"|format(novelty_score) }}; 1 = no prior work found, 0 = exact
-match): the closest prior work was \emph{ {{ closest_paper_title or "—" }} }
-({{ closest_paper_year or "—" }}).{% endif %}
+\begin{tcolorbox}[meta]
+\textbf{Disclaimer.} This document is a paper-plan draft produced by the
+Gap2Idea pipeline. The method, experimental setup, expected results, and
+discussion sections are LLM-synthesised proposals grounded in cited
+evidence gaps but \emph{not validated} by experiment. Treat every claim as
+a hypothesis. Mode: \texttt{ {{ mode }} }.{% if novelty_score is not none %}\ Estimated novelty
+({{ "%.2f"|format(novelty_score) }}; 1 = no prior work found): closest
+prior work was \emph{ {{ closest_paper_title | escape_tex or "—" }} } ({{ closest_paper_year or "—" }}).{% endif %}
 \end{tcolorbox}
 
+{% if full_paper %}
+% ===========================================================================
+% FULL PAPER DRAFT (LLM-expanded)
+% ===========================================================================
+
 \begin{abstract}
-{{ research_question }}
+{{ full_paper.abstract | escape_tex }}
+\end{abstract}
+
+\section{Introduction}
+{{ full_paper.introduction.motivation | escape_tex }}
+
+\paragraph{Contributions.}
+\begin{itemize}[leftmargin=*]
+{%- for c in full_paper.introduction.contributions %}
+  \item {{ c | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\paragraph{Paper structure.} {{ full_paper.introduction.paper_structure | escape_tex }}
+
+\section{Related Work}
+{% if full_paper.related_work %}
+\begin{itemize}[leftmargin=*]
+{%- for rw in full_paper.related_work %}
+  \item \textbf{ {{ rw.title | escape_tex }} } (\texttt{ {{ rw.paper_id }} }).
+        {{ rw.relevance | escape_tex }}
+        \textit{How we differ:} {{ rw.how_we_differ | escape_tex }}
+{%- endfor %}
+\end{itemize}
+{% else %}
+\textit{Related work could not be drawn from the input prior-art set. Run a Semantic Scholar search and re-draft.}
+{% endif %}
+
+\section{Method}
+\subsection{Overview}
+{{ full_paper.method.overview | escape_tex }}
+
+\subsection{Approach}
+{{ full_paper.method.approach | escape_tex }}
+
+\subsection{Architecture / Algorithm}
+{{ full_paper.method.architecture_or_algorithm | escape_tex }}
+
+\subsection{Training setup}
+{{ full_paper.method.training_setup | escape_tex }}
+
+\section{Experimental Setup (proposed plan)}
+
+\begin{tcolorbox}[todo]
+\textbf{Human work required.}\
+{{ full_paper.experimental_setup.human_work_required | escape_tex }}
+\end{tcolorbox}
+
+\paragraph{Datasets.}
+\begin{itemize}[leftmargin=*]
+{%- for d in full_paper.experimental_setup.datasets %}
+  \item {{ d | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\paragraph{Baselines.}
+\begin{itemize}[leftmargin=*]
+{%- for b in full_paper.experimental_setup.baselines %}
+  \item {{ b | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\paragraph{Metrics.}
+\begin{itemize}[leftmargin=*]
+{%- for m in full_paper.experimental_setup.metrics %}
+  \item {{ m | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\paragraph{Implementation notes.} {{ full_paper.experimental_setup.implementation_notes | escape_tex }}
+
+\section{Expected Results}
+\begin{tcolorbox}[todo]
+\textbf{To be filled with real experiments.} The text below is the
+hypothesised outcome pattern, not measured results.
+\end{tcolorbox}
+{{ full_paper.expected_results | escape_tex }}
+
+\section{Discussion}
+\paragraph{Limitations.} {{ full_paper.discussion.limitations | escape_tex }}
+
+\paragraph{Ethical considerations.} {{ full_paper.discussion.ethical_considerations | escape_tex }}
+
+\paragraph{Future work.} {{ full_paper.discussion.future_work | escape_tex }}
+
+\section{Conclusion}
+{{ full_paper.conclusion | escape_tex }}
+
+{% else %}
+% ===========================================================================
+% SKELETON MODE (no LLM expansion)
+% ===========================================================================
+
+\begin{abstract}
+{{ research_question | escape_tex }}
 \end{abstract}
 
 \section{Introduction}
 \textit{Author note: expand with literature framing, motivation, and contributions.}
 
 The recurring research gaps motivating this work are summarised below.
-
 \begin{itemize}[leftmargin=*]
 {%- for ev in evidence_used %}
   \item \textbf{From paper \texttt{ {{ ev.paper_id }} }:} {{ ev.gap_sentence | escape_tex }}
@@ -68,6 +171,8 @@ The recurring research gaps motivating this work are summarised below.
 \section{Assumptions and risks}
 {{ assumptions_and_risks | escape_tex }}
 
+{% endif %}
+
 {% if panel_consensus -%}
 \section*{LLM judge-panel scores}
 \begin{itemize}[leftmargin=*]
@@ -87,6 +192,11 @@ The recurring research gaps motivating this work are summarised below.
 {%- for ev in evidence_used %}
   \item arXiv:\texttt{ {{ ev.paper_id }} } — \url{https://arxiv.org/abs/ {{- ev.paper_id }} }
 {%- endfor %}
+{%- if full_paper and full_paper.related_work %}
+{%- for rw in full_paper.related_work %}
+  \item \texttt{ {{ rw.paper_id }} } — {{ rw.title | escape_tex }}
+{%- endfor %}
+{%- endif %}
 \end{itemize}
 
 \end{document}

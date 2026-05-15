@@ -739,6 +739,26 @@ def page_ideas(data):
                     "Install [tectonic](https://tectonic-typesetting.github.io/) "
                     "or TeX Live for one-click PDF."
                 )
+            st.divider()
+            full_paper_toggle = st.toggle(
+                "📚  Draft as full paper",
+                value=st.session_state.get("full_paper_toggle", False),
+                key="full_paper_toggle",
+                help=(
+                    "Run a second LLM call per idea to expand it into a full "
+                    "paper plan (abstract, related work, expanded method, "
+                    "experimental plan with TODO markers, discussion, "
+                    "conclusion). Adds ~30-60s and ~$0.02 per idea. "
+                    "Result is cached on disk so you don't pay twice."
+                ),
+            )
+            with_prior_art_toggle = st.checkbox(
+                "Also pull Related Work from Semantic Scholar (slower)",
+                value=False, key="full_paper_prior_art",
+                disabled=not full_paper_toggle,
+                help="With full-paper mode, query S2 for related work the "
+                     "drafter can cite (instead of only the evidence papers).",
+            )
         with ec2:
             custom_template: str | None = None
             if template_choice == "Custom (upload)":
@@ -759,12 +779,21 @@ def page_ideas(data):
                     "Selected template will be used for the per-idea download "
                     "and the bulk *Render to PDF* button below."
                 )
+                if full_paper_toggle:
+                    st.caption(
+                        "🟠 **Full-paper mode is on.** Per-idea downloads will "
+                        "trigger an LLM call (first time only — cached after) "
+                        "to draft a complete paper plan. TODO boxes in the "
+                        "output mark sections requiring real experiments."
+                    )
 
     # Persist the resolved template + source on session_state so all cards see it.
     st.session_state["latex_template_name"] = (
         template_choice if template_choice != "Custom (upload)" else "standard"
     )
     st.session_state["latex_template_source"] = custom_template
+    st.session_state["full_paper_enabled"] = bool(full_paper_toggle)
+    st.session_state["full_paper_prior_art_enabled"] = bool(with_prior_art_toggle)
 
     # ---- Filters in a tidy row ----
     with st.container(border=True):
@@ -827,7 +856,7 @@ def page_ideas(data):
                     except Exception:
                         pass
 
-            # Per-idea LaTeX + (optional) rendered-PDF export
+            # Per-idea LaTeX + (optional) full-paper draft + rendered-PDF export
             try:
                 from gap2idea.pipeline.export import (
                     LatexCompilationError,
@@ -837,14 +866,38 @@ def page_ideas(data):
                 )
                 tmpl_name = st.session_state.get("latex_template_name", "standard")
                 tmpl_src = st.session_state.get("latex_template_source")
-                tex = idea_to_latex(
-                    r.to_dict(),
-                    template=tmpl_name, template_source=tmpl_src,
-                )
+                full_paper_on = st.session_state.get("full_paper_enabled", False)
+                use_prior_art = st.session_state.get("full_paper_prior_art_enabled", False)
+
                 safe = "".join(c if c.isalnum() else "_" for c in str(r.get("title", "idea")))[:40] or "idea"
                 row_uid = f"{r.get('title','')[:24]}_{int(r.get('cluster_a') or 0)}"
 
-                btns = st.columns(2)
+                # On-disk cache shared with the CLI: artifacts/paper_drafts/<safe>.json
+                cache_path = ART_DIR / "paper_drafts" / f"{safe}.json"
+
+                # Pull the cached paper draft if present; load lazily into session.
+                sess_key = f"_fullpaper_{row_uid}"
+                if full_paper_on and sess_key not in st.session_state and cache_path.exists():
+                    try:
+                        st.session_state[sess_key] = json.loads(
+                            cache_path.read_text(encoding="utf-8")
+                        )
+                    except Exception:
+                        pass
+
+                full_paper_data = st.session_state.get(sess_key) if full_paper_on else None
+
+                # Render LaTeX once, with or without the full_paper data.
+                tex = idea_to_latex(
+                    r.to_dict(),
+                    template=tmpl_name, template_source=tmpl_src,
+                    full_paper=full_paper_data,
+                )
+
+                # ---- Three-button row ----
+                btns = st.columns(3)
+
+                # 1. Always-available: download the rendered .tex.
                 btns[0].download_button(
                     "📄  Download .tex",
                     tex.encode("utf-8"),
@@ -853,8 +906,42 @@ def page_ideas(data):
                     key=f"tex_{row_uid}",
                     width="stretch",
                 )
+
+                # 2. Draft-as-full-paper (only when toggle is on)
+                if full_paper_on:
+                    if full_paper_data is None:
+                        if btns[1].button("📚  Draft as paper", key=f"draft_{row_uid}", width="stretch"):
+                            from gap2idea.pipeline.paper_drafter import draft_full_paper
+                            with st.spinner("Calling LLM to draft a full paper plan… (~30-60s)"):
+                                try:
+                                    prior_art = []
+                                    if use_prior_art:
+                                        try:
+                                            q = f"{r.get('title','')}. {r.get('research_question','')}"
+                                            prior_art = get_s2_client().search(q, limit=8)
+                                        except Exception as e:
+                                            st.warning(f"S2 prior-art fetch failed: {e}")
+                                    full_paper_data = draft_full_paper(
+                                        r.to_dict(), prior_art=prior_art,
+                                    )
+                                    st.session_state[sess_key] = full_paper_data
+                                    cache_path.parent.mkdir(parents=True, exist_ok=True)
+                                    cache_path.write_text(
+                                        json.dumps(full_paper_data, ensure_ascii=False, indent=2),
+                                        encoding="utf-8",
+                                    )
+                                    st.success("Paper draft cached. Re-rendering with full content…")
+                                    st.rerun()
+                                except Exception as e:
+                                    st.error(f"Paper drafting failed: {e}")
+                    else:
+                        btns[1].caption("✓ Paper drafted (cached)")
+                else:
+                    btns[1].caption("Enable *Draft as full paper* toggle above to use")
+
+                # 3. Render to PDF (compiler-dependent)
                 if find_latex_compiler():
-                    if btns[1].button("📑  Render & download PDF", key=f"renderpdf_{row_uid}", width="stretch"):
+                    if btns[2].button("📑  Render & download PDF", key=f"renderpdf_{row_uid}", width="stretch"):
                         with st.spinner("Compiling LaTeX → PDF…"):
                             try:
                                 pdf_bytes = compile_latex_to_pdf(tex)
@@ -873,7 +960,7 @@ def page_ideas(data):
                             width="stretch",
                         )
                 else:
-                    btns[1].button("📑  Render & download PDF", disabled=True,
+                    btns[2].button("📑  Render & download PDF", disabled=True,
                                    help="Install tectonic or pdflatex to enable.",
                                    key=f"renderpdf_disabled_{row_uid}",
                                    width="stretch")
