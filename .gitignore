@@ -105,6 +105,8 @@ artifacts/
 !data/bench_v2b/plots/
 !data/bench_v2b/plots/*.png
 !data/bench_ablation.md
+!data/bench_ablation_plots/
+!data/bench_ablation_plots/*.png
 # but never the 4.8GB unarXive tarball or the downloaded arxiv PDFs
 data/bench/raw/
 data/bench_v2b/pdfs/
