@@ -1,0 +1,160 @@
+% !TEX TS-program = pdflatex
+% Gap2Idea — minimal article template. Compiles with stock TeX Live or
+% tectonic. No exotic packages, no two-column. Use this when you want a
+% clean draft you'll restructure later.
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{xcolor}              % loaded BEFORE hyperref so colour-mix syntax works
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{parskip}
+\hypersetup{colorlinks=true,urlcolor=blue!60!black,linkcolor=black}
+
+\newcommand{\todoblock}[1]{\par\noindent\fbox{\parbox{0.97\linewidth}{\textbf{Human work required.}\\#1}}\par}
+
+\title{ {{ title | escape_tex }} }
+\author{ \textit{Auto-generated draft \textemdash{} Gap2Idea} }
+\date{ {{ date }} }
+
+\begin{document}
+\maketitle
+
+\noindent\textit{This is a Gap2Idea draft, not a peer-reviewed result.
+Mode: \texttt{ {{ mode }} }.{% if novelty_score is not none %}\ Estimated novelty {{ "%.2f"|format(novelty_score) }}.{% endif %}}
+
+{% if full_paper %}
+% --- Full paper draft ---
+
+\begin{abstract}
+{{ full_paper.abstract | escape_tex }}
+\end{abstract}
+
+\section{Introduction}
+{{ full_paper.introduction.motivation | escape_tex }}
+
+\paragraph{Contributions.}
+\begin{itemize}[leftmargin=*]
+{%- for c in full_paper.introduction.contributions %}
+  \item {{ c | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\section{Related work}
+{% if full_paper.related_work %}
+\begin{itemize}[leftmargin=*]
+{%- for rw in full_paper.related_work %}
+  \item \textbf{ {{ rw.title | escape_tex }} } [{{ rw.paper_id }}].
+        {{ rw.relevance | escape_tex }}
+        \textit{How we differ:} {{ rw.how_we_differ | escape_tex }}
+{%- endfor %}
+\end{itemize}
+{% else %}
+\textit{No prior art supplied to the drafter.}
+{% endif %}
+
+\section{Method}
+\textbf{Overview.} {{ full_paper.method.overview | escape_tex }}
+
+\textbf{Approach.} {{ full_paper.method.approach | escape_tex }}
+
+\textbf{Architecture / algorithm.} {{ full_paper.method.architecture_or_algorithm | escape_tex }}
+
+\textbf{Training setup.} {{ full_paper.method.training_setup | escape_tex }}
+
+\section{Experimental setup (plan)}
+\todoblock{ {{ full_paper.experimental_setup.human_work_required | escape_tex }} }
+
+\textbf{Datasets:}
+\begin{itemize}[leftmargin=*]
+{%- for d in full_paper.experimental_setup.datasets %}
+  \item {{ d | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\textbf{Baselines:}
+\begin{itemize}[leftmargin=*]
+{%- for b in full_paper.experimental_setup.baselines %}
+  \item {{ b | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\textbf{Metrics:}
+\begin{itemize}[leftmargin=*]
+{%- for m in full_paper.experimental_setup.metrics %}
+  \item {{ m | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\textbf{Implementation notes.} {{ full_paper.experimental_setup.implementation_notes | escape_tex }}
+
+\section{Expected results}
+\todoblock{ \emph{To be replaced with measured results.} }
+
+{{ full_paper.expected_results | escape_tex }}
+
+\section{Discussion}
+\textbf{Limitations.} {{ full_paper.discussion.limitations | escape_tex }}
+
+\textbf{Ethical considerations.} {{ full_paper.discussion.ethical_considerations | escape_tex }}
+
+\textbf{Future work.} {{ full_paper.discussion.future_work | escape_tex }}
+
+\section{Conclusion}
+{{ full_paper.conclusion | escape_tex }}
+
+{% else %}
+% --- Skeleton mode ---
+
+\section*{Abstract}
+{{ research_question | escape_tex }}
+
+\section{Background and motivating gaps}
+This work is motivated by recurring research gaps across multiple papers
+({{ label_a | escape_tex }}{% if label_b %} $\times$ {{ label_b | escape_tex }}{% endif %}):
+\begin{itemize}[leftmargin=*]
+{%- for ev in evidence_used %}
+  \item \textbf{[{{ ev.paper_id }}]} {{ ev.gap_sentence | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\section{Method}
+{{ method_sketch | escape_tex }}
+
+\section{Evaluation}
+{{ evaluation_plan | escape_tex }}
+
+\section{Contribution}
+{{ expected_contribution | escape_tex }}
+
+\section{Assumptions and risks}
+{{ assumptions_and_risks | escape_tex }}
+
+{% endif %}
+
+{% if panel_consensus %}
+\section*{Automated review scores}
+Composite {{ "%.2f"|format(panel_consensus.composite) }} / 5 across
+{{ panel_consensus.n_judges }} independent judges
+(novelty {{ "%.2f"|format(panel_consensus.novelty) }},
+specificity {{ "%.2f"|format(panel_consensus.specificity) }},
+feasibility {{ "%.2f"|format(panel_consensus.feasibility) }},
+grounding {{ "%.2f"|format(panel_consensus.evidence_grounding) }};
+inter-judge agreement {{ "%.2f"|format(panel_consensus.agreement) }}).
+{% endif %}
+
+\section*{Source papers}
+\begin{itemize}[leftmargin=*]
+{%- for ev in evidence_used %}
+  \item arXiv:\texttt{ {{ ev.paper_id }} } \textemdash{} \url{https://arxiv.org/abs/{{ ev.paper_id }}}
+{%- endfor %}
+{%- if full_paper and full_paper.related_work %}
+{%- for rw in full_paper.related_work %}
+  \item [{{ rw.paper_id }}] {{ rw.title | escape_tex }}
+{%- endfor %}
+{%- endif %}
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,173 @@
+% !TEX TS-program = pdflatex
+% Gap2Idea — IEEE-conference style draft. Stays in the stock `article`
+% class (so it compiles without IEEEtran) but uses two-column layout and
+% sans-serif section headings to feel IEEE-ish.
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,margin=0.75in]{geometry}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{parskip}
+\hypersetup{colorlinks=true,urlcolor=blue!60!black,linkcolor=black,citecolor=blue!60!black}
+\titleformat*{\section}{\large\bfseries\sffamily}
+\titleformat*{\subsection}{\normalsize\bfseries\sffamily}
+
+\newcommand{\todoblock}[1]{\par\noindent
+\colorbox{orange!10}{\parbox{0.98\linewidth}{\textbf{Human work required.} #1}}\par}
+
+\title{\sffamily\bfseries\Large {{ title | escape_tex }} }
+\author{
+  \textit{Auto-generated draft via Gap2Idea}\\
+  \small Themes: {{ label_a | escape_tex }}{% if label_b %} $\times$ {{ label_b | escape_tex }}{% endif %}
+}
+\date{ {{ date }} }
+
+\begin{document}
+\maketitle
+
+\noindent\fbox{\parbox{0.97\textwidth}{\small
+\textbf{Disclaimer.}\ \ Auto-generated paper plan. Method, experimental
+setup, expected results, and discussion are LLM-synthesised hypotheses,
+not measured findings. Mode: \texttt{ {{ mode }} }.{% if novelty_score is not none %}\ Estimated novelty {{ "%.2f"|format(novelty_score) }}.{% endif %}}}
+
+\begin{multicols}{2}
+
+{% if full_paper %}
+% --- Full paper draft ---
+
+\begin{abstract}
+\noindent {{ full_paper.abstract | escape_tex }}
+\end{abstract}
+
+\section{Introduction}
+{{ full_paper.introduction.motivation | escape_tex }}
+
+\subsection*{Contributions}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+{%- for c in full_paper.introduction.contributions %}
+  \item {{ c | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\section{Related work}
+{% if full_paper.related_work %}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+{%- for rw in full_paper.related_work %}
+  \item [{{ rw.paper_id }}] \textit{ {{ rw.title | escape_tex }} } —
+        {{ rw.relevance | escape_tex }}
+        We differ: {{ rw.how_we_differ | escape_tex }}
+{%- endfor %}
+\end{itemize}
+{% else %}
+\textit{No prior art supplied to the drafter.}
+{% endif %}
+
+\section{Method}
+\subsection{Overview}
+{{ full_paper.method.overview | escape_tex }}
+
+\subsection{Approach}
+{{ full_paper.method.approach | escape_tex }}
+
+\subsection{Architecture / algorithm}
+{{ full_paper.method.architecture_or_algorithm | escape_tex }}
+
+\subsection{Training setup}
+{{ full_paper.method.training_setup | escape_tex }}
+
+\section{Experimental setup (plan)}
+\todoblock{ {{ full_paper.experimental_setup.human_work_required | escape_tex }} }
+
+\paragraph{Datasets.} \begin{itemize}[leftmargin=*,itemsep=1pt]
+{%- for d in full_paper.experimental_setup.datasets %}\item {{ d | escape_tex }}{%- endfor %}\end{itemize}
+
+\paragraph{Baselines.} \begin{itemize}[leftmargin=*,itemsep=1pt]
+{%- for b in full_paper.experimental_setup.baselines %}\item {{ b | escape_tex }}{%- endfor %}\end{itemize}
+
+\paragraph{Metrics.} \begin{itemize}[leftmargin=*,itemsep=1pt]
+{%- for m in full_paper.experimental_setup.metrics %}\item {{ m | escape_tex }}{%- endfor %}\end{itemize}
+
+\paragraph{Implementation.} {{ full_paper.experimental_setup.implementation_notes | escape_tex }}
+
+\section{Expected results}
+\todoblock{ \emph{Replace with measured results.} }
+
+{{ full_paper.expected_results | escape_tex }}
+
+\section{Discussion}
+\paragraph{Limitations.} {{ full_paper.discussion.limitations | escape_tex }}
+
+\paragraph{Ethical considerations.} {{ full_paper.discussion.ethical_considerations | escape_tex }}
+
+\paragraph{Future work.} {{ full_paper.discussion.future_work | escape_tex }}
+
+\section{Conclusion}
+{{ full_paper.conclusion | escape_tex }}
+
+{% else %}
+% --- Skeleton mode ---
+
+\begin{abstract}
+\noindent {{ research_question | escape_tex }}
+\end{abstract}
+
+\section{Introduction}
+We synthesise an actionable research direction by combining recurring
+gap statements across multiple papers
+({{ label_a | escape_tex }}{% if label_b %} $\times$ {{ label_b | escape_tex }}{% endif %}).
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+{%- for ev in evidence_used %}
+  \item [{{ ev.paper_id }}] {{ ev.gap_sentence | escape_tex }}
+{%- endfor %}
+\end{itemize}
+
+\section{Proposed method}
+{{ method_sketch | escape_tex }}
+
+\section{Evaluation plan}
+{{ evaluation_plan | escape_tex }}
+
+\section{Expected contribution}
+{{ expected_contribution | escape_tex }}
+
+\section{Assumptions and risks}
+{{ assumptions_and_risks | escape_tex }}
+
+{% endif %}
+
+{% if panel_consensus %}
+\section{LLM judge-panel scores}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+  \item Composite: {{ "%.2f"|format(panel_consensus.composite) }} / 5
+  \item Novelty: {{ "%.2f"|format(panel_consensus.novelty) }}
+  \item Specificity: {{ "%.2f"|format(panel_consensus.specificity) }}
+  \item Feasibility: {{ "%.2f"|format(panel_consensus.feasibility) }}
+  \item Grounding: {{ "%.2f"|format(panel_consensus.evidence_grounding) }}
+  \item Agreement: {{ "%.2f"|format(panel_consensus.agreement) }}
+  \item Judges: {{ panel_consensus.n_judges }}
+\end{itemize}
+{% endif %}
+
+\section{Source bibliography}
+\textit{Replace these arXiv IDs with full BibTeX entries:}
+{\footnotesize
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+{%- for ev in evidence_used %}
+  \item arXiv:\texttt{ {{ ev.paper_id }} } \textemdash{} \url{https://arxiv.org/abs/{{ ev.paper_id }}}
+{%- endfor %}
+{%- if full_paper and full_paper.related_work %}
+{%- for rw in full_paper.related_work %}
+  \item [{{ rw.paper_id }}] {{ rw.title | escape_tex }}
+{%- endfor %}
+{%- endif %}
+\end{itemize}
+}
+
+\end{multicols}
+\end{document}
