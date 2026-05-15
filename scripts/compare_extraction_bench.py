@@ -7,9 +7,11 @@ from pathlib import Path
 import pandas as pd
 
 LABELS = [
-    ("data/bench",      "v1 (text + old regex)"),
-    ("data/bench_v2a",  "v2a (text + new vocab)"),
-    ("data/bench_v2b",  "v2b (PDF + style + new vocab)"),
+    ("data/bench",            "v1 (text + old regex)  [N=10]"),
+    ("data/bench_v2a",        "v2a (text + new vocab) [N=10]"),
+    ("data/bench_v2b",        "v2b (PDF + style)      [N=10]"),
+    ("data/bench_n100_v2a",   "v2a (text + new vocab) [N=100]"),
+    ("data/bench_n100",       "v2b (PDF + style)      [N=100]"),
 ]
 HEADLINE = ["rouge1_f", "rouge2_f", "rougeL_f"]
 
