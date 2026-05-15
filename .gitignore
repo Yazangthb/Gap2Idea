@@ -113,6 +113,11 @@ artifacts/
 !data/bench_n100/*.md
 !data/bench_n100/plots/
 !data/bench_n100/plots/*.png
+!data/bench_n100_v2a/*.tsv
+!data/bench_n100_v2a/*.jsonl
+!data/bench_n100_v2a/*.md
+!data/bench_n100_v2a/plots/
+!data/bench_n100_v2a/plots/*.png
 
 # Clustering-quality benchmark outputs (same whitelist pattern)
 !data/clustering_bench/*.tsv
