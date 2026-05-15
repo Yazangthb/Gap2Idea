@@ -14,7 +14,8 @@ flowchart TD
         SYN["Synthesiser agent"]
         SYN -->|"draft idea"| CR
         CR["Critic agent"]
-        CR -->|"tool calls"| TOOLS
+        CR -->|"tool call"| TOOLS
+        TOOLS -->|"tool result"| CR
         CR -->|"critique and revision targets"| REV{"accept?"}
         REV -->|"no, revise"| SYN
         REV -->|"yes"| FINAL["final idea draft"]
