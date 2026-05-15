@@ -129,10 +129,17 @@ artifacts/
 !data/clustering_bench_n100/plots/
 !data/clustering_bench_n100/plots/*.png
 
-# but never the 4.8GB unarXive tarball, the downloaded arxiv PDFs, or
-# embedding cache directories
+# but never the 4.8GB unarXive tarball
 data/bench/raw/
-data/bench_v2b/pdfs/
-data/bench_n100/pdfs/
-data/clustering_bench/embeddings/
-data/clustering_bench_n100/embeddings/
+
+# Track downloaded arxiv PDFs (~73 MB for the n=10 and n=100 corpora combined)
+# and the cached sentence embeddings (~1.6 MB) so reruns of any downstream
+# bench can hit the cache without re-fetching or re-encoding.
+!data/bench_v2b/pdfs/
+!data/bench_v2b/pdfs/*.pdf
+!data/bench_n100/pdfs/
+!data/bench_n100/pdfs/*.pdf
+!data/clustering_bench/embeddings/
+!data/clustering_bench/embeddings/*.npy
+!data/clustering_bench_n100/embeddings/
+!data/clustering_bench_n100/embeddings/*.npy
