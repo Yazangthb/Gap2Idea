@@ -8,9 +8,15 @@ flowchart TD
     D -->|"extract-sections<br/>regex and fallbacks"| E["sections_extracted.jsonl"]
     D -->|"extract-methods<br/>LLM, strict JSON"| M["methods.tsv"]
     E -->|"extract-gaps<br/>LLM, strict JSON, verbatim"| F["gaps.tsv"]
-    F -->|"theme-mine<br/>embed, cluster, label"| G["artifacts/<br/>gap_embeddings.npy<br/>cluster_labels.tsv<br/>cluster_pairs.tsv"]
 
-    G -->|"generate-ideas"| H{"mode"}
+    F -->|"theme-mine<br/>embed, cluster, label"| TM["theme-mine step"]
+    TM --> G1["gap_embeddings.npy"]
+    TM --> G2["cluster_labels.tsv"]
+    TM --> G3["cluster_pairs.tsv"]
+
+    G1 --> H{"mode"}
+    G2 --> H
+    G3 --> H
     M --> H
     F --> H
 
@@ -19,18 +25,30 @@ flowchart TD
     H -->|"method-gap"| I3["method x gap ideas"]
     H -->|"orchestrated"| I4["multi-agent ideas"]
 
-    I1 --> J["ideas.tsv<br/>ideas_full.jsonl"]
-    I2 --> J
-    I3 --> J
-    I4 --> J
+    I1 --> GI["generate-ideas step"]
+    I2 --> GI
+    I3 --> GI
+    I4 --> GI
 
-    J -->|"S2 novelty check"| J
-    J -->|"evaluate-ideas<br/>LLM-as-judge"| K["idea_eval.tsv<br/>evaluation_report.md"]
-    J -->|"export-ideas"| L["exports tex files<br/>library.pdf"]
+    GI --> J1["ideas.tsv"]
+    GI --> J2["ideas_full.jsonl"]
+
+    J1 -->|"S2 novelty check"| J1
+    J2 -->|"S2 novelty check"| J2
+
+    J2 -->|"evaluate-ideas<br/>LLM-as-judge"| EV["evaluate-ideas step"]
+    EV --> K1["idea_eval.tsv"]
+    EV --> K2["evaluation_report.md"]
+
+    J1 -->|"export-ideas"| EX["export-ideas step"]
+    EX --> L1["exports tex files"]
+    EX --> L2["library.pdf"]
 
     classDef artifact fill:#eef,stroke:#669,color:#223;
     classDef stage fill:#fff,stroke:#444,color:#111;
+    classDef step fill:#fff7e0,stroke:#aa7700,color:#553300;
     classDef decision fill:#fdf,stroke:#a3a,color:#222;
-    class B,C,D,E,F,G,J,K,L,M,I1,I2,I3,I4 artifact;
+    class B,C,D,E,F,M,G1,G2,G3,I1,I2,I3,I4,J1,J2,K1,K2,L1,L2 artifact;
     class A stage;
+    class TM,GI,EV,EX step;
     class H decision;
