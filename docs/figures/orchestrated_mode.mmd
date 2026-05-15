@@ -42,15 +42,25 @@ flowchart TD
     AGG2["inter-judge agreement"]
     AGG1 --> AGG2
 
-    AGG2 --> OUT1["ideas.tsv<br/>flat row, mode=orchestrated"]
-    AGG2 --> OUT2["ideas_full.jsonl<br/>prompt, critiques, panel"]
-    AGG2 --> OUT3["idea_eval.tsv<br/>panel-judged scores"]
+    AGG2 --> PERSIST["persist run"]
+
+    subgraph ARTIFACTS["artifacts"]
+        OUT1["ideas.tsv<br/>flat view"]
+        OUT2["ideas_full.jsonl<br/>provenance"]
+        OUT3["idea_eval.tsv<br/>scores"]
+    end
+
+    PERSIST --> OUT1
+    PERSIST --> OUT2
+    PERSIST --> OUT3
 
     classDef agent fill:#e7f0ff,stroke:#2b5fa6,color:#0e2c52;
     classDef tool fill:#fff7e0,stroke:#aa7700,color:#553300;
     classDef artifact fill:#eef,stroke:#669,color:#223;
     classDef decision fill:#fdf,stroke:#a3a,color:#222;
+    classDef step fill:#fff,stroke:#444,color:#111;
     class SYN,CR,J1,J2,J3 agent;
     class T1,T2,T3 tool;
     class IN1,IN2,IN3,FINAL,AGG1,AGG2,OUT1,OUT2,OUT3 artifact;
+    class PERSIST step;
     class REV decision;
