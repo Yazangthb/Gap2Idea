@@ -262,6 +262,30 @@ def cmd_evaluate_ideas(args):
     write_report(eval_df, ideas_df, paths.artifacts / "evaluation_report.md")
 
 
+# ---------- bench-extraction ----------
+
+def cmd_bench_extraction(args):
+    from gap2idea.pipeline.extraction_bench import run_benchmark
+
+    paths = get_paths(args.root)
+    out_dir = Path(args.out_dir) if args.out_dir else (paths.data / "bench")
+    run_benchmark(
+        n=args.n,
+        out_dir=out_dir,
+        skip_llm=args.skip_llm,
+        tarball_path=args.tarball,
+        max_scan=args.max_scan,
+    )
+
+
+def cmd_bench_plots(args):
+    from gap2idea.pipeline.extraction_bench_plots import make_all_plots
+
+    paths = get_paths(args.root)
+    bench_dir = Path(args.bench_dir) if args.bench_dir else (paths.data / "bench")
+    make_all_plots(bench_dir)
+
+
 # ---------- run-all ----------
 
 def cmd_run_all(args):
@@ -382,6 +406,27 @@ def main():
     ev.add_argument("--judge-model", default="anthropic/claude-sonnet-4",
                     help="OpenRouter model slug for the judge. Default differs from generator to mitigate self-eval bias.")
     ev.set_defaults(func=cmd_evaluate_ideas)
+
+    # bench-extraction
+    be = sub.add_parser(
+        "bench-extraction",
+        help="Benchmark our extraction pipeline against unarXive's labeled sections",
+    )
+    be.add_argument("--n", type=int, default=10)
+    be.add_argument("--out-dir", default=None, help="Default: <root>/data/bench")
+    be.add_argument("--tarball", default="data/bench/raw/unarxive_open_subset.tar.xz",
+                    help="Path to the unarXive open-subset .tar.xz from Zenodo record 7752615")
+    be.add_argument("--max-scan", type=int, default=20000,
+                    help="Cap on records scanned before giving up")
+    be.add_argument("--skip-llm", action="store_true",
+                    help="Evaluate the regex stage only; skip openai_gaps (no API key needed)")
+    be.set_defaults(func=cmd_bench_extraction)
+
+    # bench-plots
+    bp = sub.add_parser("bench-plots",
+                        help="Regenerate plots from an existing data/bench/metrics.tsv")
+    bp.add_argument("--bench-dir", default=None)
+    bp.set_defaults(func=cmd_bench_plots)
 
     # run-all
     ra = sub.add_parser("run-all", help="Run extract-text through evaluate-ideas")

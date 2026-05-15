@@ -88,3 +88,11 @@ artifacts/
 .streamlit/secrets.toml
 
 !requirements.txt
+# benchmark outputs (whitelist past the global *.tsv / *.jsonl / *.png ignores)
+!data/bench/*.tsv
+!data/bench/*.jsonl
+!data/bench/*.md
+!data/bench/plots/
+!data/bench/plots/*.png
+# but never the 4.8GB unarXive tarball
+data/bench/raw/

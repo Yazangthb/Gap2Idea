@@ -1,0 +1,131 @@
+id	stage	metric	value	extra
+quant-ph/0402095	regex_section	rouge1_f	0.05717202654415517	limitations
+quant-ph/0402095	regex_section	rouge2_f	0.016853932584269662	limitations
+quant-ph/0402095	regex_section	rougeL_f	0.03215926493108729	limitations
+quant-ph/0402095	regex_section	pred_chars	1297.0	
+quant-ph/0402095	llm_gap	n_gaps	1.0	
+quant-ph/0402095	llm_gap	mean_sim_to_gold	0.7129418849945068	
+quant-ph/0402095	llm_gap	mean_sim_to_full	1.0000001192092896	
+quant-ph/0402095	llm_gap	recovery_at_0.5	1.0	
+quant-ph/0402095	llm_gap	hallucination_at_0.5	0.0	
+quant-ph/0402095	llm_gap	recovery_at_0.6	1.0	
+quant-ph/0402095	llm_gap	hallucination_at_0.6	0.0	
+quant-ph/0402095	llm_gap	recovery_at_0.7	1.0	
+quant-ph/0402095	llm_gap	hallucination_at_0.7	0.0	
+cs/0610128	regex_section	rouge1_f	0.26441199077632593	tail
+cs/0610128	regex_section	rouge2_f	0.2632794457274827	tail
+cs/0610128	regex_section	rougeL_f	0.26441199077632593	tail
+cs/0610128	regex_section	pred_chars	7705.0	
+cs/0610128	llm_gap	n_gaps	2.0	
+cs/0610128	llm_gap	mean_sim_to_gold	1.0	
+cs/0610128	llm_gap	mean_sim_to_full	1.0	
+cs/0610128	llm_gap	recovery_at_0.5	1.0	
+cs/0610128	llm_gap	hallucination_at_0.5	0.0	
+cs/0610128	llm_gap	recovery_at_0.6	1.0	
+cs/0610128	llm_gap	hallucination_at_0.6	0.0	
+cs/0610128	llm_gap	recovery_at_0.7	1.0	
+cs/0610128	llm_gap	hallucination_at_0.7	0.0	
+0803.2303	regex_section	rouge1_f	0.12826603325415678	tail
+0803.2303	regex_section	rouge2_f	0.1272294887039239	tail
+0803.2303	regex_section	rougeL_f	0.12826603325415678	tail
+0803.2303	regex_section	pred_chars	11686.0	
+0803.2303	llm_gap	n_gaps	1.0	
+0803.2303	llm_gap	mean_sim_to_gold	0.2867649495601654	
+0803.2303	llm_gap	mean_sim_to_full	0.2952349781990051	
+0803.2303	llm_gap	recovery_at_0.5	0.0	
+0803.2303	llm_gap	hallucination_at_0.5	1.0	
+0803.2303	llm_gap	recovery_at_0.6	0.0	
+0803.2303	llm_gap	hallucination_at_0.6	1.0	
+0803.2303	llm_gap	recovery_at_0.7	0.0	
+0803.2303	llm_gap	hallucination_at_0.7	1.0	
+0805.3456	regex_section	rouge1_f	0.13735108619481431	fallback
+0805.3456	regex_section	rouge2_f	0.06736842105263158	fallback
+0805.3456	regex_section	rougeL_f	0.09670637701471618	fallback
+0805.3456	regex_section	pred_chars	9552.0	
+0805.3456	llm_gap	n_gaps	1.0	
+0805.3456	llm_gap	mean_sim_to_gold	0.459841251373291	
+0805.3456	llm_gap	mean_sim_to_full	0.8503725528717041	
+0805.3456	llm_gap	recovery_at_0.5	0.0	
+0805.3456	llm_gap	hallucination_at_0.5	0.0	
+0805.3456	llm_gap	recovery_at_0.6	0.0	
+0805.3456	llm_gap	hallucination_at_0.6	0.0	
+0805.3456	llm_gap	recovery_at_0.7	0.0	
+0805.3456	llm_gap	hallucination_at_0.7	0.0	
+0806.2938	regex_section	rouge1_f	0.1040268456375839	future_work
+0806.2938	regex_section	rouge2_f	0.03367003367003367	future_work
+0806.2938	regex_section	rougeL_f	0.07382550335570469	future_work
+0806.2938	regex_section	pred_chars	237.0	
+0806.2938	llm_gap	n_gaps	0.0	
+0806.2938	llm_gap	mean_sim_to_gold	0.0	
+0806.2938	llm_gap	mean_sim_to_full	0.0	
+0806.2938	llm_gap	recovery_at_0.5	0.0	
+0806.2938	llm_gap	hallucination_at_0.5	0.0	
+0806.2938	llm_gap	recovery_at_0.6	0.0	
+0806.2938	llm_gap	hallucination_at_0.6	0.0	
+0806.2938	llm_gap	recovery_at_0.7	0.0	
+0806.2938	llm_gap	hallucination_at_0.7	0.0	
+0807.1134	regex_section	rouge1_f	0.3683083511777302	discussion,limitations
+0807.1134	regex_section	rouge2_f	0.14193548387096774	discussion,limitations
+0807.1134	regex_section	rougeL_f	0.25695931477516065	discussion,limitations
+0807.1134	regex_section	pred_chars	1341.0	
+0807.1134	llm_gap	n_gaps	0.0	
+0807.1134	llm_gap	mean_sim_to_gold	0.0	
+0807.1134	llm_gap	mean_sim_to_full	0.0	
+0807.1134	llm_gap	recovery_at_0.5	0.0	
+0807.1134	llm_gap	hallucination_at_0.5	0.0	
+0807.1134	llm_gap	recovery_at_0.6	0.0	
+0807.1134	llm_gap	hallucination_at_0.6	0.0	
+0807.1134	llm_gap	recovery_at_0.7	0.0	
+0807.1134	llm_gap	hallucination_at_0.7	0.0	
+0807.0023	regex_section	rouge1_f	0.5933014354066986	fallback
+0807.0023	regex_section	rouge2_f	0.4161073825503356	fallback
+0807.0023	regex_section	rougeL_f	0.37129186602870806	fallback
+0807.0023	regex_section	pred_chars	4090.0	
+0807.0023	llm_gap	n_gaps	2.0	
+0807.0023	llm_gap	mean_sim_to_gold	1.0	
+0807.0023	llm_gap	mean_sim_to_full	1.0	
+0807.0023	llm_gap	recovery_at_0.5	1.0	
+0807.0023	llm_gap	hallucination_at_0.5	0.0	
+0807.0023	llm_gap	recovery_at_0.6	1.0	
+0807.0023	llm_gap	hallucination_at_0.6	0.0	
+0807.0023	llm_gap	recovery_at_0.7	1.0	
+0807.0023	llm_gap	hallucination_at_0.7	0.0	
+0808.2057	regex_section	rouge1_f	0.31578947368421056	fallback
+0808.2057	regex_section	rouge2_f	0.07874015748031496	fallback
+0808.2057	regex_section	rougeL_f	0.1234119782214156	fallback
+0808.2057	regex_section	pred_chars	8373.0	
+0808.2057	llm_gap	n_gaps	1.0	
+0808.2057	llm_gap	mean_sim_to_gold	0.7161424160003662	
+0808.2057	llm_gap	mean_sim_to_full	1.0	
+0808.2057	llm_gap	recovery_at_0.5	1.0	
+0808.2057	llm_gap	hallucination_at_0.5	0.0	
+0808.2057	llm_gap	recovery_at_0.6	1.0	
+0808.2057	llm_gap	hallucination_at_0.6	0.0	
+0808.2057	llm_gap	recovery_at_0.7	1.0	
+0808.2057	llm_gap	hallucination_at_0.7	0.0	
+0811.2508	regex_section	rouge1_f	0.24312590448625182	fallback
+0811.2508	regex_section	rouge2_f	0.055072463768115934	fallback
+0811.2508	regex_section	rougeL_f	0.09985528219971056	fallback
+0811.2508	regex_section	pred_chars	7812.0	
+0811.2508	llm_gap	n_gaps	2.0	
+0811.2508	llm_gap	mean_sim_to_gold	0.42494961619377136	
+0811.2508	llm_gap	mean_sim_to_full	1.0	
+0811.2508	llm_gap	recovery_at_0.5	0.0	
+0811.2508	llm_gap	hallucination_at_0.5	0.0	
+0811.2508	llm_gap	recovery_at_0.6	0.0	
+0811.2508	llm_gap	hallucination_at_0.6	0.0	
+0811.2508	llm_gap	recovery_at_0.7	0.0	
+0811.2508	llm_gap	hallucination_at_0.7	0.0	
+0811.3859	regex_section	rouge1_f	0.24866785079928952	discussion
+0811.3859	regex_section	rouge2_f	0.053475935828877004	discussion
+0811.3859	regex_section	rougeL_f	0.1349911190053286	discussion
+0811.3859	regex_section	pred_chars	1322.0	
+0811.3859	llm_gap	n_gaps	1.0	
+0811.3859	llm_gap	mean_sim_to_gold	0.5495617985725403	
+0811.3859	llm_gap	mean_sim_to_full	0.8656655550003052	
+0811.3859	llm_gap	recovery_at_0.5	1.0	
+0811.3859	llm_gap	hallucination_at_0.5	0.0	
+0811.3859	llm_gap	recovery_at_0.6	0.0	
+0811.3859	llm_gap	hallucination_at_0.6	0.0	
+0811.3859	llm_gap	recovery_at_0.7	0.0	
+0811.3859	llm_gap	hallucination_at_0.7	0.0	
