@@ -88,3 +88,17 @@ artifacts/
 .streamlit/secrets.toml
 
 !requirements.txt
+
+# Benchmark outputs (whitelist past the global *.tsv / *.jsonl / *.png / *.npy ignores)
+!data/bench/*.tsv
+!data/bench/*.jsonl
+!data/bench/*.md
+!data/bench/plots/
+!data/bench/plots/*.png
+data/bench/raw/
+
+!data/clustering_bench/*.tsv
+!data/clustering_bench/*.md
+!data/clustering_bench/plots/
+!data/clustering_bench/plots/*.png
+data/clustering_bench/embeddings/
