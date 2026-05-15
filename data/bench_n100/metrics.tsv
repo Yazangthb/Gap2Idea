@@ -12,6 +12,15 @@ quant-ph/0402095	llm_gap	recovery_at_0.6	0.0
 quant-ph/0402095	llm_gap	hallucination_at_0.6	1.0	
 quant-ph/0402095	llm_gap	recovery_at_0.7	0.0	
 quant-ph/0402095	llm_gap	hallucination_at_0.7	1.0	
+quant-ph/0402095	pipeline_vs_oracle	n_oracle_gaps	2.0	
+quant-ph/0402095	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.2462584674358368	
+quant-ph/0402095	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.22226117551326752	
+quant-ph/0402095	pipeline_vs_oracle	recovery_at_0.5	0.0	
+quant-ph/0402095	pipeline_vs_oracle	coverage_at_0.5	0.0	
+quant-ph/0402095	pipeline_vs_oracle	recovery_at_0.6	0.0	
+quant-ph/0402095	pipeline_vs_oracle	coverage_at_0.6	0.0	
+quant-ph/0402095	pipeline_vs_oracle	recovery_at_0.7	0.0	
+quant-ph/0402095	pipeline_vs_oracle	coverage_at_0.7	0.0	
 cs/0610128	regex_section	rouge1_f	0.8579710144927537	fallback
 cs/0610128	regex_section	rouge2_f	0.7930029154518949	fallback
 cs/0610128	regex_section	rougeL_f	0.8579710144927537	fallback
@@ -25,6 +34,15 @@ cs/0610128	llm_gap	recovery_at_0.6	1.0
 cs/0610128	llm_gap	hallucination_at_0.6	0.0	
 cs/0610128	llm_gap	recovery_at_0.7	1.0	
 cs/0610128	llm_gap	hallucination_at_0.7	0.0	
+cs/0610128	pipeline_vs_oracle	n_oracle_gaps	1.0	
+cs/0610128	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0000001192092896	
+cs/0610128	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0000001192092896	
+cs/0610128	pipeline_vs_oracle	recovery_at_0.5	1.0	
+cs/0610128	pipeline_vs_oracle	coverage_at_0.5	1.0	
+cs/0610128	pipeline_vs_oracle	recovery_at_0.6	1.0	
+cs/0610128	pipeline_vs_oracle	coverage_at_0.6	1.0	
+cs/0610128	pipeline_vs_oracle	recovery_at_0.7	1.0	
+cs/0610128	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0803.2303	regex_section	rouge1_f	0.23013698630136983	discussion,future_work
 0803.2303	regex_section	rouge2_f	0.18181818181818182	discussion,future_work
 0803.2303	regex_section	rougeL_f	0.23013698630136983	discussion,future_work
@@ -38,6 +56,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0803.2303	llm_gap	hallucination_at_0.6	0.0	
 0803.2303	llm_gap	recovery_at_0.7	1.0	
 0803.2303	llm_gap	hallucination_at_0.7	0.0	
+0803.2303	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0803.2303	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0000001192092896	
+0803.2303	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0000001192092896	
+0803.2303	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0803.2303	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0803.2303	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0803.2303	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0803.2303	pipeline_vs_oracle	recovery_at_0.7	1.0	
+0803.2303	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0805.3456	regex_section	rouge1_f	0.13659793814432988	future_work
 0805.3456	regex_section	rouge2_f	0.12774193548387097	future_work
 0805.3456	regex_section	rougeL_f	0.13659793814432988	future_work
@@ -51,6 +78,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0805.3456	llm_gap	hallucination_at_0.6	0.0	
 0805.3456	llm_gap	recovery_at_0.7	0.5	
 0805.3456	llm_gap	hallucination_at_0.7	0.0	
+0805.3456	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0805.3456	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.44671690464019775	
+0805.3456	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0000001192092896	
+0805.3456	pipeline_vs_oracle	recovery_at_0.5	0.5	
+0805.3456	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0805.3456	pipeline_vs_oracle	recovery_at_0.6	0.5	
+0805.3456	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0805.3456	pipeline_vs_oracle	recovery_at_0.7	0.5	
+0805.3456	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0806.2938	regex_section	rouge1_f	0.8926654740608229	future_work
 0806.2938	regex_section	rouge2_f	0.8207885304659499	future_work
 0806.2938	regex_section	rougeL_f	0.8926654740608229	future_work
@@ -64,6 +100,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0806.2938	llm_gap	hallucination_at_0.6	0.0	
 0806.2938	llm_gap	recovery_at_0.7	1.0	
 0806.2938	llm_gap	hallucination_at_0.7	0.0	
+0806.2938	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0806.2938	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9911149144172668	
+0806.2938	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9911149144172668	
+0806.2938	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0806.2938	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0806.2938	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0806.2938	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0806.2938	pipeline_vs_oracle	recovery_at_0.7	1.0	
+0806.2938	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0807.1134	regex_section	rouge1_f	0.32493483927019984	fallback
 0807.1134	regex_section	rouge2_f	0.2959094865100087	fallback
 0807.1134	regex_section	rougeL_f	0.3231972198088619	fallback
@@ -77,6 +122,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0807.1134	llm_gap	hallucination_at_0.6	0.0	
 0807.1134	llm_gap	recovery_at_0.7	0.0	
 0807.1134	llm_gap	hallucination_at_0.7	0.0	
+0807.1134	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0807.1134	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.2166619449853897	
+0807.1134	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.24925179779529572	
+0807.1134	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0807.1134	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0807.1134	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0807.1134	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0807.1134	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0807.1134	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0807.0023	regex_section	rouge1_f	0.31362007168458783	discussion,future_work
 0807.0023	regex_section	rouge2_f	0.20807174887892377	discussion,future_work
 0807.0023	regex_section	rougeL_f	0.22939068100358423	discussion,future_work
@@ -90,6 +144,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0807.0023	llm_gap	hallucination_at_0.6	0.3333333333333333	
 0807.0023	llm_gap	recovery_at_0.7	0.6666666666666666	
 0807.0023	llm_gap	hallucination_at_0.7	0.3333333333333333	
+0807.0023	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0807.0023	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.48159947991371155	
+0807.0023	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.7341190576553345	
+0807.0023	pipeline_vs_oracle	recovery_at_0.5	0.3333333333333333	
+0807.0023	pipeline_vs_oracle	coverage_at_0.5	0.5	
+0807.0023	pipeline_vs_oracle	recovery_at_0.6	0.3333333333333333	
+0807.0023	pipeline_vs_oracle	coverage_at_0.6	0.5	
+0807.0023	pipeline_vs_oracle	recovery_at_0.7	0.3333333333333333	
+0807.0023	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0808.2057	regex_section	rouge1_f	0.3468917881811205	fallback
 0808.2057	regex_section	rouge2_f	0.06456571867794005	fallback
 0808.2057	regex_section	rougeL_f	0.13507290867229468	fallback
@@ -103,6 +166,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0808.2057	llm_gap	hallucination_at_0.6	0.0	
 0808.2057	llm_gap	recovery_at_0.7	1.0	
 0808.2057	llm_gap	hallucination_at_0.7	0.0	
+0808.2057	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0808.2057	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.7161422967910767	
+0808.2057	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.702480673789978	
+0808.2057	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0808.2057	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0808.2057	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0808.2057	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0808.2057	pipeline_vs_oracle	recovery_at_0.7	1.0	
+0808.2057	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0811.2508	regex_section	rouge1_f	0.26186579378068736	fallback
 0811.2508	regex_section	rouge2_f	0.05081967213114754	fallback
 0811.2508	regex_section	rougeL_f	0.10147299509001638	fallback
@@ -116,6 +188,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0811.2508	llm_gap	hallucination_at_0.6	0.0	
 0811.2508	llm_gap	recovery_at_0.7	0.5	
 0811.2508	llm_gap	hallucination_at_0.7	0.0	
+0811.2508	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0811.2508	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.2678072452545166	
+0811.2508	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.3517734110355377	
+0811.2508	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0811.2508	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0811.2508	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0811.2508	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0811.2508	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0811.2508	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0811.3859	regex_section	rouge1_f	0.7569141193595342	future_work
 0811.3859	regex_section	rouge2_f	0.6627737226277373	future_work
 0811.3859	regex_section	rougeL_f	0.7569141193595342	future_work
@@ -129,6 +210,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0811.3859	llm_gap	hallucination_at_0.6	0.3333333333333333	
 0811.3859	llm_gap	recovery_at_0.7	0.6666666666666666	
 0811.3859	llm_gap	hallucination_at_0.7	0.3333333333333333	
+0811.3859	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0811.3859	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.43489766120910645	
+0811.3859	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.4265901744365692	
+0811.3859	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0811.3859	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0811.3859	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0811.3859	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0811.3859	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0811.3859	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0902.0196	regex_section	rouge1_f	0.43727598566308246	future_work
 0902.0196	regex_section	rouge2_f	0.3032490974729242	future_work
 0902.0196	regex_section	rougeL_f	0.37275985663082434	future_work
@@ -142,6 +232,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0902.0196	llm_gap	hallucination_at_0.6	0.0	
 0902.0196	llm_gap	recovery_at_0.7	0.0	
 0902.0196	llm_gap	hallucination_at_0.7	0.0	
+0902.0196	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0902.0196	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+0902.0196	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+0902.0196	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0902.0196	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0902.0196	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0902.0196	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0902.0196	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0902.0196	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0902.2504	regex_section	rouge1_f	0.13464696223316913	fallback
 0902.2504	regex_section	rouge2_f	0.009884678747940693	fallback
 0902.2504	regex_section	rougeL_f	0.062397372742200335	fallback
@@ -155,6 +254,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0902.2504	llm_gap	hallucination_at_0.6	0.0	
 0902.2504	llm_gap	recovery_at_0.7	0.0	
 0902.2504	llm_gap	hallucination_at_0.7	0.0	
+0902.2504	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0902.2504	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+0902.2504	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+0902.2504	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0902.2504	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0902.2504	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0902.2504	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0902.2504	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0902.2504	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0902.4012	regex_section	rouge1_f	0.27380952380952384	fallback
 0902.4012	regex_section	rouge2_f	0.046199701937406856	fallback
 0902.4012	regex_section	rougeL_f	0.11607142857142856	fallback
@@ -168,6 +276,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0902.4012	llm_gap	hallucination_at_0.6	0.3333333333333333	
 0902.4012	llm_gap	recovery_at_0.7	0.0	
 0902.4012	llm_gap	hallucination_at_0.7	0.3333333333333333	
+0902.4012	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0902.4012	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.1920955926179886	
+0902.4012	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.3100324869155884	
+0902.4012	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0902.4012	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0902.4012	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0902.4012	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0902.4012	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0902.4012	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0902.3986	regex_section	rouge1_f	0.8398384925975775	limitations
 0902.3986	regex_section	rouge2_f	0.7908232118758434	limitations
 0902.3986	regex_section	rougeL_f	0.8398384925975775	limitations
@@ -181,6 +298,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0902.3986	llm_gap	hallucination_at_0.6	0.0	
 0902.3986	llm_gap	recovery_at_0.7	1.0	
 0902.3986	llm_gap	hallucination_at_0.7	0.0	
+0902.3986	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0902.3986	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0000001192092896	
+0902.3986	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0000001192092896	
+0902.3986	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0902.3986	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0902.3986	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0902.3986	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0902.3986	pipeline_vs_oracle	recovery_at_0.7	1.0	
+0902.3986	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0902.3485	regex_section	rouge1_f	0.6666666666666666	discussion,future_work
 0902.3485	regex_section	rouge2_f	0.642166344294004	discussion,future_work
 0902.3485	regex_section	rougeL_f	0.6666666666666666	discussion,future_work
@@ -194,6 +320,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0902.3485	llm_gap	hallucination_at_0.6	0.0	
 0902.3485	llm_gap	recovery_at_0.7	0.5	
 0902.3485	llm_gap	hallucination_at_0.7	0.5	
+0902.3485	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0902.3485	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.8240801095962524	
+0902.3485	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.8240801095962524	
+0902.3485	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0902.3485	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0902.3485	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0902.3485	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0902.3485	pipeline_vs_oracle	recovery_at_0.7	0.5	
+0902.3485	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0903.0843	regex_section	rouge1_f	0.9255813953488373	future_work
 0903.0843	regex_section	rouge2_f	0.897196261682243	future_work
 0903.0843	regex_section	rougeL_f	0.9209302325581395	future_work
@@ -207,6 +342,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0903.0843	llm_gap	hallucination_at_0.6	0.0	
 0903.0843	llm_gap	recovery_at_0.7	1.0	
 0903.0843	llm_gap	hallucination_at_0.7	0.0	
+0903.0843	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0903.0843	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.000000238418579	
+0903.0843	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.6931085586547852	
+0903.0843	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0903.0843	pipeline_vs_oracle	coverage_at_0.5	0.5	
+0903.0843	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0903.0843	pipeline_vs_oracle	coverage_at_0.6	0.5	
+0903.0843	pipeline_vs_oracle	recovery_at_0.7	1.0	
+0903.0843	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0903.5444	regex_section	rouge1_f	0.37951807228915657	fallback
 0903.5444	regex_section	rouge2_f	0.0925553319919517	fallback
 0903.5444	regex_section	rougeL_f	0.1506024096385542	fallback
@@ -220,6 +364,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0903.5444	llm_gap	hallucination_at_0.6	0.0	
 0903.5444	llm_gap	recovery_at_0.7	0.0	
 0903.5444	llm_gap	hallucination_at_0.7	0.0	
+0903.5444	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0903.5444	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.5404137372970581	
+0903.5444	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.4236513376235962	
+0903.5444	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0903.5444	pipeline_vs_oracle	coverage_at_0.5	0.5	
+0903.5444	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0903.5444	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0903.5444	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0903.5444	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0903.4559	regex_section	rouge1_f	0.48145896656534953	fallback
 0903.4559	regex_section	rouge2_f	0.1898965307364577	fallback
 0903.4559	regex_section	rougeL_f	0.2030395136778115	fallback
@@ -233,6 +386,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0903.4559	llm_gap	hallucination_at_0.6	0.0	
 0903.4559	llm_gap	recovery_at_0.7	1.0	
 0903.4559	llm_gap	hallucination_at_0.7	0.0	
+0903.4559	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0903.4559	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0	
+0903.4559	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0	
+0903.4559	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0903.4559	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0903.4559	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0903.4559	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0903.4559	pipeline_vs_oracle	recovery_at_0.7	1.0	
+0903.4559	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0904.4143	regex_section	rouge1_f	0.17045454545454544	fallback
 0904.4143	regex_section	rouge2_f	0.025056947608200455	fallback
 0904.4143	regex_section	rougeL_f	0.09999999999999999	fallback
@@ -246,6 +408,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0904.4143	llm_gap	hallucination_at_0.6	0.0	
 0904.4143	llm_gap	recovery_at_0.7	0.0	
 0904.4143	llm_gap	hallucination_at_0.7	0.0	
+0904.4143	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0904.4143	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+0904.4143	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+0904.4143	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0904.4143	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0904.4143	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0904.4143	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0904.4143	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0904.4143	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0905.0808	regex_section	rouge1_f	0.5810635538261998	future_work
 0905.0808	regex_section	rouge2_f	0.4135240572171651	future_work
 0905.0808	regex_section	rougeL_f	0.4357976653696498	future_work
@@ -259,6 +430,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0905.0808	llm_gap	hallucination_at_0.6	0.0	
 0905.0808	llm_gap	recovery_at_0.7	1.0	
 0905.0808	llm_gap	hallucination_at_0.7	0.0	
+0905.0808	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0905.0808	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.5630679726600647	
+0905.0808	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.6714344620704651	
+0905.0808	pipeline_vs_oracle	recovery_at_0.5	0.25	
+0905.0808	pipeline_vs_oracle	coverage_at_0.5	0.5	
+0905.0808	pipeline_vs_oracle	recovery_at_0.6	0.25	
+0905.0808	pipeline_vs_oracle	coverage_at_0.6	0.5	
+0905.0808	pipeline_vs_oracle	recovery_at_0.7	0.25	
+0905.0808	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0905.0794	regex_section	rouge1_f	0.5646437994722956	future_work
 0905.0794	regex_section	rouge2_f	0.47745358090185674	future_work
 0905.0794	regex_section	rougeL_f	0.5646437994722956	future_work
@@ -272,6 +452,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0905.0794	llm_gap	hallucination_at_0.6	0.0	
 0905.0794	llm_gap	recovery_at_0.7	1.0	
 0905.0794	llm_gap	hallucination_at_0.7	0.0	
+0905.0794	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0905.0794	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.7023867964744568	
+0905.0794	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.7129900455474854	
+0905.0794	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0905.0794	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0905.0794	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0905.0794	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0905.0794	pipeline_vs_oracle	recovery_at_0.7	0.6666666666666666	
+0905.0794	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0905.2459	regex_section	rouge1_f	0.13836477987421383	fallback
 0905.2459	regex_section	rouge2_f	0.016842105263157894	fallback
 0905.2459	regex_section	rougeL_f	0.05870020964360587	fallback
@@ -285,6 +474,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0905.2459	llm_gap	hallucination_at_0.6	1.0	
 0905.2459	llm_gap	recovery_at_0.7	0.0	
 0905.2459	llm_gap	hallucination_at_0.7	1.0	
+0905.2459	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0905.2459	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.11854293197393417	
+0905.2459	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0841967910528183	
+0905.2459	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0905.2459	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0905.2459	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0905.2459	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0905.2459	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0905.2459	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0905.2248	regex_section	rouge1_f	0.42287694974003465	fallback
 0905.2248	regex_section	rouge2_f	0.33333333333333337	fallback
 0905.2248	regex_section	rougeL_f	0.3275563258232235	fallback
@@ -298,6 +496,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0905.2248	llm_gap	hallucination_at_0.6	0.0	
 0905.2248	llm_gap	recovery_at_0.7	1.0	
 0905.2248	llm_gap	hallucination_at_0.7	0.0	
+0905.2248	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0905.2248	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.8115177154541016	
+0905.2248	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.7187583446502686	
+0905.2248	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0905.2248	pipeline_vs_oracle	coverage_at_0.5	0.5	
+0905.2248	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0905.2248	pipeline_vs_oracle	coverage_at_0.6	0.5	
+0905.2248	pipeline_vs_oracle	recovery_at_0.7	0.5	
+0905.2248	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0905.1425	regex_section	rouge1_f	0.6533742331288344	future_work,limitations
 0905.1425	regex_section	rouge2_f	0.5784615384615384	future_work,limitations
 0905.1425	regex_section	rougeL_f	0.638036809815951	future_work,limitations
@@ -311,6 +518,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0905.1425	llm_gap	hallucination_at_0.6	0.0	
 0905.1425	llm_gap	recovery_at_0.7	1.0	
 0905.1425	llm_gap	hallucination_at_0.7	0.0	
+0905.1425	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0905.1425	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9484655857086182	
+0905.1425	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9484655857086182	
+0905.1425	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0905.1425	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0905.1425	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0905.1425	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0905.1425	pipeline_vs_oracle	recovery_at_0.7	1.0	
+0905.1425	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0905.4068	regex_section	rouge1_f	0.7535410764872521	fallback
 0905.4068	regex_section	rouge2_f	0.6951566951566951	fallback
 0905.4068	regex_section	rougeL_f	0.7535410764872521	fallback
@@ -324,6 +540,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0905.4068	llm_gap	hallucination_at_0.6	0.5	
 0905.4068	llm_gap	recovery_at_0.7	0.5	
 0905.4068	llm_gap	hallucination_at_0.7	0.5	
+0905.4068	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0905.4068	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.7379683256149292	
+0905.4068	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.7379683256149292	
+0905.4068	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0905.4068	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0905.4068	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0905.4068	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0905.4068	pipeline_vs_oracle	recovery_at_0.7	0.5	
+0905.4068	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0906.2512	regex_section	rouge1_f	0.007751937984496126	fallback
 0906.2512	regex_section	rouge2_f	0.0	fallback
 0906.2512	regex_section	rougeL_f	0.007751937984496126	fallback
@@ -337,6 +562,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0906.2512	llm_gap	hallucination_at_0.6	1.0	
 0906.2512	llm_gap	recovery_at_0.7	0.0	
 0906.2512	llm_gap	hallucination_at_0.7	1.0	
+0906.2512	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0906.2512	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.2521842122077942	
+0906.2512	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.1915648728609085	
+0906.2512	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0906.2512	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0906.2512	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0906.2512	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0906.2512	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0906.2512	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0906.2447	regex_section	rouge1_f	0.030927835051546396	fallback
 0906.2447	regex_section	rouge2_f	0.005181347150259067	fallback
 0906.2447	regex_section	rougeL_f	0.025773195876288665	fallback
@@ -350,6 +584,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0906.2447	llm_gap	hallucination_at_0.6	0.0	
 0906.2447	llm_gap	recovery_at_0.7	0.0	
 0906.2447	llm_gap	hallucination_at_0.7	0.0	
+0906.2447	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0906.2447	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+0906.2447	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+0906.2447	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0906.2447	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0906.2447	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0906.2447	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0906.2447	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0906.2447	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0906.4409	regex_section	rouge1_f	0.10848400556328233	fallback
 0906.4409	regex_section	rouge2_f	0.04184100418410042	fallback
 0906.4409	regex_section	rougeL_f	0.07232267037552156	fallback
@@ -363,6 +606,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0906.4409	llm_gap	hallucination_at_0.6	0.0	
 0906.4409	llm_gap	recovery_at_0.7	0.0	
 0906.4409	llm_gap	hallucination_at_0.7	0.0	
+0906.4409	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0906.4409	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.12440957129001617	
+0906.4409	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.12440957129001617	
+0906.4409	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0906.4409	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0906.4409	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0906.4409	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0906.4409	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0906.4409	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0907.2315	regex_section	rouge1_f	0.17627118644067793	fallback
 0907.2315	regex_section	rouge2_f	0.07927519818799547	fallback
 0907.2315	regex_section	rougeL_f	0.12203389830508474	fallback
@@ -376,6 +628,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0907.2315	llm_gap	hallucination_at_0.6	0.0	
 0907.2315	llm_gap	recovery_at_0.7	0.0	
 0907.2315	llm_gap	hallucination_at_0.7	0.0	
+0907.2315	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0907.2315	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.41482365131378174	
+0907.2315	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.4085521697998047	
+0907.2315	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0907.2315	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0907.2315	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0907.2315	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0907.2315	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0907.2315	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0907.2640	regex_section	rouge1_f	0.15983606557377053	fallback
 0907.2640	regex_section	rouge2_f	0.01646090534979424	fallback
 0907.2640	regex_section	rougeL_f	0.06967213114754099	fallback
@@ -389,6 +650,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0907.2640	llm_gap	hallucination_at_0.6	0.0	
 0907.2640	llm_gap	recovery_at_0.7	0.0	
 0907.2640	llm_gap	hallucination_at_0.7	1.0	
+0907.2640	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0907.2640	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.3837917745113373	
+0907.2640	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.31181415915489197	
+0907.2640	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0907.2640	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0907.2640	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0907.2640	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0907.2640	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0907.2640	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0908.1769	regex_section	rouge1_f	0.9087779690189329	future_work
 0908.1769	regex_section	rouge2_f	0.8601036269430054	future_work
 0908.1769	regex_section	rougeL_f	0.9087779690189329	future_work
@@ -402,6 +672,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0908.1769	llm_gap	hallucination_at_0.6	0.0	
 0908.1769	llm_gap	recovery_at_0.7	1.0	
 0908.1769	llm_gap	hallucination_at_0.7	0.0	
+0908.1769	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0908.1769	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.6967846751213074	
+0908.1769	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.6180644035339355	
+0908.1769	pipeline_vs_oracle	recovery_at_0.5	0.5	
+0908.1769	pipeline_vs_oracle	coverage_at_0.5	0.5	
+0908.1769	pipeline_vs_oracle	recovery_at_0.6	0.5	
+0908.1769	pipeline_vs_oracle	coverage_at_0.6	0.5	
+0908.1769	pipeline_vs_oracle	recovery_at_0.7	0.5	
+0908.1769	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0908.3653	regex_section	rouge1_f	0.5149700598802396	discussion,future_work
 0908.3653	regex_section	rouge2_f	0.49397590361445787	discussion,future_work
 0908.3653	regex_section	rougeL_f	0.5149700598802396	discussion,future_work
@@ -415,6 +694,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0908.3653	llm_gap	hallucination_at_0.6	0.0	
 0908.3653	llm_gap	recovery_at_0.7	0.5	
 0908.3653	llm_gap	hallucination_at_0.7	0.0	
+0908.3653	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0908.3653	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.7658990621566772	
+0908.3653	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.7065540552139282	
+0908.3653	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0908.3653	pipeline_vs_oracle	coverage_at_0.5	0.5	
+0908.3653	pipeline_vs_oracle	recovery_at_0.6	0.5	
+0908.3653	pipeline_vs_oracle	coverage_at_0.6	0.5	
+0908.3653	pipeline_vs_oracle	recovery_at_0.7	0.5	
+0908.3653	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0909.5313	regex_section	rouge1_f	0.41536863966770504	fallback
 0909.5313	regex_section	rouge2_f	0.32882414151925077	fallback
 0909.5313	regex_section	rougeL_f	0.4132917964693666	fallback
@@ -428,6 +716,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0909.5313	llm_gap	hallucination_at_0.6	0.0	
 0909.5313	llm_gap	recovery_at_0.7	0.5	
 0909.5313	llm_gap	hallucination_at_0.7	0.0	
+0909.5313	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0909.5313	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.613793134689331	
+0909.5313	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.6342770457267761	
+0909.5313	pipeline_vs_oracle	recovery_at_0.5	0.5	
+0909.5313	pipeline_vs_oracle	coverage_at_0.5	0.5	
+0909.5313	pipeline_vs_oracle	recovery_at_0.6	0.5	
+0909.5313	pipeline_vs_oracle	coverage_at_0.6	0.5	
+0909.5313	pipeline_vs_oracle	recovery_at_0.7	0.5	
+0909.5313	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0910.0670	regex_section	rouge1_f	0.17847533632286994	future_work
 0910.0670	regex_section	rouge2_f	0.1561938958707361	future_work
 0910.0670	regex_section	rougeL_f	0.1757847533632287	future_work
@@ -441,6 +738,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0910.0670	llm_gap	hallucination_at_0.6	0.0	
 0910.0670	llm_gap	recovery_at_0.7	0.0	
 0910.0670	llm_gap	hallucination_at_0.7	0.0	
+0910.0670	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0910.0670	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+0910.0670	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+0910.0670	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0910.0670	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0910.0670	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0910.0670	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0910.0670	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0910.0670	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0910.1692	regex_section	rouge1_f	0.9662162162162162	future_work
 0910.1692	regex_section	rouge2_f	0.9387755102040818	future_work
 0910.1692	regex_section	rougeL_f	0.9662162162162162	future_work
@@ -454,6 +760,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0910.1692	llm_gap	hallucination_at_0.6	0.0	
 0910.1692	llm_gap	recovery_at_0.7	1.0	
 0910.1692	llm_gap	hallucination_at_0.7	0.0	
+0910.1692	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0910.1692	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0	
+0910.1692	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0	
+0910.1692	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0910.1692	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0910.1692	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0910.1692	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0910.1692	pipeline_vs_oracle	recovery_at_0.7	1.0	
+0910.1692	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0910.5055	regex_section	rouge1_f	0.41876629018245004	fallback
 0910.5055	regex_section	rouge2_f	0.3481288076588338	fallback
 0910.5055	regex_section	rougeL_f	0.41529105125977417	fallback
@@ -467,6 +782,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0910.5055	llm_gap	hallucination_at_0.6	0.0	
 0910.5055	llm_gap	recovery_at_0.7	1.0	
 0910.5055	llm_gap	hallucination_at_0.7	0.0	
+0910.5055	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0910.5055	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.6953132748603821	
+0910.5055	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.6409314274787903	
+0910.5055	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0910.5055	pipeline_vs_oracle	coverage_at_0.5	0.5	
+0910.5055	pipeline_vs_oracle	recovery_at_0.6	0.3333333333333333	
+0910.5055	pipeline_vs_oracle	coverage_at_0.6	0.5	
+0910.5055	pipeline_vs_oracle	recovery_at_0.7	0.3333333333333333	
+0910.5055	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0912.0270	regex_section	rouge1_f	0.017391304347826087	fallback
 0912.0270	regex_section	rouge2_f	0.0	fallback
 0912.0270	regex_section	rougeL_f	0.011594202898550725	fallback
@@ -480,6 +804,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0912.0270	llm_gap	hallucination_at_0.6	0.0	
 0912.0270	llm_gap	recovery_at_0.7	0.0	
 0912.0270	llm_gap	hallucination_at_0.7	0.0	
+0912.0270	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0912.0270	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+0912.0270	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+0912.0270	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0912.0270	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0912.0270	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0912.0270	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0912.0270	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0912.0270	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0912.1200	regex_section	rouge1_f	0.6976744186046512	future_work
 0912.1200	regex_section	rouge2_f	0.611764705882353	future_work
 0912.1200	regex_section	rougeL_f	0.6976744186046512	future_work
@@ -493,6 +826,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0912.1200	llm_gap	hallucination_at_0.6	0.0	
 0912.1200	llm_gap	recovery_at_0.7	1.0	
 0912.1200	llm_gap	hallucination_at_0.7	0.0	
+0912.1200	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0912.1200	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.7534327507019043	
+0912.1200	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9665336608886719	
+0912.1200	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0912.1200	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0912.1200	pipeline_vs_oracle	recovery_at_0.6	0.5	
+0912.1200	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0912.1200	pipeline_vs_oracle	recovery_at_0.7	0.5	
+0912.1200	pipeline_vs_oracle	coverage_at_0.7	1.0	
 0912.2625	regex_section	rouge1_f	0.8414239482200647	future_work
 0912.2625	regex_section	rouge2_f	0.762214983713355	future_work
 0912.2625	regex_section	rougeL_f	0.8414239482200647	future_work
@@ -506,6 +848,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0912.2625	llm_gap	hallucination_at_0.6	0.0	
 0912.2625	llm_gap	recovery_at_0.7	0.5	
 0912.2625	llm_gap	hallucination_at_0.7	0.5	
+0912.2625	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0912.2625	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.837708592414856	
+0912.2625	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.837708592414856	
+0912.2625	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0912.2625	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0912.2625	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0912.2625	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0912.2625	pipeline_vs_oracle	recovery_at_0.7	0.5	
+0912.2625	pipeline_vs_oracle	coverage_at_0.7	0.5	
 0912.4184	regex_section	rouge1_f	0.4091530054644809	discussion,future_work
 0912.4184	regex_section	rouge2_f	0.3834586466165414	discussion,future_work
 0912.4184	regex_section	rougeL_f	0.40710382513661203	discussion,future_work
@@ -519,6 +870,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0912.4184	llm_gap	hallucination_at_0.6	0.0	
 0912.4184	llm_gap	recovery_at_0.7	0.0	
 0912.4184	llm_gap	hallucination_at_0.7	0.0	
+0912.4184	pipeline_vs_oracle	n_oracle_gaps	2.0	
+0912.4184	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.45715785026550293	
+0912.4184	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.35037893056869507	
+0912.4184	pipeline_vs_oracle	recovery_at_0.5	0.0	
+0912.4184	pipeline_vs_oracle	coverage_at_0.5	0.0	
+0912.4184	pipeline_vs_oracle	recovery_at_0.6	0.0	
+0912.4184	pipeline_vs_oracle	coverage_at_0.6	0.0	
+0912.4184	pipeline_vs_oracle	recovery_at_0.7	0.0	
+0912.4184	pipeline_vs_oracle	coverage_at_0.7	0.0	
 0912.5353	regex_section	rouge1_f	0.4127423822714682	fallback
 0912.5353	regex_section	rouge2_f	0.27461858529819694	fallback
 0912.5353	regex_section	rougeL_f	0.2479224376731302	fallback
@@ -532,6 +892,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 0912.5353	llm_gap	hallucination_at_0.6	0.0	
 0912.5353	llm_gap	recovery_at_0.7	1.0	
 0912.5353	llm_gap	hallucination_at_0.7	0.0	
+0912.5353	pipeline_vs_oracle	n_oracle_gaps	1.0	
+0912.5353	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9541539549827576	
+0912.5353	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9541539549827576	
+0912.5353	pipeline_vs_oracle	recovery_at_0.5	1.0	
+0912.5353	pipeline_vs_oracle	coverage_at_0.5	1.0	
+0912.5353	pipeline_vs_oracle	recovery_at_0.6	1.0	
+0912.5353	pipeline_vs_oracle	coverage_at_0.6	1.0	
+0912.5353	pipeline_vs_oracle	recovery_at_0.7	1.0	
+0912.5353	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1001.0315	regex_section	rouge1_f	0.7790262172284644	future_work
 1001.0315	regex_section	rouge2_f	0.6954887218045114	future_work
 1001.0315	regex_section	rougeL_f	0.7752808988764045	future_work
@@ -545,6 +914,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1001.0315	llm_gap	hallucination_at_0.6	0.0	
 1001.0315	llm_gap	recovery_at_0.7	1.0	
 1001.0315	llm_gap	hallucination_at_0.7	0.0	
+1001.0315	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1001.0315	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.959313690662384	
+1001.0315	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.959313690662384	
+1001.0315	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1001.0315	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1001.0315	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1001.0315	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1001.0315	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1001.0315	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1001.1460	regex_section	rouge1_f	0.5151079136690647	fallback
 1001.1460	regex_section	rouge2_f	0.2377521613832853	fallback
 1001.1460	regex_section	rougeL_f	0.16690647482014387	fallback
@@ -558,6 +936,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1001.1460	llm_gap	hallucination_at_0.6	0.3333333333333333	
 1001.1460	llm_gap	recovery_at_0.7	0.0	
 1001.1460	llm_gap	hallucination_at_0.7	0.3333333333333333	
+1001.1460	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1001.1460	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.14890731871128082	
+1001.1460	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.19101640582084656	
+1001.1460	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1001.1460	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1001.1460	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1001.1460	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1001.1460	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1001.1460	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1002.1751	regex_section	rouge1_f	0.5952380952380952	future_work
 1002.1751	regex_section	rouge2_f	0.4730538922155688	future_work
 1002.1751	regex_section	rougeL_f	0.5178571428571429	future_work
@@ -571,6 +958,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1002.1751	llm_gap	hallucination_at_0.6	0.0	
 1002.1751	llm_gap	recovery_at_0.7	0.0	
 1002.1751	llm_gap	hallucination_at_0.7	0.0	
+1002.1751	pipeline_vs_oracle	n_oracle_gaps	0.0	
+1002.1751	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+1002.1751	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+1002.1751	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1002.1751	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1002.1751	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1002.1751	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1002.1751	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1002.1751	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1003.1682	regex_section	rouge1_f	0.9272727272727271	future_work
 1003.1682	regex_section	rouge2_f	0.8807339449541284	future_work
 1003.1682	regex_section	rougeL_f	0.9272727272727271	future_work
@@ -584,6 +980,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1003.1682	llm_gap	hallucination_at_0.6	0.0	
 1003.1682	llm_gap	recovery_at_0.7	1.0	
 1003.1682	llm_gap	hallucination_at_0.7	0.0	
+1003.1682	pipeline_vs_oracle	n_oracle_gaps	1.0	
+1003.1682	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9225988984107971	
+1003.1682	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9225988984107971	
+1003.1682	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1003.1682	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1003.1682	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1003.1682	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1003.1682	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1003.1682	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1003.3684	regex_section	rouge1_f	0.973630831643002	future_work
 1003.3684	regex_section	rouge2_f	0.9531568228105906	future_work
 1003.3684	regex_section	rougeL_f	0.973630831643002	future_work
@@ -597,6 +1002,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1003.3684	llm_gap	hallucination_at_0.6	0.0	
 1003.3684	llm_gap	recovery_at_0.7	1.0	
 1003.3684	llm_gap	hallucination_at_0.7	0.0	
+1003.3684	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1003.3684	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0	
+1003.3684	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0	
+1003.3684	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1003.3684	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1003.3684	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1003.3684	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1003.3684	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1003.3684	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1003.5621	regex_section	rouge1_f	0.7320754716981133	future_work
 1003.5621	regex_section	rouge2_f	0.6590909090909092	future_work
 1003.5621	regex_section	rougeL_f	0.7283018867924528	future_work
@@ -610,6 +1024,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1003.5621	llm_gap	hallucination_at_0.6	0.0	
 1003.5621	llm_gap	recovery_at_0.7	1.0	
 1003.5621	llm_gap	hallucination_at_0.7	0.0	
+1003.5621	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1003.5621	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.6950877904891968	
+1003.5621	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.7561131715774536	
+1003.5621	pipeline_vs_oracle	recovery_at_0.5	0.5	
+1003.5621	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1003.5621	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1003.5621	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1003.5621	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1003.5621	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1004.4402	regex_section	rouge1_f	0.9486652977412731	future_work
 1004.4402	regex_section	rouge2_f	0.911340206185567	future_work
 1004.4402	regex_section	rougeL_f	0.9486652977412731	future_work
@@ -623,6 +1046,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1004.4402	llm_gap	hallucination_at_0.6	0.0	
 1004.4402	llm_gap	recovery_at_0.7	1.0	
 1004.4402	llm_gap	hallucination_at_0.7	0.0	
+1004.4402	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1004.4402	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.960931658744812	
+1004.4402	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.960931658744812	
+1004.4402	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1004.4402	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1004.4402	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1004.4402	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1004.4402	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1004.4402	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1004.5186	regex_section	rouge1_f	0.8338907469342253	future_work
 1004.5186	regex_section	rouge2_f	0.7553072625698323	future_work
 1004.5186	regex_section	rougeL_f	0.8338907469342253	future_work
@@ -636,6 +1068,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1004.5186	llm_gap	hallucination_at_0.6	0.5	
 1004.5186	llm_gap	recovery_at_0.7	0.5	
 1004.5186	llm_gap	hallucination_at_0.7	0.5	
+1004.5186	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1004.5186	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.6007871627807617	
+1004.5186	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.6007871627807617	
+1004.5186	pipeline_vs_oracle	recovery_at_0.5	0.5	
+1004.5186	pipeline_vs_oracle	coverage_at_0.5	0.5	
+1004.5186	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1004.5186	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1004.5186	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1004.5186	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1005.0398	regex_section	rouge1_f	0.3994878361075544	fallback
 1005.0398	regex_section	rouge2_f	0.0858974358974359	fallback
 1005.0398	regex_section	rougeL_f	0.11907810499359796	fallback
@@ -649,6 +1090,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1005.0398	llm_gap	hallucination_at_0.6	0.5	
 1005.0398	llm_gap	recovery_at_0.7	0.0	
 1005.0398	llm_gap	hallucination_at_0.7	0.5	
+1005.0398	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1005.0398	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.391714483499527	
+1005.0398	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.391714483499527	
+1005.0398	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1005.0398	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1005.0398	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1005.0398	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1005.0398	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1005.0398	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1005.2442	regex_section	rouge1_f	0.21804511278195488	fallback
 1005.2442	regex_section	rouge2_f	0.09811320754716982	fallback
 1005.2442	regex_section	rougeL_f	0.09398496240601503	fallback
@@ -662,19 +1112,37 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1005.2442	llm_gap	hallucination_at_0.6	0.0	
 1005.2442	llm_gap	recovery_at_0.7	1.0	
 1005.2442	llm_gap	hallucination_at_0.7	0.0	
+1005.2442	pipeline_vs_oracle	n_oracle_gaps	1.0	
+1005.2442	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0000001192092896	
+1005.2442	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0000001192092896	
+1005.2442	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1005.2442	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1005.2442	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1005.2442	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1005.2442	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1005.2442	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1005.4752	regex_section	rouge1_f	0.39242685025817553	future_work
 1005.4752	regex_section	rouge2_f	0.3741379310344828	future_work
 1005.4752	regex_section	rougeL_f	0.3855421686746988	future_work
 1005.4752	regex_section	pred_chars	5746.0	
-1005.4752	llm_gap	n_gaps	0.0	
-1005.4752	llm_gap	mean_sim_to_gold	0.0	
-1005.4752	llm_gap	mean_sim_to_full	0.0	
+1005.4752	llm_gap	n_gaps	2.0	
+1005.4752	llm_gap	mean_sim_to_gold	0.39258792996406555	
+1005.4752	llm_gap	mean_sim_to_full	0.9675682783126831	
 1005.4752	llm_gap	recovery_at_0.5	0.0	
 1005.4752	llm_gap	hallucination_at_0.5	0.0	
 1005.4752	llm_gap	recovery_at_0.6	0.0	
 1005.4752	llm_gap	hallucination_at_0.6	0.0	
 1005.4752	llm_gap	recovery_at_0.7	0.0	
 1005.4752	llm_gap	hallucination_at_0.7	0.0	
+1005.4752	pipeline_vs_oracle	n_oracle_gaps	1.0	
+1005.4752	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.2383505254983902	
+1005.4752	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.43300750851631165	
+1005.4752	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1005.4752	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1005.4752	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1005.4752	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1005.4752	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1005.4752	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1006.1944	regex_section	rouge1_f	0.19095477386934673	fallback
 1006.1944	regex_section	rouge2_f	0.030211480362537766	fallback
 1006.1944	regex_section	rougeL_f	0.10050251256281406	fallback
@@ -688,6 +1156,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1006.1944	llm_gap	hallucination_at_0.6	0.0	
 1006.1944	llm_gap	recovery_at_0.7	0.0	
 1006.1944	llm_gap	hallucination_at_0.7	1.0	
+1006.1944	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1006.1944	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.25325942039489746	
+1006.1944	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.23758521676063538	
+1006.1944	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1006.1944	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1006.1944	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1006.1944	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1006.1944	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1006.1944	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1006.4128	regex_section	rouge1_f	0.18219749652294853	discussion,limitations
 1006.4128	regex_section	rouge2_f	0.1022964509394572	discussion,limitations
 1006.4128	regex_section	rougeL_f	0.14812239221140472	discussion,limitations
@@ -701,6 +1178,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1006.4128	llm_gap	hallucination_at_0.6	0.0	
 1006.4128	llm_gap	recovery_at_0.7	0.0	
 1006.4128	llm_gap	hallucination_at_0.7	0.0	
+1006.4128	pipeline_vs_oracle	n_oracle_gaps	0.0	
+1006.4128	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+1006.4128	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+1006.4128	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1006.4128	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1006.4128	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1006.4128	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1006.4128	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1006.4128	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1006.4925	regex_section	rouge1_f	0.945337620578778	future_work
 1006.4925	regex_section	rouge2_f	0.9193548387096774	future_work
 1006.4925	regex_section	rougeL_f	0.945337620578778	future_work
@@ -714,6 +1200,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1006.4925	llm_gap	hallucination_at_0.6	0.0	
 1006.4925	llm_gap	recovery_at_0.7	1.0	
 1006.4925	llm_gap	hallucination_at_0.7	0.0	
+1006.4925	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1006.4925	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0	
+1006.4925	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0	
+1006.4925	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1006.4925	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1006.4925	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1006.4925	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1006.4925	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1006.4925	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1007.0920	regex_section	rouge1_f	0.4879725085910653	future_work
 1007.0920	regex_section	rouge2_f	0.47058823529411764	future_work
 1007.0920	regex_section	rougeL_f	0.4810996563573883	future_work
@@ -727,6 +1222,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1007.0920	llm_gap	hallucination_at_0.6	0.0	
 1007.0920	llm_gap	recovery_at_0.7	1.0	
 1007.0920	llm_gap	hallucination_at_0.7	0.0	
+1007.0920	pipeline_vs_oracle	n_oracle_gaps	1.0	
+1007.0920	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.5977809429168701	
+1007.0920	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.5977809429168701	
+1007.0920	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1007.0920	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1007.0920	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1007.0920	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1007.0920	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1007.0920	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1007.1253	regex_section	rouge1_f	0.24146341463414636	tail
 1007.1253	regex_section	rouge2_f	0.18092909535452323	tail
 1007.1253	regex_section	rougeL_f	0.23414634146341465	tail
@@ -740,6 +1244,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1007.1253	llm_gap	hallucination_at_0.6	0.5	
 1007.1253	llm_gap	recovery_at_0.7	0.0	
 1007.1253	llm_gap	hallucination_at_0.7	1.0	
+1007.1253	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1007.1253	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.19249173998832703	
+1007.1253	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.20839212834835052	
+1007.1253	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1007.1253	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1007.1253	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1007.1253	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1007.1253	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1007.1253	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1008.3977	regex_section	rouge1_f	0.9527665317139002	future_work
 1008.3977	regex_section	rouge2_f	0.9255751014884979	future_work
 1008.3977	regex_section	rougeL_f	0.9527665317139002	future_work
@@ -753,6 +1266,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1008.3977	llm_gap	hallucination_at_0.6	0.0	
 1008.3977	llm_gap	recovery_at_0.7	1.0	
 1008.3977	llm_gap	hallucination_at_0.7	0.0	
+1008.3977	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1008.3977	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9568008184432983	
+1008.3977	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9568008184432983	
+1008.3977	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1008.3977	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1008.3977	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1008.3977	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1008.3977	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1008.3977	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1009.2123	regex_section	rouge1_f	0.33877551020408164	fallback
 1009.2123	regex_section	rouge2_f	0.14986376021798364	fallback
 1009.2123	regex_section	rougeL_f	0.13333333333333336	fallback
@@ -766,6 +1288,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1009.2123	llm_gap	hallucination_at_0.6	0.0	
 1009.2123	llm_gap	recovery_at_0.7	1.0	
 1009.2123	llm_gap	hallucination_at_0.7	0.0	
+1009.2123	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1009.2123	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.3429293930530548	
+1009.2123	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.4235478937625885	
+1009.2123	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1009.2123	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1009.2123	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1009.2123	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1009.2123	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1009.2123	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1010.1307	regex_section	rouge1_f	0.43445692883895126	future_work
 1010.1307	regex_section	rouge2_f	0.4075471698113207	future_work
 1010.1307	regex_section	rougeL_f	0.43445692883895126	future_work
@@ -779,6 +1310,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1010.1307	llm_gap	hallucination_at_0.6	0.0	
 1010.1307	llm_gap	recovery_at_0.7	1.0	
 1010.1307	llm_gap	hallucination_at_0.7	0.0	
+1010.1307	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1010.1307	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0000001192092896	
+1010.1307	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.5259224772453308	
+1010.1307	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1010.1307	pipeline_vs_oracle	coverage_at_0.5	0.5	
+1010.1307	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1010.1307	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1010.1307	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1010.1307	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1010.2511	regex_section	rouge1_f	0.22863741339491916	discussion
 1010.2511	regex_section	rouge2_f	0.2222222222222222	discussion
 1010.2511	regex_section	rougeL_f	0.22863741339491916	discussion
@@ -792,6 +1332,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1010.2511	llm_gap	hallucination_at_0.6	0.0	
 1010.2511	llm_gap	recovery_at_0.7	0.5	
 1010.2511	llm_gap	hallucination_at_0.7	0.0	
+1010.2511	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1010.2511	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.6356346011161804	
+1010.2511	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.638482928276062	
+1010.2511	pipeline_vs_oracle	recovery_at_0.5	0.5	
+1010.2511	pipeline_vs_oracle	coverage_at_0.5	0.5	
+1010.2511	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1010.2511	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1010.2511	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1010.2511	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1010.2783	regex_section	rouge1_f	0.32247557003257327	fallback
 1010.2783	regex_section	rouge2_f	0.061990212071778135	fallback
 1010.2783	regex_section	rougeL_f	0.14657980456026057	fallback
@@ -805,6 +1354,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1010.2783	llm_gap	hallucination_at_0.6	0.0	
 1010.2783	llm_gap	recovery_at_0.7	0.0	
 1010.2783	llm_gap	hallucination_at_0.7	0.0	
+1010.2783	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1010.2783	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.4310823678970337	
+1010.2783	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.34522148966789246	
+1010.2783	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1010.2783	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1010.2783	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1010.2783	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1010.2783	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1010.2783	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1011.3603	regex_section	rouge1_f	0.0	
 1011.3603	regex_section	rouge2_f	0.0	
 1011.3603	regex_section	rougeL_f	0.0	
@@ -818,6 +1376,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1011.3603	llm_gap	hallucination_at_0.6	0.0	
 1011.3603	llm_gap	recovery_at_0.7	0.0	
 1011.3603	llm_gap	hallucination_at_0.7	0.0	
+1011.3603	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1011.3603	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+1011.3603	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+1011.3603	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1011.3603	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1011.3603	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1011.3603	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1011.3603	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1011.3603	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1011.6627	regex_section	rouge1_f	0.7595959595959595	future_work
 1011.6627	regex_section	rouge2_f	0.6896551724137931	future_work
 1011.6627	regex_section	rougeL_f	0.7595959595959595	future_work
@@ -831,6 +1398,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1011.6627	llm_gap	hallucination_at_0.6	0.0	
 1011.6627	llm_gap	recovery_at_0.7	1.0	
 1011.6627	llm_gap	hallucination_at_0.7	0.0	
+1011.6627	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1011.6627	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.6337217688560486	
+1011.6627	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.6337217688560486	
+1011.6627	pipeline_vs_oracle	recovery_at_0.5	0.5	
+1011.6627	pipeline_vs_oracle	coverage_at_0.5	0.5	
+1011.6627	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1011.6627	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1011.6627	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1011.6627	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1011.6516	regex_section	rouge1_f	0.6074766355140188	future_work
 1011.6516	regex_section	rouge2_f	0.5058548009367682	future_work
 1011.6516	regex_section	rougeL_f	0.4065420560747663	future_work
@@ -844,6 +1420,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1011.6516	llm_gap	hallucination_at_0.6	0.0	
 1011.6516	llm_gap	recovery_at_0.7	1.0	
 1011.6516	llm_gap	hallucination_at_0.7	0.0	
+1011.6516	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1011.6516	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.27092602849006653	
+1011.6516	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.24262836575508118	
+1011.6516	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1011.6516	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1011.6516	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1011.6516	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1011.6516	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1011.6516	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1012.0821	regex_section	rouge1_f	0.9019607843137255	limitations
 1012.0821	regex_section	rouge2_f	0.8539709649871905	limitations
 1012.0821	regex_section	rougeL_f	0.9019607843137255	limitations
@@ -857,6 +1442,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1012.0821	llm_gap	hallucination_at_0.6	0.0	
 1012.0821	llm_gap	recovery_at_0.7	0.5	
 1012.0821	llm_gap	hallucination_at_0.7	0.0	
+1012.0821	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1012.0821	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.713046669960022	
+1012.0821	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.713046669960022	
+1012.0821	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1012.0821	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1012.0821	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1012.0821	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1012.0821	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1012.0821	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1012.5636	regex_section	rouge1_f	0.4398467432950192	future_work
 1012.5636	regex_section	rouge2_f	0.26093630084420566	future_work
 1012.5636	regex_section	rougeL_f	0.26053639846743293	future_work
@@ -870,6 +1464,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1012.5636	llm_gap	hallucination_at_0.6	0.0	
 1012.5636	llm_gap	recovery_at_0.7	1.0	
 1012.5636	llm_gap	hallucination_at_0.7	0.0	
+1012.5636	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1012.5636	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.194036066532135	
+1012.5636	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.18741236627101898	
+1012.5636	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1012.5636	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1012.5636	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1012.5636	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1012.5636	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1012.5636	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1102.3285	regex_section	rouge1_f	0.83206106870229	future_work
 1102.3285	regex_section	rouge2_f	0.7615384615384615	future_work
 1102.3285	regex_section	rougeL_f	0.83206106870229	future_work
@@ -883,6 +1486,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1102.3285	llm_gap	hallucination_at_0.6	0.0	
 1102.3285	llm_gap	recovery_at_0.7	1.0	
 1102.3285	llm_gap	hallucination_at_0.7	0.0	
+1102.3285	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1102.3285	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.987089216709137	
+1102.3285	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.987089216709137	
+1102.3285	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1102.3285	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1102.3285	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1102.3285	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1102.3285	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1102.3285	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1103.0927	regex_section	rouge1_f	0.7374631268436578	discussion,future_work
 1103.0927	regex_section	rouge2_f	0.6943620178041543	discussion,future_work
 1103.0927	regex_section	rougeL_f	0.7374631268436578	discussion,future_work
@@ -896,6 +1508,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1103.0927	llm_gap	hallucination_at_0.6	0.0	
 1103.0927	llm_gap	recovery_at_0.7	0.5	
 1103.0927	llm_gap	hallucination_at_0.7	0.0	
+1103.0927	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1103.0927	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.3901596665382385	
+1103.0927	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.39827924966812134	
+1103.0927	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1103.0927	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1103.0927	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1103.0927	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1103.0927	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1103.0927	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1103.3506	regex_section	rouge1_f	0.14193548387096774	fallback
 1103.3506	regex_section	rouge2_f	0.019480519480519484	fallback
 1103.3506	regex_section	rougeL_f	0.05806451612903227	fallback
@@ -909,6 +1530,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1103.3506	llm_gap	hallucination_at_0.6	0.0	
 1103.3506	llm_gap	recovery_at_0.7	0.0	
 1103.3506	llm_gap	hallucination_at_0.7	0.0	
+1103.3506	pipeline_vs_oracle	n_oracle_gaps	0.0	
+1103.3506	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+1103.3506	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+1103.3506	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1103.3506	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1103.3506	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1103.3506	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1103.3506	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1103.3506	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1103.4521	regex_section	rouge1_f	1.0	future_work
 1103.4521	regex_section	rouge2_f	1.0	future_work
 1103.4521	regex_section	rougeL_f	1.0	future_work
@@ -922,6 +1552,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1103.4521	llm_gap	hallucination_at_0.6	0.0	
 1103.4521	llm_gap	recovery_at_0.7	1.0	
 1103.4521	llm_gap	hallucination_at_0.7	0.0	
+1103.4521	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1103.4521	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9996921420097351	
+1103.4521	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9996921420097351	
+1103.4521	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1103.4521	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1103.4521	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1103.4521	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1103.4521	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1103.4521	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1103.5169	regex_section	rouge1_f	0.5093457943925234	future_work
 1103.5169	regex_section	rouge2_f	0.4867394695787831	future_work
 1103.5169	regex_section	rougeL_f	0.5077881619937694	future_work
@@ -935,6 +1574,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1103.5169	llm_gap	hallucination_at_0.6	0.0	
 1103.5169	llm_gap	recovery_at_0.7	1.0	
 1103.5169	llm_gap	hallucination_at_0.7	0.0	
+1103.5169	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1103.5169	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9545038938522339	
+1103.5169	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9545038938522339	
+1103.5169	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1103.5169	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1103.5169	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1103.5169	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1103.5169	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1103.5169	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1103.5071	regex_section	rouge1_f	1.0	future_work
 1103.5071	regex_section	rouge2_f	1.0	future_work
 1103.5071	regex_section	rougeL_f	1.0	future_work
@@ -948,6 +1596,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1103.5071	llm_gap	hallucination_at_0.6	0.0	
 1103.5071	llm_gap	recovery_at_0.7	1.0	
 1103.5071	llm_gap	hallucination_at_0.7	0.5	
+1103.5071	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1103.5071	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.6534906625747681	
+1103.5071	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.7059808373451233	
+1103.5071	pipeline_vs_oracle	recovery_at_0.5	0.5	
+1103.5071	pipeline_vs_oracle	coverage_at_0.5	0.5	
+1103.5071	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1103.5071	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1103.5071	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1103.5071	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1104.1580	regex_section	rouge1_f	0.21598639455782312	tail
 1104.1580	regex_section	rouge2_f	0.034071550255536626	tail
 1104.1580	regex_section	rougeL_f	0.12244897959183675	tail
@@ -961,6 +1618,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1104.1580	llm_gap	hallucination_at_0.6	1.0	
 1104.1580	llm_gap	recovery_at_0.7	0.0	
 1104.1580	llm_gap	hallucination_at_0.7	1.0	
+1104.1580	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1104.1580	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.2510770261287689	
+1104.1580	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.23016107082366943	
+1104.1580	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1104.1580	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1104.1580	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1104.1580	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1104.1580	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1104.1580	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1104.3784	regex_section	rouge1_f	0.4981949458483754	discussion,limitations
 1104.3784	regex_section	rouge2_f	0.4818840579710145	discussion,limitations
 1104.3784	regex_section	rougeL_f	0.4981949458483754	discussion,limitations
@@ -974,6 +1640,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1104.3784	llm_gap	hallucination_at_0.6	0.0	
 1104.3784	llm_gap	recovery_at_0.7	1.0	
 1104.3784	llm_gap	hallucination_at_0.7	1.0	
+1104.3784	pipeline_vs_oracle	n_oracle_gaps	1.0	
+1104.3784	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9951349496841431	
+1104.3784	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9951349496841431	
+1104.3784	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1104.3784	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1104.3784	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1104.3784	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1104.3784	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1104.3784	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1105.1534	regex_section	rouge1_f	0.170873786407767	discussion
 1105.1534	regex_section	rouge2_f	0.03118908382066277	discussion
 1105.1534	regex_section	rougeL_f	0.09320388349514563	discussion
@@ -987,6 +1662,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1105.1534	llm_gap	hallucination_at_0.6	0.0	
 1105.1534	llm_gap	recovery_at_0.7	0.0	
 1105.1534	llm_gap	hallucination_at_0.7	0.0	
+1105.1534	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1105.1534	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.28285878896713257	
+1105.1534	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.24483861029148102	
+1105.1534	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1105.1534	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1105.1534	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1105.1534	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1105.1534	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1105.1534	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1105.2968	regex_section	rouge1_f	0.7545126353790614	discussion,future_work
 1105.2968	regex_section	rouge2_f	0.681159420289855	discussion,future_work
 1105.2968	regex_section	rougeL_f	0.7545126353790614	discussion,future_work
@@ -1000,6 +1684,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1105.2968	llm_gap	hallucination_at_0.6	0.0	
 1105.2968	llm_gap	recovery_at_0.7	1.0	
 1105.2968	llm_gap	hallucination_at_0.7	0.0	
+1105.2968	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1105.2968	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9299085736274719	
+1105.2968	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9299085736274719	
+1105.2968	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1105.2968	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1105.2968	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1105.2968	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1105.2968	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1105.2968	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1105.4058	regex_section	rouge1_f	0.746227709190672	discussion,future_work
 1105.4058	regex_section	rouge2_f	0.7152682255845942	discussion,future_work
 1105.4058	regex_section	rougeL_f	0.746227709190672	discussion,future_work
@@ -1013,6 +1706,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1105.4058	llm_gap	hallucination_at_0.6	0.0	
 1105.4058	llm_gap	recovery_at_0.7	1.0	
 1105.4058	llm_gap	hallucination_at_0.7	0.0	
+1105.4058	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1105.4058	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.8452431559562683	
+1105.4058	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.8452431559562683	
+1105.4058	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1105.4058	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1105.4058	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1105.4058	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1105.4058	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1105.4058	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1105.5509	regex_section	rouge1_f	0.2511013215859031	discussion
 1105.5509	regex_section	rouge2_f	0.2433628318584071	discussion
 1105.5509	regex_section	rougeL_f	0.2511013215859031	discussion
@@ -1026,6 +1728,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1105.5509	llm_gap	hallucination_at_0.6	1.0	
 1105.5509	llm_gap	recovery_at_0.7	0.0	
 1105.5509	llm_gap	hallucination_at_0.7	1.0	
+1105.5509	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1105.5509	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.41935017704963684	
+1105.5509	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.4095594882965088	
+1105.5509	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1105.5509	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1105.5509	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1105.5509	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1105.5509	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1105.5509	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1106.0776	regex_section	rouge1_f	0.8645276292335117	future_work
 1106.0776	regex_section	rouge2_f	0.7875	future_work
 1106.0776	regex_section	rougeL_f	0.857397504456328	future_work
@@ -1039,6 +1750,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1106.0776	llm_gap	hallucination_at_0.6	0.0	
 1106.0776	llm_gap	recovery_at_0.7	1.0	
 1106.0776	llm_gap	hallucination_at_0.7	0.0	
+1106.0776	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1106.0776	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0	
+1106.0776	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0	
+1106.0776	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1106.0776	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1106.0776	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1106.0776	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1106.0776	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1106.0776	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1106.2440	regex_section	rouge1_f	0.774193548387097	discussion,future_work
 1106.2440	regex_section	rouge2_f	0.7344110854503464	discussion,future_work
 1106.2440	regex_section	rougeL_f	0.774193548387097	discussion,future_work
@@ -1052,6 +1772,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1106.2440	llm_gap	hallucination_at_0.6	0.0	
 1106.2440	llm_gap	recovery_at_0.7	1.0	
 1106.2440	llm_gap	hallucination_at_0.7	0.0	
+1106.2440	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1106.2440	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.692583441734314	
+1106.2440	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.6205538511276245	
+1106.2440	pipeline_vs_oracle	recovery_at_0.5	0.5	
+1106.2440	pipeline_vs_oracle	coverage_at_0.5	0.5	
+1106.2440	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1106.2440	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1106.2440	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1106.2440	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1106.3736	regex_section	rouge1_f	0.5982404692082112	future_work
 1106.3736	regex_section	rouge2_f	0.46868884540117417	future_work
 1106.3736	regex_section	rougeL_f	0.5483870967741934	future_work
@@ -1065,6 +1794,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1106.3736	llm_gap	hallucination_at_0.6	0.0	
 1106.3736	llm_gap	recovery_at_0.7	0.5	
 1106.3736	llm_gap	hallucination_at_0.7	0.5	
+1106.3736	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1106.3736	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.8985103964805603	
+1106.3736	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.8985103964805603	
+1106.3736	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1106.3736	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1106.3736	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1106.3736	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1106.3736	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1106.3736	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1106.3478	regex_section	rouge1_f	0.9758454106280192	future_work
 1106.3478	regex_section	rouge2_f	0.9560975609756097	future_work
 1106.3478	regex_section	rougeL_f	0.9758454106280192	future_work
@@ -1078,6 +1816,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1106.3478	llm_gap	hallucination_at_0.6	0.0	
 1106.3478	llm_gap	recovery_at_0.7	1.0	
 1106.3478	llm_gap	hallucination_at_0.7	0.0	
+1106.3478	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1106.3478	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.9796559810638428	
+1106.3478	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.9796559810638428	
+1106.3478	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1106.3478	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1106.3478	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1106.3478	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1106.3478	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1106.3478	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1106.5178	regex_section	rouge1_f	0.3158742949234488	fallback
 1106.5178	regex_section	rouge2_f	0.08716707021791767	fallback
 1106.5178	regex_section	rougeL_f	0.13537469782433523	fallback
@@ -1091,6 +1838,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1106.5178	llm_gap	hallucination_at_0.6	0.0	
 1106.5178	llm_gap	recovery_at_0.7	0.5	
 1106.5178	llm_gap	hallucination_at_0.7	0.0	
+1106.5178	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1106.5178	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.6107842922210693	
+1106.5178	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.6107842922210693	
+1106.5178	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1106.5178	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1106.5178	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1106.5178	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1106.5178	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1106.5178	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1107.3226	regex_section	rouge1_f	0.9401408450704226	discussion
 1107.3226	regex_section	rouge2_f	0.9081272084805654	discussion
 1107.3226	regex_section	rougeL_f	0.9401408450704226	discussion
@@ -1104,6 +1860,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1107.3226	llm_gap	hallucination_at_0.6	0.0	
 1107.3226	llm_gap	recovery_at_0.7	1.0	
 1107.3226	llm_gap	hallucination_at_0.7	0.0	
+1107.3226	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1107.3226	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.0	
+1107.3226	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.0	
+1107.3226	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1107.3226	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1107.3226	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1107.3226	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1107.3226	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1107.3226	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1107.4661	regex_section	rouge1_f	0.564437194127243	future_work
 1107.4661	regex_section	rouge2_f	0.4026186579378069	future_work
 1107.4661	regex_section	rougeL_f	0.401305057096248	future_work
@@ -1117,6 +1882,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1107.4661	llm_gap	hallucination_at_0.6	0.0	
 1107.4661	llm_gap	recovery_at_0.7	0.0	
 1107.4661	llm_gap	hallucination_at_0.7	0.0	
+1107.4661	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1107.4661	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.44909900426864624	
+1107.4661	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.2630665898323059	
+1107.4661	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1107.4661	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1107.4661	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1107.4661	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1107.4661	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1107.4661	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1107.5474	regex_section	rouge1_f	0.7676470588235295	future_work
 1107.5474	regex_section	rouge2_f	0.6663395485770363	future_work
 1107.5474	regex_section	rougeL_f	0.5598039215686275	future_work
@@ -1130,6 +1904,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1107.5474	llm_gap	hallucination_at_0.6	0.0	
 1107.5474	llm_gap	recovery_at_0.7	0.5	
 1107.5474	llm_gap	hallucination_at_0.7	0.5	
+1107.5474	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1107.5474	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.5825139880180359	
+1107.5474	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.5825139880180359	
+1107.5474	pipeline_vs_oracle	recovery_at_0.5	0.5	
+1107.5474	pipeline_vs_oracle	coverage_at_0.5	0.5	
+1107.5474	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1107.5474	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1107.5474	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1107.5474	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1108.3915	regex_section	rouge1_f	0.16774193548387098	discussion,future_work
 1108.3915	regex_section	rouge2_f	0.022653721682847898	discussion,future_work
 1108.3915	regex_section	rougeL_f	0.10322580645161289	discussion,future_work
@@ -1143,6 +1926,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1108.3915	llm_gap	hallucination_at_0.6	1.0	
 1108.3915	llm_gap	recovery_at_0.7	0.0	
 1108.3915	llm_gap	hallucination_at_0.7	1.0	
+1108.3915	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1108.3915	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.2884177565574646	
+1108.3915	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.18748651444911957	
+1108.3915	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1108.3915	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1108.3915	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1108.3915	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1108.3915	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1108.3915	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1108.5985	regex_section	rouge1_f	0.6116071428571428	future_work
 1108.5985	regex_section	rouge2_f	0.5816554809843402	future_work
 1108.5985	regex_section	rougeL_f	0.6071428571428571	future_work
@@ -1156,6 +1948,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1108.5985	llm_gap	hallucination_at_0.6	0.0	
 1108.5985	llm_gap	recovery_at_0.7	1.0	
 1108.5985	llm_gap	hallucination_at_0.7	0.0	
+1108.5985	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1108.5985	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.8917616009712219	
+1108.5985	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.8917616009712219	
+1108.5985	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1108.5985	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1108.5985	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1108.5985	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1108.5985	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1108.5985	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1109.0470	regex_section	rouge1_f	0.9266409266409267	future_work
 1109.0470	regex_section	rouge2_f	0.8871595330739299	future_work
 1109.0470	regex_section	rougeL_f	0.9266409266409267	future_work
@@ -1169,6 +1970,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1109.0470	llm_gap	hallucination_at_0.6	0.0	
 1109.0470	llm_gap	recovery_at_0.7	1.0	
 1109.0470	llm_gap	hallucination_at_0.7	0.0	
+1109.0470	pipeline_vs_oracle	n_oracle_gaps	1.0	
+1109.0470	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.915949821472168	
+1109.0470	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.915949821472168	
+1109.0470	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1109.0470	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1109.0470	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1109.0470	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1109.0470	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1109.0470	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1109.0217	regex_section	rouge1_f	0.21863117870722432	fallback
 1109.0217	regex_section	rouge2_f	0.06857142857142857	fallback
 1109.0217	regex_section	rougeL_f	0.10266159695817492	fallback
@@ -1182,6 +1992,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1109.0217	llm_gap	hallucination_at_0.6	0.0	
 1109.0217	llm_gap	recovery_at_0.7	0.0	
 1109.0217	llm_gap	hallucination_at_0.7	0.0	
+1109.0217	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1109.0217	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.3103797733783722	
+1109.0217	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.2892817258834839	
+1109.0217	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1109.0217	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1109.0217	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1109.0217	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1109.0217	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1109.0217	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1111.1497	regex_section	rouge1_f	0.4759825327510917	future_work
 1111.1497	regex_section	rouge2_f	0.3114035087719298	future_work
 1111.1497	regex_section	rougeL_f	0.3275109170305677	future_work
@@ -1195,6 +2014,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1111.1497	llm_gap	hallucination_at_0.6	0.0	
 1111.1497	llm_gap	recovery_at_0.7	0.0	
 1111.1497	llm_gap	hallucination_at_0.7	0.0	
+1111.1497	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1111.1497	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.20060282945632935	
+1111.1497	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.1978285014629364	
+1111.1497	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1111.1497	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1111.1497	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1111.1497	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1111.1497	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1111.1497	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1111.3083	regex_section	rouge1_f	0.29543735820519285	discussion
 1111.3083	regex_section	rouge2_f	0.1926860025220681	discussion
 1111.3083	regex_section	rougeL_f	0.15427275018905973	discussion
@@ -1208,6 +2036,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1111.3083	llm_gap	hallucination_at_0.6	0.0	
 1111.3083	llm_gap	recovery_at_0.7	0.5	
 1111.3083	llm_gap	hallucination_at_0.7	0.0	
+1111.3083	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1111.3083	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.7330067753791809	
+1111.3083	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.8648421168327332	
+1111.3083	pipeline_vs_oracle	recovery_at_0.5	0.5	
+1111.3083	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1111.3083	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1111.3083	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1111.3083	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1111.3083	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1112.0343	regex_section	rouge1_f	0.36095764272559855	future_work
 1112.0343	regex_section	rouge2_f	0.3512014787430684	future_work
 1112.0343	regex_section	rougeL_f	0.36095764272559855	future_work
@@ -1221,6 +2058,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1112.0343	llm_gap	hallucination_at_0.6	0.0	
 1112.0343	llm_gap	recovery_at_0.7	1.0	
 1112.0343	llm_gap	hallucination_at_0.7	0.0	
+1112.0343	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1112.0343	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.8549838662147522	
+1112.0343	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.8549838662147522	
+1112.0343	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1112.0343	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1112.0343	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1112.0343	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1112.0343	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1112.0343	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1112.3187	regex_section	rouge1_f	0.3837882547559967	fallback
 1112.3187	regex_section	rouge2_f	0.28831814415907203	fallback
 1112.3187	regex_section	rougeL_f	0.37055417700578996	fallback
@@ -1234,6 +2080,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1112.3187	llm_gap	hallucination_at_0.6	0.5	
 1112.3187	llm_gap	recovery_at_0.7	0.0	
 1112.3187	llm_gap	hallucination_at_0.7	1.0	
+1112.3187	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1112.3187	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.615129828453064	
+1112.3187	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.615129828453064	
+1112.3187	pipeline_vs_oracle	recovery_at_0.5	0.5	
+1112.3187	pipeline_vs_oracle	coverage_at_0.5	0.5	
+1112.3187	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1112.3187	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1112.3187	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1112.3187	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1201.2501	regex_section	rouge1_f	0.6070460704607047	future_work
 1201.2501	regex_section	rouge2_f	0.5613079019073569	future_work
 1201.2501	regex_section	rougeL_f	0.6070460704607047	future_work
@@ -1247,6 +2102,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1201.2501	llm_gap	hallucination_at_0.6	0.5	
 1201.2501	llm_gap	recovery_at_0.7	0.5	
 1201.2501	llm_gap	hallucination_at_0.7	0.5	
+1201.2501	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1201.2501	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.7873369455337524	
+1201.2501	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.7873369455337524	
+1201.2501	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1201.2501	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1201.2501	pipeline_vs_oracle	recovery_at_0.6	0.5	
+1201.2501	pipeline_vs_oracle	coverage_at_0.6	0.5	
+1201.2501	pipeline_vs_oracle	recovery_at_0.7	0.5	
+1201.2501	pipeline_vs_oracle	coverage_at_0.7	0.5	
 1202.0667	regex_section	rouge1_f	0.741444866920152	future_work
 1202.0667	regex_section	rouge2_f	0.6717557251908397	future_work
 1202.0667	regex_section	rougeL_f	0.741444866920152	future_work
@@ -1260,6 +2124,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1202.0667	llm_gap	hallucination_at_0.6	0.0	
 1202.0667	llm_gap	recovery_at_0.7	1.0	
 1202.0667	llm_gap	hallucination_at_0.7	0.0	
+1202.0667	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1202.0667	pipeline_vs_oracle	mean_sim_pipe_to_oracle	1.000000238418579	
+1202.0667	pipeline_vs_oracle	mean_sim_oracle_to_pipe	1.000000238418579	
+1202.0667	pipeline_vs_oracle	recovery_at_0.5	1.0	
+1202.0667	pipeline_vs_oracle	coverage_at_0.5	1.0	
+1202.0667	pipeline_vs_oracle	recovery_at_0.6	1.0	
+1202.0667	pipeline_vs_oracle	coverage_at_0.6	1.0	
+1202.0667	pipeline_vs_oracle	recovery_at_0.7	1.0	
+1202.0667	pipeline_vs_oracle	coverage_at_0.7	1.0	
 1202.1054	regex_section	rouge1_f	0.18562874251497005	future_work
 1202.1054	regex_section	rouge2_f	0.1686746987951807	future_work
 1202.1054	regex_section	rougeL_f	0.11976047904191617	future_work
@@ -1273,6 +2146,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1202.1054	llm_gap	hallucination_at_0.6	0.0	
 1202.1054	llm_gap	recovery_at_0.7	1.0	
 1202.1054	llm_gap	hallucination_at_0.7	0.0	
+1202.1054	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1202.1054	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.4915074110031128	
+1202.1054	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.43022966384887695	
+1202.1054	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1202.1054	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1202.1054	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1202.1054	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1202.1054	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1202.1054	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1202.1331	regex_section	rouge1_f	0.35294117647058826	future_work
 1202.1331	regex_section	rouge2_f	0.2926829268292683	future_work
 1202.1331	regex_section	rougeL_f	0.35294117647058826	future_work
@@ -1286,6 +2168,15 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1202.1331	llm_gap	hallucination_at_0.6	1.0	
 1202.1331	llm_gap	recovery_at_0.7	0.0	
 1202.1331	llm_gap	hallucination_at_0.7	1.0	
+1202.1331	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1202.1331	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.35103535652160645	
+1202.1331	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.2908632159233093	
+1202.1331	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1202.1331	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1202.1331	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1202.1331	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1202.1331	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1202.1331	pipeline_vs_oracle	coverage_at_0.7	0.0	
 1202.2591	regex_section	rouge1_f	0.0	
 1202.2591	regex_section	rouge2_f	0.0	
 1202.2591	regex_section	rougeL_f	0.0	
@@ -1299,3 +2190,12 @@ cs/0610128	llm_gap	hallucination_at_0.7	0.0
 1202.2591	llm_gap	hallucination_at_0.6	0.0	
 1202.2591	llm_gap	recovery_at_0.7	0.0	
 1202.2591	llm_gap	hallucination_at_0.7	0.0	
+1202.2591	pipeline_vs_oracle	n_oracle_gaps	2.0	
+1202.2591	pipeline_vs_oracle	mean_sim_pipe_to_oracle	0.0	
+1202.2591	pipeline_vs_oracle	mean_sim_oracle_to_pipe	0.0	
+1202.2591	pipeline_vs_oracle	recovery_at_0.5	0.0	
+1202.2591	pipeline_vs_oracle	coverage_at_0.5	0.0	
+1202.2591	pipeline_vs_oracle	recovery_at_0.6	0.0	
+1202.2591	pipeline_vs_oracle	coverage_at_0.6	0.0	
+1202.2591	pipeline_vs_oracle	recovery_at_0.7	0.0	
+1202.2591	pipeline_vs_oracle	coverage_at_0.7	0.0	

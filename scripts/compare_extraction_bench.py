@@ -56,8 +56,8 @@ def main(out_md: Path) -> None:
         lines.append(f"| {label} | {c['n_gaps']:.2f} | {c['mean_sim_to_gold']:.3f} | "
                      f"{c['recovery_at_0.6']:.3f} | {c['hallucination_at_0.6']:.3f} |")
 
-    # Stage 2 oracle comparison — only v2b has it (we ran --oracle there)
-    p = Path("data/bench_v2b/metrics.tsv")
+    # Stage 2 oracle comparison — pull from the N=100 v2b run (oracle was rerun there)
+    p = Path("data/bench_n100/metrics.tsv")
     if p.exists():
         df = pd.read_csv(p, sep="\t")
         sub = df[df["stage"] == "pipeline_vs_oracle"]

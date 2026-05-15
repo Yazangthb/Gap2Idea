@@ -290,7 +290,8 @@ def generate_oracle_gaps(papers: list[BenchPaper], out_dir: Path) -> Path:
                 "section_text": bp.gold_section_text,
             }, ensure_ascii=False) + "\n")
     log.info("Generating oracle gaps from gold sections (%d papers)…", len(papers))
-    extract_gaps(oracle_sections_path, oracle_gaps_path, resume=False)
+    # resume=True so a kill mid-run keeps work and a restart skips done papers.
+    extract_gaps(oracle_sections_path, oracle_gaps_path, resume=True)
     return oracle_gaps_path
 
 

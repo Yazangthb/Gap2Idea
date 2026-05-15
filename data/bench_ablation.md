@@ -19,7 +19,7 @@
 | v2a (text + new vocab) [N=10] | nan | nan | nan | nan |
 | v2b (PDF + style)      [N=10] | 1.70 | 0.757 | 0.700 | 0.150 |
 | v2a (text + new vocab) [N=100] | 1.34 | 0.569 | 0.435 | 0.045 |
-| v2b (PDF + style)      [N=100] | 1.61 | 0.689 | 0.630 | 0.113 |
+| v2b (PDF + style)      [N=100] | 1.63 | 0.693 | 0.630 | 0.113 |
 
 ## Pipeline gaps vs Oracle gaps (gold section fed straight to LLM)
 
@@ -27,11 +27,11 @@ Two systems, same Stage-2 LLM. Oracle skips Stage 1.
 
 | metric | mean | meaning |
 |---|---:|---|
-| n_oracle_gaps | 1.700 | gaps the LLM produces on the gold section |
-| mean_sim_pipe_to_oracle | 0.652 | avg cosine: each pipeline gap → closest oracle gap |
-| mean_sim_oracle_to_pipe | 0.700 | avg cosine: each oracle gap → closest pipeline gap |
-| recovery_at_0.6 | 0.600 | fraction of pipeline gaps that match an oracle gap |
-| coverage_at_0.6 | 0.600 | fraction of oracle gaps the pipeline reproduced |
+| n_oracle_gaps | 1.760 | gaps the LLM produces on the gold section |
+| mean_sim_pipe_to_oracle | 0.577 | avg cosine: each pipeline gap → closest oracle gap |
+| mean_sim_oracle_to_pipe | 0.575 | avg cosine: each oracle gap → closest pipeline gap |
+| recovery_at_0.6 | 0.469 | fraction of pipeline gaps that match an oracle gap |
+| coverage_at_0.6 | 0.475 | fraction of oracle gaps the pipeline reproduced |
 
 ## Per-paper rouge1_f, v1 → v2b
 
