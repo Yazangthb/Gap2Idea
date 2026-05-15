@@ -1,0 +1,41 @@
+id	stage	metric	value	extra
+quant-ph/0402095	regex_section	rouge1_f	0.4724091520861373	future_work,limitations
+quant-ph/0402095	regex_section	rouge2_f	0.3833726018175699	future_work,limitations
+quant-ph/0402095	regex_section	rougeL_f	0.44717362045760434	future_work,limitations
+quant-ph/0402095	regex_section	pred_chars	11612.0	
+cs/0610128	regex_section	rouge1_f	0.8579710144927537	fallback
+cs/0610128	regex_section	rouge2_f	0.7930029154518949	fallback
+cs/0610128	regex_section	rougeL_f	0.8579710144927537	fallback
+cs/0610128	regex_section	pred_chars	1126.0	
+0803.2303	regex_section	rouge1_f	0.23013698630136983	discussion,future_work
+0803.2303	regex_section	rouge2_f	0.18181818181818182	discussion,future_work
+0803.2303	regex_section	rougeL_f	0.23013698630136983	discussion,future_work
+0803.2303	regex_section	pred_chars	1226.0	
+0805.3456	regex_section	rouge1_f	0.13659793814432988	future_work
+0805.3456	regex_section	rouge2_f	0.12774193548387097	future_work
+0805.3456	regex_section	rougeL_f	0.13659793814432988	future_work
+0805.3456	regex_section	pred_chars	7688.0	
+0806.2938	regex_section	rouge1_f	0.8926654740608229	future_work
+0806.2938	regex_section	rouge2_f	0.8207885304659499	future_work
+0806.2938	regex_section	rougeL_f	0.8926654740608229	future_work
+0806.2938	regex_section	pred_chars	3316.0	
+0807.1134	regex_section	rouge1_f	0.32493483927019984	fallback
+0807.1134	regex_section	rouge2_f	0.2959094865100087	fallback
+0807.1134	regex_section	rougeL_f	0.3231972198088619	fallback
+0807.1134	regex_section	pred_chars	5400.0	
+0807.0023	regex_section	rouge1_f	0.31362007168458783	discussion,future_work
+0807.0023	regex_section	rouge2_f	0.20807174887892377	discussion,future_work
+0807.0023	regex_section	rougeL_f	0.22939068100358423	discussion,future_work
+0807.0023	regex_section	pred_chars	11182.0	
+0808.2057	regex_section	rouge1_f	0.3468917881811205	fallback
+0808.2057	regex_section	rouge2_f	0.06456571867794005	fallback
+0808.2057	regex_section	rougeL_f	0.13507290867229468	fallback
+0808.2057	regex_section	pred_chars	4950.0	
+0811.2508	regex_section	rouge1_f	0.26186579378068736	fallback
+0811.2508	regex_section	rouge2_f	0.05081967213114754	fallback
+0811.2508	regex_section	rougeL_f	0.10147299509001638	fallback
+0811.2508	regex_section	pred_chars	5861.0	
+0811.3859	regex_section	rouge1_f	0.7569141193595342	future_work
+0811.3859	regex_section	rouge2_f	0.6627737226277373	future_work
+0811.3859	regex_section	rougeL_f	0.7569141193595342	future_work
+0811.3859	regex_section	pred_chars	1751.0	

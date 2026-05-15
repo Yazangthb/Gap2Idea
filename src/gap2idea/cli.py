@@ -275,6 +275,7 @@ def cmd_bench_extraction(args):
         skip_llm=args.skip_llm,
         tarball_path=args.tarball,
         max_scan=args.max_scan,
+        use_pdf=args.use_pdf,
     )
 
 
@@ -420,6 +421,10 @@ def main():
                     help="Cap on records scanned before giving up")
     be.add_argument("--skip-llm", action="store_true",
                     help="Evaluate the regex stage only; skip openai_gaps (no API key needed)")
+    be.add_argument("--use-pdf", action="store_true",
+                    help="Download arxiv PDFs for the sampled papers and feed the "
+                         "style-aware block extractor (PyMuPDF). When omitted, the "
+                         "bench feeds unarXive's already-parsed plain text.")
     be.set_defaults(func=cmd_bench_extraction)
 
     # bench-plots

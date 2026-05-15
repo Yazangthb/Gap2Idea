@@ -197,6 +197,59 @@ def save_bench_inputs(papers: list[BenchPaper], out_dir: Path) -> tuple[Path, Pa
     return bench_path, texts_path
 
 
+def save_bench_inputs_from_pdfs(
+    papers: list[BenchPaper], out_dir: Path, pdf_dir: Path,
+) -> tuple[Path, Path]:
+    """PDF variant: for each paper download arxiv.org/pdf/<id>.pdf and run
+    PyMuPDF's style-aware block extractor. Writes:
+       - bench_papers.jsonl              (unchanged — gold still comes from unarXive)
+       - paper_texts.jsonl               (id, text, blocks)
+    """
+    import requests
+
+    from gap2idea.pipeline.pdf_text import blocks_to_text, extract_pdf_blocks
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    pdf_dir.mkdir(parents=True, exist_ok=True)
+    bench_path = out_dir / "bench_papers.jsonl"
+    texts_path = out_dir / "paper_texts.jsonl"
+
+    with bench_path.open("w", encoding="utf-8") as fb, texts_path.open("w", encoding="utf-8") as ft:
+        for bp in papers:
+            # Persist the gold (text-side) record
+            fb.write(json.dumps(bp.to_dict(), ensure_ascii=False) + "\n")
+
+            pdf_path = pdf_dir / f"{bp.paper_id.replace('/', '_')}.pdf"
+            if not pdf_path.exists():
+                url = f"https://arxiv.org/pdf/{bp.paper_id}.pdf"
+                log.info("  downloading %s", url)
+                try:
+                    r = requests.get(url, timeout=60)
+                    r.raise_for_status()
+                    pdf_path.write_bytes(r.content)
+                except Exception as e:  # noqa: BLE001
+                    log.warning("  download failed for %s: %s — falling back to unarXive text",
+                                bp.paper_id, e)
+                    ft.write(json.dumps({"id": bp.paper_id, "text": bp.full_text},
+                                        ensure_ascii=False) + "\n")
+                    continue
+
+            blocks = extract_pdf_blocks(pdf_path)
+            if not blocks:
+                log.warning("  PyMuPDF returned no blocks for %s — falling back", bp.paper_id)
+                ft.write(json.dumps({"id": bp.paper_id, "text": bp.full_text},
+                                    ensure_ascii=False) + "\n")
+                continue
+            text = blocks_to_text(blocks)
+            n_head = sum(1 for b in blocks if b.get("role") == "heading")
+            log.info("  %s: %d blocks (%d headings, %d chars)",
+                     bp.paper_id, len(blocks), n_head, len(text))
+            ft.write(json.dumps({"id": bp.paper_id, "text": text, "blocks": blocks},
+                                ensure_ascii=False) + "\n")
+    log.info("Wrote %s and %s", bench_path, texts_path)
+    return bench_path, texts_path
+
+
 # ----------------------------------------------------------------------
 # 2. Run our pipeline
 # ----------------------------------------------------------------------
@@ -365,6 +418,8 @@ def run_benchmark(
     skip_llm: bool = False,
     tarball_path: Path | str = DEFAULT_UNARXIVE_TARBALL,
     max_scan: int = 20000,
+    use_pdf: bool = False,
+    pdf_dir: Path | None = None,
 ) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -372,7 +427,11 @@ def run_benchmark(
     papers = sample_unarxive_papers(n=n, tarball_path=tarball_path, max_scan=max_scan)
     if not papers:
         raise RuntimeError("No qualifying papers found in unarXive stream")
-    save_bench_inputs(papers, out_dir)
+    if use_pdf:
+        pdf_dir = pdf_dir or (out_dir / "pdfs")
+        save_bench_inputs_from_pdfs(papers, out_dir, pdf_dir)
+    else:
+        save_bench_inputs(papers, out_dir)
 
     # 2. run pipeline
     sections_path, gaps_path = run_pipeline(out_dir, out_dir / "paper_texts.jsonl", skip_llm=skip_llm)
