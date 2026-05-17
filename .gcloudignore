@@ -1,24 +1,22 @@
-# Local Python environments
+# Mirror of .dockerignore for `gcloud builds submit` upload.
+.git
+.gitignore
 .venv/
 .uv-venv/
-
-# Python cache artifacts
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.vscode/
+.claude/
+.streamlit/secrets.toml
 
-# Secrets / env files
+# Secrets
 .env
 .env.*
 
-# Git + editor cruft
-.git
-.gitignore
-.ipynb_checkpoints/
-.vscode/
-
-# Large, host-mounted data that should not bloat the build context.
-# Exclude everything in data/ and artifacts/ by default, then allow through
-# only the small "demo bundle" needed for the deployed Streamlit UI.
+# Large host-only data — same allowlist as .dockerignore so the build context
+# carries the demo bundle but not the huge raw inputs.
 data/*
 !data/.gitkeep
 !data/methods.tsv
@@ -39,5 +37,11 @@ artifacts/*
 !artifacts/gap_embeddings.npy
 !artifacts/method_embeddings.npy
 
-# Research notebooks stay on the host
 notebooks/
+
+# Local TSV scratch files
+gaps_clean.tsv
+gaps_openai_10.tsv
+gaps_sample.tsv
+gaps_sample_10.tsv
+payload.json

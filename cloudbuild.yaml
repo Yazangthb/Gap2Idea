@@ -1,0 +1,53 @@
+steps:
+  # Pull the private demo bundle (artifacts/* and data/*) from the GCS bucket
+  # into the build workspace so `docker build` can COPY it in. The files are
+  # gitignored, so this is how GitHub-triggered builds get the data.
+  - id: fetch-demo-data
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -e
+        gcloud storage rsync -r gs://gap2idea-thesis-demo-data/artifacts ./artifacts
+        gcloud storage rsync -r gs://gap2idea-thesis-demo-data/data ./data
+        echo "--- Fetched demo bundle:"
+        ls -lh artifacts/ data/
+
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - europe-west1-docker.pkg.dev/$PROJECT_ID/gap2idea/gap2idea:$COMMIT_SHA
+      - -t
+      - europe-west1-docker.pkg.dev/$PROJECT_ID/gap2idea/gap2idea:latest
+      - .
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - --all-tags
+      - europe-west1-docker.pkg.dev/$PROJECT_ID/gap2idea/gap2idea
+
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - gap2idea
+      - --image=europe-west1-docker.pkg.dev/$PROJECT_ID/gap2idea/gap2idea:$COMMIT_SHA
+      - --region=europe-west1
+      - --platform=managed
+
+images:
+  - europe-west1-docker.pkg.dev/$PROJECT_ID/gap2idea/gap2idea:$COMMIT_SHA
+  - europe-west1-docker.pkg.dev/$PROJECT_ID/gap2idea/gap2idea:latest
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8
+
+timeout: 2400s
