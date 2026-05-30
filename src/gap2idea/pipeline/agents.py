@@ -155,6 +155,22 @@ async def critique_idea(
     )
     client = get_llm_client()
     result = _call_critic(client, prompt, model=model)
+    # Defensive normalisation: non-OpenAI critics (Claude/Gemini via OpenRouter)
+    # don't always honour `strict=True` on `response_format=json_schema`, so the
+    # returned dict can be missing required CRITIC_SCHEMA fields. Default
+    # conservatively rather than crashing the orchestrated run.
+    if not isinstance(result, dict):
+        result = {}
+    verdict = str(result.get("verdict", "")).strip().lower()
+    if verdict not in ("accept", "revise", "reject"):
+        verdict = "revise"  # safe default: triggers another revision pass
+    result["verdict"] = verdict
+    try:
+        result["score"] = float(result.get("score", 3.0))
+    except (TypeError, ValueError):
+        result["score"] = 3.0
+    result["issues"] = list(result.get("issues") or [])
+    result["revision_directive"] = str(result.get("revision_directive") or "")
     result["_diagnostics"] = payload["diagnostics"]  # surface for caller logging
     return result
 
