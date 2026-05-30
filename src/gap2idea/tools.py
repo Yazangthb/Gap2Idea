@@ -168,6 +168,40 @@ TOOL_DEFINITIONS: list[dict[str, Any]] = [
             "required": ["idea"],
         },
     },
+    # PR-4: gap-graph view tools. Empty result if --method graph was not run.
+    {
+        "name": "list_frontier",
+        "description": (
+            "List the top frontier gaps from the gap graph: gaps sitting on "
+            "community boundaries (low intra-community degree, many neighbour "
+            "communities). These are the long-tail novelty seeds the legacy "
+            "clustering throws away as noise. Empty if `theme-mine --method graph` "
+            "was not run."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "top_n": {"type": "integer", "default": 20, "minimum": 1, "maximum": 100},
+            },
+            "required": [],
+        },
+    },
+    {
+        "name": "list_gap_pairs",
+        "description": (
+            "List the top inter-community gap-gap structural bridges from the "
+            "gap graph. Each row identifies two individual gaps (not centroids) "
+            "connected by a high-betweenness edge. Empty if `theme-mine "
+            "--method graph` was not run."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "top_n": {"type": "integer", "default": 20, "minimum": 1, "maximum": 100},
+            },
+            "required": [],
+        },
+    },
 ]
 
 
@@ -187,6 +221,9 @@ class CorpusHandle:
     method_embeddings: np.ndarray | None
     ideas_path: Path
     root: Path
+    # PR-4: gap-graph artifacts (optional; empty when running KMeans mode)
+    frontier: pd.DataFrame = None         # type: ignore[assignment]
+    gap_pairs: pd.DataFrame = None        # type: ignore[assignment]
 
     @property
     def label_map(self) -> dict[int, str]:
@@ -240,6 +277,8 @@ def load_corpus(root: str | Path = ".", refresh: bool = False) -> CorpusHandle:
         method_embeddings=_embed_methods(methods_df, method_emb_path),
         ideas_path=paths.artifacts / "ideas.tsv",
         root=Path(root),
+        frontier=_load_tsv(paths.artifacts / "gap_frontier.tsv"),
+        gap_pairs=_load_tsv(paths.artifacts / "gap_pairs.tsv"),
     )
     return _CORPUS
 
@@ -435,6 +474,30 @@ async def save_idea(idea: dict, root: str | Path = ".") -> dict:
     return {"saved": True, "total_ideas": len(merged)}
 
 
+# ---------- PR-4: gap-graph view tools ----------
+
+async def list_frontier(top_n: int = 20, root: str | Path = ".") -> list[dict]:
+    """Top frontier gaps. Empty if the graph artifact wasn't produced."""
+    c = load_corpus(root)
+    df = c.frontier if c.frontier is not None else _load_tsv(Path("."))
+    if df is None or df.empty:
+        return []
+    if "frontier_score" in df.columns:
+        df = df.sort_values("frontier_score", ascending=False)
+    return df.head(int(top_n)).to_dict(orient="records")
+
+
+async def list_gap_pairs(top_n: int = 20, root: str | Path = ".") -> list[dict]:
+    """Top inter-community gap-gap bridges from the gap graph."""
+    c = load_corpus(root)
+    df = c.gap_pairs if c.gap_pairs is not None else _load_tsv(Path("."))
+    if df is None or df.empty:
+        return []
+    if "bridge_score" in df.columns:
+        df = df.sort_values("bridge_score", ascending=False)
+    return df.head(int(top_n)).to_dict(orient="records")
+
+
 # ===========================================================================
 # Dispatch helper used by both MCP server and orchestrator
 # ===========================================================================
@@ -450,6 +513,9 @@ TOOL_FNS = {
     "list_ideas": list_ideas,
     "get_idea": get_idea,
     "save_idea": save_idea,
+    # PR-4
+    "list_frontier": list_frontier,
+    "list_gap_pairs": list_gap_pairs,
 }
 
 

@@ -25,6 +25,7 @@ import pandas as pd
 
 from gap2idea.pipeline.agents import (
     run_critic_pipeline_for_pair,
+    run_critic_pipeline_frontier,
     run_critic_pipeline_method_gap,
     run_critic_pipeline_within,
 )
@@ -164,6 +165,17 @@ async def orchestrate_one(
             model=model, critic_model=critic_model,
             max_iterations=max_critic_iterations,
         )
+    elif mode == "frontier":
+        # PR-4: cluster_b carries the frontier gap_idx for this mode.
+        assert gap_embeddings is not None, "frontier mode needs gap_embeddings"
+        assert cluster_b is not None, "frontier mode encodes seed_idx in cluster_b"
+        result = await run_critic_pipeline_frontier(
+            gaps, gap_embeddings, seed_idx=int(cluster_b),
+            cluster_id=cluster_a, label=label_a,
+            k_evidence=max(k_evidence, 5),
+            model=model, critic_model=critic_model,
+            max_iterations=max_critic_iterations,
+        )
     else:
         raise ValueError(f"unknown mode: {mode}")
 
@@ -259,8 +271,9 @@ async def orchestrate_batch(
     cluster_labels: pd.DataFrame,
     out_tsv: Path,
     out_jsonl: Path,
-    mode: str = "within",                   # bridge | within | method-gap
+    mode: str = "within",                   # bridge | within | method-gap | frontier
     pairs: pd.DataFrame | None = None,      # required for bridge mode
+    frontier_df: pd.DataFrame | None = None, # required for frontier mode
     gap_embeddings: np.ndarray | None = None,
     methods: pd.DataFrame | None = None,
     method_embeddings: np.ndarray | None = None,
@@ -287,6 +300,18 @@ async def orchestrate_batch(
         candidates = [
             (int(r.cluster_a), int(r.cluster_b),
              label_map.get(int(r.cluster_a), ""), label_map.get(int(r.cluster_b), ""))
+            for r in ordered.itertuples(index=False)
+        ]
+    elif mode == "frontier":
+        # PR-4: each candidate carries (cluster_id, frontier_gap_idx, label, "").
+        # We pack the seed_idx into cluster_b so the existing iteration logic
+        # in the loop below is unchanged.
+        assert frontier_df is not None and not frontier_df.empty, \
+            "frontier mode requires non-empty gap_frontier.tsv"
+        ordered = frontier_df.sort_values("frontier_score", ascending=False).head(n or len(frontier_df))
+        candidates = [
+            (int(r.cluster_id), int(r.gap_idx),
+             label_map.get(int(r.cluster_id), ""), "")
             for r in ordered.itertuples(index=False)
         ]
     else:

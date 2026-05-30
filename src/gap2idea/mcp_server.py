@@ -131,6 +131,20 @@ def build_server(root: str | Path = ".") -> FastMCP:
         """Append an idea (flat dict) to artifacts/ideas.tsv. Returns {saved, total_ideas}."""
         return await T.save_idea(idea, root=root_str)
 
+    # ---- PR-4: gap-graph views ----
+
+    @mcp.tool()
+    async def list_frontier(top_n: int = 20) -> list[dict]:
+        """List the top frontier gaps — boundary gaps the graph identifies as
+        long-tail novelty seeds. Empty if `theme-mine --method graph` was not run."""
+        return await T.list_frontier(top_n=top_n, root=root_str)
+
+    @mcp.tool()
+    async def list_gap_pairs(top_n: int = 20) -> list[dict]:
+        """List the top inter-community gap-gap structural bridges from the gap
+        graph. Empty if `theme-mine --method graph` was not run."""
+        return await T.list_gap_pairs(top_n=top_n, root=root_str)
+
     return mcp
 
 

@@ -376,6 +376,35 @@ async def run_critic_pipeline_within(
     )
 
 
+async def run_critic_pipeline_frontier(
+    gaps: pd.DataFrame,
+    embeddings: np.ndarray,
+    seed_idx: int,
+    cluster_id: int,
+    label: str,
+    *,
+    k_evidence: int = 5,
+    model: str = DEFAULT_MODEL,
+    critic_model: str = "anthropic/claude-sonnet-4",
+    max_iterations: int = 2,
+) -> dict:
+    """Frontier-mode wrapper: pick the seed frontier gap plus its k-1 nearest
+    neighbours by cosine, then run the within-mode critic loop on the joined
+    evidence. Cross-community structure falls out for free because the seed
+    sits at a community boundary."""
+    from gap2idea.pipeline.openai_ideas import _frontier_evidence
+
+    ev_df = _frontier_evidence(gaps, embeddings, seed_idx, k_evidence=k_evidence)
+    if ev_df.empty:
+        raise ValueError(f"No evidence for frontier gap {seed_idx}")
+    ev = _evidence_payload(ev_df)
+    return await synthesise_with_critic(
+        mode="within", cluster_a=cluster_id, label_a=label or "frontier gap",
+        gaps_df=gaps, fed_evidence_a=ev,
+        model=model, critic_model=critic_model, max_iterations=max_iterations,
+    )
+
+
 async def run_critic_pipeline_method_gap(
     gaps: pd.DataFrame,
     cluster_id: int,

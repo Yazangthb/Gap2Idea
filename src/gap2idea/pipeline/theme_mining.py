@@ -213,6 +213,41 @@ def build_cluster_summary(gaps: pd.DataFrame, label_map: dict[int, str]) -> pd.D
     return cs.sort_values(["n_papers", "n_items", "avg_conf"], ascending=False).reset_index(drop=True)
 
 
+# ---------- gap-graph dispatcher (PR-4) ----------
+
+def cluster_gaps_via_graph(
+    gaps: pd.DataFrame,
+    X: np.ndarray,
+    *,
+    knn_k: int = 8,
+    sim_threshold: float = 0.45,
+    methods: pd.DataFrame | None = None,
+    method_embeddings: np.ndarray | None = None,
+    leiden_resolution: float = 1.0,
+    seed: int = 42,
+):
+    """Build the gap graph and detect communities. Returns (cluster_ids, G).
+
+    `cluster_ids` is aligned to the gaps DataFrame row order (i.e. position i
+    corresponds to gaps.iloc[i]). The returned `cluster_id` integers are
+    *stable* across runs on the same corpus — communities are renumbered by
+    (n_papers desc, n_items desc) so the largest community always wins id 0.
+
+    The returned `G` is a `networkx.Graph` with both gap nodes (`bipartite=0`)
+    and method nodes (`bipartite=1`); community detection runs only on the
+    gap-induced subgraph.
+    """
+    from gap2idea.pipeline import gap_graph as GG
+
+    G = GG.build_gap_graph(
+        gaps, X,
+        knn_k=knn_k, sim_threshold=sim_threshold,
+        methods=methods, method_embeddings=method_embeddings,
+    )
+    community_ids = GG.detect_communities(G, resolution=leiden_resolution, seed=seed)
+    return community_ids, G
+
+
 # ---------- bridge-score pair selection ----------
 
 def _peak(sim: float, peak_at: float = 0.45) -> float:

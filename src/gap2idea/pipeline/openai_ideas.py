@@ -884,3 +884,143 @@ def generate_ideas_method_gap(
     out_df.to_csv(out_tsv, sep="\t", index=False)
     log.info("Wrote %d method-gap ideas to %s and %s", len(out_df), out_tsv, out_jsonl)
     return out_df
+
+
+# ===========================================================================
+# PR-4: frontier mode — seeds from boundary gaps the graph identifies
+# ===========================================================================
+
+def _frontier_evidence(
+    gaps: pd.DataFrame,
+    embeddings: np.ndarray,
+    seed_idx: int,
+    *,
+    k_evidence: int = 4,
+) -> pd.DataFrame:
+    """Build evidence for a frontier gap: the seed gap + its (k-1) nearest
+    neighbours by cosine. Because the seed sits on a community boundary, the
+    neighbours will naturally span the bridging clusters — no extra
+    bookkeeping needed."""
+    if seed_idx < 0 or seed_idx >= len(gaps):
+        return gaps.iloc[0:0]
+    seed_emb = embeddings[seed_idx]
+    sims = embeddings @ seed_emb
+    sims[seed_idx] = -np.inf
+    order = np.argsort(-sims)[: max(0, k_evidence - 1)]
+    pick = np.concatenate(([seed_idx], order)).astype(int)
+    return gaps.iloc[pick].reset_index(drop=True)
+
+
+def generate_ideas_frontier(
+    gaps: pd.DataFrame,
+    embeddings: np.ndarray,
+    frontier_df: pd.DataFrame,
+    cluster_labels: pd.DataFrame,
+    out_tsv: Path,
+    out_jsonl: Path,
+    n_frontier: int | None = None,
+    model: str = IDEA_MODEL,
+    check_novelty: bool = True,
+    k_evidence: int = 5,
+) -> pd.DataFrame:
+    """One idea per top-frontier gap. Frontier gaps sit at community
+    boundaries — their nearest neighbours by cosine naturally span >=2
+    clusters, so we get bridge-style ideas without the centroid averaging."""
+    label_map = dict(zip(cluster_labels["cluster_id"].astype(int),
+                          cluster_labels["theme_label"]))
+    if "frontier_score" in frontier_df.columns:
+        frontier_df = frontier_df.sort_values("frontier_score", ascending=False)
+    if n_frontier:
+        frontier_df = frontier_df.head(n_frontier)
+
+    client = get_llm_client()
+    embedder = None
+    s2 = None
+    if check_novelty:
+        try:
+            from sentence_transformers import SentenceTransformer
+
+            embedder = SentenceTransformer("all-MiniLM-L6-v2")
+            s2 = S2Client()
+        except Exception as e:
+            log.warning("Disabling novelty check: %s", e)
+            check_novelty = False
+
+    out_jsonl.parent.mkdir(parents=True, exist_ok=True)
+    out_tsv.parent.mkdir(parents=True, exist_ok=True)
+
+    flat_rows: list[dict] = []
+    with open(out_jsonl, "w", encoding="utf-8") as jf:
+        for i, frow in enumerate(frontier_df.itertuples(index=False), 1):
+            seed_idx = int(getattr(frow, "gap_idx", -1))
+            cid = int(getattr(frow, "cluster_id", -1))
+            label = label_map.get(cid, "")
+            ev_df = _frontier_evidence(gaps, embeddings, seed_idx, k_evidence=k_evidence)
+            if ev_df.empty:
+                log.warning("Skipping frontier gap %s: no evidence", seed_idx)
+                continue
+            evidence = _evidence_payload(ev_df)
+            # The frontier flavour piggy-backs on the within-mode prompt: same
+            # synthesis system + same constraint set. Hint to the LLM that the
+            # seed bridges multiple themes by labelling the evidence list.
+            prompt = _build_within_prompt(cid, label or "frontier gap", evidence)
+            try:
+                data = _call_llm_within(client, prompt, model=model)
+            except Exception as e:
+                log.error("LLM call failed for frontier gap %s: %s", seed_idx, e)
+                continue
+            idea = data["idea"]
+
+            nov: dict = {}
+            if check_novelty:
+                try:
+                    nov = novelty_check(idea, s2, embedder, top_k=10)
+                except Exception as e:
+                    log.warning("Novelty check failed for frontier gap %s: %s", seed_idx, e)
+
+            closest = nov.get("closest_paper") or {}
+            flat_rows.append({
+                "mode": "frontier",
+                "cluster_a": cid,
+                "cluster_b": None,
+                "label_a": label,
+                "label_b": "",
+                "frontier_gap_idx": seed_idx,
+                "frontier_score": float(getattr(frow, "frontier_score", 0.0) or 0.0),
+                "n_neighbour_clusters": int(getattr(frow, "n_neighbour_clusters", 0) or 0),
+                "title": idea["title"],
+                "research_question": idea["research_question"],
+                "method_sketch": idea["method_sketch"],
+                "evaluation_plan": idea["evaluation_plan"],
+                "expected_contribution": idea["expected_contribution"],
+                "assumptions_and_risks": idea["assumptions_and_risks"],
+                "falsifiable_prediction": idea.get("falsifiable_prediction", ""),
+                "named_baseline": idea.get("named_baseline", ""),
+                "idea_confidence": float(idea["confidence"]),
+                "evidence_used_json": json.dumps(idea["evidence_used"], ensure_ascii=False),
+                "novelty_score": nov.get("novelty_score"),
+                "max_similarity_to_prior": nov.get("max_similarity"),
+                "closest_paper_title": closest.get("title", ""),
+                "closest_paper_year": closest.get("year", ""),
+                "closest_paper_id": closest.get("paperId", ""),
+            })
+
+            jf.write(json.dumps({
+                "mode": "frontier",
+                "pair": {"cluster_a": cid, "label_a": label,
+                          "frontier_gap_idx": seed_idx},
+                "evidence_a": evidence,
+                "prompt": prompt,
+                "system": SYSTEM_WITHIN,
+                "model": model,
+                "idea": idea,
+                "novelty": nov,
+            }, ensure_ascii=False) + "\n")
+            log.info("  [%d] frontier gap %d (cluster %d) %s  nov=%s",
+                     i, seed_idx, cid, idea["title"][:60],
+                     f"{nov.get('novelty_score'):.2f}" if nov.get("novelty_score") is not None else "n/a")
+
+    out_df = pd.DataFrame(flat_rows)
+    out_df.to_csv(out_tsv, sep="\t", index=False)
+    log.info("Wrote %d frontier ideas to %s and %s", len(out_df), out_tsv, out_jsonl)
+    return out_df

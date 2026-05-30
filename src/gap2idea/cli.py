@@ -132,7 +132,7 @@ def cmd_extract_methods(args):
 def cmd_theme_mine(args):
     from gap2idea.pipeline.theme_mining import (
         build_cluster_labels, build_cluster_pairs, build_cluster_summary,
-        clean_gaps, cluster_embeddings, embed_sentences,
+        clean_gaps, cluster_embeddings, cluster_gaps_via_graph, embed_sentences,
     )
 
     set_seed(args.seed)
@@ -147,7 +147,41 @@ def cmd_theme_mine(args):
     X = embed_sentences(gaps["gap_sentence"].tolist(), model_name=args.embed_model)
     np.save(paths.artifacts / "gap_embeddings.npy", X)
 
-    gaps["cluster_id"] = cluster_embeddings(X, n_points=len(gaps))
+    method = getattr(args, "method", "kmeans")
+    if method == "graph":
+        # PR-4: replace single-membership clustering with a multi-relational
+        # gap graph. Same artifact filenames + same column schemas — MCP and
+        # generation modes are drop-in compatible.
+        from gap2idea.pipeline import gap_graph as GG
+
+        methods_tsv = paths.data / "methods.tsv"
+        methods_df = read_tsv(methods_tsv) if methods_tsv.exists() else None
+        meth_emb = None
+        if methods_df is not None and not methods_df.empty:
+            meth_emb_path = paths.artifacts / "method_embeddings.npy"
+            if meth_emb_path.exists() and len(np.load(meth_emb_path)) == len(methods_df):
+                meth_emb = np.load(meth_emb_path)
+            else:
+                meth_emb = embed_sentences(methods_df["method_sentence"].tolist())
+                np.save(meth_emb_path, meth_emb)
+
+        cluster_ids, G = cluster_gaps_via_graph(
+            gaps, X,
+            knn_k=args.knn_k, sim_threshold=args.sim_threshold,
+            methods=methods_df, method_embeddings=meth_emb,
+            leiden_resolution=args.leiden_resolution, seed=args.seed,
+        )
+        gaps["cluster_id"] = cluster_ids
+
+        # Persist the full graph for downstream consumers (debugging, viewers,
+        # future graph-aware analytics). Pickle keeps it cheap; if igraph
+        # interop is added later we can switch to GraphML.
+        import pickle
+        with open(paths.artifacts / "gap_graph.gpickle", "wb") as f:
+            pickle.dump(G, f)
+    else:
+        gaps["cluster_id"] = cluster_embeddings(X, n_points=len(gaps))
+
     write_tsv(gaps, paths.artifacts / "gaps_with_clusters.tsv")
 
     labels_df = build_cluster_labels(gaps, use_llm=not args.no_llm_labels, model=args.llm_label_model)
@@ -157,10 +191,26 @@ def cmd_theme_mine(args):
     summary_df = build_cluster_summary(gaps, label_map)
     write_tsv(summary_df, paths.artifacts / "cluster_summary.tsv")
 
-    pairs_df = build_cluster_pairs(gaps, X, label_map, top_n=args.top_pairs, sim_peak=args.sim_peak)
-    write_tsv(pairs_df, paths.artifacts / "cluster_pairs.tsv")
+    if method == "graph":
+        from gap2idea.pipeline import gap_graph as GG
+        pairs_df = GG.graph_bridge_pairs(G, gaps["cluster_id"].values, top_n=args.top_pairs)
+        # Backfill labels on the bridge pairs from the same label_map used above.
+        pairs_df["label_a"] = pairs_df["cluster_a"].map(label_map).fillna("")
+        pairs_df["label_b"] = pairs_df["cluster_b"].map(label_map).fillna("")
+        write_tsv(pairs_df, paths.artifacts / "cluster_pairs.tsv")
 
-    log.info("Wrote artifacts to: %s", paths.artifacts)
+        # New artifacts: individual-gap structural bridges + frontier nodes.
+        # These power the new `frontier` generation mode and offer a finer
+        # view than centroid-pair bridges.
+        gap_pairs_df = GG.graph_individual_pairs(G, gaps["cluster_id"].values, gaps, top_n=args.top_pairs)
+        write_tsv(gap_pairs_df, paths.artifacts / "gap_pairs.tsv")
+        frontier_df = GG.frontier_nodes(G, gaps["cluster_id"].values, gaps, top_n=args.frontier_top_n)
+        write_tsv(frontier_df, paths.artifacts / "gap_frontier.tsv")
+    else:
+        pairs_df = build_cluster_pairs(gaps, X, label_map, top_n=args.top_pairs, sim_peak=args.sim_peak)
+        write_tsv(pairs_df, paths.artifacts / "cluster_pairs.tsv")
+
+    log.info("Wrote artifacts to: %s (method=%s)", paths.artifacts, method)
 
 
 # ---------- fetch-metadata ----------
@@ -215,12 +265,21 @@ def cmd_generate_ideas(args):
                 np.save(meth_emb_path, method_embeddings)
 
         pairs = read_tsv(paths.artifacts / "cluster_pairs.tsv") if args.orchestrate_mode == "bridge" else None
+        frontier_df = None
+        if args.orchestrate_mode == "frontier":
+            frontier_tsv = paths.artifacts / "gap_frontier.tsv"
+            if not frontier_tsv.exists():
+                raise SystemExit(
+                    "frontier mode requires artifacts/gap_frontier.tsv.\n"
+                    "Run `gap2idea theme-mine --method graph` first."
+                )
+            frontier_df = read_tsv(frontier_tsv)
 
         asyncio.run(orchestrate_batch(
             gaps=gaps, cluster_labels=labels,
             out_tsv=out_tsv, out_jsonl=out_jsonl,
             mode=args.orchestrate_mode,
-            pairs=pairs,
+            pairs=pairs, frontier_df=frontier_df,
             gap_embeddings=gap_embeddings,
             methods=methods, method_embeddings=method_embeddings,
             n=args.n_pairs, model=args.model,
@@ -253,6 +312,25 @@ def cmd_generate_ideas(args):
             model=args.model,
             check_novelty=not args.no_novelty,
             k_evidence=max(args.k_evidence, 6),
+        )
+    elif args.mode == "frontier":
+        from gap2idea.pipeline.openai_ideas import generate_ideas_frontier
+
+        frontier_tsv = paths.artifacts / "gap_frontier.tsv"
+        if not frontier_tsv.exists():
+            raise SystemExit(
+                "frontier mode requires artifacts/gap_frontier.tsv. Run:\n"
+                "  gap2idea theme-mine --method graph"
+            )
+        frontier_df = read_tsv(frontier_tsv)
+        gap_embeddings = np.load(paths.artifacts / "gap_embeddings.npy")
+        generate_ideas_frontier(
+            gaps=gaps, embeddings=gap_embeddings,
+            frontier_df=frontier_df, cluster_labels=labels,
+            out_tsv=out_tsv, out_jsonl=out_jsonl,
+            n_frontier=args.n_pairs, model=args.model,
+            check_novelty=not args.no_novelty,
+            k_evidence=max(args.k_evidence, 5),
         )
     elif args.mode == "method-gap":
         from gap2idea.pipeline.openai_ideas import generate_ideas_method_gap
@@ -621,6 +699,21 @@ def main():
     tm.add_argument("--llm-label-model", default="openai/gpt-4.1-mini",
                     help="OpenRouter model slug for cluster-label generation")
     tm.add_argument("--seed", type=int, default=42)
+    # PR-4: gap graph engine. Same artifact filenames + columns as legacy
+    # KMeans/HDBSCAN — MCP and generation modes work either way.
+    tm.add_argument("--method", choices=["kmeans", "graph"], default="kmeans",
+                    help="kmeans (legacy, default): single-membership partition via "
+                         "KMeans/HDBSCAN. graph: multi-relational gap graph with "
+                         "Leiden/Louvain communities and edge-betweenness bridges. "
+                         "Also emits gap_pairs.tsv, gap_frontier.tsv, gap_graph.gpickle.")
+    tm.add_argument("--knn-k", type=int, default=8,
+                    help="(graph only) Top-k semantic neighbours per gap.")
+    tm.add_argument("--sim-threshold", type=float, default=0.45,
+                    help="(graph only) Min cosine to keep a semantic edge.")
+    tm.add_argument("--leiden-resolution", type=float, default=1.0,
+                    help="(graph only) Community-detection resolution.")
+    tm.add_argument("--frontier-top-n", type=int, default=50,
+                    help="(graph only) Number of frontier gaps to write to gap_frontier.tsv.")
     tm.set_defaults(func=cmd_theme_mine)
 
     # fetch-metadata
@@ -632,11 +725,13 @@ def main():
     # generate-ideas
     gi = sub.add_parser("generate-ideas", help="Generate research ideas with novelty check")
     gi.add_argument(
-        "--mode", choices=["bridge", "within", "method-gap", "orchestrated"], default="bridge",
+        "--mode", choices=["bridge", "within", "method-gap", "frontier", "orchestrated"], default="bridge",
         help=(
             "bridge: pair gap-clusters in the bridge-score sweet spot (default). "
             "within: synthesise one idea per cluster from its gaps. "
             "method-gap: apply retrieved methods (data/methods.tsv) to each gap-cluster. "
+            "frontier: one idea per top-frontier gap from artifacts/gap_frontier.tsv "
+            "(requires `theme-mine --method graph`). "
             "orchestrated: full multi-agent pipeline (synthesiser + critic-revise + judge panel)."
         ),
     )
@@ -654,8 +749,10 @@ def main():
     gi.add_argument("--sim-high", type=float, default=0.70,
                     help="(method-gap only) upper bound of method <-> gap-cluster similarity sweet spot")
     # Orchestrated-mode extras
-    gi.add_argument("--orchestrate-mode", choices=["bridge", "within", "method-gap"], default="within",
-                    help="(orchestrated only) underlying generation mode wrapped by the agentic loop")
+    gi.add_argument("--orchestrate-mode",
+                    choices=["bridge", "within", "method-gap", "frontier"], default="within",
+                    help="(orchestrated only) underlying generation mode wrapped by the agentic loop. "
+                         "frontier requires artifacts/gap_frontier.tsv from `theme-mine --method graph`.")
     gi.add_argument("--critic-model", default="anthropic/claude-sonnet-4",
                     help="(orchestrated only) model used by the critic agent")
     gi.add_argument("--judges", default="",
