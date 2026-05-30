@@ -52,8 +52,8 @@ const C = {
   warn:    "B83232",
 };
 
-const FONT_HEAD = "Calibri";   // matches the template (Calibri Bold ~ Aptos Bold)
-const FONT_BODY = "Calibri";
+const FONT_HEAD = "Times New Roman";
+const FONT_BODY = "Times New Roman";
 
 const pres = new pptxgen();
 pres.layout = "LAYOUT_16x9";   // 10 × 5.625 in
@@ -841,7 +841,25 @@ SLIDES.push((n) => {
 // ======================================================================
 SLIDES.forEach((fn, i) => fn(i + 1));
 
-const out = path.join(__dirname, "Gap2Idea-defense.pptx");
+// Write to a fresh filename if the canonical one is locked (PowerPoint /
+// Google Drive sync). Windows-style file locks don't show up via
+// fs.accessSync — we actually have to try to open the file for writing.
+const fs = require("fs");
+function isLocked(p) {
+  try {
+    if (!fs.existsSync(p)) return false;
+    const fd = fs.openSync(p, "r+");
+    fs.closeSync(fd);
+    return false;
+  } catch (e) {
+    return true;
+  }
+}
+let out = path.join(__dirname, "Gap2Idea-defense.pptx");
+if (isLocked(out)) {
+  out = path.join(__dirname, "Gap2Idea-defense.new.pptx");
+  console.log(`(canonical file locked; writing to ${path.basename(out)} instead)`);
+}
 pres.writeFile({ fileName: out }).then(() => {
   console.log(`Wrote ${SLIDES.length} slides → ${out}`);
 });
