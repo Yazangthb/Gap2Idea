@@ -56,6 +56,7 @@ def _idea_to_flat_row(
     label_b: str,
     novelty_payload: dict,
     panel_consensus: dict,
+    sanity_verdict: dict | None = None,
 ) -> dict:
     """Flatten the multi-agent result into the unified `ideas.tsv` schema."""
     idea = result["idea"]
@@ -86,6 +87,14 @@ def _idea_to_flat_row(
         "panel_composite": panel_consensus.get("composite"),
         "panel_agreement": panel_consensus.get("agreement"),
         "panel_n_judges": panel_consensus.get("n_judges"),
+        # Sanity stage (PR-3): empty by default — populated when --sanity is on
+        "sanity_tier":           (sanity_verdict or {}).get("sanity_tier"),
+        "sanity_ran":            (sanity_verdict or {}).get("sanity_ran"),
+        "sanity_supported":      (sanity_verdict or {}).get("sanity_supported"),
+        "sanity_signal":         (sanity_verdict or {}).get("sanity_signal"),
+        "sanity_effect_size":    (sanity_verdict or {}).get("sanity_effect_size"),
+        "sanity_confound_score": (sanity_verdict or {}).get("sanity_confound_score"),
+        "sanity_notes":          (sanity_verdict or {}).get("sanity_notes", ""),
     }
 
 
@@ -125,6 +134,9 @@ async def orchestrate_one(
     sim_low: float = 0.30,
     sim_high: float = 0.70,
     check_novelty: bool = True,
+    enable_sanity: bool = True,
+    sanity_budget: str = "benchmark",
+    sanity_models: dict[str, str] | None = None,
 ) -> dict:
     """End-to-end orchestration for ONE idea. Returns {flat, full} dicts."""
     judge_panel = judge_panel or DEFAULT_JUDGE_PANEL
@@ -157,6 +169,40 @@ async def orchestrate_one(
 
     idea = result["idea"]
 
+    # ---- Experimental sanity stage (PR-3) ----
+    # Sits between critic loop and judge panel so the judges can calibrate
+    # against empirical signal. Gated on idea.confidence and the critic
+    # outcome inside `run_sanity_check` itself.
+    sanity_verdict: dict | None = None
+    if enable_sanity:
+        try:
+            from gap2idea.pipeline.sanity import run_sanity_check
+
+            sanity_verdict = await run_sanity_check(
+                idea,
+                budget=sanity_budget,
+                models=sanity_models,
+                critique_history=result.get("_critique_history"),
+            )
+            log.info(
+                "  sanity: tier=%s ran=%s supported=%s signal=%.2f confound=%.2f",
+                sanity_verdict.get("sanity_tier"),
+                sanity_verdict.get("sanity_ran"),
+                sanity_verdict.get("sanity_supported"),
+                sanity_verdict.get("sanity_signal") or 0.0,
+                sanity_verdict.get("sanity_confound_score") or 0.0,
+            )
+        except Exception as e:
+            log.warning("Sanity stage failed: %s", e)
+            sanity_verdict = {
+                "sanity_tier": None, "sanity_ran": False,
+                "sanity_supported": "inconclusive",
+                "sanity_signal": 0.0, "sanity_effect_size": None,
+                "sanity_confound_score": 1.0,
+                "sanity_notes": f"sanity stage failed: {e}",
+                "_trace": {"error": str(e)},
+            }
+
     # ---- Novelty check ----
     nov_payload: dict = {}
     if check_novelty:
@@ -169,12 +215,20 @@ async def orchestrate_one(
             log.warning("Novelty check failed: %s", e)
 
     # ---- Judge panel ----
-    consensus, panel = await _judge_idea_with_panel(idea, judge_panel)
+    # Attach the sanity verdict (minus its full _trace) to the idea dict so
+    # `_call_judge` can append it to the rubric prompt.
+    idea_for_judge = dict(idea)
+    if sanity_verdict is not None:
+        idea_for_judge["_sanity_verdict"] = {
+            k: v for k, v in sanity_verdict.items() if k != "_trace"
+        }
+    consensus, panel = await _judge_idea_with_panel(idea_for_judge, judge_panel)
 
     flat = _idea_to_flat_row(
         result, mode=mode, cluster_a=cluster_a, cluster_b=cluster_b,
         label_a=label_a, label_b=label_b,
         novelty_payload=nov_payload, panel_consensus=consensus,
+        sanity_verdict=sanity_verdict,
     )
 
     full = {
@@ -187,6 +241,7 @@ async def orchestrate_one(
         "novelty": nov_payload,
         "critique_history": result.get("_critique_history", []),
         "n_critic_iterations": result.get("_n_iterations", 0),
+        "sanity": sanity_verdict,
         "panel_consensus": consensus,
         "panel_per_judge": [
             {"model": m, "scores": s} for m, s in panel
@@ -219,6 +274,9 @@ async def orchestrate_batch(
     sim_low: float = 0.30,
     sim_high: float = 0.70,
     check_novelty: bool = True,
+    enable_sanity: bool = True,
+    sanity_budget: str = "benchmark",
+    sanity_models: dict[str, str] | None = None,
 ) -> pd.DataFrame:
     """Run orchestrate_one over the top-N candidates of the chosen mode."""
     label_map = dict(zip(cluster_labels["cluster_id"].astype(int), cluster_labels["theme_label"]))
@@ -256,6 +314,9 @@ async def orchestrate_batch(
                     k_evidence=k_evidence, k_methods=k_methods,
                     sim_low=sim_low, sim_high=sim_high,
                     check_novelty=check_novelty,
+                    enable_sanity=enable_sanity,
+                    sanity_budget=sanity_budget,
+                    sanity_models=sanity_models,
                 )
             except Exception as e:
                 log.error("Orchestration failed for cluster %s: %s", ca, e)

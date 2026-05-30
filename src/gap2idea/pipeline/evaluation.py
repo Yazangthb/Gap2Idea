@@ -139,8 +139,27 @@ def _evidence_overlap(idea_record: dict) -> float:
 def _call_judge(client: OpenAI, idea: dict, model: str) -> dict:
     # We describe the schema inline so non-OpenAI providers (which may ignore
     # `response_format=json_schema`) still produce the right fields.
+    rubric_extension = ""
+    sanity = idea.get("_sanity_verdict") if isinstance(idea, dict) else None
+    if sanity:
+        # PR-3: surface the multi-agent sanity verdict to the judge so the
+        # panel can calibrate feasibility/novelty against empirical signal.
+        rubric_extension = (
+            "\n\nA multi-agent experimental sanity stage produced the following "
+            "verdict on this idea:\n"
+            + json.dumps(sanity, ensure_ascii=False, indent=2)
+            + "\nCalibrate the *feasibility* and *novelty* axes accordingly: an "
+              "`untestable` or `no` verdict should LOWER feasibility; `yes` with "
+              "low confound_score should RAISE it; `partial`/`inconclusive` is a "
+              "neutral signal. Confound_score >= 0.6 indicates serious "
+              "methodological concerns the idea has not yet addressed."
+        )
+    # Hide the internal sanity field from the idea blob shown to the judge,
+    # so the judge sees the idea proper (not the meta-field name).
+    idea_for_blob = {k: v for k, v in idea.items() if not k.startswith("_")} if isinstance(idea, dict) else idea
     user = (
         RUBRIC
+        + rubric_extension
         + "\n\nReturn ONLY a JSON object with EXACTLY these keys (no extra prose):\n"
         + json.dumps(
             {
@@ -157,7 +176,7 @@ def _call_judge(client: OpenAI, idea: dict, model: str) -> dict:
             indent=2,
         )
         + "\n\nIdea under review:\n"
-        + json.dumps(idea, ensure_ascii=False)
+        + json.dumps(idea_for_blob, ensure_ascii=False)
     )
     resp = client.chat.completions.create(
         model=model,

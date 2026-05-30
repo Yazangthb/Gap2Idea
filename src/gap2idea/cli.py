@@ -230,6 +230,8 @@ def cmd_generate_ideas(args):
             k_evidence=args.k_evidence, k_methods=args.k_methods,
             sim_low=args.sim_low, sim_high=args.sim_high,
             check_novelty=not args.no_novelty,
+            enable_sanity=getattr(args, "sanity", True),
+            sanity_budget=getattr(args, "sanity_budget", "benchmark"),
         ))
         return
 
@@ -660,6 +662,15 @@ def main():
                     help="(orchestrated only) comma-separated judge models. Empty = use default panel.")
     gi.add_argument("--max-critic-iter", type=int, default=2,
                     help="(orchestrated only) max critique-revise iterations per idea")
+    # Multi-agent experimental sanity stage (PR-3)
+    gi.add_argument("--sanity", action=argparse.BooleanOptionalAction, default=True,
+                    help="(orchestrated only) run the multi-agent experimental "
+                         "sanity stage between critic loop and judge panel. "
+                         "Default: --sanity. Use --no-sanity to skip.")
+    gi.add_argument("--sanity-budget", choices=["smoke", "benchmark", "full"], default="benchmark",
+                    help="(orchestrated + --sanity) max experiment tier the "
+                         "Scale-Estimator agent may choose. smoke=tier 1, "
+                         "benchmark=tier 2 (default), full=tier 3.")
     gi.set_defaults(func=cmd_generate_ideas)
 
     # evaluate-ideas
