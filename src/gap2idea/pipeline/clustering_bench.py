@@ -168,6 +168,31 @@ def fit_clusters(X: np.ndarray, texts: list[str], method: str) -> tuple[np.ndarr
             notes.append(f"bertopic failed: {e}")
             labels = np.full((n,), -1)
 
+    elif method == "leiden_graph":
+        # PR-5: gap-graph community detection (Leiden if leidenalg installed,
+        # NetworkX Louvain fallback). The benchmark feeds only `texts` + `X`
+        # so we synthesise a minimal gaps frame; paper/section/method edges
+        # collapse to empty and the graph reduces to a kNN semantic graph,
+        # which is precisely what isolates the community detector for
+        # head-to-head comparison.
+        import pandas as pd
+
+        from gap2idea.pipeline import gap_graph as GG
+
+        synth_gaps = pd.DataFrame([
+            {"id": f"row_{i}", "gap_type": "", "section_type": "",
+             "gap_sentence": t, "paragraph_text": "", "confidence": 1.0}
+            for i, t in enumerate(texts)
+        ])
+        try:
+            X_norm = X / np.maximum(1e-9, np.linalg.norm(X, axis=1, keepdims=True))
+            G = GG.build_gap_graph(synth_gaps, X_norm, knn_k=8, sim_threshold=0.3)
+            labels = GG.detect_communities(G, resolution=1.0, seed=0)
+            notes.append(f"n_communities={int(labels.max()) + 1 if labels.size else 0}")
+        except Exception as e:
+            notes.append(f"leiden_graph failed: {e}")
+            labels = np.full((n,), -1)
+
     else:
         raise ValueError(f"unknown clusterer: {method}")
 

@@ -690,10 +690,16 @@ def main():
     tm = sub.add_parser("theme-mine", help="Embed -> cluster -> label -> pair")
     tm.add_argument("--gaps-tsv", default=None)
     tm.add_argument("--min-conf", type=float, default=0.5)
-    tm.add_argument("--embed-model", default="all-MiniLM-L6-v2")
+    tm.add_argument("--embed-model", default="all-MiniLM-L6-v2",
+                    help="Sentence-transformers model used to embed gap sentences. "
+                         "Default 'all-MiniLM-L6-v2' is the legacy choice. For "
+                         "thesis-grade results, swap to a science-tuned encoder "
+                         "such as 'malteos/scincl' or 'allenai/specter2_base' and "
+                         "validate via `gap2idea bench-clustering`.")
     tm.add_argument("--top-pairs", type=int, default=30)
     tm.add_argument("--sim-peak", type=float, default=0.45,
-                    help="Cosine similarity that maximises bridge_score")
+                    help="(--method kmeans only) cosine similarity that maximises "
+                         "the centroid bridge_score. No-op when --method graph.")
     tm.add_argument("--no-llm-labels", action="store_true",
                     help="Skip OpenAI cluster labels; use TF-IDF keywords only")
     tm.add_argument("--llm-label-model", default="openai/gpt-4.1-mini",
@@ -701,11 +707,12 @@ def main():
     tm.add_argument("--seed", type=int, default=42)
     # PR-4: gap graph engine. Same artifact filenames + columns as legacy
     # KMeans/HDBSCAN — MCP and generation modes work either way.
-    tm.add_argument("--method", choices=["kmeans", "graph"], default="kmeans",
-                    help="kmeans (legacy, default): single-membership partition via "
-                         "KMeans/HDBSCAN. graph: multi-relational gap graph with "
+    # PR-5 flips the default to "graph".
+    tm.add_argument("--method", choices=["kmeans", "graph"], default="graph",
+                    help="graph (default): multi-relational gap graph with "
                          "Leiden/Louvain communities and edge-betweenness bridges. "
-                         "Also emits gap_pairs.tsv, gap_frontier.tsv, gap_graph.gpickle.")
+                         "Also emits gap_pairs.tsv, gap_frontier.tsv, gap_graph.gpickle. "
+                         "kmeans (legacy): single-membership partition via KMeans/HDBSCAN.")
     tm.add_argument("--knn-k", type=int, default=8,
                     help="(graph only) Top-k semantic neighbours per gap.")
     tm.add_argument("--sim-threshold", type=float, default=0.45,

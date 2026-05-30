@@ -277,3 +277,19 @@ def test_knn_edges_threshold_filters_low_similarity():
     # Orthogonal pair must be filtered out by the threshold
     assert (0, 2) not in pairs
     assert (1, 2) not in pairs
+
+
+# ---------- PR-5: leiden_graph clusterer in the bench ----------
+
+def test_bench_leiden_graph_clusterer_runs():
+    """The new bench clusterer must produce a label per row and find at
+    least two communities on the two-block fixture."""
+    from gap2idea.pipeline.clustering_bench import fit_clusters
+
+    gaps, X = _two_block_corpus(n_per_block=6)
+    texts = gaps["gap_sentence"].tolist()
+    labels, notes = fit_clusters(X, texts, method="leiden_graph")
+    assert labels.shape == (len(texts),)
+    assert len(set(labels)) >= 2
+    # The note must record the community count for the bench report
+    assert any("n_communities" in n for n in notes)
