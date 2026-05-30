@@ -46,6 +46,15 @@ def clean_gaps(gaps: pd.DataFrame, min_conf: float = 0.5) -> pd.DataFrame:
     for c in ["gap_sentence", "paragraph_text"]:
         if c in gaps.columns:
             gaps[c] = gaps[c].astype(str).str.replace("\n", " ").str.strip()
+    # section_type carries the dominant paper section (limitations/future_work/
+    # discussion/fallback/tail) the gap was extracted from. Older gaps.tsv files
+    # written before this column was added lack it — default to "" so downstream
+    # consumers (graph edge features, evidence payloads) can treat empty as
+    # "unknown" rather than crashing.
+    if "section_type" not in gaps.columns:
+        gaps["section_type"] = ""
+    else:
+        gaps["section_type"] = gaps["section_type"].fillna("").astype(str).str.strip()
     gaps["confidence"] = pd.to_numeric(gaps["confidence"], errors="coerce").fillna(0.0)
     gaps = gaps[(gaps["confidence"] >= min_conf) & (gaps["gap_sentence"].str.len() >= 20)]
     gaps = gaps.drop_duplicates(subset=["id", "gap_sentence"]).reset_index(drop=True)

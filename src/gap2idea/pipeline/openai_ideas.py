@@ -153,6 +153,7 @@ def _evidence_payload(df: pd.DataFrame) -> list[dict]:
             {
                 "paper_id": str(r["id"]),
                 "gap_type": str(r.get("gap_type", "")),
+                "section_type": str(r.get("section_type", "")),
                 "confidence": float(r.get("confidence", 0.0)),
                 "gap_sentence": str(r["gap_sentence"]),
                 "paragraph_text": str(r.get("paragraph_text", "")),

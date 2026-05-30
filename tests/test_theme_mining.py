@@ -68,6 +68,38 @@ def test_clean_gaps_filters_short_and_low_conf():
     assert out.iloc[0]["id"] == "p1"
 
 
+def test_clean_gaps_round_trips_section_type():
+    """section_type must survive cleaning so downstream graph/critic stages
+    can use it as an edge feature / context field."""
+    df = pd.DataFrame(
+        [
+            {"id": "p1", "gap_sentence": "a" * 25, "paragraph_text": "blah",
+             "confidence": 0.9, "gap_type": "future_work",
+             "section_type": "future_work"},
+            {"id": "p2", "gap_sentence": "b" * 25, "paragraph_text": "blah",
+             "confidence": 0.9, "gap_type": "limitation",
+             "section_type": "limitations"},
+        ]
+    )
+    out = clean_gaps(df, min_conf=0.5)
+    assert "section_type" in out.columns
+    assert set(out["section_type"]) == {"future_work", "limitations"}
+
+
+def test_clean_gaps_tolerates_missing_section_type_column():
+    """Older gaps.tsv files written before PR-1 lack section_type. clean_gaps
+    must default to "" so reading them doesn't crash."""
+    df = pd.DataFrame(
+        [
+            {"id": "p1", "gap_sentence": "a" * 25, "paragraph_text": "blah",
+             "confidence": 0.9, "gap_type": "future_work"},
+        ]
+    )
+    out = clean_gaps(df, min_conf=0.5)
+    assert "section_type" in out.columns
+    assert out.iloc[0]["section_type"] == ""
+
+
 # ---------- keyword_label ----------
 
 def test_keyword_label_returns_something():

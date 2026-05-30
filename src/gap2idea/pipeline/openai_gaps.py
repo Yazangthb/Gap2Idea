@@ -81,18 +81,27 @@ GAP_SCHEMA = {
 }
 
 
-def _section_text_for_paper(sections_df: pd.DataFrame, paper_id: str) -> str:
-    """Concatenate the paper's sections, prioritising limitations/future_work."""
+def _section_text_for_paper(sections_df: pd.DataFrame, paper_id: str) -> tuple[str, str]:
+    """Concatenate the paper's sections, prioritising limitations/future_work.
+
+    Returns:
+        (joined_text, dominant_section_type) — the dominant section_type is the
+        highest-priority section that exists for this paper (limitations >
+        future_work > discussion > fallback > tail). Used downstream as a
+        per-gap provenance label so the graph phase can use it as an edge
+        feature and the critic/judge contexts can condition on it.
+    """
     priority = {"limitations": 0, "future_work": 1, "discussion": 2, "fallback": 3, "tail": 4}
     # Cast both sides to str: arxiv IDs like "2106.05969" get auto-parsed as
     # floats by pd.read_json, breaking equality lookups.
     sub = sections_df[sections_df["id"].astype(str) == str(paper_id)].copy()
     if sub.empty:
-        return ""
+        return "", ""
     sub["__p"] = sub["section_type"].map(priority).fillna(9)
     sub = sub.sort_values("__p")
     joined = "\n\n".join(sub["section_text"].astype(str).tolist())
-    return joined[:MAX_INPUT_CHARS]
+    dominant = str(sub.iloc[0]["section_type"]) if len(sub) else ""
+    return joined[:MAX_INPUT_CHARS], dominant
 
 
 CALL_TIMEOUT_SECONDS = 60  # bound per-paper wall time at 1 minute
@@ -161,13 +170,14 @@ def _call_openai(client: OpenAI, paper_id: str, text: str) -> dict:
         return {"paper_id": paper_id, "items": []}
 
 
-def _flatten(record: dict, paper_id: str) -> list[dict]:
+def _flatten(record: dict, paper_id: str, section_type: str = "") -> list[dict]:
     rows = []
     for item in record.get("items", []):
         rows.append(
             {
                 "id": paper_id,
                 "gap_type": item["type"],
+                "section_type": section_type,
                 "gap_sentence": item["gap_sentence"].replace("\n", " ").strip(),
                 "paragraph_text": item["paragraph_text"].replace("\n", " ").strip(),
                 "confidence": float(item["confidence"]),
@@ -208,20 +218,24 @@ def extract_gaps(
     # Incremental save: load anything already on disk so a fresh batch appends.
     if out_tsv.exists() and resume:
         accumulated = pd.read_csv(out_tsv, sep="\t", dtype={"id": str})
+        # Backfill: older gaps.tsv files lacked `section_type`. Add empty column
+        # so the concat below doesn't produce NaN-filled cells that break TSV.
+        if "section_type" not in accumulated.columns:
+            accumulated["section_type"] = ""
     else:
-        accumulated = pd.DataFrame(columns=["id", "gap_type", "gap_sentence",
+        accumulated = pd.DataFrame(columns=["id", "gap_type", "section_type", "gap_sentence",
                                             "paragraph_text", "confidence"])
 
     client = get_llm_client()
     for i, pid in enumerate(todo, 1):
-        text = _section_text_for_paper(sections_df, pid)
+        text, section_type = _section_text_for_paper(sections_df, pid)
         if len(text) < 200:
             log.info("  [%d/%d] %s: section text too short, skipping", i, len(todo), pid)
             continue
         try:
             rec = _call_openai(client, pid, text)
-            rows = _flatten(rec, pid)
-            log.info("  [%d/%d] %s: %d gaps", i, len(todo), pid, len(rows))
+            rows = _flatten(rec, pid, section_type=section_type)
+            log.info("  [%d/%d] %s: %d gaps (section=%s)", i, len(todo), pid, len(rows), section_type or "?")
         except Exception as e:
             log.error("  [%d/%d] %s FAILED: %s", i, len(todo), pid, e)
             rows = []

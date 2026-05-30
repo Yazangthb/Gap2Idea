@@ -109,5 +109,7 @@ def test_section_text_lookup_handles_numeric_looking_ids(tmp_path: Path):
     # Read JSONL back the way openai_gaps would, and verify lookup works.
     on_disk = pd.read_json(sec_path, lines=True, dtype=False)
     on_disk["id"] = on_disk["id"].astype(str)
-    text = _section_text_for_paper(on_disk, "2106.05969")
+    text, section_type = _section_text_for_paper(on_disk, "2106.05969")
     assert len(text) > 100
+    # PR-1: dominant section_type is now returned alongside the text.
+    assert section_type == "limitations"
