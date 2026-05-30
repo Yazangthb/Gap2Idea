@@ -50,7 +50,11 @@ CRITIC_SYSTEM = (
     "Given a draft idea, its source evidence, and tool-derived diagnostics "
     "(novelty score, evidence-overlap), identify the SPECIFIC weaknesses "
     "and propose concrete revisions a synthesiser agent should make. "
-    "Be honest: if the idea is already solid, say so and request no revision."
+    "Be honest: if the idea is already solid, say so and request no revision.\n\n"
+    "Treat the following as SPECIFICITY issues that require revision: "
+    "(a) `falsifiable_prediction` missing, vague, or lacking a quantitative "
+    "threshold; (b) `named_baseline` missing, 'TBD', 'none', 'no baseline', "
+    "or otherwise unnamed."
 )
 
 CRITIC_SCHEMA = {
@@ -162,7 +166,11 @@ async def critique_idea(
 REVISION_SYSTEM = (
     "You are a research planning assistant revising a draft idea based on "
     "a critic's feedback. Address each numbered issue. Stay strictly within "
-    "the provided evidence. Return the revised idea as JSON matching the schema."
+    "the provided evidence. Return the revised idea as JSON matching the schema.\n\n"
+    "Preserve a quantitative `falsifiable_prediction` (number/%/inequality) "
+    "and a specific `named_baseline` (a real prior method or paper). If the "
+    "prior draft had these and you weaken them in revision, you have failed. "
+    "Never replace a named baseline with 'TBD', 'none', or 'no baseline'."
 )
 
 
@@ -213,7 +221,19 @@ async def revise_idea(
     )
     client = get_llm_client()
     data = _call_revisor(client, prompt, model=model)
-    return data["idea"] if "idea" in data else data
+    revised = data["idea"] if "idea" in data else data
+
+    # Defensive field copy-through: non-OpenAI providers (Claude/Gemini)
+    # sometimes silently drop schema fields they didn't choose to populate.
+    # If the prior draft had a value and the revised one doesn't, restore
+    # the prior value rather than losing it. This is critical for the
+    # PR-2 falsifiable_prediction + named_baseline fields, which the
+    # critic depends on.
+    if isinstance(revised, dict) and isinstance(idea, dict):
+        for key, prior_val in idea.items():
+            if key not in revised and prior_val not in (None, "", [], {}):
+                revised[key] = prior_val
+    return revised
 
 
 # ===========================================================================

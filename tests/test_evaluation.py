@@ -1,7 +1,11 @@
 """Unit tests for non-API helpers in evaluation.py."""
 from __future__ import annotations
 
-from gap2idea.pipeline.evaluation import _evidence_overlap, _normalise_judge_scores
+from gap2idea.pipeline.evaluation import (
+    _evidence_overlap,
+    _falsifiability_gate,
+    _normalise_judge_scores,
+)
 
 
 def test_evidence_overlap_perfect():
@@ -94,3 +98,67 @@ def test_normalise_coerces_string_scores():
     assert out["specificity"] == 3
     assert out["feasibility"] == 0  # default
     assert out["evidence_grounding"] == 2
+
+
+# ---------- _falsifiability_gate (PR-2) ----------
+
+def _idea(pred: str = "", base: str = "RoBERTa-base") -> dict:
+    return {
+        "title": "X",
+        "research_question": "Y",
+        "falsifiable_prediction": pred,
+        "named_baseline": base,
+    }
+
+
+def test_falsifiability_gate_pass_percentage():
+    assert _falsifiability_gate(
+        _idea("We expect at least 5% F1 improvement over the baseline.", "RoBERTa-base")
+    ) is True
+
+
+def test_falsifiability_gate_pass_inequality():
+    assert _falsifiability_gate(
+        _idea("Accuracy must exceed 0.85 on the MNLI dev set.", "BERT-large")
+    ) is True
+
+
+def test_falsifiability_gate_pass_pp_unit():
+    assert _falsifiability_gate(
+        _idea("At least 3pp gain over baseline on Spider.", "T5-base")
+    ) is True
+
+
+def test_falsifiability_gate_pass_geq_symbol():
+    assert _falsifiability_gate(
+        _idea("ROUGE-L >= 0.4 vs. the comparison method.", "BART")
+    ) is True
+
+
+def test_falsifiability_gate_fail_missing_baseline():
+    assert _falsifiability_gate(
+        _idea("We expect 5% improvement.", "")
+    ) is False
+
+
+def test_falsifiability_gate_fail_tbd_baseline():
+    for bad in ["TBD", "tbd", "none", "N/A", "no baseline", "No-Baseline", "unspecified"]:
+        assert _falsifiability_gate(_idea("5% gain.", bad)) is False, f"failed for {bad!r}"
+
+
+def test_falsifiability_gate_fail_missing_prediction():
+    assert _falsifiability_gate(_idea("", "RoBERTa-base")) is False
+
+
+def test_falsifiability_gate_fail_no_quantitative_threshold():
+    """A non-numeric prediction must not pass the gate even if a baseline is named."""
+    assert _falsifiability_gate(
+        _idea("The method will significantly outperform the baseline.", "BERT-base")
+    ) is False
+
+
+def test_falsifiability_gate_handles_missing_fields():
+    """Old idea records lacking the fields entirely must return False, not crash."""
+    assert _falsifiability_gate({"title": "X"}) is False
+    assert _falsifiability_gate({}) is False
+    assert _falsifiability_gate({"falsifiable_prediction": None, "named_baseline": None}) is False

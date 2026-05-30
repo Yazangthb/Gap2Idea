@@ -5,7 +5,10 @@ import numpy as np
 import pandas as pd
 
 from gap2idea.pipeline.openai_ideas import (
+    IDEA_SCHEMA,
+    _build_method_gap_prompt,
     _build_user_prompt,
+    _build_within_prompt,
     _cosine,
     _diverse_evidence,
     _evidence_payload,
@@ -73,3 +76,32 @@ def test_build_user_prompt_includes_payload():
     assert '"theme_a_label": "A"' in p
     assert '"theme_b_label": "B"' in p
     assert "schema" in p
+
+
+# ---------- PR-2: falsifiability + named-baseline schema and prompts ----------
+
+def test_idea_schema_has_falsifiable_prediction_and_named_baseline():
+    idea_props = IDEA_SCHEMA["properties"]["idea"]["properties"]
+    assert "falsifiable_prediction" in idea_props
+    assert "named_baseline" in idea_props
+    required = IDEA_SCHEMA["properties"]["idea"]["required"]
+    assert "falsifiable_prediction" in required
+    assert "named_baseline" in required
+
+
+def test_bridge_prompt_mentions_falsifiable_prediction_and_named_baseline():
+    p = _build_user_prompt(1, 2, "A", "B", [{"paper_id": "x"}], [{"paper_id": "y"}])
+    assert "falsifiable_prediction" in p
+    assert "named_baseline" in p
+
+
+def test_within_prompt_mentions_falsifiable_prediction_and_named_baseline():
+    p = _build_within_prompt(1, "A", [{"paper_id": "x"}])
+    assert "falsifiable_prediction" in p
+    assert "named_baseline" in p
+
+
+def test_method_gap_prompt_mentions_falsifiable_prediction_and_named_baseline():
+    p = _build_method_gap_prompt(1, "A", [{"paper_id": "x"}], [{"paper_id": "y"}])
+    assert "falsifiable_prediction" in p
+    assert "named_baseline" in p

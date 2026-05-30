@@ -136,6 +136,51 @@ async def test_revise_idea_returns_idea_payload(fake_idea_response, fake_critiqu
     assert revised["title"] == "Bridging A and B"
 
 
+@pytest.mark.asyncio
+async def test_revise_idea_defensive_field_copy_through(fake_critique_revise):
+    """PR-2 regression: non-OpenAI providers (Claude/Gemini) sometimes drop
+    schema fields silently. If the prior draft had falsifiable_prediction +
+    named_baseline and the revisor's response lacks them, revise_idea must
+    restore the prior values rather than losing them."""
+    prior = {
+        "title": "Prior title",
+        "research_question": "RQ?",
+        "method_sketch": "method",
+        "evaluation_plan": "evaluate vs B",
+        "expected_contribution": "C",
+        "assumptions_and_risks": "R",
+        "falsifiable_prediction": "We expect 5pp gain over baseline on dev.",
+        "named_baseline": "RoBERTa-base",
+        "evidence_used": [],
+        "confidence": 0.7,
+    }
+    # The revisor drops the two new fields silently (simulating Claude/Gemini).
+    stripped = {
+        "pair": {"cluster_a": 0, "cluster_b": 1},
+        "idea": {
+            "title": "Revised title",
+            "research_question": "RQ-revised?",
+            "method_sketch": "method-revised",
+            "evaluation_plan": "evaluate vs B (revised)",
+            "expected_contribution": "C-revised",
+            "assumptions_and_risks": "R-revised",
+            # NOTE: falsifiable_prediction and named_baseline INTENTIONALLY missing
+            "evidence_used": [],
+            "confidence": 0.7,
+        },
+    }
+    with patch.object(agents, "_call_revisor", return_value=stripped), \
+         patch.object(agents, "get_llm_client", return_value=object()):
+        revised = await agents.revise_idea(
+            prior, fake_critique_revise,
+            [{"paper_id": "p1", "gap_sentence": "g"}],
+        )
+    assert revised["title"] == "Revised title"  # revision did apply
+    # Defensive copy-through restored the dropped fields:
+    assert revised["falsifiable_prediction"] == "We expect 5pp gain over baseline on dev."
+    assert revised["named_baseline"] == "RoBERTa-base"
+
+
 # ---------- critique-revise loop ----------
 
 @pytest.mark.asyncio

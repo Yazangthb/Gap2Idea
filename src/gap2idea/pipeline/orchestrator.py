@@ -72,6 +72,8 @@ def _idea_to_flat_row(
         "evaluation_plan": idea["evaluation_plan"],
         "expected_contribution": idea["expected_contribution"],
         "assumptions_and_risks": idea["assumptions_and_risks"],
+        "falsifiable_prediction": idea.get("falsifiable_prediction", ""),
+        "named_baseline": idea.get("named_baseline", ""),
         "idea_confidence": float(idea["confidence"]),
         "evidence_used_json": json.dumps(idea["evidence_used"], ensure_ascii=False),
         "novelty_score": novelty_payload.get("novelty_score"),

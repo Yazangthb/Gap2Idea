@@ -58,6 +58,23 @@ IDEA_SCHEMA = {
                 "evaluation_plan": {"type": "string"},
                 "expected_contribution": {"type": "string"},
                 "assumptions_and_risks": {"type": "string"},
+                "falsifiable_prediction": {
+                    "type": "string",
+                    "description": (
+                        "One sentence with a QUANTITATIVE threshold that would "
+                        "falsify the idea. Example: 'We expect at least 5pp F1 "
+                        "improvement over RoBERTa-base on MNLI.' Must contain a "
+                        "number, percentage, or inequality."
+                    ),
+                },
+                "named_baseline": {
+                    "type": "string",
+                    "description": (
+                        "Name a specific prior method or paper this idea is "
+                        "compared against. Do NOT write 'no baseline', 'TBD', "
+                        "'none', or similar — name a real method."
+                    ),
+                },
                 "evidence_used": {
                     "type": "array",
                     "items": {
@@ -79,6 +96,8 @@ IDEA_SCHEMA = {
                 "evaluation_plan",
                 "expected_contribution",
                 "assumptions_and_risks",
+                "falsifiable_prediction",
+                "named_baseline",
                 "evidence_used",
                 "confidence",
             ],
@@ -96,7 +115,12 @@ SYSTEM_IDEA = (
     "Propose exactly one actionable, novel research idea that meaningfully "
     "combines both gap themes. The method must be concrete enough that a "
     "graduate student could begin work next week. The evaluation plan must "
-    "name a metric and a comparison baseline."
+    "name a metric and a comparison baseline.\n\n"
+    "Your `falsifiable_prediction` MUST contain a quantitative threshold "
+    "(a number, percentage, or inequality). Your `named_baseline` MUST name "
+    "a specific prior method or paper — do NOT write 'TBD', 'none', "
+    "'no baseline', or similar; if no clear baseline exists in the evidence, "
+    "name the closest established method by name."
 )
 
 
@@ -184,6 +208,8 @@ def _build_user_prompt(
         "- evidence_used must be a subset of provided evidence sentences (paper_id + verbatim gap_sentence).\n"
         "- title: a precise, neutral, conference-paper-style title (<=15 words).\n"
         "- assumptions_and_risks: 2-4 sentences naming the most load-bearing assumption AND the most likely way this could fail.\n"
+        "- falsifiable_prediction: ONE sentence with a quantitative threshold (number/%/inequality) that would falsify the idea.\n"
+        "- named_baseline: name a specific prior method or paper to compare against; never 'TBD', 'none', or 'no baseline'.\n"
         "INPUT:\n" + json.dumps(payload, ensure_ascii=False)
     )
 
@@ -324,6 +350,8 @@ def generate_idea_for_pair(
         "evaluation_plan": idea["evaluation_plan"],
         "expected_contribution": idea["expected_contribution"],
         "assumptions_and_risks": idea["assumptions_and_risks"],
+        "falsifiable_prediction": idea.get("falsifiable_prediction", ""),
+        "named_baseline": idea.get("named_baseline", ""),
         "idea_confidence": idea["confidence"],
         "evidence_used_json": json.dumps(idea["evidence_used"], ensure_ascii=False),
         "novelty_score": nov.get("novelty_score"),
@@ -420,6 +448,8 @@ def generate_ideas_batch(
                 "evaluation_plan": idea["evaluation_plan"],
                 "expected_contribution": idea["expected_contribution"],
                 "assumptions_and_risks": idea["assumptions_and_risks"],
+                "falsifiable_prediction": idea.get("falsifiable_prediction", ""),
+                "named_baseline": idea.get("named_baseline", ""),
                 "idea_confidence": float(idea["confidence"]),
                 "evidence_used_json": json.dumps(idea["evidence_used"], ensure_ascii=False),
                 "novelty_score": nov.get("novelty_score"),
@@ -463,7 +493,12 @@ SYSTEM_WITHIN = (
     "Propose exactly one actionable, novel research idea that addresses the "
     "unifying opportunity these gaps represent. The method must be concrete "
     "enough that a graduate student could begin work next week. The evaluation "
-    "plan must name a metric and a comparison baseline."
+    "plan must name a metric and a comparison baseline.\n\n"
+    "Your `falsifiable_prediction` MUST contain a quantitative threshold "
+    "(a number, percentage, or inequality). Your `named_baseline` MUST name "
+    "a specific prior method or paper — do NOT write 'TBD', 'none', "
+    "'no baseline', or similar; if no clear baseline exists in the evidence, "
+    "name the closest established method by name."
 )
 
 
@@ -483,6 +518,8 @@ def _build_within_prompt(cluster_id: int, label: str, evidence: list[dict]) -> s
         "- evidence_used must be a subset of provided evidence sentences (paper_id + verbatim gap_sentence).\n"
         "- title: a precise, conference-paper-style title (<=15 words).\n"
         "- assumptions_and_risks: 2-4 sentences naming the most load-bearing assumption AND the most likely failure mode.\n"
+        "- falsifiable_prediction: ONE sentence with a quantitative threshold (number/%/inequality) that would falsify the idea.\n"
+        "- named_baseline: name a specific prior method or paper to compare against; never 'TBD', 'none', or 'no baseline'.\n"
         "INPUT:\n" + json.dumps(payload, ensure_ascii=False)
     )
 
@@ -577,6 +614,8 @@ def generate_ideas_within_clusters(
                 "evaluation_plan": idea["evaluation_plan"],
                 "expected_contribution": idea["expected_contribution"],
                 "assumptions_and_risks": idea["assumptions_and_risks"],
+                "falsifiable_prediction": idea.get("falsifiable_prediction", ""),
+                "named_baseline": idea.get("named_baseline", ""),
                 "idea_confidence": float(idea["confidence"]),
                 "evidence_used_json": json.dumps(idea["evidence_used"], ensure_ascii=False),
                 "novelty_score": nov.get("novelty_score"),
@@ -619,7 +658,11 @@ SYSTEM_METHOD_GAP = (
     "Use ONLY the provided evidence sentences and paragraphs. "
     "Do NOT invent datasets, results, or claims. "
     "The method must be testable; the evaluation plan must name a metric and "
-    "comparison baseline."
+    "comparison baseline.\n\n"
+    "Your `falsifiable_prediction` MUST contain a quantitative threshold "
+    "(a number, percentage, or inequality). Your `named_baseline` MUST name "
+    "a specific prior method or paper (the candidate method, or its closest "
+    "comparator); do NOT write 'TBD', 'none', 'no baseline', or similar."
 )
 
 
@@ -642,6 +685,8 @@ def _build_method_gap_prompt(
         "  -- i.e. list every supporting input you actually used.\n"
         "- title: precise conference-paper-style title (<=15 words).\n"
         "- assumptions_and_risks: 2-4 sentences naming the load-bearing assumption + failure mode.\n"
+        "- falsifiable_prediction: ONE sentence with a quantitative threshold (number/%/inequality) that would falsify the idea.\n"
+        "- named_baseline: name a specific prior method or paper to compare against; never 'TBD', 'none', or 'no baseline'.\n"
         "INPUT:\n" + json.dumps(payload, ensure_ascii=False)
     )
 
@@ -808,6 +853,8 @@ def generate_ideas_method_gap(
                 "evaluation_plan": idea["evaluation_plan"],
                 "expected_contribution": idea["expected_contribution"],
                 "assumptions_and_risks": idea["assumptions_and_risks"],
+                "falsifiable_prediction": idea.get("falsifiable_prediction", ""),
+                "named_baseline": idea.get("named_baseline", ""),
                 "idea_confidence": float(idea["confidence"]),
                 "evidence_used_json": json.dumps(idea["evidence_used"], ensure_ascii=False),
                 "novelty_score": nov.get("novelty_score"),

@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import re
 import statistics
 from pathlib import Path
 
@@ -81,6 +82,39 @@ EVAL_SCHEMA = {
     ],
     "additionalProperties": False,
 }
+
+
+# ---------- Falsifiability + named-baseline gate (PR-2) ----------
+
+# Recognise a quantitative threshold inside `falsifiable_prediction`. Any of:
+#   plain number (5, 0.95, .42), percent (5%), pp / percentage points (5pp),
+#   inequality (>=, <=, >, <), multiplier (2x), fold/sigma (2-fold, 1.5σ).
+_NUMERIC_RE = re.compile(
+    r"(>=|<=|>|<|≥|≤)|"                                # comparison operators
+    r"(\d+\.?\d*|\.\d+)\s*(%|pp|x|×|percent|points?|fold|σ|sd)?",
+    re.IGNORECASE,
+)
+_BAD_BASELINE_TOKENS = {
+    "", "none", "n/a", "na", "tbd", "no baseline", "no-baseline",
+    "no comparison", "unspecified", "tba",
+}
+
+
+def _falsifiability_gate(idea: dict) -> bool:
+    """Return True iff the idea names a concrete baseline AND its
+    falsifiable_prediction includes a quantitative threshold.
+
+    A `False` here does not invalidate the judge scores — it surfaces as
+    `falsifiability_gate_passed` in the eval TSV so the thesis can report
+    *how many* ideas survive the gate.
+    """
+    pred = str(idea.get("falsifiable_prediction") or "").strip()
+    base = str(idea.get("named_baseline") or "").strip()
+    if not pred or not base:
+        return False
+    if base.lower() in _BAD_BASELINE_TOKENS:
+        return False
+    return bool(_NUMERIC_RE.search(pred))
 
 
 def _evidence_overlap(idea_record: dict) -> float:
@@ -192,6 +226,7 @@ def evaluate_ideas(
             continue
         scores = _normalise_judge_scores(raw_scores)
         overlap = _evidence_overlap(rec)
+        gate_passed = _falsifiability_gate(idea)
         composite = (
             scores["novelty"] + scores["specificity"]
             + scores["feasibility"] + scores["evidence_grounding"]
@@ -212,6 +247,7 @@ def evaluate_ideas(
                 "overall_critique": scores["overall_critique"],
                 "composite": composite,
                 "evidence_overlap": overlap,
+                "falsifiability_gate_passed": gate_passed,
                 "s2_novelty_score": (rec.get("novelty") or {}).get("novelty_score"),
                 "s2_max_similarity": (rec.get("novelty") or {}).get("max_similarity"),
                 "judge_model": judge_model,
@@ -351,6 +387,7 @@ def evaluate_ideas_panel(
 
         consensus = _aggregate_panel(panel_results)
         overlap = _evidence_overlap(rec)
+        gate_passed = _falsifiability_gate(idea)
 
         row = {
             "title": idea.get("title", ""),
@@ -366,6 +403,7 @@ def evaluate_ideas_panel(
             "n_judges": consensus["n_judges"],
             "consensus_critique": consensus["consensus_critique"],
             "evidence_overlap": overlap,
+            "falsifiability_gate_passed": gate_passed,
             "s2_novelty_score": (rec.get("novelty") or {}).get("novelty_score"),
         }
         # Per-judge columns
