@@ -13,17 +13,17 @@ Everything behind the cheap gap-extraction funnel, organized for writing it up.
 |---|---|---|
 | **Core module** | `src/gap2idea/pipeline/gap_funnel.py` | Stage A slice + Stage B (cue rules + `EmbeddingGapHead`) + corpus runner |
 | **CLI** | `gap2idea extract-gaps-funnel --mode hybrid --head data/gap_head.joblib` | drop-in `gaps.tsv` |
-| Gold (eval) | `scripts/build_gap_gold.py` | full paper → gpt-4o extract→verify → 19-gap gold |
-| ACL data (train) | `scripts/harvest_acl_limitations.py` | LimGen Limitations + cue-harvest future-work |
-| Train head | `scripts/train_gap_head.py` | self-distill + `--acl-cap` + leakage guard + meta |
-| Benchmark | `scripts/bench_gap_recall.py` | staged: Stage A recall / Stage B / end-to-end |
-| Benchmark (cost) | `scripts/bench_gap_funnel.py` | older bench on `bench_gold` + cost projection |
-| LLM baseline | `scripts/eval_gap_extraction.py` | macro-F1 0.187 on old silver bench |
-| Ablation: classifier | `scripts/test_bert_stageb.py` | logreg vs DistilBERT |
-| Ablation: few-shot | `scripts/test_setfit_stageb.py` | SetFit contrastive (raw-torch reimpl) |
-| Ablation: data cap | `scripts/sweep_acl_cap.py` | ACL limitation/future cap sweep |
-| Ablation: encoder | `scripts/sweep_encoders.py` | frozen encoder sweep |
-| Figures | `scripts/plot_stage_a.py` | localization + funnel PNGs |
+| Gold (eval) | `scripts/dataset/build_gap_gold.py` | full paper → gpt-4o extract→verify → 19-gap gold |
+| ACL data (train) | `scripts/dataset/harvest_acl_limitations.py` | LimGen Limitations + cue-harvest future-work |
+| Train head | `scripts/training/train_gap_head.py` | self-distill + `--acl-cap` + leakage guard + meta |
+| Benchmark | `scripts/bench/bench_gap_recall.py` | staged: Stage A recall / Stage B / end-to-end |
+| Benchmark (cost) | `scripts/bench/bench_gap_funnel.py` | older bench on `bench_gold` + cost projection |
+| LLM baseline | `scripts/archive/eval_gap_extraction.py` | macro-F1 0.187 on old silver bench |
+| Ablation: classifier | `scripts/training/test_bert_stageb.py` | logreg vs DistilBERT |
+| Ablation: few-shot | `scripts/training/test_setfit_stageb.py` | SetFit contrastive (raw-torch reimpl) |
+| Ablation: data cap | `scripts/training/sweep_acl_cap.py` | ACL limitation/future cap sweep |
+| Ablation: encoder | `scripts/training/sweep_encoders.py` | frozen encoder sweep |
+| Figures | `scripts/bench/plot_stage_a.py` | localization + funnel PNGs |
 
 ## Data artifacts
 | Path | What |
@@ -48,7 +48,7 @@ Everything behind the cheap gap-extraction funnel, organized for writing it up.
 
 Regenerate the readable report + tsv any time:
 ```bash
-python scripts/demo_funnel.py --head data/gap_head.joblib
+python scripts/bench/demo_funnel.py --head data/gap_head.joblib
 # or over any corpus -> gaps.tsv:
 python -m gap2idea.cli extract-gaps-funnel --mode hybrid --head data/gap_head.joblib
 ```
@@ -56,25 +56,25 @@ python -m gap2idea.cli extract-gaps-funnel --mode hybrid --head data/gap_head.jo
 ## Reproduce (end-to-end)
 ```bash
 # 1. clean eval gold (needs an LLM API key)          -> data/bench_gap/gold_sentences.tsv
-python scripts/build_gap_gold.py --model openai/gpt-4o
+python scripts/dataset/build_gap_gold.py --model openai/gpt-4o
 
 # 2. harvest clean ACL limitation training data (no API; downloads LimGen, CC-BY-4.0)
-python scripts/harvest_acl_limitations.py
+python scripts/dataset/harvest_acl_limitations.py
 
 # 3. train the shipped head (bge-small + 1500 ACL limitations)
-python scripts/train_gap_head.py --encoder BAAI/bge-small-en-v1.5 --no-distant --acl-cap 1500 --out data/gap_head.joblib
+python scripts/training/train_gap_head.py --encoder BAAI/bge-small-en-v1.5 --no-distant --acl-cap 1500 --out data/gap_head.joblib
 
 # 4. benchmark (Stage A recall / Stage B / end-to-end)
-python scripts/bench_gap_recall.py --head data/gap_head.joblib
+python scripts/bench/bench_gap_recall.py --head data/gap_head.joblib
 
 # 5. figures
-python scripts/plot_stage_a.py --head data/gap_head.joblib
+python scripts/bench/plot_stage_a.py --head data/gap_head.joblib
 
 # --- ablations (reproduce the "model/encoder doesn't matter" finding) ---
-python scripts/test_bert_stageb.py --model distilbert-base-uncased
-python scripts/test_setfit_stageb.py
-python scripts/sweep_acl_cap.py
-python scripts/sweep_encoders.py
+python scripts/training/test_bert_stageb.py --model distilbert-base-uncased
+python scripts/training/test_setfit_stageb.py
+python scripts/training/sweep_acl_cap.py
+python scripts/training/sweep_encoders.py
 
 # run the funnel over a corpus (no LLM)
 python -m gap2idea.cli extract-gaps-funnel --mode hybrid --head data/gap_head.joblib

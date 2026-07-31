@@ -14,7 +14,7 @@
   classifier). The only change is Stage B's classifier.
 - Wrapped as `BertGapHead` that duck-types `EmbeddingGapHead.predict` so it drops
   into `extract_gaps()` with no other changes.
-- Script: `scripts/test_scibert_gold.py`. Output:
+- Script: `scripts/training/test_scibert_gold.py`. Output:
   `data/scibert_prep/scibert_gold_{summary.md, gaps.tsv}`.
 
 ## Result (10 gold papers, 19 gold gaps)

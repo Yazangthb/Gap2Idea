@@ -100,16 +100,16 @@ sentences as negatives. Zero new annotation.
 | `pipeline/gap_llm_filter.py` | **Stage C** — LLM precision filter over survivors (local Qwen or API), validate/junk prompts |
 | `pipeline/gap_prefilter.py` | shared text utils (`normalize_text`, `split_sentences`, n-grams) used by the funnel + the superseded miner |
 | `data/gap_head.joblib` (+ `.meta.json`) | shipped Stage-B head: bge-small + 1500 ACL limitations |
-| `scripts/train_gap_head.py` | trains the embedding head (self-distillation, negatives from body outside the slice) |
-| `scripts/harvest_acl_limitations.py` | ACL mandated-Limitations harvest — the data fix (§8.4) |
-| `scripts/build_gap_gold.py` | extract→verify gold → `data/bench_gap/gold_sentences.tsv` |
-| `scripts/bench_gap_recall.py` | Stage-A localization + end-to-end bench vs gold |
+| `scripts/training/train_gap_head.py` | trains the embedding head (self-distillation, negatives from body outside the slice) |
+| `scripts/dataset/harvest_acl_limitations.py` | ACL mandated-Limitations harvest — the data fix (§8.4) |
+| `scripts/dataset/build_gap_gold.py` | extract→verify gold → `data/bench_gap/gold_sentences.tsv` |
+| `scripts/bench/bench_gap_recall.py` | Stage-A localization + end-to-end bench vs gold |
 | CLI | `gap2idea extract-gaps-funnel --mode {rules,model,hybrid} --head data/gap_head.joblib` |
 
 *Superseded (kept for the §5.1 reasoning trail):* the lexical Tier-0 dictionary —
-`scripts/mine_tier0_dictionary.py`, `scripts/eval_tier0.py`,
+`scripts/archive/mine_tier0_dictionary.py`, `scripts/archive/eval_tier0.py`,
 `data/tier0_dictionary.json`, and the bench label sheet
-(`scripts/build_label_sheet.py`, `scripts/eval_gap_extraction.py`). Replaced by
+(`scripts/archive/build_label_sheet.py`, `scripts/archive/eval_gap_extraction.py`). Replaced by
 the structural Stage-A slice. `local_gaps.py` / `train_gap_classifier.py` were
 never built — the real modules are `gap_funnel.py` / `train_gap_head.py`.
 
@@ -136,7 +136,7 @@ Metrics:
 
 Re-run after adjudication:
 ```bash
-python scripts/eval_gap_extraction.py --bench-dir data/bench   # gold only
+python scripts/archive/eval_gap_extraction.py --bench-dir data/bench   # gold only
 ```
 
 ### 5.1 Tier 0 results (measured)
@@ -156,7 +156,7 @@ recall depends on generic words because **~50% of gap sentences carry no lexical
 cue** (e.g. open problems phrased as questions). Lexical Tier 0 realistically
 **drops ~17–21% of sentences at ≥0.92 recall** — real savings, but not 90%.
 
-**Why precision is so low (verified, `scripts/verify_tier0.py`):** inspecting
+**Why precision is so low (verified, `scripts/archive/verify_tier0.py`):** inspecting
 *which* phrase matched each true positive shows gaps are flagged on incidental
 **stopwords** ("does/one/such"), not real cues — the genuine cue word (e.g.
 "flaw") is often absent from the dictionary because only 189 mined positives
@@ -176,7 +176,7 @@ metrics).
 is the isolated sentence; this per-sentence recall is a different axis than the
 LLM baseline's per-extracted-gap macro-F1 (0.187) — not directly comparable.
 
-### 5.2 CRITICAL: "open gap" is a discourse-level property (`scripts/check_resolved.py`)
+### 5.2 CRITICAL: "open gap" is a discourse-level property (`scripts/archive/check_resolved.py`)
 
 Inspecting the text *after* suspect GT gaps shows several are **resolved in-paper**:
 - "How does one prove such a statement?" → next sentence: "As it turns out, the
@@ -219,7 +219,7 @@ above inherit that bias. Fixes:
 
 ---
 
-### 5.3 Full-paper gold dataset (`scripts/build_gold_dataset.py`)
+### 5.3 Full-paper gold dataset (`scripts/dataset/build_gold_dataset.py`)
 
 Per the §5.2 finding, gaps are re-extracted by passing the **whole paper** to
 gpt-4o (not regex sections), so the model can judge resolution. 10 fresh papers
@@ -255,13 +255,13 @@ dataset-building / approach-validation, **not** as a clean Tier-0 eval.
 gap2idea extract-gaps-funnel --mode hybrid --head data/gap_head.joblib
 
 # benchmark Stage A localization + end-to-end vs gold
-python scripts/bench_gap_recall.py --head data/gap_head.joblib
+python scripts/bench/bench_gap_recall.py --head data/gap_head.joblib
 ```
 
 *Superseded lexical-Tier-0 experiment (kept for reference only):*
 ```bash
-python scripts/mine_tier0_dictionary.py --out data/tier0_dictionary.json
-python scripts/eval_tier0.py --dict data/tier0_dictionary.json --bench-dir data/bench
+python scripts/archive/mine_tier0_dictionary.py --out data/tier0_dictionary.json
+python scripts/archive/eval_tier0.py --dict data/tier0_dictionary.json --bench-dir data/bench
 ```
 
 ---
@@ -309,7 +309,7 @@ extract-gaps-funnel [--mode rules|model|hybrid] [--head data/gap_head.joblib]`.
   distilled from teacher labels; negatives drawn from body OUTSIDE the slice.
 
 ### 8.2 Benchmark (clean, minimal, leakage-guarded)
-- **Gold** (`scripts/build_gap_gold.py`): full paper → gpt-4o extract → gpt-4o
+- **Gold** (`scripts/dataset/build_gap_gold.py`): full paper → gpt-4o extract → gpt-4o
   **verify** filter (drops prior-work limitations, contributions/cross-refs
   mislabelled as gaps, vague gestures). **19 gap sentences / 9 papers**
   (`data/bench_gap/gold_sentences.tsv`). The verify pass was essential: a raw
@@ -318,7 +318,7 @@ extract-gaps-funnel [--mode rules|model|hybrid] [--head data/gap_head.joblib]`.
   papers (`data/gap_head.meta.json`; checked in `bench_gap_recall.py`).
 - **Metric**: token-CONTAINMENT (not substring) — 19/27 gold gaps are PDF-
   scrambled, so localization is reported at τ ∈ {0.90, 0.80, 0.70}.
-- Run: `python scripts/bench_gap_recall.py --head data/gap_head.joblib`.
+- Run: `python scripts/bench/bench_gap_recall.py --head data/gap_head.joblib`.
 
 ### 8.3 Results
 **Stage A — localization recall (the ceiling) + load**
@@ -351,9 +351,9 @@ and took several iterations to diagnose honestly:
    Fix: draw negatives from the body *outside* the slice.
 2. **It's data, not the model (proven on THREE axes):** classifier method
    (logreg ≈ DistilBERT ≈ SetFit, all limitation R ≈ 0.11;
-   `scripts/test_bert_stageb.py`, `test_setfit_stageb.py`), and — after the ACL
+   `scripts/training/test_bert_stageb.py`, `test_setfit_stageb.py`), and — after the ACL
    fix — the frozen ENCODER too: bge-small ≈ bge-base ≈ mpnet ≈ SPECTER all land
-   at recall 0.526 / limitation 0.444 (`scripts/sweep_encoders.py`). Upgrading
+   at recall 0.526 / limitation 0.444 (`scripts/training/sweep_encoders.py`). Upgrading
    the model or encoder is a dead end; the literature agrees (even domain-BERT
    caps ~0.5 on limitation typing). We keep **bge-small** (smallest → most
    scalable, best future-work recall, ties on the rest).
@@ -362,8 +362,8 @@ and took several iterations to diagnose honestly:
    acknowledgments). Reverted.
 4. **The fix (shipped):** harvest the **mandated "Limitations" sections of ACL
    papers** (LimGen, CC-BY-4.0) as clean limitation positives —
-   `scripts/harvest_acl_limitations.py` → 6,433 sentences, leakage-filtered vs
-   gold. A cap sweep (`scripts/sweep_acl_cap.py`) shows limitation recall
+   `scripts/dataset/harvest_acl_limitations.py` → 6,433 sentences, leakage-filtered vs
+   gold. A cap sweep (`scripts/training/sweep_acl_cap.py`) shows limitation recall
    **0.11 → 0.44 (4×)** and end-to-end **0.42 → 0.53**, saturating at ~1,500
    sentences, *without* the distant-supervision flood (61 preds, not 143). This
    is the literature-standard recipe (mandated-section harvesting); credits were

@@ -34,7 +34,7 @@
 
 - **Verdict:** +0.10 localization recall on comprehensive gold for +12% slice size. Cost-justified.
 - **Code:** `src/gap2idea/pipeline/gap_funnel.py::slice_with_midpaper_anchors` ✅
-- **A/B test:** `scripts/ab_test_stage_a.py`
+- **A/B test:** `scripts/bench/ab_test_stage_a.py`
 
 ---
 
@@ -43,7 +43,7 @@
 ### v1 (FROZEN) — `gap_head.joblib` (bge-small + logreg, ACL-augmented)
 - **Status:** earlier shipped head.
 - **Measured (LimGen full test, 13,319 sents):** F1 0.61.
-- **Code:** training in `scripts/train_gap_head.py`.
+- **Code:** training in `scripts/training/train_gap_head.py`.
 
 ### v2 (FROZEN, current ship) — SciBERT-FT (2-epoch LimGen + ACL)
 - **Status:** **paper-baseline**, the F1=0.743 number.
@@ -51,7 +51,7 @@
 - **Measured (LimGen full test, 13,319 sents):** **F1 0.743, P 0.809, R 0.687**.
 - **Measured (gold v1, 19 gaps):** recall 0.526 (10/19), precision_floor 0.245.
 - **Measured (gold v2, 49 gaps):** recall 0.20 (10/49) — gold v2 has many mid-paper gaps Stage A v1 misses.
-- **Code:** `scripts/finetune_and_chain.py::train_bert` and `scripts/test_scibert_gold.py`.
+- **Code:** `scripts/bench/finetune_and_chain.py::train_bert` and `scripts/training/test_scibert_gold.py`.
 - **Do not retrain unless documented as a new version.**
 
 ---
@@ -75,7 +75,7 @@
 - **Method:** binary GAP/JUNK classification with surrounding context, gpt-4o batched.
 - **Measured (LimGen):** −0.20 F1 (correctly rejects section-membership false positives).
 - **Measured (gold v1, 10 papers):** **+0.076 F1** (0.334 → 0.410), 49→25 preds.
-- **Code:** `scripts/test_gap_junk_context.py` and `scripts/eval_all_stages_gold.py`.
+- **Code:** `scripts/stage_c/test_gap_junk_context.py` and `scripts/eval/eval_all_stages_gold.py`.
 
 ---
 

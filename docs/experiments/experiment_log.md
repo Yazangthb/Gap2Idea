@@ -20,7 +20,7 @@ judgment that cannot be made from a sentence in isolation (architecture doc §5.
 - **Why:** establish the expensive incumbent's cost and quality.
 - **Method:** `openai_gaps.py` — gpt-4.1-mini on regex sections, ≤2 gaps/paper.
 - **Result:** ~$4,000 / 1M papers; on the old silver bench, macro-F1 **0.187**,
-  recall starved by the ≤2/paper cap (`scripts/eval_gap_extraction.py`,
+  recall starved by the ≤2/paper cap (`scripts/archive/eval_gap_extraction.py`,
   `data/bench/eval_metrics.tsv`).
 - **Conclusion:** cost is linear in papers and rate-limited → does not scale.
   Target a cheap funnel; the ≤2/paper cap is a recall ceiling to avoid.
@@ -30,7 +30,7 @@ judgment that cannot be made from a sentence in isolation (architecture doc §5.
 - **Method:** full paper → gpt-4o extract (own-work limitation / future-work,
   verbatim) → **gpt-4o verify** filter (drop prior-work limitations,
   contributions/cross-refs mislabelled as gaps, vague gestures). Keep only
-  sentences with ≥0.80 token-recall in source. `scripts/build_gap_gold.py`.
+  sentences with ≥0.80 token-recall in source. `scripts/dataset/build_gap_gold.py`.
 - **Result:** raw single pass = 31 gaps but **~25% contaminated** (esp. math
   papers: theorem statements mislabelled future-work). Verify pass → **19 clean
   gaps / 9 papers** (`data/bench_gap/gold_sentences.tsv`; raw kept as
@@ -49,7 +49,7 @@ judgment that cannot be made from a sentence in isolation (architecture doc §5.
   generous span after a Limitations/Future-Work/Conclusion *heading*, ±window
   around an *inline* keyword (scrambled headings), and a *terminal tail*; anchor
   priority cap; mid-paper Discussion gated. `gap_funnel.slice_terminal_regions`.
-- **Result (localization recall, `scripts/bench_gap_recall.py`):**
+- **Result (localization recall, `scripts/bench/bench_gap_recall.py`):**
 
   | containment τ | all | future_work | limitation |
   |---|---|---|---|
@@ -75,7 +75,7 @@ judgment that cannot be made from a sentence in isolation (architecture doc §5.
   *only* positives, so every real gap the teacher skipped (in the same slice)
   became a **negative** → the head learned "gaps are none."
 - **Fix:** draw negatives from the paper body **outside** the slice (reliably
-  non-gap). `scripts/train_gap_head.py`.
+  non-gap). `scripts/training/train_gap_head.py`.
 - **Result:** hybrid end-to-end recall 0.37 → 0.47.
 - **Conclusion:** a self-distillation pitfall worth reporting — capped teacher
   labels silently poison the negative class.
@@ -84,7 +84,7 @@ judgment that cannot be made from a sentence in isolation (architecture doc §5.
 - **Why:** decide whether weak limitations are a model-capacity or data problem.
 - **Method:** identical data + eval, three classifiers — frozen bge+logreg,
   fine-tuned DistilBERT, SetFit contrastive fine-tuning.
-  `scripts/test_bert_stageb.py`, `scripts/test_setfit_stageb.py`.
+  `scripts/training/test_bert_stageb.py`, `scripts/training/test_setfit_stageb.py`.
   (SetFit reimplemented in raw torch — the `setfit` package is broken on
   Python 3.14 / transformers 5.5.)
 - **Result (end-to-end recall / limitation recall):** logreg 0.42 / 0.11 ·
@@ -118,13 +118,13 @@ judgment that cannot be made from a sentence in isolation (architecture doc §5.
 - **Method:** download LimGen (`github.com/arbmf/LimGen`, CC-BY-4.0, 4068 ACL
   papers); pull the `limitations` field, split sentences, filter junk, **leakage-
   guard vs gold**. Also cue-harvest future-work from `content`.
-  `scripts/harvest_acl_limitations.py`.
+  `scripts/dataset/harvest_acl_limitations.py`.
 - **Result:** **6,433 limitation + 1,268 future-work** sentences from 813 papers,
   0 leakage (`data/acl_limitations.tsv`, `data/acl_futurework.tsv`).
 
 ### E3.2 — Cap sweep (how many to add)
 - **Method:** add N ACL limitation positives, refit logreg, benchmark.
-  `scripts/sweep_acl_cap.py`.
+  `scripts/training/sweep_acl_cap.py`.
 - **Result (end-to-end recall / per-sentence limitation recall):**
 
   | ACL limitation sentences | recall | limitation R | n_pred |
@@ -143,7 +143,7 @@ judgment that cannot be made from a sentence in isolation (architecture doc §5.
 
 ### E3.3 — Encoder sweep (is it the features?)
 - **Method:** swap the frozen encoder (bge-small/base, mpnet, SPECTER), classifier
-  fixed, on the ACL-augmented data. `scripts/sweep_encoders.py`.
+  fixed, on the ACL-augmented data. `scripts/training/sweep_encoders.py`.
 - **Result:** **all tie at recall 0.526 / limitation 0.444.** SPECTER gave
   type_acc 1.00 but worse future-work; bge-small best future-work + smallest.
 - **Conclusion:** encoder doesn't matter either — **third axis confirming
@@ -156,7 +156,7 @@ judgment that cannot be made from a sentence in isolation (architecture doc §5.
 ### E4.1 — Cost projection
 - **Result:** only slice sentences are embedded (~62/paper) → ~$3–31 / 1M papers
   (local CPU ≈ free) vs ~$4,000 for per-paper LLM. **~128–166× cheaper**, offline,
-  shardable. `scripts/bench_gap_funnel.py` (cost_projection), funnel figure.
+  shardable. `scripts/bench/bench_gap_funnel.py` (cost_projection), funnel figure.
 
 ### E4.2 — Related-work analysis (deep research)
 - **Result:** our two-stage funnel (high-recall structural slice → precision
@@ -177,7 +177,7 @@ judgment that cannot be made from a sentence in isolation (architecture doc §5.
 ### E5.1 — LimGen head-to-head (limitation detection)
 - **Why:** get a real, leakage-clean number vs prior art on *their* data.
 - **Method:** LimGen ACL papers, binary limitation-sentence detection, one held-out
-  split, all methods trained on LimGen-train. `scripts/bench_limgen.py`,
+  split, all methods trained on LimGen-train. `scripts/bench/bench_limgen.py`,
   `bench_research_single.py`. Full table: [research_comparison.md](research_comparison.md).
 - **Result (F1):** DistilBERT fine-tuned (their approach) **0.674** > **stacking
   [bge+tfidf+cue] (OURS, frozen) 0.627** > bge 0.610 ≈ tfidf 0.610 > Zhang's

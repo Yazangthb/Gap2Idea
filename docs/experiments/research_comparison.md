@@ -3,7 +3,7 @@
 > Binary limitation-sentence detection on **LimGen** (ACL papers, CC-BY-4.0),
 > the prior art's own data. One held-out test split, leakage-clean, all methods
 > trained on the same LimGen-train. Metric = F1 for the limitation class.
-> Source: `scripts/bench_research_single.py` (train 8000 / val 2000 / test 5876).
+> Source: `scripts/bench/bench_research_single.py` (train 8000 / val 2000 / test 5876).
 
 ## Same-data comparison (we ran every row)
 | method | kind | precision | recall | **F1** |
@@ -19,7 +19,7 @@
 CPU box** — torch's multi-threaded CPU backward pass deadlocks randomly (completed
 ~2 of ~8 attempts; the number is from a completed run, same data/scale). It needs a
 GPU (or the planned LLM tier) to be a dependable part of the pipeline. The
-isolated/single-threaded worker is `scripts/_distilbert_worker.py` (works on GPU).
+isolated/single-threaded worker is `scripts/training/_distilbert_worker.py` (works on GPU).
 
 ## Published numbers — different data/domain/task (context only, NOT reproducible here)
 | work (venue) | task | domain | F1 |

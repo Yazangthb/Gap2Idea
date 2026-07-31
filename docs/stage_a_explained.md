@@ -2,7 +2,7 @@
 
 > Companion to [`gap_extraction_architecture.md`](gap_extraction_architecture.md) §8.
 > Code: [`src/gap2idea/pipeline/gap_funnel.py`](../src/gap2idea/pipeline/gap_funnel.py) (`slice_terminal_regions`).
-> Figures are reproducible: `python scripts/plot_stage_a.py`.
+> Figures are reproducible: `python scripts/bench/plot_stage_a.py`.
 
 ---
 
@@ -206,10 +206,10 @@ sentences over 9 papers; see architecture doc §8.2):
 
 ```bash
 # regenerate both data plots from the live code + gold
-python scripts/plot_stage_a.py --head data/gap_head.joblib
+python scripts/bench/plot_stage_a.py --head data/gap_head.joblib
 
 # full staged benchmark (Stage A recall + Stage B + end-to-end)
-python scripts/bench_gap_recall.py --head data/gap_head.joblib
+python scripts/bench/bench_gap_recall.py --head data/gap_head.joblib
 ```
 
 Figures: [`figures/stage_a_flow.mmd`](figures/stage_a_flow.mmd) (flow source),
