@@ -111,6 +111,31 @@ def _looks_like_sentence(s: str) -> bool:
     return alpha / len(s) >= 0.55  # reject formula/number/punctuation-dominated lines
 
 
+# References / citations / captions that column-scramble drags into a gap region.
+# These can never be gap sentences, so Stage A drops them from the candidate slice
+# BEFORE Stage B ever sees them — a candidate-quality gate, like _looks_like_sentence.
+_REFERENCE_RE = re.compile(
+    r"(?:19|20)\d\d[a-z]?\s*\.\s*$"                     # ends in a year + period (bib entry / trailing cite)
+    r"|\b(?:In\s+)?Proceedings\b|\bConference on\b|\bJournal of\b"
+    r"|\bTransactions on\b|\bWorkshop on\b|\bSymposium on\b"
+    r"|\barXiv:\s*\d|\bdoi\s*:|\bpreprint\b|\bpp\.\s*\d+"
+    r"|(?:Figure|Table|Fig\.|Tab\.)\s*\d+\s*[:.]",      # figure / table captions
+    re.IGNORECASE,
+)
+_BIB_AUTHOR_RE = re.compile(r"[A-Z][A-Za-z]+,\s+[A-Z]\.")   # "Khondaker, A." bibliography author
+
+
+def _is_reference(s: str) -> bool:
+    """True for bibliography entries, citation dumps, and figure/table captions —
+    text that PDF column-scramble interleaves into a gap region but that can never
+    be a gap sentence. Conservative: a lone inline 'et al.' inside a real sentence
+    is NOT matched (no year-end / venue / author-list signal), so genuine
+    limitations that cite prior work survive the slice."""
+    if _REFERENCE_RE.search(s):
+        return True
+    return len(_BIB_AUTHOR_RE.findall(s)) >= 2             # dense author list = a bibliography line
+
+
 def _anchor_tag(s: str, is_heading: bool) -> str | None:
     """limitations / future_work / discussion if this unit anchors a gap region."""
     if LIMITATION_HEAD_RE.search(s):
@@ -233,7 +258,9 @@ def slice_terminal_regions(
         tags = [keep[k] for k in run]
         best = max(tags, key=lambda t: _TAG_RANK[t])
         head = next((sents[k] for k in run if is_head[k]), best)
-        cand = [sents[k] for k in run if not is_head[k] and len(sents[k]) >= MIN_SENT_CHARS]
+        cand = [sents[k] for k in run
+                if not is_head[k] and len(sents[k]) >= MIN_SENT_CHARS
+                and not _is_reference(sents[k])]
         if cand:
             loc = run[0] / n
             regions.append(Region(best, head[:80], round(loc, 4), loc >= TERMINAL_THRESHOLD, cand))
@@ -328,6 +355,7 @@ def slice_with_midpaper_anchors(
                if not is_head[k]
                and len(sents[k]) >= MIN_SENT_CHARS
                and _looks_like_sentence(sents[k])
+               and not _is_reference(sents[k])
                and normalize_text(sents[k])[:60] not in covered]
         if run:
             midpaper_runs.append(run)
@@ -397,6 +425,20 @@ _LIMIT_CUES = re.compile(
 _CONTRIB_GUARD = re.compile(
     r"\b(we (?:show|prove|establish|demonstrate|present|propose|introduce|derive)|"
     r"in this (?:paper|work|section) we|our (?:main )?(?:result|theorem|contribution))\b",
+    re.IGNORECASE,
+)
+# Broader contribution / method-description guard for the MODEL path — the head
+# over-fires on "We showed / we evaluate / we apply / we mainly focus on ..."
+# sentences inside target regions. Deliberately excludes ubiquitous verbs
+# ("consider", "use") to avoid nuking genuine scope limitations phrased with them.
+_MODEL_CONTRIB_RE = re.compile(
+    r"\bwe\s+(?:(?:further|also|then|mainly|directly|first|next|now)\s+)*"
+    r"(?:show(?:ed)?|prove[d]?|establish(?:ed)?|demonstrate[d]?|present(?:ed)?|propose[d]?|"
+    r"introduce[d]?|derive[d]?|develop(?:ed)?|design(?:ed)?|evaluate[d]?|test(?:ed)?|"
+    r"apply|applied|examine[d]?|report(?:ed)?|analyze[d]?|studied|study|focus(?:es|ed)?\s+on|"
+    r"obtain(?:ed)?|claim(?:ed)?|compute[d]?|achieve[d]?)\b"
+    r"|\bin this (?:paper|work|section),?\s+we\b"
+    r"|\bour (?:main )?(?:result|theorem|contribution|method|approach|model|algorithm|framework)\b",
     re.IGNORECASE,
 )
 
@@ -619,6 +661,13 @@ def extract_gaps(
             elif model_hit:
                 if not _looks_like_sentence(s):
                     continue  # gate MODEL emissions only — reject scramble debris
+                # The head over-fires on contribution / method-description sentences
+                # ("We showed ...", "we mainly focus on ...") inside target regions.
+                # Reject those unless the sentence also carries an explicit
+                # limitation/future cue (then it is a genuine gap, e.g. "we do not").
+                if (_MODEL_CONTRIB_RE.search(s)
+                        and not _LIMIT_CUES.search(s) and not _FUTURE_CUES.search(s)):
+                    continue
                 # in a target section, prefer the section's type when the model is
                 # only weakly confident (it confuses limitation vs future_work).
                 gtype = model_t
