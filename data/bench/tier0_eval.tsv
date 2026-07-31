@@ -1,0 +1,3 @@
+variant	dict_size	recall	specificity	survivor_rate	precision	f1	tp	fp	fn	tn	n_gaps	n_sentences
+pool	711	0.9886	0.2036	0.8316	0.2175	0.3566	87	313	1	80	88	481
+compact	29	0.7727	0.4733	0.5717	0.2473	0.3747	68	207	20	186	88	481

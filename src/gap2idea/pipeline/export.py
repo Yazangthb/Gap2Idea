@@ -107,16 +107,48 @@ _TEX_ESCAPE = {
 }
 _TEX_ESCAPE_RE = re.compile("|".join(re.escape(c) for c in _TEX_ESCAPE))
 
+# Math regions the LLM may emit verbatim — preserve them unescaped so the
+# resulting .tex still compiles as real math. Order matters: longest /
+# most-specific patterns first.
+_MATH_REGION_RE = re.compile(
+    r"\$\$.*?\$\$"                                                   # $$...$$
+    r"|\\\[.*?\\\]"                                                  # \[...\]
+    r"|\\\(.*?\\\)"                                                  # \(...\)
+    r"|\\begin\{(equation\*?|align\*?|gather\*?|displaymath|eqnarray\*?)\}"
+    r".*?\\end\{\1\}"                                                # \begin{...}...\end{...}
+    r"|\$[^\$\n]+?\$",                                               # $...$ (single-line)
+    re.DOTALL,
+)
+
+
+def _escape_plain(s: str) -> str:
+    """Apply the plain-text LaTeX escape table to a string with no math in it."""
+    return _TEX_ESCAPE_RE.sub(lambda m: _TEX_ESCAPE[m.group(0)], s)
+
 
 def escape_tex(value: object) -> str:
     """Escape LaTeX special characters in a string.
+
+    Math-aware: preserves $...$, $$...$$, \\(...\\), \\[...\\], and
+    \\begin{equation}...\\end{equation} regions verbatim. The LLM
+    drafter emits real LaTeX math in those forms; escaping it as plain
+    text would render the formulas as escaped source code in the PDF.
+    Everything outside a math region is still escaped against the plain
+    LaTeX special-character table.
 
     Robust against None and non-string inputs (coerces via str()).
     """
     if value is None:
         return ""
     s = str(value)
-    return _TEX_ESCAPE_RE.sub(lambda m: _TEX_ESCAPE[m.group(0)], s)
+    out: list[str] = []
+    last = 0
+    for m in _MATH_REGION_RE.finditer(s):
+        out.append(_escape_plain(s[last:m.start()]))
+        out.append(m.group(0))            # math passes through verbatim
+        last = m.end()
+    out.append(_escape_plain(s[last:]))
+    return "".join(out)
 
 
 def _build_env(extra_templates: dict[str, str] | None = None) -> Environment:

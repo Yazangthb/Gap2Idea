@@ -1,0 +1,7 @@
+mode	scope	n_pred	gold	matched	gap_recall	type_acc	macro_f1_floor
+rules	all	8	27	3	0.111	1.0	0.143
+rules	open	8	23	3	0.13	1.0	0.143
+model	all	24	27	5	0.185	1.0	0.156
+model	open	24	23	5	0.217	1.0	0.156
+hybrid	all	26	27	5	0.185	1.0	0.147
+hybrid	open	26	23	5	0.217	1.0	0.147

@@ -1,0 +1,39 @@
+%% Stage A — structural slice (gap_funnel.slice_terminal_regions)
+%% Renders on GitHub. Labels are quoted for the GitHub Mermaid parser.
+flowchart TD
+    P["Paper: text (+ PyMuPDF blocks)"] --> OU["_ordered_units()"]
+
+    subgraph S1["1 - Reading-order stream"]
+      OU --> U["Ordered units: (sentence, is_heading)<br/>headings kept verbatim, flagged"]
+      U --> STOP{"heading matches<br/>references / appendix?"}
+      STOP -- "yes" --> CUT["stop - drop the rest"]
+      STOP -- "no" --> U
+    end
+
+    U --> SRC
+
+    subgraph SRC["2 - Union THREE recall sources into a keep-map (index to tag)"]
+      direction LR
+      T["Terminal tail<br/>last 30 units<br/>tag = tail (0)"]
+      H["Heading anchors<br/>Limitations/Future/Conclusion heading<br/>+40 sentences  tag = limitations/future"]
+      K["Inline keyword windows<br/>keyword mid-text (scrambled heading)<br/>+/-5 sentences"]
+    end
+
+    SRC --> GATE{"discussion anchor<br/>before 45% of doc?"}
+    GATE -- "yes (mid-paper exposition)" --> DROP["drop - Oracle-Limitations guard"]
+    GATE -- "no / Limitations / Future / tail" --> RANK["tag priority on overlap:<br/>limitations 3 &gt; future 2 &gt; discussion 1 &gt; tail 0"]
+
+    RANK --> CAP{"more than 160 kept?"}
+    CAP -- "yes" --> CAPY["keep highest-priority-then-latest<br/>(never drop Limitations for appendix tail)"]
+    CAP -- "no" --> GRP
+    CAPY --> GRP["3 - Group contiguous indices into Regions"]
+
+    GRP --> R["Region: section_type, heading,<br/>location_fraction, is_terminal,<br/>sentences (candidates >= 25 chars,<br/>headings excluded)"]
+    R --> OUT(["-> Stage B classifies these sentences"])
+
+    classDef src fill:#dbeafe,stroke:#2563eb;
+    classDef drop fill:#fee2e2,stroke:#dc2626;
+    classDef out fill:#dcfce7,stroke:#16a34a;
+    class T,H,K src;
+    class CUT,DROP drop;
+    class OUT out;

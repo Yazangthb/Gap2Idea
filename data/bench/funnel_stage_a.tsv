@@ -1,0 +1,4 @@
+containment_tau	loc_recall_all	loc_recall_open	rec_limitation	rec_future_work
+0.9	0.556	0.609	0.5	0.6
+0.8	0.593	0.652	0.583	0.6
+0.75	0.63	0.696	0.583	0.667

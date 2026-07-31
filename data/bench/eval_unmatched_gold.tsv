@@ -1,0 +1,79 @@
+paper_id	sent_idx	sentence	gold_type
+quant-ph/0402095	0	Can quantum computers solve {{formula:2de743ab-f30f-4f20-85d1-cba9cc2299f0}} -complete problems in polynomial time?	open_problem
+quant-ph/0402095	3	But when we try to show {{formula:9e42b679-736c-4860-8a4a-a21221c28022}} relative to an oracle, a new difficulty arises: even if the oracle encodes {{formula:408e632b-a4bb-4177-9eb9-213f2f60a6c8}} exponentially hard search problems for each input length {{formula:e96c9337-84d0-448b-9d47-366ce5b41a60}} , the quantum advice, being an “exponentially large object” itself, might somehow encode information about all {{formula:5d9acaa0-a933-44cf-8bd8-aab0b7b2cc3d}} problems.	limitation
+quant-ph/0402095	5	How does one prove such a statement?	open_problem
+quant-ph/0402095	15	His motivation was to show a limitation of space-bounded quantum sorting algorithms.	limitation
+quant-ph/0402095	71	Markov's inequality is only {{formula:d8ab2e52-6301-4ec2-a4d2-5a8c21a8cf57}} , as opposed to {{formula:927e7741-0adf-44a5-a138-0aedab2459e9}} from Lemma REF .An earlier version of this paper claimed to prove {{formula:572d4a6f-3559-4ce6-81dd-036b2e50b6aa}} , by applying Bernstein's inequality {{cite:04c66e8bea656d2a387c6a95e59b282bb5de3285}} rather than A.	limitation
+quant-ph/0402095	73	We have since discovered a flaw in that argument.	limitation
+quant-ph/0402095	106	Are {{formula:7940211f-ead2-4025-8d03-52abf9232625}} and {{formula:a1be2f51-241b-41db-ae1c-4e506f493f04}} polynomially related for every total Boolean function {{formula:6b486ce4-3c56-4482-a92a-de0ad768fb03}} ?	open_problem
+quant-ph/0402095	107	Also, can we exhibit any asymptotic separation between these measures?	open_problem
+quant-ph/0402095	109	Based on that fact, a previous version of this paper claimed incorrectly that {{formula:96333ac9-eb09-4dea-bd15-a5c9c8bf0a0e}} .	limitation
+quant-ph/0402095	112	As a first step toward answering the above questions, can we lower-bound {{formula:147accf1-2907-40b3-a57a-340d334f4d1a}} for groups other than {{formula:36f39b6c-c0de-4a99-bbff-80cfd4087d39}} (such as {{formula:d1659315-fc6b-46e7-9ddf-cf387eb7dd87}} , or nonabelian groups)?	open_problem
+quant-ph/0402095	113	Also, can we characterize {{formula:a5d20f31-f0e3-4b17-95ba-5f3334c97e7f}} for all sets {{formula:3d1bf0be-acf5-4287-abe8-1ad5081c95c0}} , closing the gap between the upper and lower bounds?	open_problem
+quant-ph/0402095	114	Is there an oracle relative to which {{formula:84f7c16b-92d1-47e8-8c03-d7059689a49e}} ?	open_problem
+quant-ph/0402095	115	Can we give oracles relative to which {{formula:a65bcb43-9fb4-4321-85f9-6e4ee82380b7}} and {{formula:9f5f8919-348e-49d7-8a82-7b05089e75d5}} are not contained in {{formula:880392a2-dc34-4c12-bdb0-0182809bd49b}} ?	open_problem
+quant-ph/0402095	117	Even more ambitiously, can we prove a direct product theorem for quantum query complexity that applies to any partial or total function (not just search)?	open_problem
+quant-ph/0402095	118	For all {{formula:72f04dea-ec6d-4cbe-842f-3a211f0f47ab}} (partial or total), is {{formula:75b5080c-aa15-4b7a-8d8d-c58082ba4ff1}} whenever {{formula:84d493e5-eca0-4ffc-9d2f-1091e2cb2d4f}} ?	open_problem
+quant-ph/0402095	119	In other words, is the separation of Bar-Yossef et al. {{cite:f09da469e735106212608910cb08a0bab844a6a8}} the best possible?	open_problem
+quant-ph/0402095	120	Can the result {{formula:18e501c7-c687-4810-89fb-7403cc8764ac}} for partial {{formula:6d905f2e-eb32-4ae3-ac87-7836404a71b7}} be improved to {{formula:bb182b39-7b9c-4f3e-a523-a5c38aacba3d}} ?	open_problem
+quant-ph/0402095	121	We do not even know how to rule out {{formula:6192e879-1609-4158-8961-00b1b70270ff}} .	open_problem
+quant-ph/0402095	126	He then asked about the other direction: for some {{formula:563abe73-c80b-4512-b9ce-00ca81b8c287}} , does {{formula:15371299-f4fb-4a89-b52d-a729d1e95acc}} whenever {{formula:c50dfab1-5b69-428b-b83b-77c3f23a4e49}} , and does {{formula:1a8e0f97-8067-4113-8704-6a1560d41c90}} whenever {{formula:6e14ff89-9bfd-451b-9c39-b1a4469b37e9}} ?	open_problem
+quant-ph/0402095	129	Here we ask a related question: can {{formula:3e113e07-fbd1-4b3a-8b16-54fe77d642b9}} ever be exponentially smaller than {{formula:fa205707-fd61-42c9-af3d-74b48f7b1cd1}} ?	open_problem
+quant-ph/0402095	131	However, as in the case of {{formula:1916160a-fed5-4be5-a876-52191df540e1}} versus {{formula:29e256e7-fe75-4d4b-a44e-3f58519fec78}} , it remains to extend that result to functions.	open_problem
+cs/0610128	9	In such a case, Bin Buffering has very large bins (8 times larger than Ola) which might be undesirable: the approximation power of Bin Buffering for range sums is at least 4 times lower than Ola because of the much larger bins.	limitation
+cs/0610128	14	However, this approach calls for storing all coefficients in order to quickly answer queries within a user-specified error bound.	limitation
+cs/0610128	15	This would be unacceptable for many applications: the wavelet buffer is as large as the external array itself.	limitation
+cs/0610128	42	It is difficult to compare the progressive approximation we get using this approach with related wavelet-based ones.	limitation
+0803.2303	0	Are simple the zeros of the {{formula:ffdef203-3147-4251-99c7-6bae2376c8b9}} Riemann Function?	open_problem
+0803.2303	2	Does there exist such an Exceptional Field?	open_problem
+0803.2303	32	Therefore: To find non-trivial solutions for {{formula:670f1c8d-c5f6-4f59-bce7-b3e350884e40}} ;{{formula:f7afec10-59fa-4a91-b01d-e497f18c6f17}} , we can try the system: {{formula:2a27f91e-b141-4002-a826-4292869820a1}} for {{formula:59e6b9fc-37b5-4daf-9d40-7755ff159432}} big enough could be useful to try the system {{formula:37948644-dd7f-43ad-b4d2-711a21d427fd}} Corollary 2 If every statement of the type “{{formula:df47fa29-56c6-4539-84c1-1fe39f0487f8}} ” is true.	future_work
+0803.2303	44	I believe that one of the must important result to be studied after this one is the paper of Andre Weil.	future_work
+0805.3456	3	The extension of the proposed technique for synchronization of nonlinear systems is the subject of ongoing work.	future_work
+0806.2938	15	For the defects to become dynamical degrees of freedom there should be a fine tuning which allows infrared and ultraviolet scales to coexist.	limitation
+0806.2938	17	A central point: for the dual-superconductor mechanism of confinement to be relevant, similar fine tuning should be realized in the non-Abelian case as well.	limitation
+0806.2938	19	No explicit form of the fine tuning is known theoretically but coexistence of the two scale is seen in the lattice simulations.	limitation
+0806.2938	20	Also, there should be consistency between dynamics in four dimensions, or of the original Yang-Mills fields and dynamics on the defects world-sheet.	limitation
+0807.1134	3	For calculations at 30–150 AU around 1–3 M{{formula:bbc857ae-465e-439d-b410-ab04ee1aba90}} stars, the spacing of mass bins in an annulus and the spacing of annuli in the disk limit the accuracy of the results.	limitation
+0807.1134	4	Our standard mass spacing, {{formula:70fc209f-d068-432c-b33c-7b139dface75}} , lengthens the evolution time by 10% to 20% relative to more accurate calculations with {{formula:257ac13a-028c-45b4-bbfb-2acd3023d202}} 1.4 {{cite:2ee1f5fbb05af202d278638441fba201dd7de042}}.	limitation
+0807.1134	5	The radial resolution, {{formula:50ffe053-2d66-4894-b232-762e76852b57}} = 0.025, also lengthens the evolution time.	limitation
+0807.1134	7	Combining the lags for mass spacing and radial resolution, our evolution timescales are {{formula:f02c34c8-781d-4e41-b7a2-cfc29235d6dd}} 20% to 30% longer than the actual evolution times.	limitation
+0807.0023	1	Further research in this area may prove useful for other network types such as those generated from other metadata properties.	future_work
+0807.0023	2	For instance, it may be of interest to study the effect of this algorithm on usage networks {{cite:468a23a878b132724286a69804c9d8374e3227f1}}.	future_work
+0807.0023	4	It would be interesting to see what co-usage means for a particular genera of resources by determining which metadata properties these networks are best at propagating.	future_work
+0807.0023	5	A variety of propagation algorithms may also be explored.	future_work
+0807.0023	7	Different path types might be an important aspect of increasing the precision and recall performance of this method.	open_problem
+0807.0023	11	What has been presented in this study is the results of this algorithm without the intervention of any human components (besides the initial creation of metadata through the hep-th dataset creation process).	limitation
+0807.0023	13	Such an analysis is left to future research.	future_work
+0807.0023	14	Finally, multiplicative effects due to particle interaction may effect the results of the algorithm.	open_problem
+0807.0023	17	Currently, only a summation is being provided.	limitation
+0807.0023	18	It may be interesting to multiply this summation by the number of unique particles that provided energy for a particular recommended metadata value.	future_work
+0807.0023	27	However, it can be unreliable for non-text resources, yield low-quality metadata and can be computationally expensive.	limitation
+0807.0023	34	The results of this experiment are promising and there still exists a range of potential modifications to this basic framework that may lead to even better results.	future_work
+0808.2057	2	Since there is no general classification of weighing matrices, characterizing graphs of Hankel weighing matrices seems to be out of reach.	limitation
+0808.2057	5	A way to study the relation between these matrices and anticirculant ones, would be to prove that the graphs of Hankel weighing matrices are always isomorphic to graphs of {{formula:f1f125b5-a07c-4699-96d3-b7290f902bfa}} , except for some special cases which will include the examples in proposition REF .	future_work
+0808.2057	15	Perhaps the physical picture that motivates our study could provide some insight toward proving these conjectures.	future_work
+0808.2057	24	Can one classify the Hankel and anticirculant weighing matrices which cannot be obtained by this trick?	open_problem
+0808.2057	31	The range over which the downconversion can occur is limited by the phasematching bandwidth of the cavity.	limitation
+0811.2508	1	However, there are areas where improvements in uncertainties are needed and basic assumptions tested.	limitation
+0811.2508	2	Surface gravity determinations in particular require better constraints, since these enable age-dating of individual sources.	limitation
+0811.2508	3	In the short term, improvements in spectral models can help in this endeavor; however, a sufficiently sampled grid of benchmark sources may obviate the need for models entirely.	future_work
+0811.2508	4	Benchmarks should increasingly arise from mass standards, for which age constraints are more precise; these additionally provide necessary tests of evolutionary models upon which most of the age-dating techniques hinge.	future_work
+0811.2508	8	Finally, a larger, more complete sample of brown dwarfs with precise RV measurements will both improve our statistical constraints on the age of the local brown dwarf population (and subpopulations) while additionally aiding in the search for mass standards.	future_work
+0811.2508	16	For older and more distant clusters ({{formula:83b41c4b-48c1-487a-a353-8178d9b31b89}} {{formula:690b614b-3bd5-4319-b3ff-87fa70b66e4b}} 1 kpc), decreasing surface temperatures and compact radii exacerbate the sensitivity issues that plague low-mass stellar studies (see contribution by G.	limitation
+0811.2508	17	There are as yet no known brown dwarfs in globular clusters, despite detection of the end of the stellar main sequence in systems such as NGC 6397 {{cite:c3aec005bae16b8b016b152ed6e95e913ebbba61}}.	open_problem
+0811.2508	21	Hence, while brown dwarfs in clusters with ages spanning {{formula:d04cab8f-1ad5-4f29-8829-12127be65e27}} 1–650 Myr are now well-documented, with age uncertainties as good as 10% (for the LDB technique; see {{formula:2752efcf-bf12-4728-b9ad-906588d5f8b6}} 3), useful predictive trends are probably limited to ages of {{formula:0e4883ac-4a31-445b-9a11-524283ca5db6}} 10 Myr.	limitation
+0811.2508	24	Age uncertainties for companion brown dwarfs depend on stellar dating methods which are generally more uncertain (50–100%; e.g., {{cite:2846bd411a46d3033c7ace28d4b8d255ace1785e}}) than cluster ages.	limitation
+0811.2508	25	Searches for substellar companions to more precisely age-dated white dwarfs (e.g. {{cite:83e6d0a5494a6f0fdbad6697a9c46cf831bf1a6a}}, {{cite:c27d7df5faca8aba6723804766afa5a4e49bba75}}) and subgiants {{cite:b8139efc3091db6b2604210afb1c5ed65573ba4f}} have so far met with limited success.	limitation
+0811.2508	38	This technique requires resolved optical spectroscopy of both components and can be pursued only for a few (rare) wide low-mass pairs (e.g., Burgasser et al., in prep.) or using high spatial-resolution spectroscopy (e.g. {{cite:09db6dfd8019c882d6da74c45a9487139c06e08b}}).	limitation
+0811.2508	40	Despite its utility, the detection of LI I absorption in brown dwarf spectra has limitations.	limitation
+0811.2508	41	The 6708 Å line lies in an relatively faint spectral region for cool L-type dwarfs, so sensitive spectral observations on large telescopes are typically required to detect (or convincingly rule out) this feature.	limitation
+0811.2508	42	For optically-brighter M-type brown dwarfs, high-resolution observations are generally required to distinguish Li I absorption from overlapping molecular absorption features.	limitation
+0811.2508	43	Young brown dwarfs ({{formula:87369e06-cec4-46cc-8511-286c1e16ef36}} 50 Myr) with low surface gravities show weakened alkali line absorption (see {{formula:df33d6ef-3020-4acf-809e-f839464296be}} 5), including Li I, making it again necessary to obtain sensitive, high-resolution observations {{cite:15f44987c00c2b2c90a1607b6160c901c1aec91a}}.	limitation
+0811.3859	3	Some of the open questions that we see are as follows: Our results provide new possibilities to attack the graph isomorphism problem.	open_problem
+0811.3859	4	For example, it will be interesting to prove a {{formula:bf11a214-943f-4bd0-8256-01184643d69f}} upper bound for {{formula:a565f4cf-3afd-445c-80fc-35aac302745d}} .	open_problem
+0811.3859	6	Similarly, are there special cases of {{formula:b1bc22ba-5df9-41e0-af2d-0e0e2806e501}} (other than what is translated from the bounds for {{formula:66119676-2026-470d-ad92-ecc2591db094}} ) which can be solved in polynomial time?	open_problem
+0811.3859	9	One could ask if the problem is easier over fixed finite fields independent on the input.	open_problem
+0811.3859	11	It will still be interesting to give a better (than the trivial {{formula:13fc76b0-a8a2-468c-86b2-d1f810e3e58f}} ) upper bound for linear matroids represented over fixed finite fields (even for {{formula:e44a632e-ecf4-4a9b-891a-951b45448747}} ).	open_problem
+0811.3859	12	Can we use the colouring technique of linear matroid isomorphism to reduce the general instances of linear matroid isomorphism to isomorphism testing of “simpler components” of the matroid?	open_problem
+0811.3859	13	Can we make the reduction from {{formula:3a57d6cb-005e-4e6a-8cb9-22de9d9fdbb8}} to {{formula:14b40ab7-67b3-4493-8c98-b150b4fc9983}} many-one?	open_problem
+0811.3859	14	Can we improve the complexity of this reduction in the general case?	open_problem

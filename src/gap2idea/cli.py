@@ -111,6 +111,22 @@ def cmd_extract_gaps(args):
     )
 
 
+# ---------- extract-gaps-funnel ----------
+
+def cmd_extract_gaps_funnel(args):
+    """Cheap, scalable gap extraction (future_work + limitation) without an LLM.
+    Reads paper_texts.jsonl directly (no extract-sections needed)."""
+    from gap2idea.pipeline.gap_funnel import extract_all_gaps
+
+    paths = get_paths(args.root)
+    extract_all_gaps(
+        texts_jsonl=paths.data / "paper_texts.jsonl",
+        out_tsv=paths.data / "gaps.tsv",
+        head_path=args.head,
+        mode=args.mode,
+    )
+
+
 # ---------- extract-methods ----------
 
 def cmd_extract_methods(args):
@@ -680,6 +696,15 @@ def main():
     eg.add_argument("--no-resume", action="store_true")
     eg.set_defaults(func=cmd_extract_gaps)
 
+    # extract-gaps-funnel (cheap, no LLM — future_work + limitation at scale)
+    egf = sub.add_parser("extract-gaps-funnel",
+                         help="Cheap funnel gap extraction (no LLM): paper_texts.jsonl -> gaps.tsv")
+    egf.add_argument("--mode", choices=["rules", "model", "hybrid"], default="hybrid",
+                     help="rules=cue-only (no model); model=embedding head; hybrid=both")
+    egf.add_argument("--head", default="data/gap_head.joblib",
+                     help="Path to the trained embedding head (for model/hybrid modes)")
+    egf.set_defaults(func=cmd_extract_gaps_funnel)
+
     # extract-methods
     em = sub.add_parser("extract-methods", help="LLM method-claim extraction over abstracts/intros")
     em.add_argument("--model", default="openai/gpt-4.1-mini")
@@ -834,25 +859,6 @@ def main():
     mc = sub.add_parser("serve-mcp", help="Run the Model Context Protocol server (stdio transport) "
                                           "so Claude Desktop / Cursor / etc. can query the corpus")
     mc.set_defaults(func=cmd_serve_mcp)
-
-    # bench-clustering (from origin/experments/clustering_quality)
-    bc = sub.add_parser("bench-clustering",
-                        help="Benchmark clustering quality (clusterer x embedder grid)")
-    bc.add_argument("--gaps-tsv", default="data/bench/gaps.tsv",
-                    help="Path to a gaps.tsv produced by extract-gaps")
-    bc.add_argument("--out-dir", default=None,
-                    help="Default: <root>/data/clustering_bench")
-    bc.add_argument("--clusterers", default="kmeans,agglomerative,hdbscan,bertopic")
-    bc.add_argument("--embedders",
-                    default="all-MiniLM-L6-v2,all-mpnet-base-v2,"
-                            "intfloat/e5-base-v2,BAAI/bge-small-en-v1.5")
-    bc.add_argument("--n-bootstrap", type=int, default=10)
-    bc.set_defaults(func=cmd_bench_clustering)
-
-    bcp = sub.add_parser("bench-clustering-plots",
-                         help="Regenerate plots from clustering_bench/metrics.tsv")
-    bcp.add_argument("--bench-dir", default=None)
-    bcp.set_defaults(func=cmd_bench_clustering_plots)
 
     # bench-extraction (from origin/experments/extraction_quality)
     be = sub.add_parser(

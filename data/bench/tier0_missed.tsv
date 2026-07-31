@@ -1,0 +1,2 @@
+paper_id	sent_idx	label	sentence
+quant-ph/0402095	0	open_problem	Can quantum computers solve {{formula:2de743ab-f30f-4f20-85d1-cba9cc2299f0}} -complete problems in polynomial time?

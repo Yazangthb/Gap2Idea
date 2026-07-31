@@ -1,0 +1,87 @@
+mode	paper_id	pred_type	section_type	source	matched_gold_id	gap_sentence
+rules	2211.01962	future_work	future_work	rule	2211.01962::g1	the scope of this paper, and we leave this as future work.
+rules	2211.01962	future_work	future_work	rule	2211.01962::g2	For future work, it would be interesting to understand the tightness of GEC by establishing
+rules	2211.01962	future_work	future_work	rule	2211.01962::g3	In addition, for algorithm design, it would be interesting to develop poste-
+rules	2511.03443	future_work	tail	rule	2511.03443::g2	For future studies, we are interested in developing
+rules	2511.03443	future_work	tail	rule		We would like to express our gratitude to Dr. Yitian Qian and Dr. Lianghai Xiao for kindly sharing
+rules	2309.09902	limitation	limitations	rule		as the cues were provided in Subtask 2, the roles We did not study risks that may or may not arise
+rules	2507.03922	limitation	limitations	rule	2507.03922::g1	and assumes the availability of a KB, namely
+rules	2510.04514	future_work	limitations	rule		remaining challenges and areas for future improve-
+rules	2510.04514	future_work	limitations	rule		restricted to single charts; future work will driven visual self-verification mechanism fur-
+rules	2510.04514	limitation	limitations	rule		etc.) adds latency and cost due to the agen- radar plots, which are affected by depth dis-
+rules	2510.04514	future_work	limitations	rule		Future work includes on-the-fly responsibly released for research purposes only.
+rules	2510.04514	limitation	limitations	rule	2510.04514::g3	is currently no standard method for quan-
+rules	2511.13548	limitation	limitations	rule		AutoDAN-HGA and GCG suffer from three core limitations:
+rules	2511.13548	limitation	limitations	rule		can bypass the safety alignment mechanisms of and in- prone to false positives or negatives.
+rules	2511.13548	limitation	limitations	rule		process by evaluating the quality and relevance of mutated A critical limitation of prior jailbreak evaluation frameworks
+rules	2511.13548	future_work	future_work	rule		jailbreak effectiveness that inform future research on jailbreak also varies—models with diverse, context-sensitive refusals
+rules	2511.13548	future_work	future_work	rule		vulnerabilities in aligned LLMs requires a multi-layered de- filtering details remain undisclosed for most open-source
+rules	2511.13548	limitation	future_work	rule		fense that integrates training-time hardening, runtime safe- models, the causes of cross-model variability cannot yet be
+rules	2511.13548	limitation	limitations	rule		(i.e., whether the model attempts to comply with an unsafe limitations of prior approaches that suffer from low diversity,
+rules	2002.09564	future_work	future_work	rule		have insufﬁciently regularized the models and/or did not tion and segmentation for future work.
+rules	2003.01908	future_work	future_work	rule	2003.01908::g2	the gap between our method and Cohen et al. ( 2019 ) remains a valuable future direction.
+rules	2102.04998	future_work	future_work	rule		Lemma 4.4 in the next step t + 1 .
+hybrid	2208.03805	future_work	future_work	model		by pairwise independent sampling) and a ﬁxed integrand, and also includes extensions to convergence in the
+hybrid	2211.01962	future_work	future_work	model	2211.01962::g1	Computational efficiency for the partially observable models studied in these works is beyond
+hybrid	2211.01962	future_work	future_work	rule+model	2211.01962::g1	the scope of this paper, and we leave this as future work.
+hybrid	2211.01962	limitation	future_work	model		( 2014 ) study the Bayesian regret, which is weaker than the frequentist/worst-case regret.
+hybrid	2211.01962	future_work	future_work	model		us to capture much more general interactive decision making problems.
+hybrid	2211.01962	future_work	future_work	model		2019 ) with a Hellinger-distance-based loss function, which is different from the extensions made in
+hybrid	2211.01962	future_work	future_work	model		bilinear class, and we will discuss the extension to multi-step case in Appendix C.7 .
+hybrid	2211.01962	future_work	future_work	model		We then adopt the conditional posterior sampling from Dann et al. ( 2021 ) but
+hybrid	2211.01962	future_work	future_work	model		also make some important extensions to better fit in the GEC framework.
+hybrid	2211.01962	future_work	future_work	model		When specialized to particular examples of MDP, POMDP, PSR models, GEC
+hybrid	2211.01962	future_work	future_work	model		can be bounded by other complexity measures such as Bellman eluder dimension ( Jin et al. , 2021 ),
+hybrid	2211.01962	future_work	future_work	model		Furthermore, in addition to a new complexity
+hybrid	2211.01962	future_work	future_work	rule+model	2211.01962::g2	For future work, it would be interesting to understand the tightness of GEC by establishing
+hybrid	2211.01962	future_work	future_work	rule+model	2211.01962::g3	In addition, for algorithm design, it would be interesting to develop poste-
+hybrid	2511.03443	limitation	tail	model		updated, the proximal linearization of the objective function is minimized within it until no sufficient
+hybrid	2511.03443	future_work	tail	rule+model	2511.03443::g2	For future studies, we are interested in developing
+hybrid	2511.03443	future_work	tail	rule		We would like to express our gratitude to Dr. Yitian Qian and Dr. Lianghai Xiao for kindly sharing
+hybrid	2309.09902	future_work	limitations	model		task 1 of GermEval 2023 Shared Task 1) are shown in gests that this strategy may pave the way for new
+hybrid	2309.09902	limitation	limitations	rule+model		as the cues were provided in Subtask 2, the roles We did not study risks that may or may not arise
+hybrid	2309.09902	limitation	limitations	model		on the Eval dataset, as reported by the organizers models are to be used in other scenarios.
+hybrid	2507.03922	limitation	limitations	model		both based on the same Wikipedia dump as our train only the newly introduced parameters.
+hybrid	2507.03922	future_work	limitations	model		We also test embeddings ex- tailed settings are provided in Appendix C .
+hybrid	2507.03922	limitation	limitations	rule	2507.03922::g1	and assumes the availability of a KB, namely
+hybrid	2510.04514	future_work	limitations	rule+model		remaining challenges and areas for future improve-
+hybrid	2510.04514	future_work	limitations	rule		restricted to single charts; future work will driven visual self-verification mechanism fur-
+hybrid	2510.04514	limitation	limitations	model		large proprietary models (OpenAI, Claude, formance on harder formats such as 3D and
+hybrid	2510.04514	limitation	limitations	rule+model		etc.) adds latency and cost due to the agen- radar plots, which are affected by depth dis-
+hybrid	2510.04514	limitation	limitations	model		manually designed, our vision tools generalize related tasks without human oversight.
+hybrid	2510.04514	future_work	limitations	rule+model		Future work includes on-the-fly responsibly released for research purposes only.
+hybrid	2510.04514	future_work	limitations	model		Finally, since ChartAgent is designed to research.
+hybrid	2510.04514	limitation	limitations	model		be modular and plug-and-play, it can directly datasets: ChartBench ( Xu et al. , 2023 ), ChartX
+hybrid	2510.04514	future_work	limitations	model		benefit from future advances in vision tools ( Xia et al. , 2024 ), and ChartQA-unannotated ( Islam
+hybrid	2510.04514	future_work	limitations	model		(e.g., stronger OCR or segmentation models). et al. , 2024 ).
+hybrid	2510.04514	limitation	limitations	rule	2510.04514::g3	is currently no standard method for quan-
+hybrid	2511.13548	limitation	limitations	model		To address these limitations, we generating outputs that deviate from ethical or legal standards.
+hybrid	2511.13548	future_work	limitations	model		extends the AutoDAN-like approaches.
+hybrid	2511.13548	limitation	limitations	model		Nevertheless, significant limitations remain: manually
+hybrid	2511.13548	limitation	limitations	model		we also employs a semantic similarity model that com- crafted jailbreaks are labor-intensive, lack scalability across
+hybrid	2511.13548	limitation	limitations	model		pares model outputs before and after mutations, delivering diverse models or tasks, and often lose effectiveness quickly
+hybrid	2511.13548	limitation	limitations	model		Together, these works form the foundation for lies in mutation diversity and shallow semantic evaluation, as
+hybrid	2511.13548	limitation	limitations	model		This threat model reflects real-world scenarios where ma- of F ORGE DAN, including its overall workflow, algorithmic
+hybrid	2511.13548	limitation	limitations	rule+model		AutoDAN-HGA and GCG suffer from three core limitations:
+hybrid	2511.13548	limitation	limitations	rule		can bypass the safety alignment mechanisms of and in- prone to false positives or negatives.
+hybrid	2511.13548	limitation	limitations	rule		process by evaluating the quality and relevance of mutated A critical limitation of prior jailbreak evaluation frameworks
+hybrid	2511.13548	future_work	future_work	rule		jailbreak effectiveness that inform future research on jailbreak also varies—models with diverse, context-sensitive refusals
+hybrid	2511.13548	future_work	future_work	rule		vulnerabilities in aligned LLMs requires a multi-layered de- filtering details remain undisclosed for most open-source
+hybrid	2511.13548	limitation	future_work	rule		fense that integrates training-time hardening, runtime safe- models, the causes of cross-model variability cannot yet be
+hybrid	2511.13548	limitation	limitations	rule+model		(i.e., whether the model attempts to comply with an unsafe limitations of prior approaches that suffer from low diversity,
+hybrid	2511.13548	limitation	limitations	model		Vajravelu, “Assessing the current limitations of large C.
+hybrid	2511.13548	future_work	tail	model		large language models,” in Proceedings of the 2024 on ACM SIGSAC [34] Y.
+hybrid	2002.09564	limitation	discussion	model		does not hold true for strongly-regularized models.
+hybrid	2002.09564	limitation	limitations	model		ments, we use ImageNet data, which lacks gender and eth-
+hybrid	2002.09564	limitation	limitations	model		previous ﬁndings, well-regularized random baseline in our therefore have biased representations.
+hybrid	2002.09564	future_work	future_work	rule		have insufﬁciently regularized the models and/or did not tion and segmentation for future work.
+hybrid	2002.09564	future_work	future_work	model		sults using neural networks therefore necessitates a com- quential graph convolutional network for active learning.
+hybrid	2002.09564	future_work	future_work	model		Conclusion and Proposed Guidelines [4] Ekin D Cubuk, Barret Zoph, Dandelion Mane, Vijay Vasude-
+hybrid	2002.09564	future_work	future_work	model		Our extensive experiments suggest a strong need for a policies from data. arXiv preprint arXiv:1805.09501 , 2018.
+hybrid	2003.01908	future_work	future_work	model		( 2017 ) proposed to use traditional image processing, e.g. image cropping, rescaling, and quilting.
+hybrid	2003.01908	future_work	future_work	model		this by prepending a custom-trained denoiser to these pretrained classifers.
+hybrid	2003.01908	future_work	future_work	model		This is only a ﬁrst stab at provably robustifying pretrained classiﬁers, and we believe there is still
+hybrid	2003.01908	limitation	future_work	model		certiﬁed accuracies as Cohen et al. ( 2019 ) is something that we could not achieve in our paper.
+hybrid	2003.01908	future_work	future_work	rule+model	2003.01908::g2	the gap between our method and Cohen et al. ( 2019 ) remains a valuable future direction.
+hybrid	2102.04998	future_work	future_work	rule		Lemma 4.4 in the next step t + 1 .
+hybrid	2102.04998	future_work	future_work	model	2102.04998::g1	Analysis of architectures such as Residual Networks and Transformers would be a potentially

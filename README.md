@@ -200,8 +200,9 @@ gap2idea select-papers      # corpus selection (S2 search OR arxiv snapshot)
 gap2idea download-pdfs      # parallel arxiv PDF download
 gap2idea extract-text       # PyMuPDF text extraction
 gap2idea extract-sections   # regex section parser + window fallback
-gap2idea extract-gaps       # LLM gap extraction from limitations/future-work
-gap2idea extract-methods    # LLM method-claim extraction from abstracts/intros
+gap2idea extract-gaps        # gap extraction — expensive per-paper LLM path
+gap2idea extract-gaps-funnel # cheap no-LLM funnel (future_work + limitation), drop-in gaps.tsv
+gap2idea extract-methods     # LLM method-claim extraction from abstracts/intros
 gap2idea theme-mine         # embed → cluster → label → bridge-score pairs
 gap2idea fetch-metadata     # S2 enrichment for every paper id
 gap2idea generate-ideas     # idea synthesis + novelty check (3 modes — see below)
@@ -357,9 +358,15 @@ src/gap2idea/
   pipeline/
     arxiv_select.py            # S2 search + arxiv snapshot + PDF download
     pdf_text.py                # PyMuPDF
-    sections.py                # Limitations / Future Work finder
-    openai_gaps.py             # gap extraction (LLM strict JSON)
-    openai_methods.py          # NEW: method-claim extraction
+    sections.py                # Limitations / Future Work finder (regex, legacy path)
+    openai_gaps.py             # gap extraction — expensive per-paper LLM path
+    gap_funnel.py              # cheap funnel: Stage A slice + Stage B rules/embedding head
+    gap_prefilter.py           # shared text normalization + sentence splitting
+    gap_llm_filter.py          # Stage C: LLM precision filter over ~6 survivors/paper
+    gap_graph.py               # multi-relational gap graph (Leiden + bridge/frontier)
+    sanity.py                  # multi-agent experimental-sanity stage
+    paper_drafter.py           # full-paper draft expander (--full-paper)
+    openai_methods.py          # method-claim extraction
     theme_mining.py            # embed/cluster/label + bridge-score pairs
     semantic_scholar.py        # S2 Graph API client w/ 429 retry
     openai_ideas.py            # idea synthesis (3 modes) + novelty check
@@ -369,7 +376,7 @@ src/gap2idea/
     export.py                  # NEW: LaTeX + PDF rendering
     llm.py                     # OpenRouter client factory + JSON parser
   templates/
-    idea_paper.tex.j2          # NEW: per-idea LaTeX starter template
+    idea_paper_{minimal,standard,ieee}.tex.j2   # three bundled LaTeX templates
   app/
     streamlit_app.py           # tabbed dashboard (with export buttons)
 artifacts/                     # generated outputs (gitignored)

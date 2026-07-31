@@ -1,0 +1,13 @@
+mode	scope	type	tp	fp	fn	precision_floor	recall	f1
+rules	all	limitation	0	2	12	0.0	0.0	0.0
+rules	all	future_work	3	3	12	0.5	0.2	0.286
+rules	open	limitation	0	2	8	0.0	0.0	0.0
+rules	open	future_work	3	3	12	0.5	0.2	0.286
+model	all	limitation	0	7	12	0.0	0.0	0.0
+model	all	future_work	5	12	10	0.294	0.333	0.312
+model	open	limitation	0	7	8	0.0	0.0	0.0
+model	open	future_work	5	12	10	0.294	0.333	0.312
+hybrid	all	limitation	0	7	12	0.0	0.0	0.0
+hybrid	all	future_work	5	14	10	0.263	0.333	0.294
+hybrid	open	limitation	0	7	8	0.0	0.0	0.0
+hybrid	open	future_work	5	14	10	0.263	0.333	0.294
