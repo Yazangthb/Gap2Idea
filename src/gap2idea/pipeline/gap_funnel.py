@@ -379,6 +379,67 @@ def slice_with_midpaper_anchors(
 
 
 # ---------------------------------------------------------------------------
+# Stage A (GROBID) — authoritative sections; blacklist background/related-work
+# ---------------------------------------------------------------------------
+# When a GROBID section tree is available it replaces the heuristic slice: we
+# keep only Limitations / Future-Work / Discussion / Conclusion sections and
+# DROP Introduction / Related-Work / Background (the background-FP source) plus
+# method/results sections. Falls back to slice_terminal_regions when absent.
+# Pure prior-work sections — SAFE to blacklist. "introduction" is deliberately
+# EXCLUDED: theory/math papers state their own limitations up front in the intro
+# ("a major drawback of our approach", "a limitation of our theory"), so we keep
+# it (rules-only) rather than drop it and lose genuine gaps.
+_RELATED_SECTION = re.compile(
+    r"\b(related work|background|prior work|literature|related literature|"
+    r"preliminar\w*|motivation|notation|problem statement)\b", re.IGNORECASE)
+_INTRO_SECTION = re.compile(r"\bintroduction\b", re.IGNORECASE)
+_LIM_SECTION = re.compile(
+    r"\b(limitation\w*|threats? to validity|shortcoming\w*|weakness\w*|drawback\w*|caveat\w*)\b", re.IGNORECASE)
+_FUT_SECTION = re.compile(r"\b(future work|future direction\w*|future research)\b", re.IGNORECASE)
+_DISC_SECTION = re.compile(r"\b(discussion|conclu\w*|final remarks|closing remarks|outlook)\b", re.IGNORECASE)
+
+
+def classify_grobid_heading(h: str) -> str:
+    """limitations | future_work | discussion | introduction | background | other."""
+    if _LIM_SECTION.search(h):
+        return "limitations"
+    if _FUT_SECTION.search(h):
+        return "future_work"
+    if _DISC_SECTION.search(h):
+        return "discussion"
+    if _RELATED_SECTION.search(h):
+        return "background"          # blacklist (pure prior-work)
+    if _INTRO_SECTION.search(h):
+        return "introduction"        # keep, but rules-only (see slice below)
+    return "other"
+
+
+# Introduction is demoted to a rules-only region (mapped to "discussion"): the
+# high-precision cue rules catch own-work limitations stated up front, while the
+# embedding head is NOT allowed to fire there and flood the intro's prior-work prose.
+_GROBID_KEEP = {"limitations", "future_work", "discussion", "introduction"}
+
+
+def slice_grobid_regions(sections: list[dict]) -> list[Region]:
+    """Stage A over GROBID sections: keep Limitations/Future/Discussion/Conclusion
+    + Introduction (rules-only); blacklist Related-Work/Background; drop method/results."""
+    regions: list[Region] = []
+    n = max(1, len(sections))
+    for i, sec in enumerate(sections):
+        cls = classify_grobid_heading(sec.get("heading", ""))
+        if cls not in _GROBID_KEEP:
+            continue
+        section_type = "discussion" if cls == "introduction" else cls
+        cand = [s for s in split_sentences(sec.get("text", ""))
+                if len(s) >= MIN_SENT_CHARS and _looks_like_sentence(s) and not _is_reference(s)]
+        if cand:
+            loc = i / n
+            regions.append(Region(section_type, str(sec.get("heading", ""))[:80],
+                                  round(loc, 4), loc >= TERMINAL_THRESHOLD, cand))
+    return regions
+
+
+# ---------------------------------------------------------------------------
 # Stage B.1 — high-precision cue rules (free fast-accept + a type)
 # ---------------------------------------------------------------------------
 # Mined from the high-lift cues in §5.1 plus the phrasing observed in the gold
@@ -617,14 +678,22 @@ def extract_gaps(
     model_threshold: float = 0.6,
     section_threshold: float = SECTION_THRESHOLD,
     terminal_only: bool = True,
+    grobid_sections: list[dict] | None = None,
 ) -> list[dict]:
     """Run the full funnel on one paper. ``mode`` in {rules, model, hybrid}.
 
     rules  : cue rules only (no encoder needed)
     model  : embedding head only
     hybrid : cue rule wins on type; head fills the cue-less remainder
+
+    ``grobid_sections`` (from ``grobid_sections.extract_sections``): when given,
+    Stage A uses the authoritative GROBID section tree and blacklists
+    background/related-work; when None, it falls back to the PyMuPDF heuristic.
     """
-    regions = slice_terminal_regions(text, blocks=blocks, terminal_only=terminal_only)
+    if grobid_sections is not None:
+        regions = slice_grobid_regions(grobid_sections)
+    else:
+        regions = slice_terminal_regions(text, blocks=blocks, terminal_only=terminal_only)
     if not regions:
         return []
 
