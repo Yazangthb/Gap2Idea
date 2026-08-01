@@ -79,3 +79,72 @@ def extract_sections(pdf_path: str | Path, timeout: float = 180.0) -> list[dict]
             continue
         out.append({"n": (head.get("n") or "").strip(), "heading": heading, "text": _div_text(div)})
     return out or None
+
+
+def _grobid_text(sections: list[dict]) -> str:
+    """Faithful full-paper text reconstructed from GROBID sections (clean, ordered)."""
+    return "\n\n".join(
+        (f"{s['heading']}\n{s['text']}" if s.get("text") else s["heading"]) for s in sections
+    ).strip()
+
+
+def extract_all_grobid(
+    pdfs_dir,
+    out_jsonl,
+    max_workers: int = 4,
+    fallback: bool = True,
+    timeout: float = 180.0,
+):
+    """Ingest every PDF in ``pdfs_dir`` -> paper_texts.jsonl with GROBID's clean
+    text + section tree. Per-paper PyMuPDF fallback when GROBID is down or fails.
+
+    Output schema is a superset of ``pdf_text.extract_all``:
+        id, text, n_chars, source ("grobid" | "pymupdf")
+        + sections (GROBID rows)  OR  blocks, n_headings (fallback rows)
+    so the funnel picks up ``sections`` when present and everything else reads
+    the clean ``text``.
+    """
+    import pandas as pd
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    from gap2idea.pipeline import pdf_text as PT
+
+    pdfs_dir, out_jsonl = Path(pdfs_dir), Path(out_jsonl)
+    pdfs = sorted(pdfs_dir.glob("*.pdf"))
+    up = grobid_available()
+    log.info("GROBID ingest: %d PDFs (grobid_up=%s, fallback=%s)", len(pdfs), up, fallback)
+    if not up and not fallback:
+        raise RuntimeError(f"GROBID not reachable at {GROBID_URL} and fallback disabled")
+
+    def _work(p: Path) -> dict:
+        secs = extract_sections(p, timeout=timeout) if up else None
+        if secs:
+            text = _grobid_text(secs)
+            return {"id": p.stem, "text": text, "n_chars": len(text),
+                    "sections": secs, "source": "grobid"}
+        if fallback:
+            blocks = PT.extract_pdf_blocks(p)
+            text = PT.blocks_to_text(blocks) if blocks else PT.extract_pdf_text(p)
+            return {"id": p.stem, "text": text, "n_chars": len(text), "blocks": blocks,
+                    "n_headings": sum(1 for b in blocks if b["role"] == "heading"),
+                    "source": "pymupdf"}
+        return {"id": p.stem, "text": "", "n_chars": 0, "source": "grobid_failed"}
+
+    rows: list[dict] = []
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        futures = [ex.submit(_work, p) for p in pdfs]
+        for fut in as_completed(futures):
+            rows.append(fut.result())
+
+    df = pd.DataFrame(rows)
+    df["id"] = df["id"].astype(str)
+    df = df.sort_values("id").reset_index(drop=True)
+    before = len(df)
+    df = df[df["n_chars"] >= PT.MIN_TEXT_CHARS].reset_index(drop=True)
+    n_grobid = int((df["source"] == "grobid").sum()) if "source" in df.columns else 0
+    log.info("Kept %d/%d papers (%d via GROBID, %d via PyMuPDF fallback)",
+             len(df), before, n_grobid, len(df) - n_grobid)
+    out_jsonl.parent.mkdir(parents=True, exist_ok=True)
+    df.to_json(out_jsonl, orient="records", lines=True, force_ascii=False)
+    log.info("Wrote %s", out_jsonl)
+    return df

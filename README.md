@@ -50,7 +50,7 @@ streamlit run src/gap2idea/app/streamlit_app.py
 ```bash
 gap2idea select-papers --source s2 --query "graph neural networks" --n 100
 gap2idea download-pdfs
-gap2idea extract-text
+gap2idea extract-text --grobid   # clean text + real section tree (GROBID service; PyMuPDF fallback)
 gap2idea extract-gaps-funnel --mode hybrid --head data/gap_head.joblib   # cheap, no per-paper LLM
 # → then theme-mine → generate-ideas → evaluate-ideas as above
 ```

@@ -74,15 +74,21 @@ def cmd_download_pdfs(args):
 # ---------- extract-text ----------
 
 def cmd_extract_text(args):
-    from gap2idea.pipeline.pdf_text import extract_all
-
     paths = get_paths(args.root)
-    extract_all(
-        pdfs_dir=paths.pdfs,
-        out_jsonl=paths.data / "paper_texts.jsonl",
-        max_workers=args.workers,
-        max_pages=args.max_pages,
-    )
+    out_jsonl = paths.data / "paper_texts.jsonl"
+    if getattr(args, "grobid", False):
+        # Clean text + real section tree via a GROBID service; per-paper PyMuPDF
+        # fallback when GROBID is down or fails on a PDF.
+        from gap2idea.pipeline.grobid_sections import extract_all_grobid
+        extract_all_grobid(pdfs_dir=paths.pdfs, out_jsonl=out_jsonl, max_workers=args.workers)
+    else:
+        from gap2idea.pipeline.pdf_text import extract_all
+        extract_all(
+            pdfs_dir=paths.pdfs,
+            out_jsonl=out_jsonl,
+            max_workers=args.workers,
+            max_pages=args.max_pages,
+        )
 
 
 # ---------- extract-sections ----------
@@ -683,6 +689,10 @@ def main():
     et = sub.add_parser("extract-text", help="Extract text from every PDF in data/pdfs")
     et.add_argument("--workers", type=int, default=8)
     et.add_argument("--max-pages", type=int, default=None)
+    et.add_argument("--grobid", action="store_true",
+                    help="Use a GROBID service for clean text + real section tree "
+                         "(scrambling-free; per-paper PyMuPDF fallback). Set GROBID_URL "
+                         "if not http://localhost:8070.")
     et.set_defaults(func=cmd_extract_text)
 
     # extract-sections

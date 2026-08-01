@@ -792,10 +792,13 @@ def extract_all_gaps(
     df = pd.read_json(texts_jsonl, lines=True, dtype=False)
     df["id"] = df["id"].astype(str)
     has_blocks = "blocks" in df.columns
+    has_sections = "sections" in df.columns  # GROBID ingestion adds this
     rows: list[dict] = []
     for _, r in df.iterrows():
         blocks = r["blocks"] if has_blocks and isinstance(r.get("blocks"), list) else None
-        rows.extend(extract_gaps(str(r["id"]), str(r["text"]), blocks=blocks, head=head, mode=mode))
+        secs = r["sections"] if has_sections and isinstance(r.get("sections"), list) else None
+        rows.extend(extract_gaps(str(r["id"]), str(r["text"]), blocks=blocks, head=head,
+                                 mode=mode, grobid_sections=secs))
     out = pd.DataFrame(rows, columns=["id", "gap_type", "gap_sentence", "paragraph_text",
                                       "confidence", "section_type", "source"])
     out_tsv.parent.mkdir(parents=True, exist_ok=True)
