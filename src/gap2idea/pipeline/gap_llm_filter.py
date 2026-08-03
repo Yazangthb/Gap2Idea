@@ -25,32 +25,73 @@ log = get_logger(__name__)
 DEFAULT_LOCAL = "Qwen/Qwen2.5-3B-Instruct"
 DEFAULT_API = "openai/gpt-4o-mini"
 
+# Batched-judge output schema: one verdict per input sentence. Sent with
+# response_format=json_schema strict (YandexGPT / OpenAI honour it), so we get a
+# clean array back instead of parsing prose. See LLMGapFilter.judge_batch.
+BATCH_SCHEMA = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": ["results"],
+    "properties": {
+        "results": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["id", "keep"],
+                "properties": {
+                    "id": {"type": "integer"},
+                    "keep": {"type": "boolean"},
+                },
+            },
+        }
+    },
+}
+#: sentences per batched LLM call (keeps prompts well within context limits;
+#: one call handles a normal paper's candidates, chunking only huge inputs).
+BATCH_CHUNK = 40
+
 # Two prompt modes (set via mode=):
 #  "validate" — strict "is this a gap?"; keep iff YES. Catches method-description
 #               / contribution false positives too. Needs a capable model (>=1.5B).
 #  "junk"     — conservative "is this obvious junk?"; drop iff YES. Recall-safe but
 #               only removes acknowledgments/formulas/citations (use with tiny models).
 SYSTEM_VALIDATE = (
-    "You are a precision filter for research-gap extraction. Reject (NO) a sentence "
-    "if it is ONE OF: (a) an acknowledgment or thanks; (b) a citation, cross-reference, "
-    "or 'See Appendix/Figure/Section' line; (c) a CONTRIBUTION claim — sentences like "
-    "'we propose', 'to address these limitations we...', 'our method achieves'; (d) a "
-    "math equation, formula reference, or lemma statement; (e) a scramble or fragment "
-    "(broken hyphenation, mid-clause start, or section-header fragment). Accept (YES) "
-    "if it is the authors' own LIMITATION, ASSUMPTION, SCOPE restriction, or "
-    "FUTURE-WORK direction. Reply one word: YES or NO."
+    "You are a precision filter for research-gap extraction. A gap is a limitation, "
+    "assumption, scope restriction, or future-work direction of THE AUTHORS' OWN work. "
+    "Reject (NO) a sentence if it is ONE OF: (a) an acknowledgment or thanks; (b) a "
+    "citation, cross-reference, or 'See Appendix/Figure/Section' line; (c) a CONTRIBUTION "
+    "or SELF-PROMOTIONAL claim — 'we propose', 'to address these limitations we...', 'our "
+    "method achieves', or a vague boast with no concrete gap ('we believe our work/approach "
+    "is promising', 'opens a wide array of topics', 'is a promising alternative'); (d) a "
+    "math equation, formula reference, or lemma statement; (e) a "
+    "scramble or fragment (broken hyphenation, mid-clause start, or section-header "
+    "fragment); (f) a limitation, weakness, or gap of PRIOR or OTHER work rather than the "
+    "authors' own — motivating criticism such as 'existing methods cannot...', "
+    "'traditional approaches fail to...', 'previous work is limited to...', 'X et al. do "
+    "not handle...', 'current models struggle with...'. Accept (YES) ONLY if the sentence "
+    "states the AUTHORS' OWN limitation, assumption, scope restriction, or future-work "
+    "direction. Reply one word: YES or NO."
 )
 SHOTS_VALIDATE = [
     ("We leave multilingual evaluation for future work.", "YES"),
     ("A limitation of our approach is that it assumes English input.", "YES"),
     ("This work focuses on English-language datasets.", "YES"),
     ("Future work will explore co-evolutionary settings.", "YES"),
+    ("Another limitation of our theory is that it only applies to i.i.d. sequences.", "YES"),
     ("To address these limitations, we propose a new framework.", "NO"),
     ("We would like to express our gratitude to Dr. Qian.", "NO"),
     ("See Appendix L.3 for further details.", "NO"),
     ("Lemma 4.4 in the next step t + 1.", "NO"),
     ("We thank the anonymous reviewers.", "NO"),
     ("Our method achieves 95% accuracy.", "NO"),
+    # (f) limitations of PRIOR / OTHER work — motivation, not the authors' own gap
+    ("Existing methods cannot easily capture long-range dependencies.", "NO"),
+    ("Traditional approaches fail to scale beyond a few thousand nodes.", "NO"),
+    ("SIFT-like methods cannot produce meaningful matches across spectral contents.", "NO"),
+    # (c) vague self-promotion — the authors' own sentence, but no concrete gap
+    ("We believe our approach is a promising alternative to current methods.", "NO"),
+    ("We believe our work introduces a wide array of topics for future research.", "NO"),
 ]
 SYSTEM_JUNK = (
     "You decide if a sentence is OBVIOUSLY NOT a research gap — an acknowledgment, "
@@ -405,9 +446,14 @@ SHOTS_VALIDATE_COT = [
 
 class LLMGapFilter:
     def __init__(self, backend: str = "local", model: str | None = None,
-                 mode: str = "validate", client=None):
+                 mode: str = "validate", client=None, context_style: str = "fields"):
         self.backend = backend
         self.mode = mode
+        # How ``use_context`` renders a candidate's surrounding text in the batch
+        # prompt: "fields" = separate TARGET + SURROUNDING TEXT lines (target
+        # appears twice); "inline" = one passage with the target wrapped in
+        # «guillemets», judged in place (target appears once).
+        self.context_style = context_style
         self.model = model or (DEFAULT_LOCAL if backend == "local" else DEFAULT_API)
         if mode == "validate":
             self._sys, self._shots = SYSTEM_VALIDATE, SHOTS_VALIDATE
@@ -430,7 +476,8 @@ class LLMGapFilter:
         self._cot = mode in ("validate_cot", "validate_v5", "validate_v6", "validate_v7", "validate_v8", "validate_v9", "validate_v10")
         self._tok = self._lm = None        # local, lazy
         self._client = client              # api
-        self.n_judged = 0
+        self.n_judged = 0                  # sentences judged
+        self.n_calls = 0                   # LLM calls made (batched << judged)
 
     # -- prompt -----------------------------------------------------------
     def _messages(self, sentence: str) -> list[dict]:
@@ -468,6 +515,7 @@ class LLMGapFilter:
 
     def judge(self, sentence: str) -> bool:
         self.n_judged += 1
+        self.n_calls += 1
         if self.backend == "local":
             import torch
             self._ensure_local()
@@ -486,24 +534,194 @@ class LLMGapFilter:
             self._client = get_llm_client()
         resp = self._client.chat.completions.create(
             model=self.model, messages=self._messages(sentence),
-            temperature=0.0, max_tokens=2)
+            temperature=0.0, max_tokens=(30 if self._cot else 5))
         return self._keep(resp.choices[0].message.content)
 
+    # -- batched judge ----------------------------------------------------
+    @staticmethod
+    def _item_text(it) -> str:
+        """Target sentence of a batch item (a bare str or a {sentence,...} dict)."""
+        return str(it.get("sentence", "") if isinstance(it, dict) else it)
+
+    def _batch_messages(self, items: list) -> list[dict]:
+        """One prompt that judges MANY items. The system prompt + the mode's
+        few-shots (rendered inline as KEEP/DROP calibration) are sent once; the
+        candidates follow as a numbered list. Output is a per-id verdict array.
+
+        Each item is a bare sentence, or a dict with optional metadata to
+        disambiguate own-vs-prior work:
+          {"sentence": str, "title": str|None, "context": str|None}
+        where ``context`` is the surrounding text (±1 sentence, i.e. the row's
+        ``paragraph_text``). Metadata is context only — the model judges the
+        TARGET sentence, using title/surrounding text just to resolve references
+        like "this approach" / "such methods".
+        """
+        cal = "\n".join(f'- {"KEEP" if self._keep(a) else "DROP"}: "{s}"'
+                        for s, a in self._shots)
+        has_title = any(isinstance(it, dict) and it.get("title") for it in items)
+        has_ctx = any(isinstance(it, dict) and it.get("context") for it in items)
+        inline = has_ctx and self.context_style == "inline"
+        note = ""
+        if has_title or has_ctx:
+            if inline:
+                bits = (["the PAPER TITLE"] if has_title else [])
+                note = ("\n\nEach item is a short PASSAGE with exactly ONE sentence wrapped in "
+                        "«guillemets» — that marked sentence is the TARGET. Judge ONLY the "
+                        "«marked» TARGET; use the rest of the passage"
+                        + (" and " + " and ".join(bits) if bits else "")
+                        + " solely to tell whether the TARGET refers to the AUTHORS' OWN work "
+                        "or to prior/other work — never judge the surrounding text itself.")
+            else:
+                bits = (["the PAPER TITLE"] if has_title else []) + \
+                       (["the SURROUNDING TEXT (sentences around it)"] if has_ctx else [])
+                note = ("\n\nEach item has a TARGET sentence plus " + " and ".join(bits) +
+                        ". Judge ONLY the TARGET; use " + " / ".join(
+                            (["title"] if has_title else []) + (["surrounding text"] if has_ctx else []))
+                        + " solely to tell whether the TARGET refers to the AUTHORS' OWN work or "
+                        "to prior/other work — never judge the context itself.")
+        sys = (
+            self._sys + note
+            + "\n\nYou will receive a NUMBERED list. For EACH item, decide keep=true if the "
+            "TARGET states the AUTHORS' OWN limitation, assumption, scope restriction, or "
+            "future-work direction, and keep=false otherwise (including limitations of prior "
+            "or other work). Return JSON of the form "
+            '{"results":[{"id":<n>,"keep":<bool>}, ...]} with EXACTLY one entry per input '
+            "item, using the same ids, in order.\n\nCalibration examples:\n" + cal
+        )
+        lines = []
+        for i, it in enumerate(items):
+            if not isinstance(it, dict):
+                lines.append(f"{i + 1}. {it}")
+                continue
+            s = str(it.get("sentence", ""))
+            ctx = str(it.get("context", "") or "").strip()
+            title = str(it.get("title", "") or "")
+            if inline and ctx:
+                # mark the target once, in place; fall back to prepending if the
+                # exact sentence isn't a substring of the paragraph
+                marked = ctx.replace(s, f"«{s}»", 1) if s and s in ctx \
+                    else f"«{s}»  [context: {ctx}]"
+                block = f"{i + 1}. {marked}"
+                if title:
+                    block += f"\n   PAPER TITLE: {title}"
+            else:
+                block = f"{i + 1}. TARGET: {s}"
+                if title:
+                    block += f"\n   PAPER TITLE: {title}"
+                if ctx and ctx != s.strip():
+                    block += f"\n   SURROUNDING TEXT: {ctx}"
+            lines.append(block)
+        return [{"role": "system", "content": sys},
+                {"role": "user", "content": "Items:\n" + "\n".join(lines)}]
+
+    def judge_batch(self, items: list) -> list[bool]:
+        """Judge every item in ONE api call; returns keep-flags in input order.
+
+        ``items`` are bare sentences or ``{sentence,title,context}`` dicts (see
+        ``_batch_messages``). Falls back to per-sentence judging for the local
+        backend and for any verdict the batch response omits or malforms (so a bad
+        row never silently drops a candidate). ``n_calls`` counts the single batch
+        call plus any fallbacks — normally 1 per chunk of ``BATCH_CHUNK``.
+        """
+        if not items:
+            return []
+        if self.backend != "api":
+            return [self.judge(self._item_text(it)) for it in items]
+        if self._client is None:
+            from gap2idea.pipeline.llm import get_llm_client
+            self._client = get_llm_client()
+        from gap2idea.pipeline.llm import parse_json_response
+
+        self.n_calls += 1
+        vmap: dict[int, bool] = {}
+        try:
+            resp = self._client.chat.completions.create(
+                model=self.model, messages=self._batch_messages(items),
+                temperature=0.0, max_tokens=min(4096, 48 + 16 * len(items)),
+                response_format={"type": "json_schema", "json_schema": {
+                    "name": "gap_verdicts", "schema": BATCH_SCHEMA, "strict": True}})
+            data = parse_json_response(resp.choices[0].message.content)
+            for r in data.get("results", []):
+                if isinstance(r, dict) and "id" in r and "keep" in r:
+                    vmap[int(r["id"])] = bool(r["keep"])
+        except Exception as e:  # network / JSON / schema — degrade, don't crash
+            log.warning("Stage C batch judge failed (%s) — per-sentence fallback", e)
+
+        out: list[bool] = []
+        resolved = 0
+        for i, it in enumerate(items):
+            if (i + 1) in vmap:
+                out.append(vmap[i + 1])
+                resolved += 1
+            else:
+                out.append(self.judge(self._item_text(it)))   # counts its own call
+        self.n_judged += resolved
+        return out
+
     # -- apply ------------------------------------------------------------
-    def filter_gaps(self, gaps: list[dict], protect_rules: bool = True) -> list[dict]:
+    #: cue-rule hits inside these sections are trusted (see ``protect_rules``);
+    #: rule hits in every other section (discussion, GROBID-introduction, tail,
+    #: midpaper) are judged, because that is where prior-work critiques and
+    #: conclusion-summary false positives concentrate.
+    PROTECT_SECTIONS = ("limitations", "future_work")
+
+    def filter_gaps(self, gaps: list[dict], protect_rules: bool = True,
+                    protect_sections: "tuple[str, ...] | None" = None,
+                    batch: bool = True, chunk_size: "int | None" = None,
+                    use_context: bool = False, use_title: bool = False) -> list[dict]:
         """Keep gaps the LLM confirms; tag survivors with source '+llm'.
 
         protect_rules: cue-rule hits are already high-precision and hold most real
-        gaps, so don't risk the LLM rejecting them — only judge the pure-model
-        predictions, where the false positives (math exposition, fragments)
-        concentrate. This keeps recall while still filtering the noisy candidates.
+        gaps, so don't risk the LLM rejecting them — but ONLY inside explicit gap
+        sections (``protect_sections``: Limitations / Future-Work). A cue rule that
+        fires in a discussion, introduction, tail, or mid-paper region is far more
+        likely to be a prior-work critique ("existing methods cannot...") or a
+        conclusion-summary claim, so we still judge those. Pure-model predictions
+        are always judged. Set ``protect_rules=False`` to judge everything.
+
+        batch: judge all candidates in ~one call per ``chunk_size`` (default
+        ``BATCH_CHUNK``) instead of one call per sentence — the system prompt and
+        few-shots are sent once per chunk, so tokens and latency collapse. Order
+        is preserved. Set ``batch=False`` for the legacy one-call-per-sentence path.
+
+        use_context / use_title: feed each candidate's surrounding text (the row's
+        ``paragraph_text``, ±1 sentence) and/or the paper ``title`` to the judge as
+        disambiguation context (helps resolve "this approach" own-vs-prior). Only
+        the target sentence is judged. Requires ``batch`` + the api backend.
         """
+        protect_sections = self.PROTECT_SECTIONS if protect_sections is None else protect_sections
+        chunk = chunk_size or BATCH_CHUNK
+
+        # Decide which candidates to judge (rest are protected rule hits, kept as-is).
+        judge_idx = [
+            i for i, g in enumerate(gaps)
+            if not (protect_rules and "rule" in g.get("source", "")
+                    and str(g.get("section_type", "")).lower() in protect_sections)
+        ]
+        verdict: dict[int, bool] = {}
+        if judge_idx:
+            def _item(g):
+                if not (use_context or use_title):
+                    return str(g.get("gap_sentence", ""))
+                it = {"sentence": str(g.get("gap_sentence", ""))}
+                if use_title:
+                    it["title"] = str(g.get("title", "") or "")
+                if use_context:
+                    it["context"] = str(g.get("paragraph_text", "") or "")
+                return it
+            items = [_item(gaps[i]) for i in judge_idx]
+            if batch and self.backend == "api":
+                flags: list[bool] = []
+                for k in range(0, len(items), chunk):
+                    flags.extend(self.judge_batch(items[k:k + chunk]))
+            else:
+                flags = [self.judge(self._item_text(it)) for it in items]
+            verdict = dict(zip(judge_idx, flags))
+
         kept = []
-        for g in gaps:
-            src = g.get("source", "")
-            if protect_rules and "rule" in src:
-                kept.append(g)
-                continue
-            if self.judge(str(g.get("gap_sentence", ""))):
-                kept.append({**g, "source": src + "+llm"})
+        for i, g in enumerate(gaps):
+            if i not in verdict:
+                kept.append(g)                                  # protected
+            elif verdict[i]:
+                kept.append({**g, "source": g.get("source", "") + "+llm"})
         return kept

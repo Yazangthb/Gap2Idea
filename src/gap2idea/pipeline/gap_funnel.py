@@ -772,12 +772,24 @@ def extract_all_gaps(
     out_tsv: "str | Path",
     head_path: "str | Path | None" = None,
     mode: str = "hybrid",
+    llm_filter: bool = False,
+    llm_backend: str = "api",
+    llm_mode: str = "validate",
+    llm_model: "str | None" = None,
+    protect_rules: bool = True,
 ) -> "pd.DataFrame":
     """Run the funnel over an entire corpus and write a gaps.tsv.
 
     Output columns are a superset of openai_gaps' schema (id, gap_type,
     gap_sentence, paragraph_text, confidence) plus section_type, source — so
     every downstream stage (theme-mine, gap-graph, ideas) is unchanged.
+
+    Stage C (optional, ``llm_filter=True``): after the cheap Stage A+B slice, an
+    LLM judges each surviving candidate and drops the ones that aren't the
+    authors' own limitation/future-work. Because A+B already cut ~98% of
+    sentences, the LLM sees only a handful per paper. ``protect_rules`` keeps
+    high-precision cue hits inside explicit Limitations/Future-Work sections
+    unjudged (recall guard) while still judging rule hits elsewhere.
     """
     import pandas as pd
 
@@ -799,6 +811,15 @@ def extract_all_gaps(
         secs = r["sections"] if has_sections and isinstance(r.get("sections"), list) else None
         rows.extend(extract_gaps(str(r["id"]), str(r["text"]), blocks=blocks, head=head,
                                  mode=mode, grobid_sections=secs))
+
+    if llm_filter and rows:
+        from gap2idea.pipeline.gap_llm_filter import LLMGapFilter
+        n_before = len(rows)
+        filt = LLMGapFilter(backend=llm_backend, model=llm_model, mode=llm_mode)
+        rows = filt.filter_gaps(rows, protect_rules=protect_rules)
+        log.info("Stage C (%s/%s): judged %d candidates in %d LLM call(s), kept %d of %d",
+                 llm_backend, llm_mode, filt.n_judged, filt.n_calls, len(rows), n_before)
+
     out = pd.DataFrame(rows, columns=["id", "gap_type", "gap_sentence", "paragraph_text",
                                       "confidence", "section_type", "source"])
     out_tsv.parent.mkdir(parents=True, exist_ok=True)

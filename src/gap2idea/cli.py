@@ -130,6 +130,11 @@ def cmd_extract_gaps_funnel(args):
         out_tsv=paths.data / "gaps.tsv",
         head_path=args.head,
         mode=args.mode,
+        llm_filter=args.llm_filter,
+        llm_backend=args.llm_backend,
+        llm_mode=args.llm_mode,
+        llm_model=args.llm_model,
+        protect_rules=not args.judge_all,
     )
 
 
@@ -713,6 +718,18 @@ def main():
                      help="rules=cue-only (no model); model=embedding head; hybrid=both")
     egf.add_argument("--head", default="data/gap_head.joblib",
                      help="Path to the trained embedding head (for model/hybrid modes)")
+    # Stage C — optional LLM precision filter over the funnel's survivors
+    egf.add_argument("--llm-filter", action="store_true",
+                     help="Stage C: LLM-judge each survivor, drop non-gaps (uses LLM_PROVIDER)")
+    egf.add_argument("--llm-backend", choices=["api", "local"], default="api",
+                     help="Stage C backend: api=LLM_PROVIDER client (default); local=transformers")
+    egf.add_argument("--llm-mode", default="validate",
+                     help="Stage C prompt variant (validate, validate_v10, junk, ...)")
+    egf.add_argument("--llm-model", default=None,
+                     help="Stage C model override (else provider default)")
+    egf.add_argument("--judge-all", action="store_true",
+                     help="Stage C: also judge cue-rule hits in Limitations/Future-Work "
+                          "sections (default: protect them)")
     egf.set_defaults(func=cmd_extract_gaps_funnel)
 
     # extract-methods
