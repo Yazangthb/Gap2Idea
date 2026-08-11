@@ -1,0 +1,60 @@
+\section{Current Progress}
+\label{sec:progress}
+
+Component scorecard (\emph{built} $\neq$ \emph{evaluated}):
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}p{3.4cm}cp{4.2cm}p{3.6cm}@{}}
+\toprule
+\textbf{Component} & \textbf{Built} & \textbf{Evaluated} & \textbf{State} \\
+\midrule
+RQ2 --- Gap extraction (funnel A/B/C) & yes & small gold + LimGen + BAGELS/FWS (this work) & \textbf{paper-ready}, honest/indicative claims \\
+RQ1 --- Gap graph (Leiden + bridge/frontier) & yes (novel) & prior bench was $N{=}11$ and excluded the shipped graph method; no extrinsic eval & \textbf{needs real eval} on hundreds of gaps \\
+RQ3 --- Idea generation (5 modes + multi-agent) & yes & committed runs are the simple path; no orchestrated/critic runs saved & \textbf{needs runs} \\
+Idea evaluation / novelty & yes (code) & panel unused (single judge, self-bias); human study has no real responses; S2 novelty on $\sim$7/27 & \textbf{make-or-break; not yet credible} \\
+Output + deployment (MCP, Docker, CI) & yes (strong) & 19 tests & \textbf{paper-ready} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Done in this cycle (extraction hardening + benchmarking)}
+\begin{itemize}
+  \item YandexGPT provider integration behind the LLM-provider abstraction
+        (model-slug rewriting; strict \texttt{json\_schema} supported).
+  \item A \textbf{batched Stage C} judge ($\sim$2 calls per 25 papers,
+        $-88\%$ tokens vs one call per sentence) with prior-work and
+        self-promotion rejection and section-aware rule protection.
+  \item A \textbf{context ablation}: feeding the judge the surrounding paragraph
+        ($\pm 1$ sentence) or the paper title \emph{lowered} precision (bare
+        sentence $>$ sentence-in-context), a reproducible negative result.
+  \item The \textbf{BAGELS extraction benchmark} (0.74 verbatim / 0.79 semantic
+        coverage), with a fair comparison to BAGELS's own generation numbers.
+  \item The \textbf{future-work benchmark} plus a \textbf{reproducibility
+        finding}: the reported SOTA of 0.907 does not reproduce; $\sim$0.82 is the
+        reproducible bar, and all text-only methods cluster at 0.76--0.82.
+  \item A \textbf{dataset-suitability survey} concluding that no ideal
+        cross-domain, full-paper, verbatim extraction benchmark exists (BAGELS is
+        the best available; Dr.\ Inventor's rhetorical layer is unavailable).
+\end{itemize}
+
+\subsection{Highest-value next steps (priority order)}
+\begin{enumerate}
+  \item \textbf{P0 --- evaluation integrity.} Remove any placeholder human data;
+        run a \emph{real} human study (5--10 domain readers, $\sim$15 ideas,
+        Krippendorff's $\alpha$); run the cross-provider judge panel and report
+        \emph{LLM-vs-human correlation}; fix Semantic-Scholar novelty coverage.
+  \item \textbf{P1 --- justify the pipeline logic.} The \emph{graph-vs-random
+        ablation}: do bridge/frontier seeds produce ideas rated higher (panel and
+        humans, blind)? This is the experiment that earns every upstream component
+        its place. Plus a with/without-critic ablation for the multi-agent path.
+  \item \textbf{P2 --- component evals at real size.} Re-run clustering on hundreds
+        of gaps from \texttt{runs/*} \emph{including} the shipped Leiden-graph
+        method; enlarge the extraction gold (19 $\rightarrow$ a few hundred).
+\end{enumerate}
+
+\paragraph{Framing.} The intended contribution is a \emph{system} and an
+\emph{evaluation methodology}---cost-efficient extraction, graph-seeded
+recombination, anti-hallucination engineering, deployability, and a
+human-validated idea-quality study---rather than a ``beats SOTA'' claim.

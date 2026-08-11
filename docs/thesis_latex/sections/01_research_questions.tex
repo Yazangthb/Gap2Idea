@@ -1,0 +1,52 @@
+\section{Research Questions}
+\label{sec:rq}
+
+Scientific output grows faster than any researcher can read. Turning that
+literature into \emph{what has not yet been done}---concrete, novel, feasible
+research directions---is a core scholarly task that does not scale manually, and
+that na\"ive per-paper LLM use cannot scale \emph{economically}: a per-paper
+extractor costs on the order of \$4{,}000 per million papers and is rate-limited.
+This thesis builds and evaluates \textbf{Gap2Idea}, an end-to-end system that
+mines research gaps from papers, organises them into a graph, and generates
+evaluated research ideas. Three research questions structure both the system and
+the literature; the pipeline instantiates them in sequence---\textbf{RQ2
+(extract) $\rightarrow$ RQ1 (graph) $\rightarrow$ RQ3 (ideate)}.
+
+\subsection{RQ2 --- Text-Based Gap Mining}
+\emph{Can research gaps (limitations, future-work directions) be extracted from
+scientific papers at corpus scale without a per-paper LLM, at a quality
+competitive with fine-tuned transformers?}
+\begin{itemize}
+  \item \textbf{RQ2a.} What architecture localises and classifies gap sentences
+        cheaply and at high recall? (A structural slice $\rightarrow$ a cheap
+        classifier $\rightarrow$ an LLM precision filter.)
+  \item \textbf{RQ2b.} Is extraction quality bounded by \emph{training data} or
+        \emph{model capacity}?
+  \item \textbf{RQ2c.} How does the funnel compare, on public benchmarks (LimGen,
+        BAGELS, the future-work corpus), to fine-tuned and generative baselines?
+\end{itemize}
+
+\subsection{RQ1 --- Graph-Based Forecasting}
+\emph{Can research gaps be organised into a multi-relational graph whose structure
+identifies promising, novel directions---by recombination and bridging---better
+than ungrounded pairing?}
+\begin{itemize}
+  \item \textbf{RQ1a.} How to embed and cluster gaps into interpretable
+        communities?
+  \item \textbf{RQ1b.} Do graph-derived \emph{bridge} and \emph{frontier} seeds
+        yield better idea candidates than random gap pairs? (The extrinsic
+        clustering signal.)
+\end{itemize}
+
+\subsection{RQ3 --- LLM-Driven Ideation}
+\emph{Can an LLM, grounded in retrieved gap evidence, generate novel, feasible,
+non-hallucinated research ideas, and can idea quality be evaluated reliably?}
+\begin{itemize}
+  \item \textbf{RQ3a.} What grounding and anti-hallucination constraints keep
+        generated ideas faithful to evidence?
+  \item \textbf{RQ3b.} Does a multi-agent critic/revise loop improve idea quality
+        over a single pass?
+  \item \textbf{RQ3c.} Can idea quality be assessed by combining an LLM-judge
+        panel with a human expert study, and do LLM judgments correlate with human
+        ratings?
+\end{itemize}

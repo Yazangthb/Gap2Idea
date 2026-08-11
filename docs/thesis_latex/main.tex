@@ -1,0 +1,84 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- encoding & fonts ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% --- layout ---
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\setlength{\parskip}{0.4em}
+\setlength{\parindent}{0pt}
+
+% --- math & symbols ---
+\usepackage{amsmath,amssymb}
+
+% --- tables ---
+\usepackage{booktabs}
+\usepackage{array}
+
+% --- graphics & code ---
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single,columns=fullflexible,
+        keepspaces=true,showstringspaces=false}
+
+% --- bibliography (natbib + BibTeX; portable on Overleaf) ---
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{unsrtnat}
+
+% --- links (load hyperref last) ---
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=black, citecolor=blue, urlcolor=blue,
+            pdftitle={Gap2Idea}, pdfauthor={Yazan Alnakri; Hamza}}
+
+% TODO: fill in full author names, affiliation, and supervisor.
+\title{\textbf{Gap2Idea}: A Cost-Efficient End-to-End System for Mining\\
+Research Gaps and Generating Evaluated Research Ideas}
+\author{Yazan Alnakri \and Hamza}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The volume of scientific literature makes it infeasible for researchers to
+manually identify open research gaps and synthesise new directions. Large
+language models (LLMs) can help, but applying them per paper does not scale:
+extracting gaps from a million papers with a per-paper LLM costs on the order of
+thousands of dollars and is rate-limited. We present \textbf{Gap2Idea}, an
+end-to-end, deployable system that mines research gaps from scientific papers and
+generates evaluated research ideas. Extraction uses a \emph{cost-efficient
+funnel}: a free structural slice and a lightweight classifier reduce each paper
+to a handful of candidate gap sentences, over which an LLM is applied only as a
+precision filter, cutting cost by roughly two orders of magnitude ($\sim$\$3--31
+vs $\sim$\$4{,}000 per million papers) while matching the quality range of a
+fine-tuned transformer on a shared benchmark. We show empirically that extraction
+quality is \emph{bounded by training data, not model capacity}, and adopt a
+recipe that harvests mandated ``Limitations'' sections as clean supervision.
+Extracted gaps are organised into a \emph{multi-relational gap-graph} whose
+community bridges and frontier nodes seed \emph{novelty-by-recombination} idea
+generation, performed by a \emph{grounded multi-agent} process with explicit
+anti-hallucination constraints. Generated ideas are assessed by a multi-faceted
+protocol combining a cross-provider LLM judge panel, automated novelty checks
+against Semantic Scholar, and a human expert study. The system is open-source,
+containerised, and deployed with a Model Context Protocol interface.
+\emph{[Results sentence to be completed after the human study / graph-vs-random
+ablation.]}
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\input{sections/01_research_questions}
+\input{sections/02_literature_review}
+\input{sections/03_method}
+\input{sections/04_results}
+\input{sections/05_progress}
+
+\bibliography{references}
+
+\end{document}

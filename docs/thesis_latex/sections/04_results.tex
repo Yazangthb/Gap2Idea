@@ -1,0 +1,108 @@
+\section{Results}
+\label{sec:results}
+
+Extraction (RQ2) is the benchmarked component. RQ1/RQ3 results are pending real
+runs (\S\ref{sec:progress}) and are reported honestly, not fabricated.
+
+\subsection{Stage A --- localisation (the recall ceiling)}
+On the clean 19-gap / 9-paper gold set (token-containment match at threshold
+$\tau$):
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}cccc@{}}
+\toprule
+containment $\tau$ & recall (all) & future-work & limitation \\
+\midrule
+$0.80$ & \textbf{0.84} & \textbf{0.91} & 0.75 \\
+$0.70$ & 0.89 & 1.00 & 0.75 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Stage A drops $\sim$82\% of sentences for free. Future-work localisation is
+effectively solved; the residual misses are mid-paper own-work limitations
+(a structural, not a slicer, limit).
+
+\subsection{Stage B / end-to-end, and the data-not-model finding}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Stage B head & preds/paper & gap recall & limitation recall & type acc \\
+\midrule
+rules only & 2.2 & 0.32 & 0.11 & 1.00 \\
+hybrid (bge+logreg) & 4.2 & 0.42 & 0.11 & 1.00 \\
+\textbf{+ ACL limitations} \emph{(shipped)} & 6.1 & \textbf{0.53} & \textbf{0.44} & 0.90 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Data, not model} (a clean negative result): classifier method
+(logreg $\approx$ DistilBERT $\approx$ SetFit) \emph{and} frozen encoder
+(bge-small $\approx$ bge-base $\approx$ mpnet $\approx$ SPECTER \citep{specter})
+all tie at limitation recall $\approx 0.11$; only \emph{clean data}---harvesting
+mandated ACL Limitations sections \citep{limgen2024}---moved limitation recall
+$0.11 \rightarrow 0.44$ ($4\times$) and end-to-end $0.42 \rightarrow 0.53$,
+saturating at $\sim$1{,}500 sentences. Upgrading the model is a dead end, and the
+literature agrees (even a domain-pretrained BERT caps $\sim$0.5 on limitation
+typing).
+
+\subsection{Cost (RQ2's headline)}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lc@{}}
+\toprule
+Approach & Cost / 1M papers \\
+\midrule
+Per-paper LLM (gpt-4.1-mini, $\sim$9k tokens) & $\sim$\$4{,}000 \\
+Funnel (Stage A slice + Stage B head) & $\sim$\$3--31 \\
+Stage C batched judge (this work) & $\sim$\$25--30 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The funnel is $\sim$130--160$\times$ cheaper; adding the batched Stage C keeps it
+within the same order ($\sim$\$30/1M vs $\sim$\$180/1M for a per-sentence LLM
+filter---a $-88\%$ token reduction from batching).
+
+\subsection{Same-data comparison vs prior art (LimGen)}
+Leakage-clean, on LimGen ACL data, our cheap frozen \emph{stacking ensemble} F1
+$0.627$ beats a reproduced Bernoulli-NB \citep{zhangfws2022} ($0.553$), TF-IDF
+($0.610$), and base bge ($0.610$), and is $\sim$0.05 behind a fine-tuned
+DistilBERT ($0.674$). On a 196-sentence sample the Stage~C lift is
+$0.643 \rightarrow 0.725$ (precision $0.56 \rightarrow 0.79$)---\emph{indicative}
+(given the sample size) that the funnel matches the range of a fine-tuned
+transformer at a fraction of the cost.
+
+\subsection{New benchmarks (this work)}
+
+\paragraph{BAGELS extraction (ACL).} Over 127 papers / 1{,}212 verbatim gold
+limitation sentences \citep{bagels}, the funnel's Stage~A+B coverage of the gold
+is \textbf{0.738 verbatim} and \textbf{0.790 semantic} (bge cosine $\geq 0.75$);
+per table, ACL-23 is $0.822/0.859$ and ACL-24 $0.699/0.758$. BAGELS is a
+\emph{generation} benchmark whose best generation Coverage-of-Ground-Truth is
+$76.62\%$ (GPT-3.5). On the comparable coverage metric our \emph{extraction}
+matches or exceeds their best \emph{generation}---but this is an easier task
+(the limitations section is present) with a stricter matcher, so it is framed as
+\emph{establishing the first cheap extraction baseline on BAGELS}, not beating
+their leaderboard. Stage~C is a precision filter; on a limitations-only gold set
+(no negatives) it can only cost coverage, so A+B is the coverage figure to quote.
+
+\paragraph{Future-work sentence corpus.} On the labelled corpus of
+\citet{zhangfws2022} (64{,}896 sentences), sentence classification is a
+lexical-cue task on pre-segmented sentences, which favours bag-of-words. Our head
+scores \textbf{macro-F1 0.765 zero-shot} and \textbf{0.772 with Stage C} (Stage~C
+removed 314 false positives against 118 true future-work sentences, raising
+precision $0.80 \rightarrow 0.88$). We do \emph{not} beat their reported $0.907$;
+however, that number is \emph{not reproducible}: a faithful reproduction of their
+own Bernoulli-NB on the full corpus reaches $0.820$, and all text-only methods
+(their NB, TF-IDF, our embeddings) cluster at $0.76$--$0.82$. These pre-segmented
+sentence benchmarks do not exercise the funnel's actual contributions (structural
+localisation and corpus-scale extraction from raw PDFs).
+
+\paragraph{Provider robustness.} YandexGPT occasionally issues a content-filter
+refusal on a batch; the per-sentence fallback in Stage~C absorbs it with no lost
+paper---a small reliability data point for single-provider deployments.

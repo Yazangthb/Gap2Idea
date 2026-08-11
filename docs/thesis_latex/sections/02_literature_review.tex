@@ -1,0 +1,125 @@
+\section{Literature Review}
+\label{sec:lr}
+
+We organise related work by the three research questions. Extraction-specific
+claims are drawn from an adversarially-verified sweep (independent verifiers;
+confidence noted in text where relevant); the graph and ideation clusters are
+drawn from the reviewed corpus.
+
+\subsection{RQ2 --- Text-based gap mining}
+\label{sec:lr-rq2}
+
+\paragraph{The task and its two shapes.} Work on ``gaps'' divides into
+\emph{extraction} (locate the sentences stating a limitation or future-work
+direction) and \emph{generation} (synthesise a limitations/future-work passage).
+Extraction systems converge on a single architecture---\textbf{high-recall
+structural/lexical retrieval $\rightarrow$ high-precision classifier
+filter}---which is precisely the funnel this thesis uses. \citet{huwan2015}
+pair a regex future-work extractor with a four-way classifier; \citet{zhangfws2022}
+use two stages (a Naive-Bayes binary recogniser reaching Macro-F1 $90.7\%$ on
+their corpus, then a SciBERT six-way typer at weighted-F1 $72.6\%$) and release a
+labelled NLP/ACL future-work corpus (9{,}009 future-work vs 55{,}887 non-future-work
+sentences). The closest analogue to our funnel is the randomized-controlled-trial
+limitations system of \citet{rctlimits}: a keyword slice of candidate sentences
+followed by a fine-tuned PubMedBERT filter reaching detection F1 $0.821$, scaled
+to $\sim$12k articles with no per-paper LLM, and only marginally above a
+rule-only baseline ($0.800$)---direct support for our design and a realistic
+target. \citet{futuregen2025} state the pattern outright (regex high-recall
+$\rightarrow$ LLM filter $\rightarrow$ RAG generation) and trim their input ``to
+reduce API cost,'' i.e.\ they pay exactly the per-paper cost our cheap Stage~B is
+designed to avoid.
+
+\paragraph{Limitation datasets and generation.} \citet{limgen2024} harvest the
+\emph{mandated} ``Limitations'' sections of 4{,}068 ACL papers as gold and
+benchmark generative models---the mandated-section harvest is the
+distant-supervision recipe we adopt (\S\ref{sec:method}). \citet{bagels} build a
+limitations dataset over ACL/NeurIPS/PeerJ (verbatim author-stated plus
+peer-review-supplemented) and benchmark generation by BERTScore/ROUGE and
+coverage; its ACL split is the benchmark used in \S\ref{sec:results}. The same
+group iterates on limitation \emph{generation}: topic-modelled aggregation
+\citep{limtopic}, a per-paper graph with RAG \citep{generatingsuggesti2024}, and a
+multimodal chart-limitation variant \citep{mitigatingvisual2024}. Sentence-level
+classification of literature-review, problem, and method sentences is studied by
+\citet{modellingclassifyi2025} and \citet{extractingproblem2026}; the latter
+reports that fine-tuned models beat LLM in-context learning on this task and
+diagnoses formulaic-expression shortcut-learning---a failure mode any cue-based
+classifier inherits. \citet{gapmap2025} and \citet{canllms2025} push toward
+\emph{implicit} gaps (not author-stated)---the harder, more useful frontier, and
+the boundary of what a faithful \emph{extractor} (this thesis) deliberately does
+not attempt. \citet{mixtureknowledge2024} bridge gap identification and graph
+structure for review generation.
+
+\paragraph{The hard problems, corroborated.} The literature independently
+confirms our findings: gaps concentrate in \emph{terminal} sections
+(Discussion/Future-Work/Conclusion) but some hide mid-paper; authors conflate
+future-work with limitations, and $>$50\% of stated limitations cannot be
+discerned from text alone; and while binary detection is easy, fine-grained
+typing is hard for everyone (SciBERT wF1 $72.6\%$ on six future-work types;
+PubMedBERT F1 $0.49$ on 24 limitation sub-types). Extraction datasets are
+domain-locked (ACL, biomedical); none targets cross-domain arXiv AI/ML/math,
+motivating our own small gold set.
+
+\subsection{RQ1 --- Graph-based forecasting}
+\label{sec:lr-rq1}
+
+The reviewed RQ1 cluster frames ``finding promising directions'' as
+graph/link-prediction-over-time, which motivates our gap-graph.
+
+\paragraph{Knowledge-graph link prediction for trend forecasting.}
+\citet{predictingfuture2022} (Science4Cast) forecast future concept links in a
+100k-paper network; \citet{impact4cast2024} and \citet{forecastinghigh2024}
+predict \emph{high-impact} future links on evolving knowledge graphs;
+\citet{forecastingfuture2023} and the dual-link-prediction technology-opportunity
+analysis of \citet{technologyopportun2023} do the same for AI and patents.
+\citet{predictingnew2025} extract concept graphs with LLMs to predict new
+materials-science directions.
+
+\paragraph{Emerging-topic detection over dynamic graphs.}
+\citet{trackingdynamics2020} track co-word-network dynamics for emerging topics;
+\citet{studypredictabilit2025} predict new scholar topics from knowledge networks;
+\citet{empiricalstudy} couple a knowledge graph with an LLM to reconstruct
+scientific history and forecast trends.
+
+\paragraph{Graph topic modelling and representation learning} supply the
+machinery for our community step: graph-isomorphism and neural graph topic models
+\citep{ginopic2024,ngtm2025,graphconvolutional2023}, graph-based topic-diversity
+and multiview online clustering \citep{noveltopic2023,multiviewdeep2022}, and
+self-supervised graph autoencoders and negative sampling
+\citep{s2gae2023,understandingnegat2020}. \citet{linkprediction2024} and
+\citet{literaturebased2025} tie graph structure directly to hypothesis
+generation---the RQ1$\rightarrow$RQ3 bridge. Gap2Idea's contribution relative to
+this cluster is to run the same graph/recombination machinery over
+\emph{extracted research-gap nodes} (not concept or citation nodes) and to expose
+\emph{bridge} (edge-betweenness) and \emph{frontier} structure as idea seeds.
+
+\subsection{RQ3 --- LLM-driven ideation}
+\label{sec:lr-rq3}
+
+\paragraph{Knowledge-graph-grounded ideation.} Closest to our graph-seeded
+generation with a human study is \citet{generationhuman2024}. \citet{chimera2025}
+build a knowledge base of \emph{idea recombinations}; \citet{cam2023} mine
+creative analogies; and \citet{ramonllull} realise combinatorial
+theme$\times$domain$\times$method ideation---the explicit recombination
+hypothesis.
+
+\paragraph{Idea-development tools and grounding studies.} IdeaSynth
+\citep{ideasynth2025}, SCI-IDEA \citep{sciidea2025}, workflow scaffolding
+\citep{scaffoldingflexibl2025}, and CRISP-IM \citep{adaptingcrisp2021} evolve idea
+facets with a human in the loop. Quality studies motivate our evidence-grounding
+and human evaluation: \citet{canchatgpt2024} and \citet{comparingideation2024}
+compare LLM and human ideation, and \citet{improvingresearch2025} report gains in
+feasibility and quality from metadata grounding.
+
+\paragraph{Surveys and role framings.} \citet{reviewllm2025} review 61
+LLM-ideation studies; \citet{evolvingrole}, \citet{ai4research2025}, and
+\citet{aiscience2025} frame LLMs as evaluator/collaborator/scientist and chart the
+move toward agentic science. LLM-as-judge recurs across the cluster (including
+ablation meta-evaluation, \citealp{abgen2025}); its standing caveat---%
+self-evaluation bias when judge and generator share a model family---directly
+motivates our cross-provider panel and human study.
+
+\paragraph{Where Gap2Idea sits.} Individually, each component has precedent. The
+contribution is their integration: a cost-efficient extraction funnel feeding a
+gap-graph whose bridges and frontiers seed grounded, hallucination-gated,
+multi-agent ideation, validated by a human-anchored evaluation
+methodology---a deployed, reproducible pipeline rather than any single new model.

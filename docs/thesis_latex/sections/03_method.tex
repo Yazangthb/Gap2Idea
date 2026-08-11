@@ -1,0 +1,98 @@
+\section{Method}
+\label{sec:method}
+
+\subsection{System overview}
+Six stages pass plain files (\texttt{data/} in, \texttt{artifacts/} out) and are
+exposed as a CLI, a Streamlit app, and a Model Context Protocol (MCP) server:
+
+\begin{lstlisting}
+select-papers -> download-pdfs -> extract-text (GROBID; PyMuPDF fallback)
+   -> gap extraction (funnel: Stage A/B/C)                     [RQ2]
+   -> theme-mine (embed -> gap-graph: Leiden + bridge/frontier) [RQ1]
+   -> generate-ideas (grounded, multi-agent, gated)            [RQ3]
+   -> evaluate-ideas (LLM panel + S2 novelty + human study)
+   -> export-ideas (LaTeX / PDF / full-paper)   |   serve-mcp
+\end{lstlisting}
+
+An LLM-provider abstraction (\texttt{pipeline/llm.py}) routes every LLM call
+through one OpenAI-compatible client; \texttt{LLM\_PROVIDER} selects OpenRouter
+(multi-model) or YandexGPT, with model-slug rewriting so that no call-site changes
+when switching providers.
+
+\subsection{Ingestion (RQ2 input)}
+\texttt{extract-text} parses PDFs with GROBID \citep{grobid} (a TEI section tree;
+ML-based, reliable on scrambled two-column PDFs), falling back to PyMuPDF when
+GROBID is unavailable. GROBID ingestion is the corpus-scale ``PDF-parsing line
+item'' and aligns with the AllenAI S2ORC pipeline, which also wraps GROBID
+\citep{s2orc}; it feeds clean text and a real section tree to the whole pipeline
+(\texttt{pipeline/grobid\_sections.py}, \texttt{gap\_funnel.slice\_grobid\_regions}).
+
+\subsection{Gap extraction --- the funnel (RQ2)}
+\label{sec:method-funnel}
+Three stages of increasing cost, each shrinking the input for the next
+(\texttt{pipeline/gap\_funnel.py}, \texttt{pipeline/gap\_llm\_filter.py}):
+
+\begin{itemize}
+  \item \textbf{Stage A --- structural slice} (\texttt{slice\_terminal\_regions} /
+        \texttt{slice\_grobid\_regions}): on the reading-order sentence stream,
+        union three recall sources---a span after a Limitations/Future-Work/%
+        Conclusion \emph{heading}, a $\pm$window around an \emph{inline keyword}
+        (catching column-scrambled headings), and the \emph{terminal tail}. With
+        GROBID, keep Limitations/Future-Work/Discussion/Introduction sections and
+        blacklist Related-Work/Background. Position-gated, priority-capped; free
+        (regex/CPU); \textbf{drops $\sim$82\% of sentences}.
+  \item \textbf{Stage B --- classify} (\texttt{cue\_label} +
+        \texttt{EmbeddingGapHead}): high-precision cue rules give a free
+        fast-accept and type; a logistic head over frozen \texttt{bge-small-en-v1.5}
+        embeddings \citep{bgesmall} catches cue-less gaps, but only inside
+        \emph{explicit} Limitations/Future-Work regions (tail/discussion use rules
+        only, else false positives flood). Self-distilled from teacher labels with
+        negatives drawn from the body \emph{outside} the slice; the shipped head
+        adds $\sim$1{,}500 harvested ACL Limitations sentences as clean positives.
+  \item \textbf{Stage C --- LLM precision filter}
+        (\texttt{gap\_llm\_filter.LLMGapFilter}): an LLM judges only the $\sim$6
+        survivors per paper and drops false positives (acknowledgments, formulas,
+        citations, contribution claims, \emph{prior-work critiques}, PDF scramble).
+        Two refinements introduced in this work: (i) a \emph{batched judge}---one
+        structured \texttt{json\_schema} call per $\sim$40 candidates instead of
+        one per sentence; and (ii) \emph{section-aware protection}---cue-rule hits
+        inside explicit Limitations/Future-Work sections are trusted, while hits in
+        Discussion/Intro/tail (where prior-work critiques concentrate) are judged.
+\end{itemize}
+
+A \emph{context ablation} found that feeding the judge the surrounding paragraph
+($\pm 1$ sentence) or the paper title \emph{lowered} precision: a gap sentence and
+its adjacent motivating/prior-work sentence have opposite ownership, so any local
+window blurs the own-vs-prior boundary that the bare sentence draws cleanly.
+
+\subsection{Gap graph --- theme mining (RQ1)}
+\texttt{pipeline/theme\_mining.py} and \texttt{gap\_graph.py}: gap sentences are
+embedded, a multi-relational graph is built (semantic-similarity, same-paper,
+same-section, and shared-method edges), Leiden community detection
+\citep{leiden} partitions it, and edge-betweenness identifies \emph{bridge} gaps
+(spanning communities) and \emph{frontier} nodes; these seed
+novelty-by-recombination. \emph{(Method verified against code; extrinsic
+evaluation pending, \S\ref{sec:progress}.)}
+
+\subsection{Idea generation (RQ3)}
+\texttt{pipeline/openai\_ideas.py}, \texttt{agents.py}, \texttt{orchestrator.py}:
+five modes (\textbf{bridge}, \textbf{within-community}, \textbf{method-gap},
+\textbf{frontier}, \textbf{orchestrated}) turn seeds into ideas, grounded in
+retrieved evidence with anti-hallucination gates---a verbatim-evidence
+constraint, an evidence-overlap check, and a required named baseline plus
+falsifiable prediction. The orchestrated mode runs a multi-agent
+critic/revise/sanity loop (\texttt{agents.py}, \texttt{sanity.py}).
+
+\subsection{Evaluation (cross-cutting)}
+\texttt{pipeline/evaluation.py}: a cross-provider LLM-judge panel scores ideas
+(novelty / specificity / feasibility / grounding) with inter-judge agreement; an
+automated Semantic-Scholar novelty check (\texttt{semantic\_scholar.py}); and a
+human expert study form (Krippendorff's $\alpha$), with LLM-judge-vs-human
+correlation as the justification for using the panel at all.
+
+\subsection{Output and deployment}
+\texttt{export.py}, \texttt{paper\_drafter.py}: per-idea LaTeX
+(\texttt{minimal}/\texttt{standard}/\texttt{ieee}), a consolidated PDF, or a
+full-paper plan; \texttt{mcp\_server.py} exposes the corpus to Claude Desktop and
+Cursor. The system is containerised (Docker), deployable on Cloud Run, and covered
+by CI and a test suite.
