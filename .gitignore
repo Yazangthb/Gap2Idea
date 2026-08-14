@@ -131,3 +131,7 @@ data/bench_v2b/pdfs/
 data/bench_n100/pdfs/
 data/clustering_bench/embeddings/
 data/clustering_bench_n100/embeddings/
+
+# FWS benchmark data caches (regenerable from the FWS repo URL)
+data/fws_recognition.csv
+data/fws_lemm.pkl

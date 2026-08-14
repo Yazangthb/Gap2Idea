@@ -145,6 +145,37 @@ SHOTS_VALIDATE_RCT = [
     ("Previous studies were limited by short follow-up and small samples.", "NO"),
 ]
 
+# FWS / future-work mode — for the other half of gap extraction (Zhang et al. 2022,
+# future-work-sentence recognition). KEEP forward-looking author intentions/suggestions;
+# DROP contributions, results, background, and non-forward-looking conclusions. The
+# lexical decoys ("this suggests...", "results confirm...") are the hard negatives.
+SYSTEM_VALIDATE_FWS = (
+    "You are a precision filter for FUTURE-WORK sentences in academic papers. KEEP a sentence "
+    "if it describes what the AUTHORS plan, intend, or suggest to do in the FUTURE, or a "
+    "direction future research should take — e.g. 'in future work we will...', 'we plan/intend "
+    "to...', 'we leave X for future work', 'it would be interesting to...', 'future research "
+    "should explore...', 'X remains to be investigated', 'we aim to extend...'. "
+    "DROP a sentence if it is NOT forward-looking: (a) background or motivation; (b) a "
+    "description of what was DONE in this paper (contributions, methods, results); (c) a "
+    "restatement of findings or conclusions with no future direction; (d) a limitation stated "
+    "with no future action; (e) a citation or reference. When unsure whether it is "
+    "forward-looking, KEEP. Bias toward KEEP for any explicit plan, intention, or suggestion "
+    "about the future."
+)
+SHOTS_VALIDATE_FWS = [
+    ("In future work, we plan to extend our approach to multilingual settings.", "YES"),
+    ("It would be interesting to investigate the effect of larger training corpora.", "YES"),
+    ("We leave the exploration of unsupervised variants for future work.", "YES"),
+    ("Future research should examine how these findings generalize to other domains.", "YES"),
+    ("We intend to incorporate syntactic features in subsequent versions of the model.", "YES"),
+    ("These questions remain to be addressed in follow-up studies.", "YES"),
+    ("Our model achieves state-of-the-art results on three benchmarks.", "NO"),
+    ("In this paper, we proposed a novel attention mechanism.", "NO"),
+    ("The dataset consists of 10,000 manually annotated sentences.", "NO"),
+    ("These results confirm our hypothesis that context improves accuracy.", "NO"),
+    ("Prior work has largely ignored this phenomenon.", "NO"),
+]
+
 # V4 — V3 prompt + chain-of-thought (category first, then YES/NO). Best on the
 # 10-sample test (100% gap recall vs V3's 75%).
 SYSTEM_VALIDATE_COT = SYSTEM_VALIDATE + (
@@ -512,6 +543,8 @@ class LLMGapFilter:
             self._sys, self._shots = SYSTEM_VALIDATE_V10, SHOTS_VALIDATE_V10
         elif mode == "validate_rct":
             self._sys, self._shots = SYSTEM_VALIDATE_RCT, SHOTS_VALIDATE_RCT
+        elif mode == "validate_fws":
+            self._sys, self._shots = SYSTEM_VALIDATE_FWS, SHOTS_VALIDATE_FWS
         else:
             self._sys, self._shots = SYSTEM_JUNK, SHOTS_JUNK
         self._cot = mode in ("validate_cot", "validate_v5", "validate_v6", "validate_v7", "validate_v8", "validate_v9", "validate_v10")
