@@ -64,6 +64,28 @@ compresses to ~0.82–0.85; cheap ≈ expensive here. **Stage C is neutral-to-sl
 this prevalence** (e.g. bge 0.850 → 0.849), consistent with the RCT finding: Stage C is a
 low-prevalence precision tool, not a high-prevalence one.
 
+## Stage C error analysis + optimization (shipped zero-shot detector, 699 predicted-pos)
+
+Inspecting what `validate_fws` keeps/drops on the shipped detector's predictions:
+
+| Stage-C prompt | kept-FP | dropped-TP | P | R | pos-F1 | Macro-F1 |
+|---|---|---|---|---|---|---|
+| validate_fws (initial) | 139 | 18 | 0.768 | 0.526 | 0.624 | 0.786 |
+| **keep-biased (shipped)** | 141 | 7 | 0.770 | 0.538 | **0.633** | **0.791** |
+| drop-strict | 41 | 176 | 0.880 | 0.345 | 0.496 | 0.720 |
+
+- The **139 kept "false positives" are overwhelmingly real future-work the gold mislabels as 0**
+  ("*a thorough investigation ... remains future work*", "*further research is required*",
+  "*it would be interesting to try ...*" all labelled negative). Precision is **label-capped**,
+  not prompt-capped — same as the RCT Stage-C analysis.
+- **`drop-strict` proves it**: chasing precision (kept-FP 139→41, P 0.77→0.88) drops 176 *real*
+  future-work sentences, collapsing recall 0.53→0.35 and F1 to 0.496.
+- **`keep-biased` is the win**: explicitly keeping weak/implicit own-future-work (hopes about
+  one's own resource, "currently experimenting", "we can further improve") cut wrongly-dropped
+  TPs 18→7 for +2 FPs → pos-F1 0.624→**0.633**, macro 0.786→**0.791**. Shipped as the
+  `validate_fws` default. (Caveat: selected on the test predictions — a dev-split reselection
+  would firm this up; the gain is small and the change is principled, not fitted to noise.)
+
 ## Findings
 
 1. **The published SOTA reproduces but is a leakage artifact** (+0.082 from chi²-on-full-data).

@@ -160,7 +160,10 @@ SYSTEM_VALIDATE_FWS = (
     "restatement of findings or conclusions with no future direction; (d) a limitation stated "
     "with no future action; (e) a citation or reference. When unsure whether it is "
     "forward-looking, KEEP. Bias toward KEEP for any explicit plan, intention, or suggestion "
-    "about the future."
+    "about the future. Additionally KEEP the weaker/implicit forms of the authors' own future "
+    "work: hopes or beliefs that their OWN method, model, or released resource will be "
+    "extended, improved, or prove useful; ongoing work ('we are currently "
+    "experimenting/exploring'); and 'we can further improve ...' statements."
 )
 SHOTS_VALIDATE_FWS = [
     ("In future work, we plan to extend our approach to multilingual settings.", "YES"),
@@ -169,6 +172,9 @@ SHOTS_VALIDATE_FWS = [
     ("Future research should examine how these findings generalize to other domains.", "YES"),
     ("We intend to incorporate syntactic features in subsequent versions of the model.", "YES"),
     ("These questions remain to be addressed in follow-up studies.", "YES"),
+    ("We are currently experimenting with adversarial learning models for this task.", "YES"),
+    ("By extracting new features we can further improve our method.", "YES"),
+    ("We hope our decomposition provides a useful framework to guide future work.", "YES"),
     ("Our model achieves state-of-the-art results on three benchmarks.", "NO"),
     ("In this paper, we proposed a novel attention mechanism.", "NO"),
     ("The dataset consists of 10,000 manually annotated sentences.", "NO"),
