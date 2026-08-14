@@ -106,6 +106,45 @@ SHOTS_JUNK = [
     ("Evaluation so far is restricted to single charts.", "NO"),
 ]
 
+# RCT / biomedical mode — a domain-tuned, KEEP-biased validate prompt. Tuned and
+# validated on the Lan et al. (2024) RCT/SAL limitation-detection pool: it matches
+# their PubMedBERT precision (~0.75) while dropping only ~2/180 true limitations.
+# Use mode="validate_rct" when filtering biomedical / clinical-trial gaps, where the
+# arXiv/ACL-flavoured default over-rejects study limitations (small sample, short
+# follow-up, single-centre, no blinding, attrition, generalisability).
+SYSTEM_VALIDATE_RCT = (
+    "You are a precision filter for STUDY LIMITATIONS in randomized controlled trial (RCT) "
+    "reports. KEEP a sentence if it states a weakness, caveat, bias, constraint, or scope "
+    "restriction of THIS study/trial — for example: small or limited sample size; short "
+    "follow-up; single-center or narrow setting; lack of blinding; selection, recall, or "
+    "measurement bias; confounding; low statistical power; missing data, attrition, or low "
+    "response; limited generalizability; reliance on self-report; post-hoc or unadjusted "
+    "analyses; or an explicit call for further research to address such a gap. "
+    "DROP a sentence ONLY if it clearly does none of that and is instead one of: "
+    "(a) background, rationale, or prior findings; (b) a restatement of THIS study's positive "
+    "results or effect estimates; (c) a clinical recommendation or implication "
+    "('clinicians should...'); (d) a methods description with no stated weakness; "
+    "(e) a limitation of OTHER studies rather than this one; (f) a citation or reference "
+    "fragment. When unsure, KEEP. "
+    "Bias strongly toward KEEP: only DROP when highly confident the sentence is pure "
+    "background, a pure positive-result restatement, a citation, or clearly about other "
+    "studies. Any hedge, caveat, or constraint about this trial is a KEEP."
+)
+SHOTS_VALIDATE_RCT = [
+    ("The main limitation of our study is the relatively small sample size.", "YES"),
+    ("Participants were recruited from a single center, which may limit generalizability.", "YES"),
+    ("The trial was not blinded, so outcome assessment may have been biased.", "YES"),
+    ("Follow-up was limited to six months, and long-term effects remain unknown.", "YES"),
+    ("We relied on self-reported adherence, which is subject to recall bias.", "YES"),
+    ("The study may have been underpowered to detect small differences between groups.", "YES"),
+    ("Further trials with larger and more diverse samples are needed to confirm these findings.", "YES"),
+    ("Cardiovascular disease is a leading cause of mortality worldwide.", "NO"),
+    ("The intervention significantly reduced HbA1c compared with control (p<0.001).", "NO"),
+    ("Clinicians should consider offering this intervention in routine practice.", "NO"),
+    ("Randomization was performed using a computer-generated sequence.", "NO"),
+    ("Previous studies were limited by short follow-up and small samples.", "NO"),
+]
+
 # V4 — V3 prompt + chain-of-thought (category first, then YES/NO). Best on the
 # 10-sample test (100% gap recall vs V3's 75%).
 SYSTEM_VALIDATE_COT = SYSTEM_VALIDATE + (
@@ -471,11 +510,20 @@ class LLMGapFilter:
             self._sys, self._shots = SYSTEM_VALIDATE_V9, SHOTS_VALIDATE_V9
         elif mode == "validate_v10":
             self._sys, self._shots = SYSTEM_VALIDATE_V10, SHOTS_VALIDATE_V10
+        elif mode == "validate_rct":
+            self._sys, self._shots = SYSTEM_VALIDATE_RCT, SHOTS_VALIDATE_RCT
         else:
             self._sys, self._shots = SYSTEM_JUNK, SHOTS_JUNK
         self._cot = mode in ("validate_cot", "validate_v5", "validate_v6", "validate_v7", "validate_v8", "validate_v9", "validate_v10")
+        #: junk mode inverts (YES = obvious junk = drop); every validate* mode keeps
+        #: on YES. Flag off the actual prompt so it is robust to the mode string.
+        self._junk = (self._sys is SYSTEM_JUNK)
         self._tok = self._lm = None        # local, lazy
         self._client = client              # api
+        #: extra provider params merged into chat.completions.create (e.g. Yandex
+        #: reasoning-model controls: {"reasoning_effort": "low"} for gpt-oss,
+        #: {"chat_template_kwargs": {"enable_thinking": False}} for qwen3).
+        self.extra_body: dict | None = None
         self.n_judged = 0                  # sentences judged
         self.n_calls = 0                   # LLM calls made (batched << judged)
 
@@ -489,14 +537,19 @@ class LLMGapFilter:
         return msgs
 
     def _keep(self, text: str) -> bool:
-        t = text.strip().upper()
+        # Empty/None content (e.g. a reasoning model that spent its budget before
+        # emitting an answer) is treated as KEEP for validate* modes — never silently
+        # drop a candidate; junk mode's empty means "not obvious junk" -> also keep.
+        t = (text or "").strip().upper()
+        if not t:
+            return not self._junk
         if self._cot:
             for ln in t.splitlines():
                 if "ANSWER" in ln:
                     return "YES" in ln.split(":", 1)[-1]
             return t.startswith("Y")
         yes = t.startswith("Y")
-        return yes if self.mode == "validate" else (not yes)   # validate: YES=gap=keep
+        return (not yes) if self._junk else yes   # validate*: YES=gap=keep; junk: YES=junk=drop
 
     # -- backends ---------------------------------------------------------
     def _ensure_local(self):
@@ -637,9 +690,12 @@ class LLMGapFilter:
         try:
             resp = self._client.chat.completions.create(
                 model=self.model, messages=self._batch_messages(items),
-                temperature=0.0, max_tokens=min(4096, 48 + 16 * len(items)),
+                # generous budget: reasoning models (gpt-oss, qwen3) burn tokens on
+                # hidden analysis before the JSON — a terse yandexgpt reply stops early.
+                temperature=0.0, max_tokens=min(8192, 256 + 400 * len(items)),
                 response_format={"type": "json_schema", "json_schema": {
-                    "name": "gap_verdicts", "schema": BATCH_SCHEMA, "strict": True}})
+                    "name": "gap_verdicts", "schema": BATCH_SCHEMA, "strict": True}},
+                **({"extra_body": self.extra_body} if self.extra_body else {}))
             data = parse_json_response(resp.choices[0].message.content)
             for r in data.get("results", []):
                 if isinstance(r, dict) and "id" in r and "keep" in r:
