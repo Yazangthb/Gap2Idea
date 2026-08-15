@@ -8,6 +8,22 @@ Everything behind the cheap gap-extraction funnel, organized for writing it up.
 - **[../gap_extraction_architecture.md](../gap_extraction_architecture.md)** — living architecture & status (§8 = the funnel).
 - **[../stage_a_explained.md](../stage_a_explained.md)** — Stage A deep-dive with figures.
 
+## SOTA benchmark suites (extraction phases vs published work)
+
+Head-to-head of the funnel (Stage B detector + Stage C filter) against dataset-specific SOTA.
+
+| Dataset | Gap type | Published SOTA | Our finding | Write-up |
+|---|---|---|---|---|
+| **RCT / SAL** (Lan 2024) | limitations | PubMedBERT P .751 / R .907 / **F1 .821** | match their precision (.75–.78); ~.01 F1 gap is recall, not method | [rct_stagec.md](rct_stagec.md) |
+| **FWS** (Zhang 2022) | future work | BernoulliNB **macro-F1 .9073** | reproduces exactly (.9072) but is chi²-selection **leakage** (+.082); honest ceiling ~.85; bge-small (33M) best model | [fws_recognition.md](fws_recognition.md) |
+| **LimGen** | limitations | Stage-B head-to-head | whole-section-positive labels penalise a precision filter | [limgen_stagec.md](limgen_stagec.md), [limgen_enhanced.md](limgen_enhanced.md) |
+| **BAGELS** | limitations | whole-section labels | noisy for sentence-level F1 | [bagels_output.md](bagels_output.md) |
+
+Cross-dataset conclusions: **data not model** (bge-small ≈/> 110M PubMedBERT/SciBERT everywhere);
+**Stage C is a low-prevalence precision tool** (lifts the 2–3% full stream, neutral on curated
+pools); and both SOTAs return to honest baselines once prevalence/leakage/label-noise are
+controlled. Runner scripts + hub structure: [scripts/README.md](../../scripts/README.md).
+
 ## Code map (scripts/ — left in place; they cross-import via fixed paths)
 | Purpose | Script | Notes |
 |---|---|---|
