@@ -1,0 +1,234 @@
+% Gap2Idea --- MDPI-styled working draft (standalone, compiles with pdflatex+bibtex).
+% NOTE: This approximates the MDPI layout with a standard class so it renders anywhere.
+% For actual submission, paste the body into the official MDPI Overleaf template (mdpi.cls).
+% Convention: \done{} marks measured results; \pending{} marks blanks still to fill.
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{abstract}
+
+% --- scaffold macros -------------------------------------------------------
+\newcommand{\pending}[1]{\textcolor{red!80!black}{$\langle$\textbf{PENDING:} #1$\rangle$}}
+\newcommand{\done}[1]{\textcolor{green!45!black}{#1}}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection.}{0.5em}{}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}
+\renewcommand{\abstracttextfont}{\normalfont\small}
+
+\title{\bfseries From Research Limitations to Research Ideas: A Two-Phase
+Retrieval-Augmented System for Mining and Operationalizing Self-Acknowledged
+Gaps in the Scientific Literature}
+\author{\pending{Author 1, Author 2} \\ \small \pending{Department, University} \\
+\small \pending{correspondence@email}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The volume of scientific literature makes it infeasible to manually track the research gaps---
+self-acknowledged limitations and stated future work---reported across a field. We present
+\textbf{Gap2Idea}, a two-phase system that (i)~\emph{extracts} gap statements at scale and
+(ii)~\emph{operationalizes} them into ranked, evidence-grounded research ideas. Phase~1 is a
+cheap extraction funnel: a structural section slice (Stage~A), a lightweight embedding-plus-cue
+detector (Stage~B), and a batched large-language-model precision filter (Stage~C). We benchmark
+Phase~1 against two published sentence-classification SOTAs. On limitations in randomized
+controlled trials, our general-purpose detector plus Stage~C \done{matches the reported
+precision (0.75--0.78 vs.\ 0.751) and reaches F1 $\approx$ 0.815 vs.\ 0.821} on a faithful
+reconstruction of the original evaluation. On future-work-sentence recognition, we \done{reproduce
+the reported macro-F1 of 0.907 exactly (0.9072) and show it to be a feature-selection-leakage
+artifact}: refitting selection inside cross-validation folds drops the same model to 0.825, and
+under honest evaluation a 33\,M-parameter general encoder matches or exceeds 110\,M
+domain-specific transformers. Across datasets, (a)~capacity and domain-pretraining wash out after
+fine-tuning (``data not model''), and (b)~the LLM filter is a \emph{low-prevalence} tool.
+Phase~2 (ideation) is specified here; empirical results are \pending{main Phase-2 numbers}.
+\end{abstract}
+
+\noindent\textbf{Keywords:} research gap mining; self-acknowledged limitations; future work
+sentences; scientific idea generation; retrieval-augmented generation; reproducibility.
+
+\section{Introduction}
+Scientific papers routinely state their own \emph{limitations} and propose \emph{future work}.
+In aggregate these self-acknowledged gaps map what a field knows it cannot yet do---an ideal
+substrate for surfacing open problems and generating research directions. Two obstacles have
+kept this from being exploited at scale: gaps must be \emph{extracted} cheaply from millions of
+documents, and then \emph{operationalized}---normalized, de-duplicated, scored, and turned into
+novel, feasible ideas---rather than merely summarized.
+
+Contributions:
+\begin{enumerate}[leftmargin=1.4em,itemsep=1pt]
+  \item \done{A cheap, scalable gap-extraction funnel (Phase~1)} whose final precision filter is
+  a \emph{batched} LLM call, keeping cost roughly constant per document.
+  \item \done{A reproducibility audit of two published SOTAs}: we match one (RCT limitation
+  detection) under a reconstructed protocol and show the other (future-work recognition) to be
+  inflated by evaluation leakage.
+  \item \done{A cross-dataset ``data-not-model'' result}: after fine-tuning, a 33\,M general
+  encoder matches/beats 110\,M domain models on three datasets.
+  \item A specification of the ideation phase (Phase~2); implementation and evaluation are
+  \pending{Phase-2 implementation}.
+\end{enumerate}
+
+\section{Related Work}
+Self-acknowledged limitations in RCTs were annotated by Lan et al.~\citep{rctlimits}, who report
+a PubMedBERT detector (P~$=$~0.751, R~$=$~0.907, F1~$=$~0.821). Future-work sentences were
+formalized by Zhang et al.~\citep{zhangfws2022} (ACL FWS-RC; Bernoulli Naive Bayes, macro-F1
+0.9073), building on early future-work mining~\citep{huwan2015}. Mandated limitation-section
+corpora such as LimGen~\citep{limgen2024} and BAGELS~\citep{bagels} enable scale but at the cost
+of whole-section label noise. Retrieval-augmented idea generation is explored by, e.g.,
+FutureGen~\citep{futuregen2025}. \pending{full related-work synthesis and positioning against the
+idea-generation / analogical-transfer / novelty-estimation literature.}
+
+\section{Materials and Methods}
+\subsection{System overview}
+Gap2Idea has two phases. Phase~1 (extraction) converts full-text papers into a stream of gap
+sentences; Phase~2 (ideation) converts that stream into ranked ideas. Phase~1 is implemented and
+benchmarked (Section~4); Phase~2 is specified here and \pending{unimplemented}.
+
+\subsection{Phase 1 --- gap-extraction funnel}
+A three-stage funnel trades cheap recall for a little expensive precision:
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+  \item \textbf{Stage~A --- structural slice.} Parse sections (GROBID~\citep{grobid}) and keep
+  only gap-bearing regions (limitations, future work, discussion, conclusion).
+  \item \textbf{Stage~B --- cheap detector.} Lexical cues plus an embedding head
+  (\texttt{bge-small}~\citep{bgesmall}, 33\,M params) classify each candidate as
+  \emph{limitation}, \emph{future\_work}, or \emph{none}. Tuned for recall.
+  \item \textbf{Stage~C --- LLM precision filter.} Survivors are judged in \emph{batches}
+  (one \texttt{json\_schema}-constrained call per $\approx$40 sentences). Domain prompt modes
+  (\texttt{validate\_rct}, \texttt{validate\_fws}) reject prior-work critiques, contribution
+  claims, results, acknowledgments, and citations.
+\end{itemize}
+
+\subsection{Phase 2 --- ideation pipeline}
+Specified but \pending{not yet implemented/evaluated}:
+(1)~normalization into \{limitation\_type, target\_entity, cause, scope, evidence, paper, year\}
+via a small classifier; (2)~entity linking to CSO/MeSH/Papers-with-Code (expected
+$\sim$40--60\,\% coverage); (3)~canonicalization by embed~+~ANN~+~density clustering
+(UMAP/HDBSCAN); (4)~a gap graph with \emph{addressed} edges mined from citation
+contexts~\citep{s2orc} (a mined edge is a strong \emph{negative} signal); (5)~scoring by
+frequency, field-normalized persistence, unaddressed ratio, breadth, actionability
+(raw frequency down-weighted); (6)~three generation mechanisms (intra-domain matching;
+cross-domain analogical transfer in a \emph{structure} space; limitation composition);
+(7)~grounded LLM synthesis; (8)~novelty verification by dense retrieval~\citep{specter}~+~an
+\emph{entailment} check; (9)~feasibility filter; (10)~retrospective validation at year~$T$ using
+an LLM with pretraining cutoff~$\le T$. \pending{per-step design details and hyperparameters.}
+
+\subsection{Datasets}
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lllc@{}}
+\toprule
+Dataset & Task & Size & Use \\ \midrule
+RCT/SAL~\citep{rctlimits} & limitation detection & 43k sent, 200 papers, 952 lim & benchmark + sandbox \\
+FWS~\citep{zhangfws2022} & future-work recognition & 64.9k sent, 9k papers & benchmark \\
+LimGen/BAGELS~\citep{limgen2024,bagels} & limitation sentences & whole-section harvest & noise analysis \\
+ACL limitations (harvest) & limitation sentences & 6{,}433 ($\sim$54\% clean) & Phase-1$\to$2 bridge \\
+\bottomrule
+\end{tabular}
+\caption{Datasets used. \pending{finalize ACL/arXiv Phase-2 corpus size after Stage-C cleaning.}}
+\end{table}
+
+\subsection{Implementation}
+Python; \texttt{sentence-transformers}, \texttt{scikit-learn}, \texttt{transformers}
+(BiomedBERT/SciBERT fine-tuning); YandexGPT via an OpenAI-compatible client; GPU experiments on a
+single Tesla V100. \pending{code/version/release details.}
+
+\section{Results}
+\subsection{RCT limitation detection vs.\ Lan et al.}
+Reconstructing their section-filtered pool via BioC section types (99\,\% gold-positive
+retention) and evaluating at their $\sim$20.7\,\% prevalence:
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Method (section pool @ 20.7\%) & Precision & Recall & F1 \\ \midrule
+Their PubMedBERT (reported) & 0.751 & 0.907 & 0.821 \\
+Our detector only & 0.668 & 0.887 & 0.762 \\
+Our detector + Stage~C (gpt-oss-120b) & 0.752 & 0.882 & 0.812 \\
+Our detector + Stage~C (yandexgpt-5-pro) & 0.780 & 0.842 & 0.810 \\
+\bottomrule
+\end{tabular}
+\caption{\done{We match their precision; the residual $\sim$0.01 F1 is a recall gap.}}
+\end{table}
+
+\subsection{Future-work recognition vs.\ Zhang et al.}
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lc@{}}
+\toprule
+Pipeline & Macro-F1 \\ \midrule
+Their reported & 0.9073 \\
+Reproduced (chi$^2$ on full data, then 10-fold CV) & \textbf{0.9072} \\
+Proper (chi$^2$ refit inside each fold) & \textbf{0.8252} \\
+Leakage inflation & \textbf{+0.082} \\
+\bottomrule
+\end{tabular}\hfill
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Model (clean balanced split) & Params & Macro-F1 \\ \midrule
+bge-small (fine-tuned) & 33\,M & \textbf{0.879} \\
+PubMedBERT (fine-tuned) & 110\,M & 0.877 \\
+SciBERT (fine-tuned) & 110\,M & 0.864 \\
+BernoulliNB / TF-IDF+logreg & --- & 0.830 \\
+\bottomrule
+\end{tabular}
+\caption{\done{The reported SOTA reproduces exactly and is a leakage artifact; a 33\,M encoder
+is the best honest model.}}
+\end{table}
+
+\subsection{Cross-dataset findings}
+\done{(i)~Data not model}---a 33\,M general encoder matches/beats 110\,M domain models on RCT and
+FWS. \done{(ii)~Stage~C is prevalence-sensitive}---clear lift at 2--3\,\% prevalence, neutral at
+14--21\,\%. \done{(iii)~Published SOTAs regress to honest baselines} once leakage, prevalence,
+and label noise are controlled.
+
+\subsection{Extraction-to-ideation bridge}
+\done{Stage~C judges only 54\,\% of the raw whole-section ACL limitation harvest to be genuine
+authors'-own limitations}; it therefore doubles as the cleaning step producing the Phase-2 corpus.
+
+\subsection{Phase 2 --- ideation results}
+\pending{canonical-limitation counts and cluster quality; gap-ranking table; generated-idea
+samples; novelty-filter precision; feasibility distribution; retrospective-validation recall
+vs.\ $T{+}1\ldots T{+}3$ papers; expert Likert ratings.}
+
+\section{Discussion}
+Our extraction results argue for a cost-first design: a small encoder plus a batched LLM filter
+matches specialized transformers at a fraction of the cost, with the LLM's value concentrated at
+low prevalence. The reproducibility findings motivate honest, prevalence-aware, leakage-free
+reporting.
+
+\textbf{Threats to validity.} (i)~Fine-tuned detectors use each corpus's train split (disjoint by
+paper id), whereas the shipped pipeline is zero-shot; the two must not be conflated.
+(ii)~Stage-C prompt selection for RCT was made on test predictions---\pending{dev-split
+reselection}. (iii)~Random vs.\ section negatives: only the section-negative table is
+apples-to-apples. (iv)~Residual false positives are dominated by annotation-label noise, capping
+measurable precision.
+
+\textbf{Study limitations.} Phase~2 is unimplemented; RCT limitations are trial-\emph{execution}
+issues rather than open research problems, so idea generation must target multi-domain
+research-problem corpora (arXiv). \pending{quantify Phase-2 novelty/feasibility.}
+
+\section{Conclusions}
+Gap2Idea mines self-acknowledged research gaps and operationalizes them into ideas. Phase~1 is
+implemented and benchmarked---matching or auditing two published SOTAs and yielding reusable
+``data-not-model'' and ``low-prevalence precision-filter'' characterizations. Phase~2 is
+specified and \pending{pending}; next steps: Stage-C-clean an ACL/arXiv corpus, canonicalize via
+clustering, and implement grounded, novelty-verified idea generation with retrospective
+validation.
+
+\vspace{6pt}
+\small
+\noindent\textbf{Author Contributions:} \pending{}.\quad
+\textbf{Funding:} \pending{}.\quad
+\textbf{Data Availability:} RCT/SAL and FWS are public; code \pending{release URL}.\quad
+\textbf{Conflicts of Interest:} None.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

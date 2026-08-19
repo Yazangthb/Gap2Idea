@@ -135,3 +135,14 @@ data/clustering_bench_n100/embeddings/
 # FWS benchmark data caches (regenerable from the FWS repo URL)
 data/fws_recognition.csv
 data/fws_lemm.pkl
+
+# LaTeX build artifacts
+docs/mdpi_latex/*.aux
+docs/mdpi_latex/*.bbl
+docs/mdpi_latex/*.blg
+docs/mdpi_latex/*.log
+docs/mdpi_latex/*.out
+docs/mdpi_latex/*.fls
+docs/mdpi_latex/*.fdb_latexmk
+docs/mdpi_latex/*.pdf
+docs/mdpi_latex/build.log
