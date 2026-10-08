@@ -455,7 +455,19 @@ _FUTURE_CUES = re.compile(
     r"we\s+(?:will|plan to|intend to)\s+explore|"
     r"next step|further (?:work|research|investigation|study)|"
     r"would be (?:interesting|valuable|worthwhile)|"
-    r"it would be interesting|an? (?:interesting|promising|natural) (?:direction|next step|avenue)"
+    r"it would be interesting|an? (?:interesting|promising|natural) (?:direction|next step|avenue)|"
+    # mined on the FWS train split (held-out test F1 0.585 -> 0.650); generalizable
+    # intent phrases only — bare "future"/"the future" deliberately excluded (they win
+    # on FWS only because the whole corpus is future-work-centric, and over-fire elsewhere).
+    r"(?:plan|plans|planning)\s+to|intend(?:s|ed)?\s+to|also\s+intend|"
+    r"future directions? include|future plans|plans? include|"
+    r"we\s+will\s+(?:investigate|explore|extend|incorporate|study|consider|try|continue|apply|also)|"
+    r"will\s+(?:investigate|extend|incorporate|study|continue|consider)|"
+    r"to extend (?:our|the) (?:work|approach|method|model|framework|analysis|study)|"
+    r"another (?:interesting|promising|natural) (?:direction|avenue|line)|"
+    r"also (?:want|hope|interested|would like|plan|like) to|"
+    r"(?:promising|interesting|natural|fruitful) (?:future )?direction is|"
+    r"direction is to|investigate whether"
     r")\b",
     re.IGNORECASE,
 )
