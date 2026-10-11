@@ -379,6 +379,155 @@ def slice_with_midpaper_anchors(
 
 
 # ---------------------------------------------------------------------------
+# Stage A v3 — section-aware keep (the notebook/funnel default)
+# ---------------------------------------------------------------------------
+# Keep the WHOLE Discussion / Conclusion / Limitations / Future-Work section,
+# unioned with the v2 anchor slice (so it is never below v2). On reliable section
+# headings (GROBID, pdf_to_blocks, or SAL/BioC) this lifts limitation recall to
+# ~0.99; on noisy headings it degrades gracefully to v2. See stage_a_package and
+# stage_c_package/stage_c_end_to_end_funnel.ipynb.
+SECTION_HEAD_RE = re.compile(
+    r"\b(discussion|conclusions?|limitations?|weakness(?:es)?|strengths?|future|"
+    r"outlook|threats? to validity|caveats?|shortcomings?|drawbacks?|further work|"
+    r"next steps?)\b", re.IGNORECASE)
+
+
+def _section_regions(text: str, blocks: list[dict] | None = None) -> list[Region]:
+    """Every sentence inside a heading whose title names a target section."""
+    units = _ordered_units(text, blocks)
+    n = len(units)
+    if n == 0 or not any(u[1] for u in units):
+        return []
+    sents = [u[0] for u in units]
+    is_head = [u[1] for u in units]
+    regions: list[Region] = []
+    keep, head, loc, run = False, "", 0.0, []
+
+    def _flush() -> None:
+        if keep and run:
+            cand = [s for s in run if len(s) >= MIN_SENT_CHARS and not _is_reference(s)]
+            if cand:
+                regions.append(Region("section", head[:80], round(loc, 4),
+                                      loc >= TERMINAL_THRESHOLD, cand))
+
+    for i in range(n):
+        if is_head[i]:
+            _flush(); run = []
+            head = sents[i]; keep = bool(SECTION_HEAD_RE.search(sents[i])); loc = i / n
+        elif keep:
+            run.append(sents[i])
+    _flush()
+    return regions
+
+
+def slice_section_aware(text: str, blocks: list[dict] | None = None,
+                        terminal_only: bool = True) -> list[Region]:
+    """Stage A v3: v2 anchors UNION whole target sections. Strictly >= v2 recall."""
+    base = slice_with_midpaper_anchors(text, blocks=blocks, terminal_only=terminal_only)
+    covered = {normalize_text(s)[:60] for r in base for s in r.sentences}
+    out = list(base)
+    for r in _section_regions(text, blocks):
+        new = [s for s in r.sentences if normalize_text(s)[:60] not in covered]
+        if new:
+            covered.update(normalize_text(s)[:60] for s in new)
+            out.append(Region("section", r.heading, r.location_fraction, r.is_terminal, new))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# PDF front-end — any PDF -> [{role:'heading'|'text', text}] blocks (no container)
+# ---------------------------------------------------------------------------
+# A font/layout heuristic over PyMuPDF (pdfplumber fallback). Its ONLY job is to
+# find heading lines so slice_section_aware can recover sections. Validated on
+# non-arXiv PDFs. See stage_a_package/stage_a_final.ipynb.
+_PDF_NUMBERED_HEAD = re.compile(r"^\s*(\d+(\.\d+)*)[.)]?\s+[A-Z]")
+_PDF_HASWORD = re.compile(r"[A-Za-z]")
+
+
+def _pdf_classify_lines(lines: list[dict], body: float,
+                        size_ratio: float = 1.12, max_head_words: int = 12) -> list[dict]:
+    def _is_heading(l: dict) -> bool:
+        t = l["text"]; w = len(t.split())
+        if w == 0 or w > max_head_words:
+            return False
+        if t.endswith((".", ",", ";", ":")) and not _PDF_NUMBERED_HEAD.match(t):
+            return False
+        big = l["size"] >= body * size_ratio
+        bold = l["bold"] and l["size"] >= body * 0.98
+        numbered = bool(_PDF_NUMBERED_HEAD.match(t)) and (big or bold)
+        return big or bold or numbered
+    blocks, buf = [], []
+
+    def _flush() -> None:
+        if buf:
+            blocks.append({"role": "text", "text": " ".join(buf)}); buf.clear()
+    for l in lines:
+        if _is_heading(l):
+            _flush(); blocks.append({"role": "heading", "text": l["text"]})
+        else:
+            buf.append(l["text"])
+    _flush()
+    return blocks
+
+
+def _pdf_lines_pymupdf(path: str) -> list[dict]:
+    import fitz
+    out = []
+    for page in fitz.open(path):
+        for blk in page.get_text("dict").get("blocks", []):
+            for ln in blk.get("lines", []):
+                spans = ln.get("spans", [])
+                txt = "".join(s["text"] for s in spans).strip()
+                if not txt or not _PDF_HASWORD.search(txt):
+                    continue
+                sz = max((s["size"] for s in spans), default=0.0)
+                bold = any(("bold" in s["font"].lower()) or (s.get("flags", 0) & 16) for s in spans)
+                out.append({"text": txt, "size": round(sz, 1), "bold": bold})
+    return out
+
+
+def _pdf_lines_pdfplumber(path: str) -> list[dict]:
+    import pdfplumber
+    out = []
+    with pdfplumber.open(path) as pdf:
+        for page in pdf.pages:
+            words = page.extract_words(extra_attrs=["size", "fontname"], use_text_flow=True)
+            cur, buf = None, []
+
+            def _emit(b: list) -> None:
+                if not b:
+                    return
+                txt = " ".join(w["text"] for w in b).strip()
+                if txt and _PDF_HASWORD.search(txt):
+                    sz = max(w.get("size", 0) for w in b)
+                    bold = any("bold" in str(w.get("fontname", "")).lower() for w in b)
+                    out.append({"text": txt, "size": round(sz, 1), "bold": bold})
+            for w in words:
+                if cur is None or abs(w["top"] - cur) <= 2:
+                    buf.append(w); cur = w["top"] if cur is None else cur
+                else:
+                    _emit(buf); buf = [w]; cur = w["top"]
+            _emit(buf)
+    return out
+
+
+def pdf_to_blocks(path: str) -> list[dict]:
+    """Parse a PDF into heading/text blocks for slice_section_aware (PyMuPDF/pdfplumber)."""
+    import statistics
+    lines = []
+    try:
+        lines = _pdf_lines_pymupdf(path)
+    except Exception:
+        lines = []
+    if not lines:
+        lines = _pdf_lines_pdfplumber(path)
+    if not lines:
+        return []
+    body = statistics.median([l["size"] for l in lines])
+    return _pdf_classify_lines(lines, body)
+
+
+# ---------------------------------------------------------------------------
 # Stage A (GROBID) — authoritative sections; blacklist background/related-work
 # ---------------------------------------------------------------------------
 # When a GROBID section tree is available it replaces the heuristic slice: we
@@ -705,7 +854,7 @@ def extract_gaps(
     if grobid_sections is not None:
         regions = slice_grobid_regions(grobid_sections)
     else:
-        regions = slice_terminal_regions(text, blocks=blocks, terminal_only=terminal_only)
+        regions = slice_section_aware(text, blocks=blocks, terminal_only=terminal_only)
     if not regions:
         return []
 
