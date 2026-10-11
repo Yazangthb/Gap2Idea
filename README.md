@@ -1,98 +1,66 @@
-# Gap2Idea
+# Gap2Idea — minimal (experiments + pipeline)
 
-End-to-end pipeline that mines **research gaps** (limitations, future work) from academic
-papers, structures them into a graph, and synthesises **novel, evidence-grounded research
-ideas** — each novelty-checked against Semantic Scholar and scored by an LLM judge panel.
-Runs as a CLI, a Streamlit app, or an MCP server.
-
-## Pipeline
+A trimmed branch of Gap2Idea containing **only** the research-gap extraction **experiments**
+(the Stage A/B/C notebooks) and the **end-to-end pipeline** that runs them over a list of papers.
 
 ```
-select-papers → download-pdfs → extract-text ─► data/paper_texts.jsonl
-      │
-  gap extraction ─► data/gaps.tsv
-      ├─ extract-gaps          LLM per paper (verbatim, strict JSON)        ~$4000 / 1M papers
-      └─ extract-gaps-funnel   cheap Stage A/B/C funnel (fw + limitation)   ~$3–31 / 1M papers
-      │
-theme-mine     ─► gap graph: Leiden communities + bridge & frontier scoring
-generate-ideas ─► ideas   (modes: bridge · within · method-gap · frontier · orchestrated)
-evaluate-ideas ─► LLM judge panel + Semantic-Scholar novelty
-export-ideas   ─► LaTeX / PDF / full-paper draft        serve-mcp ─► MCP server
+paper(s) → Stage A (localize) → Stage B (classify) → Stage C (LLM filter) → gaps
 ```
 
-Stages pass plain files (`data/` inputs, `artifacts/` outputs). Every LLM call is an
-OpenRouter model slug — swap providers with `--model <provider/model>`.
+## Layout
+```
+scripts/run_extraction_pipeline.py   # the full pipeline (list of papers → gaps.tsv/json)
+src/gap2idea/pipeline/               # the funnel code the pipeline + notebooks import
+  gap_funnel.py      # Stage A (slice_section_aware, pdf_to_blocks) + Stage B (cue rules, EmbeddingGapHead)
+  gap_llm_filter.py  # Stage C (LLMGapFilter — batched LLM precision filter)
+  llm.py             # LLM client (Yandex / OpenRouter, OpenAI-compatible)
+  sections.py, gap_prefilter.py
+stage_a_package/     # Stage A notebooks (localization): section-aware slice + PDF front-end
+stage_b_package/     # Stage B notebooks (classifier): cue rules + encoder head, model comparison
+stage_c_package/     # Stage C notebooks (LLM filter) + the end-to-end funnel on real papers
+```
+
+## The pipeline
+Takes a **list of papers** (PDFs or a texts `jsonl`) and runs the whole funnel, using the exact
+components validated in the notebooks (`pdf_to_blocks` + `slice_section_aware` for Stage A, cue rules +
+frozen `bge-small`+logreg head for Stage B, a Yandex LLM for Stage C).
+
+```bash
+# PDFs in a folder, Stage A+B only
+python scripts/run_extraction_pipeline.py --pdfs data/pdfs --out gaps.tsv
+
+# full funnel with Stage C (biomedical prompt)
+python scripts/run_extraction_pipeline.py --pdfs data/pdfs --out gaps.tsv --stage-c --domain biomed
+
+# from a texts jsonl ({"id","text"[,"blocks"]})
+python scripts/run_extraction_pipeline.py --texts paper_texts.jsonl --out gaps.tsv --stage-c
+```
+Output columns: `id, gap_type, gap_sentence, section_type, source, confidence, paragraph_text`.
 
 ## Install
-
 ```bash
-pip install --upgrade uv
-uv sync                 # creates .venv with all deps
-cp .env.example .env    # then set OPENROUTER_API_KEY (S2_API_KEY recommended)
+pip install -e .          # or: pip install -r requirements.txt
 ```
+Python 3.10+. First Stage-B run trains a `bge-small`+logreg head from `data/scibert_prep/train.jsonl`
+(~2 min, cached to `data/pipeline_head.joblib`).
 
-Then `source .venv/bin/activate` (or `.venv/Scripts/activate` on Windows), or prefix
-commands with `uv run`. Docker: `docker build -t gap2idea . && docker run --env-file .env -p 8501:8501 gap2idea`.
+## Data (not included)
+The notebooks and the Stage-B head expect labeled data under `data/` (e.g.
+`data/scibert_prep/train.jsonl`, gold sets, SAL/FWS/Sci-Sentence corpora). These are **not** shipped in
+this minimal branch. Public corpora are fetched on demand by the benchmarks (SAL/FWS from GitHub, BioC
+sections from the PMC API); the self-distilled training set must be supplied under `data/`.
 
-## Usage
-
-**Already have `data/gaps.tsv`:**
-```bash
-gap2idea theme-mine --gaps-tsv data/gaps.tsv      # embed → gap graph → bridge/frontier
-gap2idea fetch-metadata
-gap2idea generate-ideas --n-pairs 10
-gap2idea evaluate-ideas --judges "anthropic/claude-sonnet-4,openai/gpt-4o"
-gap2idea export-ideas --format library-pdf
-streamlit run src/gap2idea/app/streamlit_app.py
+## Stage C (LLM filter)
+Set credentials in a `.env` (see `.env.example`):
 ```
-
-**From scratch (arXiv):**
-```bash
-gap2idea select-papers --source s2 --query "graph neural networks" --n 100
-gap2idea download-pdfs
-gap2idea extract-text --grobid   # clean text + real section tree (GROBID service; PyMuPDF fallback)
-gap2idea extract-gaps-funnel --mode hybrid --head data/gap_head.joblib   # cheap, no per-paper LLM
-# → then theme-mine → generate-ideas → evaluate-ideas as above
+LLM_PROVIDER=yandex
+YANDEX_API_KEY=...
+YANDEX_FOLDER_ID=...
 ```
+Default model is `yandexgpt-5-lite` @ batch 20 (the probe winner). Without `--stage-c` the pipeline
+stops after Stage A+B and needs no API.
 
-**Multi-agent generation** (critic-revise loop + judge panel):
-```bash
-gap2idea generate-ideas --mode orchestrated --orchestrate-mode within \
-  --judges "anthropic/claude-sonnet-4,openai/gpt-4o,google/gemini-2.5-flash"
-```
-
-Run `gap2idea <command> -h` for all flags.
-
-## How it works
-
-- **Gap extraction** — two engines, same `gaps.tsv` schema: an LLM extractor (verbatim,
-  expensive) and a cheap funnel (structural slice → cue/embedding classifier → optional
-  LLM filter) for corpus scale.
-- **Theme mining** — gaps form a multi-relational graph; Leiden communities plus
-  edge-betweenness *bridges* and *frontier* nodes seed novelty-by-recombination.
-- **Idea generation** — grounded in retrieved evidence with anti-hallucination gates
-  (verbatim evidence, evidence-overlap, named baseline + falsifiable prediction); optional
-  multi-agent critic / revise / sanity loop.
-- **Evaluation** — LLM-as-judge (novelty / specificity / feasibility / grounding), optional
-  cross-provider panel with inter-judge agreement, Semantic-Scholar novelty, human-study form.
-- **Output** — per-idea LaTeX (`minimal` / `standard` / `ieee`) or one consolidated PDF;
-  `--full-paper` expands an idea into a paper plan. `serve-mcp` exposes the corpus to
-  Claude Desktop / Cursor.
-
-## Docs & layout
-
-- **[docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md)** — file-by-file map + reading order. Start here to navigate the code.
-- **[docs/experiments/](docs/experiments/)** — lab notebook + results registry (all numbers, reproduce steps).
-- **[docs/gap_extraction_architecture.md](docs/gap_extraction_architecture.md)** — the extraction funnel design.
-- **[scripts/README.md](scripts/README.md)** — experiment & ops scripts, grouped by purpose.
-
-## Requirements
-
-- Python ≥ 3.10
-- `OPENROUTER_API_KEY` **(required)** — one key for OpenAI / Anthropic / Google / open-source models.
-- `S2_API_KEY` (recommended) — lifts Semantic Scholar rate limits.
-- Optional: `tectonic` or `pdflatex` on PATH for `export-ideas --format rendered-pdf`.
-
-## License
-
-MIT
+## Key results (from the notebooks)
+- **Stage A**: keeping Discussion+Conclusion retains **99%** of limitations on real SAL papers (0.861→0.988 on SAL, 5-fold CV).
+- **Stage B**: fine-tuned PubMedBERT best in-domain (SAL full-funnel A+B **0.604**); frozen bge generalizes best cross-domain.
+- **Stage C**: lifts precision ~0.30→0.60; full funnel **PubMedBERT A+B+C 0.701**. Precision vs SAL gold is a documented lower bound (span-based annotation under-labels; see `stage_c_package/stage_c_end_to_end_funnel.ipynb`).

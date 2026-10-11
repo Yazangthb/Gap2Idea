@@ -1,50 +1,18 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "gap2idea"
-version = "0.2.0"
-description = "Mine research gaps from papers and synthesise novel research ideas."
-readme = "README.md"
+name = "gap2idea-minimal"
+version = "0.1.0"
+description = "Research-gap extraction — experiments (Stage A/B/C notebooks) + end-to-end pipeline"
 requires-python = ">=3.10"
-license = { text = "MIT" }
-authors = [{ name = "Yazan Nukari" }]
 dependencies = [
-  "pandas",
-  "numpy",
-  "scikit-learn",
-  "sentence-transformers",
-  "hdbscan",
-  "plotly",
-  "streamlit",
-  "pymupdf",
-  "openai",
-  "python-dotenv",
-  "requests",
-  "tqdm",
-  # Multi-agent / MCP / export
-  "mcp>=1.0",         # Anthropic Model Context Protocol Python SDK
-  "jinja2",           # LaTeX + HTML templating
-  "reportlab",        # Pure-Python PDF generation (no system deps)
+    "numpy", "pandas", "scikit-learn", "joblib",
+    "torch", "sentence-transformers",
+    "pymupdf", "pdfplumber",
+    "openai", "python-dotenv",
 ]
-
-[project.optional-dependencies]
-dev = ["pytest", "pytest-cov", "ruff", "pytest-asyncio"]
-
-[project.scripts]
-gap2idea = "gap2idea.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[tool.setuptools.package-data]
-"gap2idea.templates" = ["*.j2"]
-
-[tool.ruff]
-line-length = 110
-target-version = "py310"
-
-[tool.pytest.ini_options]
-asyncio_mode = "auto"
-testpaths = ["tests"]

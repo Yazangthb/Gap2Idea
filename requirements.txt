@@ -1,14 +1,15 @@
-pandas
-tqdm
-requests
-streamlit
-plotly
-sentence-transformers
-hdbscan
-pymupdf
-python-dotenv
-openai
 numpy
+pandas
 scikit-learn
-# Semantic Scholar lookups use `requests` above. No new deps.
-
+joblib
+torch
+sentence-transformers
+pymupdf
+pdfplumber
+openai
+python-dotenv
+# notebooks
+matplotlib
+nbformat
+jupyter
+ipykernel
