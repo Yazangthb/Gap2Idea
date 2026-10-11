@@ -8,6 +8,7 @@ survivors (Stage A localize + Stage B classify). Uses **Yandex paid models** via
 |---|---|
 | `stage_c_all_experiments.ipynb` | (1) model x batch-size probe over Yandex models on a small labeled SAL sample; (2) the real metric: Stage B detector -> Stage C on SAL, full-stream and prevalence-matched vs Lan 2024 PubMedBERT 0.821. |
 | `stage_c_final.ipynb` | The shipped config: `validate_rct` judge on `yandexgpt-5-lite` @ batch 20. A clean `stage_c_filter(sentences)` step, a demo, and the SAL headline. |
+| `stage_c_end_to_end_funnel.ipynb` | **The whole funnel on real papers:** section recovery (PMC BioC) -> Stage A -> all 8 Stage B models -> Stage C, scored vs exhaustive SAL gold (40 papers). Best A+B+C = **PubMedBERT 0.701**. Plus the Stage C **gold-noise diagnosis** (SAL annotation criteria, adjudication), the **SAL-criteria** re-eval (0.701 -> 0.568), and the **Kilicoglu-2018** cross-check. Results baked in; heavy cells run on a GPU box / Yandex. |
 
 ## What Stage C is
 Stage A+B is recall-first and leaks false positives (prior-work critiques, contribution claims,
