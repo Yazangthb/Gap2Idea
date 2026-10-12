@@ -1,0 +1,58 @@
+[
+ {
+  "model": "MiniLM-L6(frozen)",
+  "AB_F1": 0.371,
+  "ABC_P": 0.563,
+  "ABC_R": 0.434,
+  "ABC_F1": 0.49
+ },
+ {
+  "model": "mpnet(frozen)",
+  "AB_F1": 0.437,
+  "ABC_P": 0.59,
+  "ABC_R": 0.463,
+  "ABC_F1": 0.519
+ },
+ {
+  "model": "bge-small(frozen)",
+  "AB_F1": 0.436,
+  "ABC_P": 0.588,
+  "ABC_R": 0.488,
+  "ABC_F1": 0.533
+ },
+ {
+  "model": "bge-base(frozen)",
+  "AB_F1": 0.437,
+  "ABC_P": 0.567,
+  "ABC_R": 0.493,
+  "ABC_F1": 0.527
+ },
+ {
+  "model": "e5-base(frozen)",
+  "AB_F1": 0.457,
+  "ABC_P": 0.568,
+  "ABC_R": 0.507,
+  "ABC_F1": 0.536
+ },
+ {
+  "model": "DistilBERT-FT",
+  "AB_F1": 0.523,
+  "ABC_P": 0.645,
+  "ABC_R": 0.488,
+  "ABC_F1": 0.556
+ },
+ {
+  "model": "SciBERT-FT",
+  "AB_F1": 0.553,
+  "ABC_P": 0.646,
+  "ABC_R": 0.498,
+  "ABC_F1": 0.562
+ },
+ {
+  "model": "PubMedBERT-FT",
+  "AB_F1": 0.604,
+  "ABC_P": 0.662,
+  "ABC_R": 0.498,
+  "ABC_F1": 0.568
+ }
+]

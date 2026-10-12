@@ -1,0 +1,123 @@
+{
+ "SAL": {
+  "majority (all-neg)": [
+   0,
+   0.0,
+   0
+  ],
+  "TF-IDF + LogReg": [
+   0.362,
+   0.571,
+   0.443
+  ],
+  "CountBin(1-4) + BernoulliNB": [
+   0.0,
+   0.0,
+   0
+  ],
+  "cue-rules only": [
+   0.355,
+   0.215,
+   0.267
+  ],
+  "bge-small frozen + logreg": [
+   0.164,
+   0.82,
+   0.273
+  ],
+  "MiniLM-L6(frozen)": [
+   0.127,
+   0.737,
+   0.216
+  ],
+  "mpnet(frozen)": [
+   0.17,
+   0.785,
+   0.28
+  ],
+  "bge-small(frozen)": [
+   0.17,
+   0.82,
+   0.282
+  ],
+  "bge-base(frozen)": [
+   0.179,
+   0.824,
+   0.294
+  ],
+  "e5-base(frozen)": [
+   0.192,
+   0.859,
+   0.314
+  ],
+  "DistilBERT-FT": [
+   0.272,
+   0.859,
+   0.413
+  ],
+  "SciBERT-FT": [
+   0.309,
+   0.883,
+   0.458
+  ],
+  "PubMedBERT-FT": [
+   0.343,
+   0.888,
+   0.495
+  ]
+ },
+ "FWS": {
+  "majority (all-neg)": [
+   0,
+   0.0,
+   0
+  ],
+  "TF-IDF + LogReg": [
+   0.667,
+   0.767,
+   0.714
+  ],
+  "CountBin(1-4) + BernoulliNB": [
+   0.88,
+   0.51,
+   0.646
+  ],
+  "cue-rules only": [
+   0.855,
+   0.559,
+   0.676
+  ],
+  "bge-small frozen + logreg": [
+   0.514,
+   0.82,
+   0.632
+  ]
+ },
+ "SciSentence": {
+  "majority (all-neg)": [
+   0,
+   0.0,
+   0
+  ],
+  "TF-IDF + LogReg": [
+   0.784,
+   0.725,
+   0.753
+  ],
+  "CountBin(1-4) + BernoulliNB": [
+   0.895,
+   0.425,
+   0.576
+  ],
+  "cue-rules only": [
+   1.0,
+   0.15,
+   0.261
+  ],
+  "bge-small frozen + logreg": [
+   0.761,
+   0.875,
+   0.814
+  ]
+ }
+}
