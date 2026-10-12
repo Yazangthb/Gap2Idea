@@ -1,0 +1,7 @@
+{
+ "n": 10,
+ "fullpaper_recall": 0.345,
+ "fullpaper_prec": 0.559,
+ "fullpaper_tok": 6540,
+ "funnel_AB_recall": 0.927
+}
