@@ -50,6 +50,19 @@ Scripts: `stage_c_package/cost_tokens.py` (accounting, no API), `stage_c_package
 - The funnel's **free, local Stage A+B reaches recall 0.93** on the same papers — a small model reading
   ~200 sentences at once misses limitations; localizing first fixes that.
 
+### Full per-stage funnel metrics (same 10 papers: 2,053 sentences, 55 gold)
+| stage | P | R | F1 | kept | gold caught |
+|---|---|---|---|---|---|
+| Stage A (section gate) | 0.110 | **1.000** | 0.199 | 498 | 55/55 |
+| A+B (+ PubMedBERT detector) | 0.468 | 0.927 | 0.622 | 109 | 51/55 |
+| **A+B+C (+ Stage C LLM filter)** | **0.584** | 0.818 | **0.682** | 77 | 45/55 |
+| full-paper LLM (same model) | 0.559 | 0.345 | 0.429 | — | 19/55 |
+
+Each stage does one job: A localizes (recall 1.0, cheap recall-first gate), B narrows (109, recall
+0.93), C filters for precision (0.47→0.58, recall 0.93→0.82). **Full funnel F1 0.68 (R 0.82) vs the
+full-paper LLM's 0.43 (R 0.35)** — higher recall and F1 at a fraction of the cost. Script:
+`stage_c_package/cost_perstage.py`.
+
 ## Conclusion
 **The funnel is both cheaper and higher-recall than full-paper LLM extraction with a comparable model.**
 - Recall: **0.93 (funnel A+B, $0 LLM)** vs **0.35 (full-paper LLM, 6.5k tokens/paper)**.
