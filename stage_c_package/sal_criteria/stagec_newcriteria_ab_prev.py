@@ -33,34 +33,7 @@ MODELS = list(rows[0]["preds"].keys())
 AB = {m: [r["inA"] & r["preds"][m] for r in rows] for m in MODELS}
 
 # --- new keep-biased SAL-criteria prompt (validated in the 3-model sweep) ---
-SYS_SAL = ("You judge whether the «marked» TARGET sentence is a SELF-ACKNOWLEDGED LIMITATION of the "
- "AUTHORS' OWN study, using the SAL annotation criteria. A limitation is a weakness/caveat/bias/"
- "constraint the authors admit about THIS trial, fitting a known category: study design; loose or "
- "narrow population / convenience sampling; single-center or narrow setting; intervention "
- "composite/non-standardized; control (no placebo / active placebo / care-as-usual); outcome measure "
- "excluded/imprecise/unvalidated; missing data or drop-out; small sample / underpowered; randomization "
- "unbalanced/poor/open; blinding (patient or team not blinded); short duration or follow-up; "
- "multiple/post-hoc testing or unadjusted confounding; funding; limited generalizability.\n"
- "DECISION RULE (keep-biased):\n"
- "- keep=true if the TARGET states such a limitation, OR states a consequence ('could introduce bias', "
- "'cannot be assessed', 'results may be confounded', 'risk of type 1 error') whose underlying CAUSE "
- "(no blinding, small sample, single center, multiple testing, short follow-up...) is evident in the "
- "TARGET or its SURROUNDING context. When in doubt and a real weakness of this study is present, keep=true.\n"
- "- keep=false ONLY for CLEAR non-limitations: restated positive results; clinical recommendations; "
- "critique of prior/other work; plain methods description; background; or a bare header like "
- "'This study has several limitations.' with no specific weakness.")
-SHOTS_SAL = [("the lack of a no treatment arm in this study", "YES"),
- ("our study included only a relatively small sample of participants", "YES"),
- ("The absence of masking is most relevant for the assessment of events.", "YES"),
- ("the crossover design and the relatively short treatment periods are limitations", "YES"),
- ("the trial was conducted at a single center", "YES"),
- ("Because outcomes were exploratory, the risk of type 1 error was considerable.", "YES"),
- ("This could have introduced a bias in the results.", "YES"),
- ("This study has several limitations.", "NO"),
- ("The intervention significantly reduced symptoms at 12 weeks.", "NO"),
- ("Clinicians should consider these findings when counseling patients.", "NO"),
- ("Existing methods cannot capture long-range dependencies.", "NO"),
- ("Participants were randomized 1:1 using a computer-generated sequence.", "NO")]
+from gap2idea.pipeline.stage_c_prompts import SAL_SYS as SYS_SAL, SAL_SHOTS as SHOTS_SAL
 
 CLIENT = get_llm_client("yandex"); F = os.environ["YANDEX_FOLDER_ID"].strip()
 MODEL = f"gpt://{F}/yandexgpt-5-lite/latest"

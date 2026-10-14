@@ -53,21 +53,7 @@ if A.stage_c:
     from gap2idea.pipeline.gap_llm_filter import LLMGapFilter
     from gap2idea.pipeline.llm import get_llm_client
     F = os.environ["YANDEX_FOLDER_ID"].strip()
-    SYS_GAP = ("You are a precision filter for RESEARCH-GAP and LIMITATION statements in academic text, "
-     "including related-work sections. KEEP the «marked» sentence if it identifies a limitation, weakness, "
-     "shortcoming, unsolved problem, open challenge, or missing capability — in prior/existing work, a method, "
-     "or the field (need NOT be the authors' own study). DROP it if it merely describes what a work does, gives "
-     "background, states results/findings, or makes a neutral/positive general statement with no gap. When a "
-     "sentence clearly names a shortcoming or unaddressed problem, KEEP.")
-    SHOTS_GAP = [("Existing methods cannot capture long-range dependencies.","YES"),
-     ("However, these approaches do not scale to large graphs.","YES"),
-     ("No prior work has addressed the multilingual setting.","YES"),
-     ("This remains an open problem in the field.","YES"),
-     ("Current benchmarks lack annotations for rare classes.","YES"),
-     ("archjava is an architecture description language on top of java.","NO"),
-     ("The model achieves 92% accuracy on the benchmark.","NO"),
-     ("Smith et al. proposed a transformer-based model for this task.","NO"),
-     ("These tools are widely used in industry.","NO")]
+    from gap2idea.pipeline.stage_c_prompts import GAP_SYS as SYS_GAP, GAP_SHOTS as SHOTS_GAP
     def judge(idxs):
         f = LLMGapFilter(backend="api", model=f"gpt://{F}/yandexgpt-5-lite/latest", mode="validate",
                          client=get_llm_client("yandex"), context_style="inline")

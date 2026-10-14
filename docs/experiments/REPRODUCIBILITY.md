@@ -16,8 +16,8 @@ assuming a rerun used your change.
 | you change… | stale artifact | why | fix |
 |---|---|---|---|
 | **model head** (retrain bge+logreg) | `data/pipeline_head.joblib` | loaded if present (`if cache.exists(): load`) | `rm data/pipeline_head.joblib` (or pass a new `--head` path) → retrains from `data/scibert_prep/train.jsonl` |
-| **detector** for **SAL** experiments | `stage_c_package/sal_criteria/sal_test_allmodels.json` | holds **frozen precomputed** per-sentence predictions for all 8 encoder models; **no regenerator script exists** | needs a (missing) script to recompute predictions; until then SAL funnel / baseline-grid-SAL / cost numbers are locked to the saved predictions |
-| **a Stage C prompt** | the 5 scripts that **inline** `_sys`/`_shots` | they set their own prompt, ignoring the repo default: `breadth_diag.py`, `scisent_recall_first.py`, `sal_criteria/stagec_faithful_pubmed.py`, `stagec_newcriteria_sweep.py`, `stagec_newcriteria_ab_prev.py` | edit the prompt **inside that script**, not `gap_llm_filter.py` |
+| **frozen detector** for **SAL** experiments | `stage_c_package/sal_criteria/sal_test_allmodels.json` | holds precomputed per-sentence predictions | **FIXED:** rerun `python scripts/bench/dump_sal_preds.py --inplace` → regenerates the frozen-encoder columns (reproduces them exactly). *Fine-tuned* columns (PubMedBERT-FT / SciBERT-FT / DistilBERT-FT) still need their GPU checkpoints and are preserved |
+| **a Stage C prompt** | — | — | **FIXED:** all 5 experiment scripts now import from `src/gap2idea/pipeline/stage_c_prompts.py` (`SAL_SYS`/`SAL_SHOTS`, `GAP_SYS`/`GAP_SHOTS`). Edit once there → propagates to every experiment. (Shipped funnel prompts remain in `gap_llm_filter.py`.) |
 | **a Stage C verdict** where a run cached it | any `*_verdicts.json` a script explicitly loads | avoids re-calling the API | delete the cache file before rerun |
 
 ## Practical checklist before a "did my change take effect?" rerun
@@ -29,8 +29,11 @@ assuming a rerun used your change.
 4. Changed a **Stage C model**? → it's a live API arg; reruns recompute (delete any verdict cache).
 5. Result files (`*_results.json`, `*.csv`, `gaps.tsv`) are **overwritten** on rerun — safe to re-run.
 
-## Recommended hardening (not yet done)
-- Add `scripts/bench/dump_sal_preds.py` so the SAL detector predictions regenerate from the current
-  head/checkpoint (removes the biggest pin).
-- Centralize Stage C prompts in one module and have the experiment scripts import them, so a prompt
-  tweak propagates everywhere instead of living in 5 copies.
+## Hardening — DONE (Oct 2026)
+- ✅ `scripts/bench/dump_sal_preds.py` regenerates the frozen-encoder SAL predictions (reproduces the
+  saved columns exactly; FT columns preserved — they need GPU checkpoints).
+- ✅ Stage C experiment prompts centralized in `src/gap2idea/pipeline/stage_c_prompts.py`; all 5 scripts
+  import them, so a prompt tweak propagates on the next rerun.
+
+Remaining pin: the *fine-tuned* SAL detectors (PubMedBERT-FT etc.) still need their checkpoints + GPU to
+regenerate — the headline SAL detector numbers stay fixed to the saved predictions until then.

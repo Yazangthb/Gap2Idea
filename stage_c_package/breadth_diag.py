@@ -89,21 +89,7 @@ ss = sx.Sentence.astype(str).tolist()
 sg = [1 if c in {"LIMITATION","RESEARCH GAP"} else 0 for c in sx.Category]
 sb = stage_b(ss, TARGET); sidx = [i for i,x in enumerate(sb) if x]
 
-SYS_GAP = ("You are a precision filter for RESEARCH-GAP and LIMITATION statements in academic text, "
- "including related-work sections. KEEP the «marked» sentence if it identifies a limitation, weakness, "
- "shortcoming, unsolved problem, open challenge, or missing capability — in prior/existing work, a method, "
- "or the field (it need NOT be the authors' own study). DROP it if it merely describes what a work does, "
- "gives background, states results/findings, or makes a neutral or positive general statement with no gap "
- "or weakness. When a sentence clearly names a shortcoming or an unaddressed problem, KEEP.")
-SHOTS_GAP = [("Existing methods cannot capture long-range dependencies.","YES"),
- ("However, these approaches do not scale to large graphs.","YES"),
- ("No prior work has addressed the multilingual setting.","YES"),
- ("This remains an open problem in the field.","YES"),
- ("Current benchmarks lack annotations for rare classes.","YES"),
- ("archjava is an architecture description language on top of java.","NO"),
- ("The model achieves 92% accuracy on the benchmark.","NO"),
- ("Smith et al. proposed a transformer-based model for this task.","NO"),
- ("These tools are widely used in industry.","NO")]
+from gap2idea.pipeline.stage_c_prompts import GAP_SYS as SYS_GAP, GAP_SHOTS as SHOTS_GAP
 
 for tag, (sp, sh, md) in {"validate (self-ack)": (None,None,"validate"),
                           "GAP-matched prompt": (SYS_GAP,SHOTS_GAP,"validate")}.items():
