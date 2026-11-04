@@ -1,0 +1,105 @@
+%  MDPI MAKE submission — ported section by section from
+%  origin/paper-writing:manuscript/ (generic article draft).
+%  Rules we follow: ../docs/publication/MDPI_MAKE_NOTES.md
+%  Template: official MDPI ACS LaTeX template (res.mdpi.com, v20260911).
+%
+%  Status of each part (update as we port):
+%    [x] Title                [x] Authors/affiliations (supervisor Rustam to be added)
+%    [x] Abstract (188 words) [x] Keywords (8)
+%    [ ] 1 Introduction       [ ] 2 Related Work        [ ] 3 Materials and Methods
+%    [ ] 4 Results            [ ] 5 Discussion          [ ] 6 Conclusions
+%    [ ] Back matter          [ ] Appendix              [ ] References check
+\documentclass[make,article,submit,pdftex,moreauthors]{Definitions/mdpi}
+
+% Extra packages used by the draft's tables/figures (mdpi.cls already loads
+% graphicx, amsmath, booktabs, tabularx, array, multirow, tikz, float, xcolor).
+\usepackage{subcaption}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric}
+
+%=================================================================
+\firstpage{1}
+\makeatletter
+\setcounter{page}{\@firstpage}
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+\datereceived{ }
+\daterevised{ }
+\dateaccepted{ }
+\datepublished{ }
+
+%=================================================================
+% Title
+\Title{Scalable Extraction of Author-Stated Research Gaps: Towards Automated Idea Generation}
+
+% ORCIDs — fill in, then add \orcidA{} etc. after each name in \Author
+\newcommand{\orcidauthorA}{0000-0000-0000-000X} % Yazan Alnakri
+\newcommand{\orcidauthorB}{0000-0000-0000-000X} % Osama Orabi
+\newcommand{\orcidauthorC}{0000-0000-0000-000X} % Hamza Aldaghstany
+
+% Authors (supervisor Rustam ... to be added later as last author)
+\Author{Yazan Alnakri *, Osama Orabi and Hamza Aldaghstany}
+
+\AuthorNames{Yazan Alnakri, Osama Orabi and Hamza Aldaghstany}
+
+% All authors share one affiliation, so no superscripts are needed.
+% TODO: confirm faculty/department and street address.
+\address{%
+Innopolis University, Universitetskaya St. 1, Innopolis 420500, Russia; y.alnakri@innopolis.university (Y.A.); o.orabi@innopolis.university (O.O.); h.aldaghstany@innopolis.university (H.A.)}
+
+\corres{Correspondence: y.alnakri@innopolis.university}
+
+%=================================================================
+% Abstract (<= ~200 words, one paragraph: background, methods, results, conclusion)
+\abstract{Limitation and future-work statements are author-stated research gaps that could seed automated idea generation, but extracting them at scale requires source attribution and controlled processing cost. We study a three-stage funnel: structural localization, a sentence classifier, and a large-language-model (LLM) precision filter applied only to the remaining candidates, which returns source sentences rather than generated descriptions. We evaluate it on full-article limitation detection, future-work recognition, and research-gap sentence classification. On 40 randomized-trial articles (7968 sentences, 205 labelled limitations), localization discards 76.3\% of sentences while retaining 203 positives. A fine-tuned PubMedBERT classifier reaches precision 0.460, recall 0.878, and $F_1$ 0.604; the LLM filter raises precision to 0.580 and $F_1$ to 0.658, with recall falling to 0.761. Filtering only candidates requires an estimated 75,622 input tokens versus 282,846 for full-article prompting, a 3.74-fold reduction that excludes detector computation and output tokens. Baselines, ablations, and prevalence analyses show that method rankings depend on the input condition and target definition. Because prompts were refined on benchmark feedback, LLM results are exploratory, and human validation is documented but not yet completed. The funnel provides a measured precision--recall and cost trade-off for attributable gap extraction, a building block towards automated research idea generation.}
+
+% Keywords (3--10, semicolon-separated)
+\keyword{research gap extraction; limitations; future work; scientific text mining; large language models; LLM filtering; sentence classification; PubMedBERT}
+
+%=================================================================
+\begin{document}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_materials_methods}
+\input{sections/04_results}
+\input{sections/05_discussion}
+\input{sections/06_conclusions}
+
+%=================================================================
+% Back matter (all required for MAKE unless marked optional)
+\vspace{6pt}
+\authorcontributions{TODO (CRediT). All authors have read and agreed to the published version of the manuscript.}
+\funding{This research received no external funding.} % TODO confirm
+\institutionalreview{Not applicable.}
+\informedconsent{Not applicable.}
+\dataavailability{TODO: code + derived annotations at [GitHub/Zenodo DOI]; public-domain sources listed.}
+\acknowledgments{TODO (incl. GenAI statement if applicable).}
+\conflictsofinterest{The authors declare no conflicts of interest.}
+
+\abbreviations{Abbreviations}{%
+The following abbreviations are used in this manuscript:\\
+\noindent
+\begin{tabular}{@{}ll}
+LLM & Large language model\\
+RCT & Randomized controlled trial\\
+\end{tabular}
+}
+
+%=================================================================
+% Appendix (to be ported from sections/07_appendix.tex)
+% \appendixtitles{yes}
+% \appendixstart
+% \appendix
+% \input{sections/07_appendix}
+
+%=================================================================
+\begin{adjustwidth}{-\extralength}{0cm}
+\reftitle{References}
+\bibliography{references}
+\PublishersNote{}
+\end{adjustwidth}
+\end{document}
