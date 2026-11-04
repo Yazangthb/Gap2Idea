@@ -18,6 +18,7 @@ import random
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+import xml.etree.ElementTree as ET
 
 import pandas as pd
 import requests
@@ -121,6 +122,63 @@ def select_from_snapshot(
     if len(keepers) > n:
         keepers = rng.sample(keepers, n)
     return pd.DataFrame(keepers).reset_index(drop=True)
+
+
+# ---------- selection: arXiv API (keyless) ----------
+
+ARXIV_API_URL = "http://export.arxiv.org/api/query"
+
+
+def select_from_arxiv_api(
+    query: str,
+    n: int = 50,
+    categories: set[str] | None = None,
+) -> pd.DataFrame:
+    """Query the public arXiv API (no key required) and return a DataFrame.
+
+    Columns: id (arxiv_id), title, abstract, year, categories. This is a
+    keyless alternative to the Semantic Scholar search path, whose
+    unauthenticated tier is heavily rate-limited (HTTP 429/403).
+    """
+    search = f"all:{query}"
+    if categories:
+        cat_q = " OR ".join(f"cat:{c}" for c in sorted(categories))
+        search = f"({search}) AND ({cat_q})"
+    params = {
+        "search_query": search,
+        "start": 0,
+        "max_results": n,
+        "sortBy": "relevance",
+        "sortOrder": "descending",
+    }
+    log.info("arXiv API search '%s' (max_results=%d)", query, n)
+    r = requests.get(
+        ARXIV_API_URL,
+        params=params,
+        timeout=60,
+        headers={"User-Agent": "gap2idea-research/0.1"},
+    )
+    r.raise_for_status()
+
+    ns = {"a": "http://www.w3.org/2005/Atom"}
+    root = ET.fromstring(r.text)
+    rows = []
+    for e in root.findall("a:entry", ns):
+        raw_id = e.findtext("a:id", default="", namespaces=ns) or ""
+        arx = raw_id.rsplit("/", 1)[-1]          # e.g. 2401.12345v1
+        arx = arx.split("v")[0] if arx else arx  # strip version suffix
+        if not arx:
+            continue
+        title = " ".join((e.findtext("a:title", default="", namespaces=ns) or "").split())
+        abstract = " ".join((e.findtext("a:summary", default="", namespaces=ns) or "").split())
+        year = (e.findtext("a:published", default="", namespaces=ns) or "")[:4]
+        cats = " ".join(c.get("term", "") for c in e.findall("a:category", ns) if c.get("term"))
+        rows.append(
+            {"id": arx, "title": title, "abstract": abstract, "year": year, "categories": cats}
+        )
+    df = pd.DataFrame(rows).drop_duplicates(subset="id").reset_index(drop=True)
+    log.info("Selected %d papers from arXiv API", len(df))
+    return df
 
 
 # ---------- download ----------

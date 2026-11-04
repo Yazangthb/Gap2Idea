@@ -146,3 +146,11 @@ docs/mdpi_latex/*.fls
 docs/mdpi_latex/*.fdb_latexmk
 docs/mdpi_latex/*.pdf
 docs/mdpi_latex/build.log
+
+# External sentence-level datasets (downloaded locally, not committed)
+data/external/
+
+# blinding key for the human-validation study (never push)
+data/gold/*PRIVATE*
+# Office lock files
+~$*

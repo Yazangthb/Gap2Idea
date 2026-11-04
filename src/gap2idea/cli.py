@@ -40,13 +40,15 @@ log = get_logger("gap2idea.cli")
 
 def cmd_select_papers(args):
     from gap2idea.pipeline.arxiv_select import (
-        select_from_semantic_scholar, select_from_snapshot,
+        select_from_arxiv_api, select_from_semantic_scholar, select_from_snapshot,
     )
 
     paths = get_paths(args.root)
     paths.data.mkdir(parents=True, exist_ok=True)
 
-    if args.source == "s2":
+    if args.source == "arxiv":
+        df = select_from_arxiv_api(query=args.query, n=args.n)
+    elif args.source == "s2":
         df = select_from_semantic_scholar(query=args.query, n=args.n)
     else:
         snap = Path(args.snapshot) if args.snapshot else paths.data / "arxiv-metadata-oai-snapshot.json"
@@ -675,7 +677,7 @@ def main():
 
     # select-papers
     sp = sub.add_parser("select-papers", help="Pick a paper corpus")
-    sp.add_argument("--source", choices=["s2", "snapshot"], default="s2")
+    sp.add_argument("--source", choices=["arxiv", "s2", "snapshot"], default="arxiv")
     sp.add_argument("--query", default="machine learning")
     sp.add_argument("--snapshot", default=None, help="Path to arxiv-metadata-oai-snapshot.json")
     sp.add_argument("--cats", default="cs.LG,stat.ML")
