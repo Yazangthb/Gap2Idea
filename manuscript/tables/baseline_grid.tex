@@ -1,0 +1,22 @@
+% Generated offline by revision_audit/verify_minimal.py
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Subset & Method & Precision & Recall & $F_1$ \\
+\midrule
+SAL & majority (all-neg) & 0.000 & 0.000 & 0.000 \\
+SAL & TF-IDF + LogReg & 0.362 & 0.571 & 0.443 \\
+SAL & CountBin(1-4) + BernoulliNB & 0.000 & 0.000 & 0.000 \\
+SAL & cue-rules only & 0.355 & 0.215 & 0.267 \\
+SAL & bge-small frozen + logreg & 0.164 & 0.820 & 0.273 \\
+FWS & majority (all-neg) & 0.000 & 0.000 & 0.000 \\
+FWS & TF-IDF + LogReg & 0.667 & 0.767 & 0.714 \\
+FWS & CountBin(1-4) + BernoulliNB & 0.880 & 0.510 & 0.646 \\
+FWS & cue-rules only & 0.855 & 0.559 & 0.676 \\
+FWS & bge-small frozen + logreg & 0.514 & 0.820 & 0.632 \\
+SciSentence & majority (all-neg) & 0.000 & 0.000 & 0.000 \\
+SciSentence & TF-IDF + LogReg & 0.784 & 0.725 & 0.753 \\
+SciSentence & CountBin(1-4) + BernoulliNB & 0.895 & 0.425 & 0.576 \\
+SciSentence & cue-rules only & 1.000 & 0.150 & 0.261 \\
+SciSentence & bge-small frozen + logreg & 0.761 & 0.875 & 0.814 \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,445 @@
+\section{Methodology}
+\label{S:methodology}
+
+The funnel separates three decisions: which source regions to inspect, which sentences to retain
+as candidates, and which candidates an LLM accepts. We describe the reusable extraction runner
+and identify the configurations used in each experiment. The biomedical experiment substitutes
+in-domain binary detectors for the runner's three-class hybrid head; it is therefore a study of
+the same stage decomposition, not evidence that one unchanged classifier was deployed across all datasets.
+
+\begin{figure}[t]
+\centering
+\input{tikz/pipeline}
+\caption{Workflow from collection and preparation to research-question analysis.
+Counts illustrate the saved SAL realization: recovered
+Discussion/Conclusion tags, a binary PubMedBERT detector, and RCT-prompt verification. Other
+experiments use the configurations in \Cref{S:stage-a,S:stage-b,S:stage-c}; the hybrid runner
+and raw-PDF parsing are not evaluated by these SAL counts.}
+\label{F:pipeline}
+\end{figure}
+
+\subsection{Task definition}
+\label{S:task}
+
+The principal task returns sentences expressing a limitation of the authors' own study or a
+future-work direction associated with that study. A limitation may concern study design, data,
+evaluation, assumptions, or applicability. A future-work statement proposes subsequent research
+rather than merely describing a contribution already made. The system does not determine whether
+an author-stated problem is still open in the wider literature.
+
+Let a parsed article be $D=(s_1,\ldots,s_n)$. Stages produce nested index sets
+\begin{equation}
+ I_C\subseteq I_B\subseteq I_A\subseteq\{1,\ldots,n\}.
+\end{equation}
+An output contains the retained source sentence, paper identifier, predicted type, section label,
+acceptance source, confidence value, and local context. Text is selected rather than rewritten.
+This guarantees extraction from the \emph{parsed representation}, not perfect correspondence to
+PDF typography or correct attribution. Parsing and classification errors remain possible. Rule
+confidence is a fixed value and classifier confidence is a model probability; neither is treated
+as a calibrated measure of factual correctness.
+
+The Sci-Sentence auxiliary experiment uses a different positive definition: Limitation or
+Research Gap, including statements about prior work. Its target-matched verifier permits that
+attribution. These results are reported separately from the principal task. Threats to validity
+can trigger a target-section rule, but no independently evaluated third output class is claimed.
+
+\subsection{Evaluation data and evidence provenance}
+\label{S:data}
+
+\Cref{T:datasets} lists the evaluated subsets rather than conflating them with the size of each
+upstream resource. The principal SAL artifact contains 40 articles, 7,968 ordered sentences, and
+205 limitation labels. Its records include article identifiers, recovered section tags, gold
+labels, and predictions from eight detectors. Section tags were recovered through PMC BioC in the
+original experiment. This reconstruction is held fixed in our offline analysis; its quality is not
+established by the sentence-classification metrics.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Evaluation subsets and the surviving evidence used in the present study.
+``Aggregate'' means that complete row-level predictions were not supplied for independent recomputation.}
+\label{T:datasets}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.3cm}YY@{}}
+\toprule
+Subset & Size / target & Input condition & Evidence \\
+\midrule
+SAL/RCT \citep{lan2024automatic} & 40 articles; 7,968 sentences; 205 limitations & Reconstructed full-article stream; Discussion/Conclusion gate & Sentence labels, eight detector prediction vectors, and 391 verdicts for each of two prompts \\
+SAL cost subset & 10 articles; 2,053 sentences; 55 limitations & Sample restricted to articles with at least two positives & Stage counts and full-article aggregate metrics; token estimates over all 40 articles \\
+FWS \citep{zhang2023fws} & 1,506 sentences; 220 future-work positives & Curated future-work/conclusion material & Aggregate before/after filter metrics \\
+Sci-Sentence \citep{bolanos2025scisentence} & 140 test sentences; 40 Limitation/Research-Gap positives & Curated rhetorical sentences; no localization gate & Aggregate baseline/filter metrics; additional target-matched runs recorded in notes \\
+Internal arXiv reference & 10 articles; 49 mixed-type statements, including 11 limitations and 14 future-work statements & Parsed full articles; LLM-built silver labels & Notebook output and development summaries; original prediction files absent from the minimal snapshot \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The SAL records are a reconstructed evaluation stream, not a new annotation effort. We do not
+assume that an unlabelled sentence is certainly free of a semantically valid limitation, nor
+replace source labels on the basis of an LLM's disagreement. The FWS breadth script removes exact
+training-sentence matches and samples papers with seed~0 until the selected pool reaches about
+1,500 sentences. This sentence exclusion is not proof of complete paper-disjointness.
+Sci-Sentence uses its supplied 140-sentence test partition. Raw upstream files and trained checkpoints are not included in the minimal branch. A
+new regenerator supplies the binary frozen-head recipe; exact checkpoint-level regeneration
+remains distinct from recomputing metrics from the saved predictions.
+
+The internal 49-statement set contains scope, assumption, and open-problem labels in addition to
+the two detector classes. We use its target-specific limitation and future-work recalls only;
+recall over all 49 labels would have a different denominator and a different task definition.
+These labels were produced by an LLM and should be described as silver reference annotations.
+They neither establish human annotation agreement nor support precise system precision, because
+negative sentences were not exhaustively annotated. The original internal reference is separate
+from the older unarXive section-overlap benchmark.
+
+\subsection{Collection, preparation, and label alignment}
+\label{S:preparation}
+
+The workflow begins by selecting a source corpus and recording its document identifiers, native
+annotation units, and intended target. This precedes model selection: a limitation-only biomedical
+benchmark, a future-work sentence collection, and a rhetorical-role corpus cannot be made
+interchangeable merely by giving their positive labels the same name. The public resources
+supply complementary tests of the extraction components; the internal articles exercise parsing
+and transfer under a smaller, less reliable reference. We retain these distinctions when choosing
+eligible inputs and interpreting their outcomes.
+
+For the SAL analysis, the collected material is the saved sentence stream and its recovered
+PMC section metadata. Article identifiers and sentence order connect the gold labels, section gate,
+detector predictions, and verifier verdicts. Preparation therefore preserves the row identities
+through every stage rather than independently resegmenting text for each model. This permits
+paired stage comparisons and prevents a removed sentence from disappearing from the recall
+denominator. The exact upstream reconstruction and any excluded source records must be recovered
+before rebuilding this stream from the original corpus; the present analysis starts from its
+saved 7,968 records.
+
+FWS provides already curated sentences. Its breadth evaluation loads the available test material,
+excludes exact sentence matches to the training text, and selects the documented seeded subset.
+Sci-Sentence supplies a fixed test partition and rhetorical labels; Limitation and Research Gap
+are merged for its binary test. These preprocessing choices are explicit because curated
+sentences test recognition and verification, whereas reconstructed article streams additionally
+test localization. A train/test split should be tracked by article identifiers as well as text:
+exact sentence deduplication alone cannot exclude near duplicates or other sentences from the
+same article.
+
+For raw articles, preparation instead extracts text blocks, identifies headings, segments
+sentences, and associates each sentence with its source section. The PDF libraries provide a
+local, inspectable route that can retain layout cues without requiring an external parsing service.
+The resulting record must preserve enough source information to inspect errors in reading order,
+segmentation, and heading assignment. This route is implemented in the runner, but the SAL
+experiment's recovered tags do not demonstrate its accuracy. We distinguish an error caused by
+an absent candidate region from a detector error on an available sentence.
+
+Label alignment is likewise recorded before scoring. Our principal definition excludes criticism
+of prior work unless the sentence also states a limitation or direction of the present study.
+For example, an authors' statement that their sample covers only one institution fits the
+limitation target; a claim that earlier methods ignore a phenomenon does not automatically fit it.
+A proposal to test a method on additional populations fits future work, while a description of an
+experiment already completed does not. These are illustrative policy examples, not additional
+annotated observations. Sci-Sentence's broader binary target is retained under its own definition;
+its Research Gap labels are not silently reannotated to match the author-only task.
+
+\subsection{Stage A: structural localization}
+\label{S:stage-a}
+
+The reusable runner invokes \texttt{slice\_section\_aware}. It unions the mid-paper-anchor
+localizer with complete sections whose headings name Discussion, Conclusion, Limitations,
+Future Work, or related expressions. The anchor localizer combines spans after target headings,
+inline keyword windows, the terminal tail, and narrow windows around scope/assumption phrases.
+Generic discussion anchors are position-gated; explicit limitation and future-work anchors are
+accepted independently of position. The terminal-window component caps selected units at 160; mid-paper additions and the
+whole-section union can expand that set, so the final localizer has no global 160-sentence cap. The resulting region list removes
+repeated source content according to the implementation's normalized-text keys.
+
+For PDF input, \texttt{pdf\_to\_blocks} uses PyMuPDF, with pdfplumber as a fallback. Font size,
+bold weight, and short-line/numbering cues distinguish headings from body text. The heuristic
+uses a 1.12 body-font size ratio and a twelve-word heading limit. The sentence splitter protects
+common abbreviations and applies text normalization; references and selected terminal headings
+stop the eligible stream. These heuristics can introduce reading-order and sentence-boundary errors.
+
+Structural localization is chosen as a low-cost, high-recall allocation mechanism. It reduces
+how many sentences the detector and verifier inspect while retaining regions where authors often
+qualify results or describe next steps. Whole-section retention protects statements without an
+explicit cue, while anchor windows support less conventional article structures. The choice has
+a direct measurable consequence: any labelled positive removed here is unreachable downstream.
+We therefore assess both compression and positive reachability rather than treating a smaller
+candidate pool alone as evidence of success.
+
+The principal SAL experiment uses a simpler, explicitly distinct realization: retain sentences
+whose recovered section tag is \texttt{DISCUSS} or \texttt{CONCL}. This measures localization
+conditional on supplied section tags. It does not validate automatic heading recovery on PDFs.
+In the FWS curated pool the gate is effectively a pass-through; in Sci-Sentence it is disabled.
+
+\subsection{Stage B: sentence detection}
+\label{S:stage-b}
+\label{S:pipeline}
+
+The reusable hybrid detector combines lexical cues with a frozen sentence encoder and a
+class-weighted logistic regression. If a cue assigns a target label, that label is accepted;
+otherwise the highest-probability classifier label must be a gap type and meet threshold
+$\tau_B$. The cleaned runner uses \texttt{BAAI/bge-small-en-v1.5}, $C=2$, balanced class weights,
+and $\tau_B=0.5$. Its expected training input is a cached self-distilled sentence set; development
+notes describe ACL limitation augmentation. The cache itself is absent from this snapshot. If neither a head nor its training data is available, the runner falls back to
+rules; that fallback must not be reported as a classifier run.
+
+The final Stage-B notebook instead selects a frozen MiniLM-L6 encoder with logistic regression
+trained on Sci-Sentence, FWS, and SAL. These are separate configurations. Its training label map
+collapses Sci-Sentence Research Gap and Extension into the label named \emph{future work} and
+Limitation into \emph{limitation}. This is a proxy mapping: an Extension sentence is not necessarily
+future work. That semantic mismatch is a transfer limitation, not a change to the task definition.
+The development comparison also includes bge-base, e5-base, mpnet, and full fine-tuning of
+DistilBERT, SciBERT, and PubMedBERT~\citep{sanh2019distilbert,beltagy2019scibert,gu2021pubmedbert}.
+Frozen sentence features are obtained through Sentence-Transformers~\citep{reimers2019sentencebert}.
+
+Frozen encoders with a linear head separate semantic representation from task-specific fitting.
+They provide a comparatively small adaptation component and allow several representations to be
+compared without fine-tuning the entire encoder. Balanced class weights counter the dominance of
+non-target training sentences, and logistic regression supplies probabilities for thresholding.
+The regularization parameter and threshold specify the implemented operating point; they are not
+claimed to be universally optimal. Lexical cues offer an explicit path for conventional limitation
+and future-work expressions, but may confuse hypothetical statements, prior-work descriptions,
+and generic conclusions. The semantic head complements this path by recognizing wording beyond
+literal cue matches.
+
+Fine-tuned scientific and biomedical encoders test a different adaptation strategy. Their inclusion
+asks whether representations specialized for scientific text and its domain improve detection on
+the evaluated stream. A detector ranking can reflect domain, training data, optimization, and
+threshold choice simultaneously. Accordingly, the saved-vector comparison answers which recorded
+configuration performed better; it does not isolate pretraining architecture as the sole cause.
+
+In the SAL experiment, Stage~B consists of eight saved binary detector prediction vectors: five
+frozen encoder heads and three fine-tuned encoders. Their names are retained in the result tables.
+The analysis applies Stage~A to those predictions and compares them on the same source labels.
+The supplied \texttt{dump\_sal\_preds.py} regenerates the five frozen columns using normalized
+embeddings, balanced logistic regression ($C=2$, maximum 2,000 iterations), SAL's training CSV,
+and a default positive-probability threshold of 0.5. It parses the list-valued
+\texttt{limitation\_annotation} field and labels a sentence positive if any entry is true.
+It preserves the three fine-tuned columns because their checkpoints are not supplied. The
+notebook describes SAL-specific fitting and threshold tuning, but complete fine-tuning run
+manifests remain unavailable. Thus a specified frozen-head regeneration recipe does not establish
+bit-for-bit reproduction of every saved encoder or fine-tuned checkpoint.
+
+\subsection{Stage C: selective verification}
+\label{S:stage-c}
+
+The API verifier receives candidate sentences and returns structured \texttt{\{id, keep\}}
+judgments. It uses temperature zero, a strict JSON schema, and retries missing batch judgments
+through the single-item path. Empty single-item responses are handled conservatively by keeping
+the candidate; this is a failure policy, not a guarantee of semantic correctness. Surviving
+sentences are not rewritten.
+
+The saved SAL run uses \texttt{yandexgpt-5-lite}, batches of 20 candidate sentences in document
+order, and at most one neighboring sentence on each side within the same article. It judges the
+actual PubMedBERT-positive stream rather than the union of positives from several detectors.
+Two cached prompt configurations are available: the keep-biased RCT prompt, labelled
+\texttt{rct} in the verdict file, and a keep-biased SAL-criteria prompt, labelled \texttt{sal}.
+Their complete target decisions are retained for all 391 candidates. The former depends on a
+historical prompt alias not defined in the minimal branch; the latter's wording is present in
+its experiment script. This provenance difference matters for regenerating API runs.
+
+Verification is placed after detection because inspecting every full article with an LLM spends
+input on a large number of obvious negatives. Local context supplies attribution and temporal cues
+that an isolated candidate may omit: a preceding sentence can identify whose study is discussed,
+and a following sentence can clarify whether an action is proposed or already completed. Keeping
+context within the same article avoids attributing a candidate to an unrelated document. Batching
+amortizes repeated instructions, but may affect attention and judgments; a batch of 20 is the
+recorded configuration, not a demonstrated optimum.
+
+The keep-biased instruction reflects the intended precision--recall trade-off. The verifier should
+remove clear off-target candidates while avoiding unnecessary deletion of valid but indirectly
+worded limitations. We therefore measure both false-positive removal and true-positive retention.
+A better final precision accompanied by a large recall loss is not described as an unqualified
+improvement. Structured identifiers connect decisions to their input rows and make the saved run
+checkable; a well-formed JSON reply itself does not validate the content of those decisions.
+
+The implementation also contains general author-gap and future-work prompt modes. In the
+breadth experiment, FWS uses the future-work mode, whereas the initial Sci-Sentence run uses
+the author-gap mode despite its different attribution target. Target-matched Sci-Sentence prompt
+runs are treated as exploratory adaptation studies. The complete instruction is more than the selected base prompt. The shared batch wrapper
+appends an authors'-own limitation/assumption/scope/future-work decision rule even when the
+experiment overrides the base prompt. In particular, the intended gap-matched base prompt allows
+prior-work gaps while that suffix rejects them. We retain these recorded runs as exploratory
+configurations with conflicting instructions, rather than treating them as clean tests of target
+alignment. The appendix records both layers; silently repairing the wrapper would produce a new
+experiment, not reproduce the saved one.
+
+The deployment runner protects selected cue
+matches in explicit gap sections; the direct SAL verdict experiment judges every binary-detector
+candidate. Batch size, context representation, judging order, and rule protection therefore
+belong to the experiment configuration, not to an assumed universal default. The command-line
+runner inherits a default batch chunk of 40 from \texttt{filter\_gaps}; the direct SAL experiments
+explicitly use 20. The separate library entry point \texttt{extract\_all\_gaps} also restricts
+model-only acceptance by section, unlike the runner's simpler cue-or-head rule. We do not assign
+one implementation's measurements to every entry point.
+
+\subsection{Experimental design and comparisons}
+\label{sec:experimental-design}
+
+The design links each research question to a unit of analysis, a comparison, and a measurable
+answer (\Cref{T:rq-design}). The article is the sampling unit for uncertainty estimation, while
+sentence-level labels determine extraction correctness. Dataset-specific findings are kept
+separate so that differences in input preparation and annotation policy remain visible.
+
+\begin{table}[t]
+\centering\small
+\caption{Operational design and justification for answering each research question.}
+\label{T:rq-design}
+\begin{tabularx}{\linewidth}{@{}p{1cm}YYY@{}}
+\toprule
+RQ & Comparison / analysis & Reported measures & Why these measures fit \\
+\midrule
+RQ1 & Same SAL rows: full detector, A+B, then A+B+C; both saved prompts & Reachability, candidate counts, precision, recall, $F_1$, TP retention, FP removal & Separates where candidates are lost from whether verification improves the surviving set \\
+RQ2 & SAL detectors and classical baselines; auxiliary tasks; alternative references & Target-specific scores, candidate load, positional sensitivity, reference provenance & Separates detector behavior from label policy, reference coverage and test-pool differences \\
+RQ3 & Forty-paper input accounting; separate ten-paper full-article pilot & Summed estimated input tokens and ratio; pilot extraction metrics and failures & Includes prompt/context overhead and checks effectiveness alongside input reduction \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{RQ1: stages on a common full-article stream.}
+We recompute full-stream and A+B detector metrics from all 7,968 SAL records. We then apply the
+cached RCT and SAL-criteria judgments to PubMedBERT's A+B candidates. The recall denominator remains
+all 205 labelled limitations, including the two removed by Stage~A. This prevents conditioning
+end-to-end recall only on reachable positives.
+
+\paragraph{RQ2: detectors and annotation targets.}
+The eight SAL detector vectors are compared under the same localization gate. Separate FWS and
+Sci-Sentence tables use the saved aggregate metrics and explicitly state their input condition.
+Development notes from the internal arXiv set report target-specific recalls and candidate load;
+these are not full prediction-level replications. The aggregate baseline grid includes an all-negative predictor, cue rules, TF-IDF with
+balanced logistic regression ($C=4$), binary one-to-four-gram counts with Bernoulli naive Bayes,
+and normalized bge-small embeddings with balanced logistic regression ($C=2$). Feature extraction
+is fitted on training material. SAL uses the saved full stream; FWS uses a separate seeded
+20\%-of-paper test split; Sci-Sentence uses its supplied test partition. The FWS baseline grid
+and 1,506-sentence breadth pool therefore have different test memberships and are not paired.
+A second development notebook compares TF-IDF/SVM, training-only chi-squared feature selection
+with Bernoulli naive Bayes, frozen heads, and SciBERT fine-tuning on its own grouped splits.
+Those logged tables remain separate from the saved native-prevalence grid.
+
+We do not pool the datasets or compare binary
+positive-class $F_1$ directly with a seven-class or macro-averaged published score.
+
+\paragraph{RQ3: input accounting and a small full-article comparison.}
+The accounting file estimates full-article and selective-verification input on all 40 SAL papers.
+It uses \texttt{cl100k\_base} tokens, includes repeated prompts and surrounding context, and assumes
+per-paper batching at 20 candidates. Prompt/message wrappers contain approximate overhead constants.
+It is not a reconstruction of exact billed requests for the separately cached verifier stream.
+We report summed inputs and their ratio, excluding output tokens, embedding computation, model
+training, and API retries.
+
+The full-article baseline sends numbered article sentences to the same Yandex model and extracts
+returned sentence indices. Its recorded run covers ten articles selected with seed~1 from papers
+having at least two labelled limitations. It uses a separate extraction prompt and does not implement
+chunking or a strong retry policy. Failed/unparseable replies yield no extracted indices. The
+recorded two empty/unparseable cases are part of that baseline's outcome, not removed from its
+reported recall denominator. The small sample is not representative of all papers, and the
+comparison does not isolate localization from prompt and output-format differences.
+
+\paragraph{Selection and uncertainty.}
+Prompts, detector choices, and thresholds were inspected during development, including feedback
+from benchmark subsets later used for reporting. The LLM comparisons are therefore exploratory.
+For the complete SAL prediction/verdict pair, we additionally perform 10,000 paired
+paper-cluster bootstrap resamples, with seed~20261013, recomputing pooled $F_1$ each time.
+Percentile intervals describe variability conditional on the saved predictions. They do not
+correct test-feedback selection, provider drift, or missing training provenance; no confirmatory
+significance or non-inferiority claim is made. Aggregate-only studies receive no invented
+confidence intervals or paired tests.
+
+\subsection{Measures and reproducibility}
+\label{S:measures}
+
+Strict sentence scoring is primary. Positive-class recall measures whether the system finds the
+annotated statements, while precision measures how much of the output a reader can accept under
+the reference policy. Their harmonic mean summarizes the trade-off without concealing the
+individual components. Accuracy would be dominated by the many negative sentences in the full
+SAL stream and is therefore not the headline measure. Candidate counts additionally reveal the
+work passed to subsequent stages, which a classification score alone does not capture.
+
+Paper-cluster resampling preserves dependence among sentences from one article. Treating thousands
+of sentences as independent samples would overlook their shared writing style, topic, and section
+structure. Pairing the same resampled articles across stage configurations makes the difference
+analyzed comparable within each resample. Where only pooled metrics survive, we report those
+metrics at their recorded precision and avoid constructing article-level uncertainty from them.
+
+With $TP$, $FP$, and $FN$ defined against the dataset's labels,
+\begin{equation}
+ P=\frac{TP}{TP+FP},\qquad R=\frac{TP}{TP+FN},\qquad
+ F_1=\frac{2TP}{2TP+FP+FN}.
+\end{equation}
+We report positive-class metrics and the native prevalence of each evaluated subset when that
+denominator is supplied. Development macro-$F_1$ values are labelled separately. Stage-A
+reachability is the proportion of labelled positives retained; compression is the proportion of
+all input sentences removed. Stage-C true-positive retention and false-positive removal are
+computed relative to its input detector and the \emph{same gold labels}; they are not independent
+of annotation error.
+
+For the internal parsed-PDF reference, legacy matching uses normalized token containment at 0.7.
+Token overlap tolerates boundary corruption but does not prove exact quotation or correct labeling.
+We additionally recompute the repository's neighboring-sentence scores for windows $W=1,2$ as a sensitivity analysis: a prediction within $W$ positions of any gold sentence in the same paper contributes to
+precision, and a gold sentence within $W$ positions of any prediction contributes to recall. This heuristic does not adjudicate
+semantic equivalence and can credit multiple nearby predictions. It is not substituted for strict
+scores or for manual review of disputed examples.
+
+For prevalence sensitivity, we reuse the fixed SAL decisions inside the 1,885-sentence section
+pool. All 203 reachable positives are retained and 778 negatives are sampled without replacement,
+giving 981 sentences at approximately 20.7\% prevalence. We average $F_1$ over seeds 0--7 using
+NumPy's default random generator. No new judging occurs after subsampling. This isolates the
+scoring effect of negative sampling conditional on the saved decisions; it is not a reproduction
+of the published authors' checkpoint or exact candidate pool.
+
+\subsection{Reference construction and the human-validation protocol}
+\label{S:reference-protocol}
+
+The branch also documents an expanded model-labelled reference with three positive types:
+limitation, future work, and research gap. The third label permits an unresolved issue in the
+field or prior literature; it does not add a third independently evaluated output class to the
+current two-target detector. The documented collection combines 190 arXiv CS/ML articles with
+the same 40 SAL articles. Separate whole-paper model passes propose sentence indices and short
+quotations. Quote checking is intended to verify source alignment. Agreement on the same type
+forms one tier; an additional model pass adjudicates one-sided or type-disagreement candidates
+to increase coverage. These tiers describe model agreement, not demonstrated human correctness.
+
+Only the datasheet, the generated annotation interface, and its construction/merge utilities
+are supplied. The raw full-corpus labels, model responses, collection manifest, and generation
+scripts referenced by the datasheet are absent. Consequently, its corpus totals and inter-model
+agreement are reported as documented construction statistics, separate from prediction-level
+extraction results. Provider/model identifiers in that document have no accompanying request
+logs or pinned versions; they are not evidence of a particular verified model release.
+
+The implemented human-validation protocol samples four strata: 227 model-labelled limitation
+sentences not labelled in SAL, 15 SAL-positive disagreement items, 60 positive controls, and
+60 negative controls. The generated interface contains 362 numbered targets from 40 articles;
+source/system labels are hidden, context is shown, and source articles are linked. Its builder
+uses seed 13. Two annotators can record a binary decision, a type, and notes. The merge utility
+computes coverage, raw agreement and Cohen's kappa on jointly answered rows; type agreement
+is conditional on both annotators accepting the item as a gap.
+
+The utility also reports consensus-only acceptance proportions and a lenient either-annotator
+proportion. Disagreements are excluded from its consensus-only precision denominators; this is
+not an independent adjudication procedure. The stratum-enriched sample cannot establish
+population precision or full-corpus recall without appropriate sampling treatment and a
+reference for items missed by all models. It covers the biomedical disagreement problem,
+not independent validation of the 190 arXiv papers. No completed annotator exports or scored
+human results are supplied, so this protocol contributes no human-agreement or corrected-precision
+result in the present paper.
+
+\subsection{Artifact-based reproduction}
+\label{S:reproducibility}
+
+The code snapshot examined is the \texttt{minimal} branch at commit \texttt{28a6c2d}. Our offline
+verification records hashes of all 72 tracked files, verifies prediction/verdict coverage and
+accounting totals, and generates the principal and supplementary numerical tables. No new detector training or LLM inference was performed
+for that recomputation. Original experiments used GPU fine-tuning and API-based judging; CPU-capable
+frozen heads are also implemented. Hard-coded machine paths, missing raw training inputs and
+checkpoints, and API aliases ending in \texttt{latest} currently limit exact end-to-end reproduction.
+The experiment prompts for SAL keep-biased and intended gap-matched validation are centralized
+in \texttt{stage\_c\_prompts.py}; shipped prompts remain in \texttt{gap\_llm\_filter.py}.
+The historical RCT alias is still imported from an absent helper. A changed detector stream
+requires new matching verdicts: retaining an old cache after candidate changes is not a valid
+pipeline rerun. The appendix distinguishes these regeneration constraints from the offline
+score recomputation, which requires neither training nor paid inference.
+
+
+\paragraph{Data and artifact availability.}
+The analyzed code and saved outputs are identified by the
+\href{https://github.com/Yazangthb/Gap2Idea/tree/28a6c2dbfad8ad332a66dd11e7b16f74d3ec4267}{repository commit}.
+Public benchmark sources are attributed in \Cref{T:datasets}. The snapshot supplies the principal
+SAL predictions/verdicts and several aggregate results, but not all training inputs, model
+checkpoints, upstream reconstructions or expanded reference labels. Their absence limits
+end-to-end regeneration; it does not prevent reproducing the principal saved-run scores.
+Article text and benchmark data remain subject to their respective source licenses.

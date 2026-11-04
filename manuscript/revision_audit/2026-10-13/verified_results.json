@@ -1,0 +1,215 @@
+{
+  "repo_commit": "66c237a985ebf3351d684b1096ad4d91bf051786",
+  "source_sha256": {
+    "stage_c_package/sal_criteria/sal_test_allmodels.json": "f4cf4d33aa52bd5d4417d4ed2295f24b2f58db70f1059fe1b04bad4f30c83e6d",
+    "stage_c_package/sal_criteria/faithful_pubmed_verdicts.json": "a2c08ab16391efa74029afe298154dd81481509caae137e00257f47a12e8f073",
+    "stage_c_package/cost_tokens.csv": "7354ccade190499a2c96d6d90cef9a0dccb1f916ca1618a619efdb25e89921eb",
+    "stage_c_package/breadth_results.json": "24d0526870c53e8c603041aab2d5e62d5e2d60c179fadf22abc6565f4f08f67f",
+    "stage_c_package/baseline_grid_results.json": "b85af986fe17a969dbbe398e0645e401ea680759c29e7a1f18b86434de84e00b",
+    "stage_c_package/cost_fullpaper_results.json": "8ade951694c4a42990dfc0d22264a1e2358c2a90ec44189ff8a6ae81adc18ad4",
+    "stage_c_package/cost_perstage_results.json": "728252bf498c7cd9c19cb88b4f796a51b1d8948e7964cab90232aeda479227c0"
+  },
+  "SAL": {
+    "n": 7968,
+    "papers": 40,
+    "gold": 205,
+    "A": {
+      "tp": 203,
+      "fp": 1682,
+      "fn": 2,
+      "precision": 0.1076923076923077,
+      "recall": 0.9902439024390244,
+      "f1": 0.19425837320574163
+    },
+    "models": {
+      "MiniLM-L6(frozen)": {
+        "full": {
+          "tp": 151,
+          "fp": 1042,
+          "fn": 54,
+          "precision": 0.12657166806370496,
+          "recall": 0.7365853658536585,
+          "f1": 0.21602288984263232
+        },
+        "AB": {
+          "tp": 149,
+          "fp": 449,
+          "fn": 56,
+          "precision": 0.2491638795986622,
+          "recall": 0.7268292682926829,
+          "f1": 0.3711083437110834
+        }
+      },
+      "mpnet(frozen)": {
+        "full": {
+          "tp": 161,
+          "fp": 785,
+          "fn": 44,
+          "precision": 0.17019027484143764,
+          "recall": 0.7853658536585366,
+          "f1": 0.2797567332754127
+        },
+        "AB": {
+          "tp": 159,
+          "fp": 364,
+          "fn": 46,
+          "precision": 0.30401529636711283,
+          "recall": 0.775609756097561,
+          "f1": 0.4368131868131868
+        }
+      },
+      "bge-small(frozen)": {
+        "full": {
+          "tp": 168,
+          "fp": 819,
+          "fn": 37,
+          "precision": 0.1702127659574468,
+          "recall": 0.8195121951219512,
+          "f1": 0.28187919463087246
+        },
+        "AB": {
+          "tp": 166,
+          "fp": 391,
+          "fn": 39,
+          "precision": 0.2980251346499102,
+          "recall": 0.8097560975609757,
+          "f1": 0.4356955380577428
+        }
+      },
+      "bge-base(frozen)": {
+        "full": {
+          "tp": 169,
+          "fp": 777,
+          "fn": 36,
+          "precision": 0.17864693446088795,
+          "recall": 0.824390243902439,
+          "f1": 0.29365768896611644
+        },
+        "AB": {
+          "tp": 167,
+          "fp": 392,
+          "fn": 38,
+          "precision": 0.29874776386404295,
+          "recall": 0.8146341463414634,
+          "f1": 0.43717277486910994
+        }
+      },
+      "e5-base(frozen)": {
+        "full": {
+          "tp": 176,
+          "fp": 740,
+          "fn": 29,
+          "precision": 0.19213973799126638,
+          "recall": 0.8585365853658536,
+          "f1": 0.31400535236396077
+        },
+        "AB": {
+          "tp": 174,
+          "fp": 383,
+          "fn": 31,
+          "precision": 0.3123877917414722,
+          "recall": 0.848780487804878,
+          "f1": 0.4566929133858268
+        }
+      },
+      "DistilBERT-FT": {
+        "full": {
+          "tp": 176,
+          "fp": 472,
+          "fn": 29,
+          "precision": 0.2716049382716049,
+          "recall": 0.8585365853658536,
+          "f1": 0.4126611957796014
+        },
+        "AB": {
+          "tp": 174,
+          "fp": 287,
+          "fn": 31,
+          "precision": 0.3774403470715835,
+          "recall": 0.848780487804878,
+          "f1": 0.5225225225225225
+        }
+      },
+      "SciBERT-FT": {
+        "full": {
+          "tp": 181,
+          "fp": 404,
+          "fn": 24,
+          "precision": 0.3094017094017094,
+          "recall": 0.8829268292682927,
+          "f1": 0.4582278481012658
+        },
+        "AB": {
+          "tp": 179,
+          "fp": 263,
+          "fn": 26,
+          "precision": 0.40497737556561086,
+          "recall": 0.8731707317073171,
+          "f1": 0.5533230293663061
+        }
+      },
+      "PubMedBERT-FT": {
+        "full": {
+          "tp": 182,
+          "fp": 348,
+          "fn": 23,
+          "precision": 0.3433962264150943,
+          "recall": 0.8878048780487805,
+          "f1": 0.49523809523809526
+        },
+        "AB": {
+          "tp": 180,
+          "fp": 211,
+          "fn": 25,
+          "precision": 0.46035805626598464,
+          "recall": 0.8780487804878049,
+          "f1": 0.6040268456375839
+        }
+      }
+    },
+    "ABC": {
+      "rct": {
+        "tp": 156,
+        "fp": 113,
+        "fn": 49,
+        "precision": 0.5799256505576208,
+        "recall": 0.7609756097560976,
+        "f1": 0.6582278481012658
+      },
+      "sal": {
+        "tp": 148,
+        "fp": 101,
+        "fn": 57,
+        "precision": 0.5943775100401606,
+        "recall": 0.7219512195121951,
+        "f1": 0.6519823788546255
+      }
+    },
+    "conditional_cluster_bootstrap": {
+      "AB": [
+        0.5537918871252204,
+        0.653555219364599
+      ],
+      "ABC_rct": [
+        0.6043478260869565,
+        0.70995670995671
+      ],
+      "paired_difference": [
+        0.025556414883561085,
+        0.08263917455093928
+      ]
+    }
+  },
+  "tokens": {
+    "totals": {
+      "sents": 7968,
+      "gold": 205,
+      "kept_A": 1885,
+      "detpos_B": 391,
+      "full_tokens": 282846,
+      "funnel_tokens": 75622
+    },
+    "ratio": 3.7402607706752002
+  },
+  "analysis_note": "Offline metric recomputation. Bootstrap is descriptive and conditional on saved predictions; prompt selection used test feedback. No new inference or training."
+}

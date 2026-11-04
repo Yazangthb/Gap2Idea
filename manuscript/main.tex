@@ -1,0 +1,197 @@
+\documentclass[11pt, a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\usepackage{graphicx}          % figures
+\usepackage{amsmath, amssymb}  % math
+\usepackage{booktabs}          % nice tables
+\usepackage{array}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\usepackage[expansion=false,nopatch=footnote]{microtype}
+\usepackage{longtable}
+\usepackage{pdflscape}
+% \usepackage{siunitx}           % aligned numbers / units in tables
+\usepackage{caption}
+\usepackage{subcaption}        % subfigures
+\usepackage{float}             % [H] placement
+\usepackage{natbib}            % \citep{}, \citet{}
+\usepackage{tikz}              % vector diagrams
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric}
+\usepackage{hyperref}          % clickable references
+\usepackage{cleveref}          % \Cref{}, \cref{} — load AFTER hyperref
+\usepackage{authblk}           % author/affiliation blocks
+\usepackage{setspace}
+\onehalfspacing
+
+% authblk has no built-in \corrauthor command; define a minimal one that
+% stores the corresponding author's name/e-mail and prints a footnote
+% marker next to their \author entry.
+\newcommand{\corrauthor}[3]{%
+  \affil[#1]{}% no-op placeholder to keep affil numbering intact if needed
+  \gdef\corrauthorname{#2}%
+  \gdef\corrauthoremail{#3}%
+}
+\newcommand{\printcorrauthornote}{%
+  \begingroup\footnotesize\noindent
+  \textsuperscript{*}Corresponding author: \corrauthorname\ (\href{mailto:\corrauthoremail}{\corrauthoremail})
+  \endgroup\par\medskip
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% ---------- Title ----------
+\title{Gap2Idea: A Selective Verification Funnel for Limitations and Future Work}
+% \author[1]{}
+\author[1]{Yazan~Alnakri}
+\author[2]{Osama~Orabi}
+\author[3]{Hamza~aldaghstany}
+\author[4]{Firas~Jolha}
+% \author[5,6]{Giancarlo~Succi}
+
+
+\affil[1]{Innopolis University, Innopolis, Russia (e-mail: y.alnakri@innopolis.university)}
+\affil[2]{Innopolis University, Innopolis, Russia (e-mail: o.orabi@innopolis.university)}
+\affil[3]{Innopolis University, Innopolis, Russia (e-mail: h.aldaghstany@innopolis.university)}
+\affil[4]{Innopolis University, Innopolis, Russia (e-mail: f.jolha@innopolis.university)}
+
+
+
+% \corrauthor[1]{Firas Jolha}{f.jolha@innopolis.university}
+
+\date{4 November 2026}
+
+\begin{document}
+
+\maketitle
+% \printcorrauthornote
+
+\begin{abstract}
+Scientific papers contain limitations and future-work statements that can support literature
+review and research planning, but extracting these statements requires both source attribution
+and control of processing cost. We study a three-stage funnel: structural localization,
+sentence detection, and selective large-language-model (LLM) verification. The implementation
+retains source sentences rather than generating gap descriptions. We evaluate saved experiments
+separately for full-article limitation detection, future-work recognition, and an auxiliary
+literature-gap task. On a 40-article randomized-trial evaluation stream containing 7,968 sentences
+and 205 labelled limitations, localization retains 203 positives while discarding 76.3\% of
+sentences. A fine-tuned PubMedBERT detector then achieves precision 0.460, recall 0.878, and
+$F_1$ 0.604. Selective verification increases precision to 0.580 and $F_1$ to 0.658, while
+reducing recall to 0.761. An estimated input-token comparison on these articles gives
+282,846 tokens for full-article prompting versus 75,622 for selective verification, a
+3.74-fold reduction; this estimate excludes detector computation and output tokens.
+Classical baselines, localization ablations, detector-development studies, and prevalence
+sensitivity analyses show that rankings depend on the input condition and target definition.
+We also document model-labelled reference construction and a human-validation protocol,
+without treating pending annotation as completed evaluation. Because prompts were refined using benchmark feedback, the LLM results
+are exploratory rather than untouched-test estimates. The study establishes a measured
+precision--recall and input-volume trade-off, without claiming general superiority over
+published systems or validation of downstream idea generation.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ---------- Sections ----------
+\input{sections/01_introduction}
+\input{sections/02_related_works}
+\input{sections/03_methodology}
+\input{sections/04_results}
+\input{sections/05_discussion}
+\input{sections/06_conclusion}
+\appendix
+\input{sections/07_appendix}
+
+% ---------- Bibliography ----------
+% plainnat/apalike/unsrtnat work with natbib's \citep / \citet
+\bibliographystyle{plainnat}
+% \bibliography{references}
+\bibliography{references_handnotes}
+
+% ---------- Appendix: Template usage examples ----------
+% Remove this appendix once you no longer need the reference examples below.
+% \appendix
+% \section{Examples}
+% \label{APX:examples}
+
+% This appendix demonstrates the conventions used throughout this template. Copy whichever snippet you need into your own section files, then delete this appendix from your final report.
+
+% \subsection{Figures}
+% Place image files in \texttt{tikz/} and reference them as follows:
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.6\textwidth]{tikz/example_plot.png}
+%     \caption{Example figure. Replace \texttt{tikz/example-plot.png} with
+%     your own file. Refer to it in text with \texttt{\textbackslash Cref\{F:example\}}.}
+%     \label{F:example}
+% \end{figure}
+
+% As \Cref{F:example} shows, cleveref automatically inserts the word "Figure" for you — no need to type it manually.
+
+% \subsection{Tables}
+% For simple tables, use \texttt{booktabs} for clean horizontal rules (avoid vertical rules):
+
+% \begin{table}[H]
+%     \centering
+%     \caption{Example results table.}
+%     \label{T:example}
+%     \begin{tabular}{lcc}
+%         \toprule
+%         Model & Accuracy (\%) & F1-score \\
+%         \midrule
+%         Baseline     & 72.3 & 0.68 \\
+%         Proposed     & \textbf{81.5} & \textbf{0.77} \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% \Cref{T:example} summarizes the comparison between the baseline and the proposed approach. For larger tables, save the \texttt{tabular} environment in its own file under \texttt{tables/} and pull it in with \texttt{\textbackslash input\{tables/your-table\}}.
+
+% \subsection{TikZ figures}
+% Students are encouraged to draw diagrams (flowcharts, experimental designs, architecture diagrams, decision trees, etc.) natively in \LaTeX{} using \texttt{TikZ} rather than pasting in screenshots — this keeps vector-quality, theme-consistent figures that scale cleanly in the PDF.
+
+% \begin{figure}[H]
+%     \centering
+%     \begin{tikzpicture}[
+%         node distance=1.5cm,
+%         every node/.style={draw, rounded corners, align=center, minimum height=0.9cm},
+%         arrow/.style={-{Latex[length=2mm]}}
+%     ]
+%         \node (start) {Collect Data};
+%         \node (process) [right=of start] {Preprocess};
+%         \node (analyze) [right=of process] {Run Experiment};
+%         \node (result)  [right=of analyze] {Analyze Results};
+
+%         \draw[arrow] (start) -- (process);
+%         \draw[arrow] (process) -- (analyze);
+%         \draw[arrow] (analyze) -- (result);
+%     \end{tikzpicture}
+%     \caption{Example TikZ diagram of an experimental pipeline.}
+%     \label{F:tikz-example}
+% \end{figure}
+
+% For more complex diagrams, consider keeping the \texttt{tikzpicture} in its own file under \texttt{tikz/} and \texttt{\textbackslash input\{\}}-ing it, so \texttt{main.tex} stays readable.
+
+% \subsection{Citations}
+% This template uses \texttt{natbib}. Given a BibTeX entry with key \texttt{smith2020}, in \texttt{references.bib}:
+
+% \begin{itemize}
+%     \item \texttt{\textbackslash citep\{smith2020\}} renders as a parenthetical citation, e.g. \citep{smith2020} — use this when the citation is not the grammatical subject of the sentence.
+%     \item \texttt{\textbackslash citet\{smith2020\}} renders as an in-text citation, e.g. \citet{smith2020} found that... — use this when you are directly discussing the authors' work.
+% \end{itemize}
+
+% \noindent\textit{Note:} \texttt{smith2020} is a placeholder key. Add real entries to \texttt{references.bib} before compiling, or these citations will show up as "\texttt{?}".
+
+\end{document}

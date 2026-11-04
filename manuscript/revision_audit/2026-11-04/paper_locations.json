@@ -1,0 +1,210 @@
+{
+  "sec:introduction": {
+    "number": "1",
+    "page": 3
+  },
+  "S:related-works": {
+    "number": "2",
+    "page": 5
+  },
+  "S:rw-background": {
+    "number": "2.1",
+    "page": 5
+  },
+  "S:rw-authorstated": {
+    "number": "2.2",
+    "page": 6
+  },
+  "S:rw-future": {
+    "number": "2.3",
+    "page": 7
+  },
+  "S:rw-methods": {
+    "number": "2.4",
+    "page": 7
+  },
+  "S:rw-gap": {
+    "number": "2.5",
+    "page": 8
+  },
+  "T:related-work": {
+    "number": "1",
+    "page": 9
+  },
+  "S:methodology": {
+    "number": "3",
+    "page": 12
+  },
+  "S:task": {
+    "number": "3.1",
+    "page": 12
+  },
+  "S:data": {
+    "number": "3.2",
+    "page": 12
+  },
+  "F:pipeline": {
+    "number": "1",
+    "page": 13
+  },
+  "S:preparation": {
+    "number": "3.3",
+    "page": 13
+  },
+  "T:datasets": {
+    "number": "2",
+    "page": 14
+  },
+  "S:stage-a": {
+    "number": "3.4",
+    "page": 15
+  },
+  "S:stage-b": {
+    "number": "3.5",
+    "page": 16
+  },
+  "S:pipeline": {
+    "number": "3.5",
+    "page": 16
+  },
+  "S:stage-c": {
+    "number": "3.6",
+    "page": 17
+  },
+  "T:rq-design": {
+    "number": "3",
+    "page": 18
+  },
+  "sec:experimental-design": {
+    "number": "3.7",
+    "page": 18
+  },
+  "S:measures": {
+    "number": "3.8",
+    "page": 19
+  },
+  "S:reference-protocol": {
+    "number": "3.9",
+    "page": 20
+  },
+  "S:reproducibility": {
+    "number": "3.10",
+    "page": 21
+  },
+  "S:results": {
+    "number": "4",
+    "page": 21
+  },
+  "T:sal-stages": {
+    "number": "4",
+    "page": 22
+  },
+  "T:prevalence": {
+    "number": "5",
+    "page": 23
+  },
+  "T:sal-detectors": {
+    "number": "6",
+    "page": 23
+  },
+  "T:baseline-grid": {
+    "number": "7",
+    "page": 24
+  },
+  "T:breadth": {
+    "number": "8",
+    "page": 24
+  },
+  "T:transfer": {
+    "number": "9",
+    "page": 25
+  },
+  "T:tokens": {
+    "number": "10",
+    "page": 26
+  },
+  "T:full-paper": {
+    "number": "11",
+    "page": 26
+  },
+  "S:discussion": {
+    "number": "5",
+    "page": 26
+  },
+  "S:conclusion": {
+    "number": "6",
+    "page": 29
+  },
+  "A:configuration": {
+    "number": "A",
+    "page": 30
+  },
+  "A:implementation": {
+    "number": "A.1",
+    "page": 30
+  },
+  "T:configurations": {
+    "number": "12",
+    "page": 30
+  },
+  "A:development": {
+    "number": "A.2",
+    "page": 31
+  },
+  "T:localizer-development": {
+    "number": "13",
+    "page": 31
+  },
+  "T:localizer-cv": {
+    "number": "14",
+    "page": 31
+  },
+  "T:internal-full": {
+    "number": "15",
+    "page": 32
+  },
+  "T:within-corpus": {
+    "number": "16",
+    "page": 33
+  },
+  "A:verifiers": {
+    "number": "A.3",
+    "page": 34
+  },
+  "T:verifier-sweep": {
+    "number": "17",
+    "page": 34
+  },
+  "T:union-runs": {
+    "number": "18",
+    "page": 34
+  },
+  "A:breadth-adaptation": {
+    "number": "A.4",
+    "page": 35
+  },
+  "T:adaptation": {
+    "number": "19",
+    "page": 35
+  },
+  "T:neighbor": {
+    "number": "20",
+    "page": 35
+  },
+  "A:reference": {
+    "number": "A.5",
+    "page": 36
+  },
+  "T:reference-construction": {
+    "number": "21",
+    "page": 36
+  },
+  "A:prompts": {
+    "number": "A.6",
+    "page": 36
+  },
+  "A:excluded": {
+    "number": "A.7",
+    "page": 38
+  }
+}

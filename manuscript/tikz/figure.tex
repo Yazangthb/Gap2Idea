@@ -1,0 +1,57 @@
+
+% figures/example-tikz.tex
+%
+% A standalone TikZ diagram, kept separate from the section files so that
+% the .tex sources stay readable. Include it inside a figure environment,
+% e.g. from within a section file:
+%
+%   \begin{figure}[H]
+%       \centering
+%       \input{figures/example-tikz}
+%       \caption{Randomized two-group experimental design.}
+%       \label{fig:rct-design}
+%   \end{figure}
+%
+% Requires (already loaded in main.tex):
+%   \usepackage{tikz}
+%   \usetikzlibrary{positioning, arrows.meta, shapes.geometric}
+
+\begin{tikzpicture}[
+    node distance = 1.2cm and 1.8cm,
+    box/.style = {
+        draw, rounded corners, minimum width=3cm, minimum height=1cm,
+        align=center, font=\small
+    },
+    decision/.style = {
+        draw, diamond, aspect=2, minimum width=2.6cm, minimum height=1cm,
+        align=center, font=\small, inner sep=1pt
+    },
+    arrow/.style = {-{Latex[length=2mm]}, thick}
+]
+
+    % --- Nodes ---
+    \node[box] (population) {Target Population\\($N$ units)};
+    \node[decision, below=of population] (randomize) {Random\\Assignment};
+
+    \node[box, below left=1.4cm and 1.2cm of randomize] (control)
+        {Control Group\\(no treatment)};
+    \node[box, below right=1.4cm and 1.2cm of randomize] (treatment)
+        {Treatment Group\\(receives intervention)};
+
+    \node[box, below=1.4cm of control] (measure-c) {Measure Outcome $Y_C$};
+    \node[box, below=1.4cm of treatment] (measure-t) {Measure Outcome $Y_T$};
+
+    \node[box, below=1.6cm of randomize, yshift=-3.0cm,
+          minimum width=4.2cm] (compare)
+        {Compare $Y_T$ vs.\ $Y_C$\\(e.g., two-sample $t$-test)};
+
+    % --- Arrows ---
+    \draw[arrow] (population) -- (randomize);
+    \draw[arrow] (randomize) -| (control);
+    \draw[arrow] (randomize) -| (treatment);
+    \draw[arrow] (control) -- (measure-c);
+    \draw[arrow] (treatment) -- (measure-t);
+    \draw[arrow] (measure-c) |- (compare);
+    \draw[arrow] (measure-t) |- (compare);
+
+\end{tikzpicture}

@@ -1,0 +1,36 @@
+% Three-column workflow; counts are the cached SAL realization, not the PDF runner.
+\begin{tikzpicture}[
+ font=\footnotesize, node distance=3mm,
+ stage/.style={draw=black!65, rounded corners=3pt, align=center, text width=3.25cm,
+ minimum height=1.35cm, inner sep=4pt, line width=.5pt},
+ cell/.style={draw=black!25, rounded corners=2pt, align=left, font=\scriptsize,
+ minimum height=1.35cm, inner sep=4pt},
+ kept/.style={cell,text width=3.15cm}, metric/.style={cell,text width=5.05cm},
+ head/.style={font=\footnotesize\bfseries,align=center},
+ flow/.style={-{Latex[length=2.2mm]},line width=.7pt,black!75}]
+\node[stage,fill=black!6] (data) {\textbf{Collection}\\ Source articles, corpora, and reference labels};
+\node[stage,fill=black!6,below=of data] (prep) {\textbf{Preparation}\\ Align labels, sentence IDs, order, and sections};
+\node[stage,fill=blue!7,below=of prep] (a) {\textbf{Stage A}\\ Structural localization};
+\node[stage,fill=green!9,below=of a] (b) {\textbf{Stage B}\\ Sentence detection};
+\node[stage,fill=orange!13,below=of b] (c) {\textbf{Stage C}\\ Selective LLM verification};
+\node[stage,fill=black!6,below=of c] (out) {\textbf{Output}\\ Retained source sentences and provenance};
+\node[stage,fill=violet!7,below=of out] (analysis) {\textbf{Analysis}\\ Compare stages, targets, and input requirements};
+\foreach \x/\y in {data/prep,prep/a,a/b,b/c,c/out,out/analysis} \draw[flow] (\x)--(\y);
+\node[kept,fill=black!3,right=3mm of data] (kd) {SAL case: 40 articles\\Other tests: FWS, Sci-Sentence, internal arXiv};
+\node[kept,fill=black!3,right=3mm of prep] (kp) {7{,}968 ordered sentences\\205 labelled limitations};
+\node[kept,fill=blue!3,right=3mm of a] (ka) {7{,}968 $\rightarrow$ 1{,}885\\76.3\% of input removed};
+\node[kept,fill=green!4,right=3mm of b] (kb) {1{,}885 $\rightarrow$ 391\\180 labelled positives kept};
+\node[kept,fill=orange!6,right=3mm of c] (kc) {391 $\rightarrow$ 269\\156 labelled positives kept};
+\node[kept,fill=black!3,right=3mm of out] (ko) {269 accepted candidates\\3.38\% of original sentences};
+\node[kept,fill=violet!3,right=3mm of analysis] (kr) {Strict sentence scores\\Paired article resampling\\Separate input accounting};
+\node[metric,fill=black!3,right=3mm of kd] (md) {\textbf{Purpose}: complementary domains and targets; preserve each corpus's annotation policy};
+\node[metric,fill=black!3,right=3mm of kp] (mp) {\textbf{Gold prevalence}: 2.57\%\\Recover section tags; preserve row identity for paired comparisons};
+\node[metric,fill=blue!3,right=3mm of ka] (ma) {\textbf{Reachability}: 203/205 = 0.990\\Discussion/Conclusion gate raises positive prevalence to 10.77\%};
+\node[metric,fill=green!4,right=3mm of kb] (mb) {\textbf{Precision / recall / $F_1$}\\0.460 / 0.878 / 0.604\\SAL realization: binary PubMedBERT};
+\node[metric,fill=orange!6,right=3mm of kc] (mc) {\textbf{Precision / recall / $F_1$}\\0.580 / 0.761 / 0.658\\RCT prompt; batches of 20; local context};
+\node[metric,fill=black!3,right=3mm of ko] (mo) {\textbf{Interpretation}: 156 TP and 113 FP\\Source extraction with classification uncertainty; no claim of gap novelty};
+\node[metric,fill=violet!3,right=3mm of kr] (mr) {\textbf{RQ1}: stage contribution\\\textbf{RQ2}: detector/reference dependence\\\textbf{RQ3}: estimated input efficiency};
+\node[head,above=2mm of data] {Workflow step};
+\node[head,above=2mm of kd] {Data / sentences retained};
+\node[head,above=2mm of md] {Purpose / measurement};
+\end{tikzpicture}

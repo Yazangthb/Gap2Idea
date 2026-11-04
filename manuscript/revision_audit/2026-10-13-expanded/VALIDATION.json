@@ -1,0 +1,17 @@
+{
+  "pages": 30,
+  "cited_works": 28,
+  "numbered_tables": 10,
+  "comparison_studies": 17,
+  "original_comparison_studies_preserved": 13,
+  "pdf_sha256": "24283aca28030ed9be6e642976d95ad9b143c5a2cd3971b833adb4cbd79c7060",
+  "build": "pdflatex, bibtex, repeated pdflatex until cross-references stable",
+  "latex_warnings": [],
+  "fonts": [
+    "Type1"
+  ],
+  "visual_review": "All 30 pages; detailed comparison-table, pipeline and RQ-design inspection; latest table edit rendered and reviewed.",
+  "source_repo_commit": "66c237a985ebf3351d684b1096ad4d91bf051786",
+  "source_repo_status": "",
+  "new_training_or_api_calls": false
+}

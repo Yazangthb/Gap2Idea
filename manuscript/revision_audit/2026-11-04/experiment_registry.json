@@ -1,0 +1,1062 @@
+{
+  "date": "2026-11-04",
+  "commit": "28a6c2dbfad8ad332a66dd11e7b16f74d3ec4267",
+  "experiments": [
+    {
+      "id": "A01",
+      "name": "Terminal versus mid-paper anchors",
+      "evidence": "Executed notebook outputs",
+      "placement": "Main + appendix",
+      "paper_refs": [
+        "S:results",
+        "T:localizer-development"
+      ],
+      "sources": [
+        "stage_a_package/stage_a_all_experiments.ipynb",
+        "stage_a_package/stage_a_final.ipynb"
+      ],
+      "result": "433 -> 559 retained; loc@0.70 0.633 -> 0.857; mixed 49-statement silver reference.",
+      "note": "No raw ten-paper corpus is included; these are preserved outputs, not a rerun."
+    },
+    {
+      "id": "A02",
+      "name": "Whole-section union (v3)",
+      "evidence": "Implementation + notebook narrative",
+      "placement": "Appendix; no new measured row",
+      "paper_refs": [
+        "A:development",
+        "S:stage-a"
+      ],
+      "sources": [
+        "stage_a_package/stage_a_all_experiments.ipynb",
+        "stage_a_package/stage_a_final.ipynb",
+        "src/gap2idea/pipeline/gap_funnel.py"
+      ],
+      "result": "Narrative says v3 matches v2 on fragmented internal blocks.",
+      "note": "Executed side-by-side output contains v1/v2 only; no invented v3 metric."
+    },
+    {
+      "id": "A03",
+      "name": "PDF front end and structured-section alternative",
+      "evidence": "Implemented/demo",
+      "placement": "Method + appendix; no accuracy result",
+      "paper_refs": [
+        "S:stage-a",
+        "A:development"
+      ],
+      "sources": [
+        "stage_a_package/stage_a_final.ipynb",
+        "src/gap2idea/pipeline/sections.py",
+        "src/gap2idea/pipeline/gap_funnel.py"
+      ],
+      "result": "PyMuPDF/pdfplumber front end and GROBID-section slicing implemented.",
+      "note": "No exhaustive PDF heading or parser-comparison accuracy study."
+    },
+    {
+      "id": "A04",
+      "name": "SAL localization split and five-fold partitions",
+      "evidence": "Notebook reference values",
+      "placement": "Main + appendix",
+      "paper_refs": [
+        "T:localizer-cv",
+        "S:results"
+      ],
+      "sources": [
+        "stage_a_package/stage_a_optimization.ipynb"
+      ],
+      "result": "Anchors 0.861 +/- 0.054; whole sections 0.988 +/- 0.020; distinct SAL-training development protocol.",
+      "note": "Token containment and supplied section names; not strict 40-paper test scoring or nested training CV."
+    },
+    {
+      "id": "A05",
+      "name": "Train cue mining and localization cue augmentation",
+      "evidence": "Code + notebook reference",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:localizer-cv",
+        "A:development"
+      ],
+      "sources": [
+        "stage_a_package/stage_a_optimization.ipynb"
+      ],
+      "result": "Cue-augmented reachability 0.880 +/- 0.047; whole-section+cue 0.990 +/- 0.020; split before/after values retained.",
+      "note": "Augmented drop accounting adds overlapping windows; fold cues are not re-mined per fold."
+    },
+    {
+      "id": "A06",
+      "name": "Localizer error localization",
+      "evidence": "Notebook narrative + analysis code",
+      "placement": "Appendix",
+      "paper_refs": [
+        "A:development"
+      ],
+      "sources": [
+        "stage_a_package/stage_a_optimization.ipynb"
+      ],
+      "result": "Discussion/cue-less misses motivate section retention.",
+      "note": "No independent error annotations supplied; no population-level missed-label claim."
+    },
+    {
+      "id": "B01",
+      "name": "Sci-Sentence/FWS fitting: frozen versus full FT",
+      "evidence": "Markdown/notebook logs",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:internal-full"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/RESULTS.md",
+        "stage_b_package/v100_results/ALL_METRICS.md",
+        "stage_b_package/stage_b_all_experiments.ipynb"
+      ],
+      "result": "SF 6,700 training rows; frozen/DistilBERT/SciBERT val macro 0.633/0.745/0.846; per-target transfer retained.",
+      "note": "Do not call transfer drop proof of overfitting alone; no checkpoints/predictions."
+    },
+    {
+      "id": "B02",
+      "name": "Adding SAL and PubMedBERT to mixed training",
+      "evidence": "Markdown/notebook logs",
+      "placement": "Main discussion + appendix",
+      "paper_refs": [
+        "T:internal-full",
+        "T:transfer"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/RESULTS_sal.md",
+        "stage_b_package/v100_results/ALL_METRICS.md",
+        "stage_b_package/stage_b_final.ipynb"
+      ],
+      "result": "SFS 7,706 training rows; bge limitation recovery 0.455 -> 0.545; PubMedBERT pooled val macro 0.890.",
+      "note": "Early per-dataset macro values conflict with consolidated conventions; those columns are not mixed into the paper."
+    },
+    {
+      "id": "B03",
+      "name": "Five frozen encoder sweep",
+      "evidence": "Markdown/notebook logs",
+      "placement": "Main + appendix",
+      "paper_refs": [
+        "T:transfer",
+        "T:internal-full"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/RESULTS_sweep.md",
+        "stage_b_package/v100_results/ALL_METRICS.md",
+        "stage_b_package/stage_b_all_experiments.ipynb"
+      ],
+      "result": "MiniLM limitation/future recovery 0.636/0.857, kept170; full five-encoder target-specific comparisons retained.",
+      "note": "Mixed-denominator recall_all is not the headline target metric."
+    },
+    {
+      "id": "B04",
+      "name": "Rules plus head versus head alone",
+      "evidence": "Markdown logs",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:internal-full"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/ALL_METRICS.md",
+        "stage_b_package/stage_b_all_experiments.ipynb"
+      ],
+      "result": "Nine fits: head-only and hybrid per-target recall.",
+      "note": "Candidate counts are review load, not precision."
+    },
+    {
+      "id": "B05",
+      "name": "MiniLM balancing/resampling/paraphrases",
+      "evidence": "Notebook/log reference",
+      "placement": "Appendix with denominator warning",
+      "paper_refs": [
+        "A:development"
+      ],
+      "sources": [
+        "stage_b_package/stage_b_all_experiments.ipynb",
+        "stage_b_package/v100_results/MODEL_COMPARISON.md"
+      ],
+      "result": "All-49 recovery weighted0.571; no weights0.265; resample0.551; augmented0.571.",
+      "note": "Includes 24 non-target types; no per-type decisions; not a clean two-target efficacy estimate."
+    },
+    {
+      "id": "B06",
+      "name": "Future-work and limitation cue optimization",
+      "evidence": "Notebook reference + shipped rules",
+      "placement": "Appendix",
+      "paper_refs": [
+        "A:development"
+      ],
+      "sources": [
+        "stage_b_package/stage_b_all_experiments.ipynb",
+        "src/gap2idea/pipeline/gap_funnel.py"
+      ],
+      "result": "Curated FWS positive F1 0.585 -> 0.650; SAL cue F1 0.267 -> 0.275.",
+      "note": "Rejected permissive FWS0.694 variant was affected by development selection; excluded as held-out evidence."
+    },
+    {
+      "id": "B07",
+      "name": "FWS within-corpus benchmark development",
+      "evidence": "Notebook reference tables",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:within-corpus"
+      ],
+      "sources": [
+        "stage_b_package/stage_b_model_comparison.ipynb"
+      ],
+      "result": "Balanced grouped holdout: SciBERT macro0.876/positive0.880; six methods.",
+      "note": "Not directly comparable to published-paper scores or the native-prevalence grid; predictions unavailable."
+    },
+    {
+      "id": "B08",
+      "name": "SAL within-corpus benchmark development",
+      "evidence": "Notebook reference tables",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:within-corpus"
+      ],
+      "sources": [
+        "stage_b_package/stage_b_model_comparison.ipynb"
+      ],
+      "result": "New sampled training-article holdout: SciBERT macro0.900/positive0.843; six methods.",
+      "note": "Not directly comparable to published-paper scores or the native-prevalence grid; predictions unavailable."
+    },
+    {
+      "id": "B09",
+      "name": "Sci-Sentence within-corpus benchmark development",
+      "evidence": "Notebook reference tables",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:within-corpus"
+      ],
+      "sources": [
+        "stage_b_package/stage_b_model_comparison.ipynb"
+      ],
+      "result": "Three proxy classes: SciBERT macro0.856; five methods; own grouped split.",
+      "note": "Not directly comparable to published-paper scores or the native-prevalence grid; predictions unavailable."
+    },
+    {
+      "id": "B10",
+      "name": "Native-prevalence classical baseline grid",
+      "evidence": "Saved aggregate JSON",
+      "placement": "Main",
+      "paper_refs": [
+        "T:baseline-grid"
+      ],
+      "sources": [
+        "stage_c_package/baseline_grid.py",
+        "stage_c_package/baseline_grid_results.json",
+        "docs/experiments/comparison_plan.md"
+      ],
+      "result": "All-negative, TF-IDF/LR, binary-count NB, cues and bge/LR on SAL/FWS/Sci-Sentence; all rows retained.",
+      "note": "FWS split differs from breadth pool. SAL separately fitted bge0.273 differs from cached bge0.282."
+    },
+    {
+      "id": "B11",
+      "name": "Legacy self-distillation/ACL-cap recipe",
+      "evidence": "Package README description only",
+      "placement": "Mentioned; performance excluded",
+      "paper_refs": [
+        "A:development",
+        "S:stage-b"
+      ],
+      "sources": [
+        "stage_b_package/README.md",
+        "scripts/run_extraction_pipeline.py"
+      ],
+      "result": "README describes no/600/1500 ACL augmentation; current notebooks instead use public mixtures.",
+      "note": "No completed cap-ablation outputs in this branch; no legacy cache treated as current trained model."
+    },
+    {
+      "id": "B12",
+      "name": "SPECTER2 and regularized fine-tuning",
+      "evidence": "Failed/unrun/proposed",
+      "placement": "Mentioned; no performance claim",
+      "paper_refs": [
+        "A:development"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/RESULTS_sweep.md",
+        "stage_b_package/v100_results/MODEL_COMPARISON.md"
+      ],
+      "result": "SPECTER2 legacy-loading failure; regularized FT proposed.",
+      "note": "Not completed experiments with usable performance results."
+    },
+    {
+      "id": "C01",
+      "name": "Five-judge by three-batch easy SAL probe",
+      "evidence": "Implemented + qualitative reference",
+      "placement": "Appendix; no numerical ranking",
+      "paper_refs": [
+        "A:verifiers"
+      ],
+      "sources": [
+        "stage_c_package/stage_c_all_experiments.ipynb",
+        "stage_c_package/stage_c_final.ipynb"
+      ],
+      "result": "Five configured models; 30+30 sample; batch10/20/40.",
+      "note": "No executed sweep table survives; lite@20 is a documented selection, not a verified optimum."
+    },
+    {
+      "id": "C02",
+      "name": "Stage B -> C SAL prototype and prevalence matching",
+      "evidence": "Implemented notebook; output absent",
+      "placement": "Method history; no extra numerical result",
+      "paper_refs": [
+        "A:verifiers"
+      ],
+      "sources": [
+        "stage_c_package/stage_c_all_experiments.ipynb"
+      ],
+      "result": "Frozen bge prototype; TEST_CAP1500 by default; can run full test.",
+      "note": "References absent bench helpers; cannot assume default smoke run is full-stream evaluation."
+    },
+    {
+      "id": "C03",
+      "name": "SAL section reconstruction and eight-detector comparison",
+      "evidence": "Full row predictions",
+      "placement": "Main; recomputed",
+      "paper_refs": [
+        "T:sal-detectors",
+        "T:sal-stages"
+      ],
+      "sources": [
+        "stage_c_package/sal_criteria/sal_test_allmodels.json",
+        "stage_c_package/stage_c_end_to_end_funnel.ipynb"
+      ],
+      "result": "7,968 rows/40 papers/205 positive; section gate203TP/1,885; all eight detector vectors.",
+      "note": "BioC-conditioned stream, not raw-PDF validation."
+    },
+    {
+      "id": "C04",
+      "name": "Earlier broad-prompt union judging",
+      "evidence": "Notebook reference only",
+      "placement": "Appendix; not headline",
+      "paper_refs": [
+        "A:verifiers"
+      ],
+      "sources": [
+        "stage_c_package/stage_c_end_to_end_funnel.ipynb"
+      ],
+      "result": "Eight logged F1 values, PubMedBERT0.701.",
+      "note": "Different batch membership/configuration; no saved raw union verdicts. Candidate-specific0.658 is principal."
+    },
+    {
+      "id": "C05",
+      "name": "Context/batch/prompt diagnosis",
+      "evidence": "Narrative/log only",
+      "placement": "Appendix; bounded observation",
+      "paper_refs": [
+        "A:verifiers"
+      ],
+      "sources": [
+        "stage_c_package/stage_c_end_to_end_funnel.ipynb",
+        "docs/experiments/sal_stage_c_summary.md"
+      ],
+      "result": "Hard-sample best approximately 0.827; recorded56/60 versus37/60 kept under different batch settings.",
+      "note": "Missing complete configuration/decisions; not a controlled proof of batch/context causality."
+    },
+    {
+      "id": "C06",
+      "name": "Strict SAL-criteria union run across eight detectors",
+      "evidence": "Saved aggregate JSON",
+      "placement": "Main interpretation + appendix",
+      "paper_refs": [
+        "T:union-runs"
+      ],
+      "sources": [
+        "stage_c_package/sal_criteria/funnel_salcriteria_results.json",
+        "stage_c_package/stage_c_end_to_end_funnel.ipynb"
+      ],
+      "result": "All eight rows; PubMedBERT F1 0.568.",
+      "note": "Different judge/run from keep-biased lite; no prompt-only causal attribution."
+    },
+    {
+      "id": "C07",
+      "name": "Three-judge keep-biased hard-sample sweep",
+      "evidence": "Saved aggregate JSON",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:verifier-sweep"
+      ],
+      "sources": [
+        "stage_c_package/sal_criteria/newcriteria_sweep_results.json",
+        "stage_c_package/sal_criteria/stagec_newcriteria_sweep.py"
+      ],
+      "result": "120 candidates, 60+60; lite/pro/5.1 F1 0.789/0.779/0.784; six calls each.",
+      "note": "Selection sample, not full-stream extraction performance; no billed cost/latency ranking."
+    },
+    {
+      "id": "C08",
+      "name": "Two-prompt union judging across eight detectors",
+      "evidence": "Saved aggregate JSON",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:union-runs"
+      ],
+      "sources": [
+        "stage_c_package/sal_criteria/ab_prev_funnel_results.json",
+        "stage_c_package/sal_criteria/stagec_newcriteria_ab_prev.py"
+      ],
+      "result": "All 16 prompt/detector aggregate combinations retained.",
+      "note": "Union pool1,036; batch effects; missing ab_prev_verdicts means only aggregates can be inspected."
+    },
+    {
+      "id": "C09",
+      "name": "Candidate-specific PubMedBERT: two prompts",
+      "evidence": "Full row predictions/verdicts",
+      "placement": "Main; recomputed",
+      "paper_refs": [
+        "T:sal-stages"
+      ],
+      "sources": [
+        "stage_c_package/sal_criteria/faithful_pubmed_verdicts.json",
+        "stage_c_package/sal_criteria/stagec_faithful_pubmed.py"
+      ],
+      "result": "391 candidates; RCT269kept/156TP F1 .658; SAL249/148 F1 .652.",
+      "note": "Bootstrap conditional on saved predictions and test-informed choices; historical RCT helper missing."
+    },
+    {
+      "id": "C10",
+      "name": "Section-pool prevalence sensitivity",
+      "evidence": "Offline replay from saved decisions",
+      "placement": "Main; recomputed",
+      "paper_refs": [
+        "T:prevalence"
+      ],
+      "sources": [
+        "stage_c_package/sal_criteria/stagec_faithful_pubmed.py",
+        "stage_c_package/sal_criteria/faithful_pubmed_verdicts.json"
+      ],
+      "result": "203 positives+778 sampled negatives; eight seeds; AB/RCT/SAL meanF1 .749/.757/.741.",
+      "note": "Scoring sensitivity, not a fresh API run or faithful published checkpoint reproduction."
+    },
+    {
+      "id": "C11",
+      "name": "Neighbor-position sensitivity W0/1/2",
+      "evidence": "Implemented scorer + saved decisions",
+      "placement": "Main + appendix; recomputed",
+      "paper_refs": [
+        "T:neighbor"
+      ],
+      "sources": [
+        "scripts/span_eval.py",
+        "stage_c_package/sal_criteria/sal_test_allmodels.json",
+        "stage_c_package/sal_criteria/faithful_pubmed_verdicts.json"
+      ],
+      "result": "RCT F1 .658/.821/.853 for W0/1/2.",
+      "note": "Many-to-many positional credit, not semantic span truth or improved strict model accuracy."
+    },
+    {
+      "id": "C12",
+      "name": "SAL disagreement/error categorization",
+      "evidence": "Single-reader narrative",
+      "placement": "Discussion + appendix; projected precision excluded",
+      "paper_refs": [
+        "S:discussion",
+        "A:verifiers"
+      ],
+      "sources": [
+        "docs/experiments/sal_stage_c_summary.md",
+        "stage_c_package/stage_c_end_to_end_funnel.ipynb"
+      ],
+      "result": "22/101 FP sample; rough45/36/18% categories; independent human adjudication absent.",
+      "note": "The stated projected precision approximately 0.87 is unsupported. Even reclassifying45% of101FP gives (148+.45*101)/249 = approximately 0.777, not .87; sampling/labels unverified."
+    },
+    {
+      "id": "C13",
+      "name": "Kilicoglu sentence cross-check",
+      "evidence": "Notebook reference only",
+      "placement": "Appendix",
+      "paper_refs": [
+        "A:verifiers"
+      ],
+      "sources": [
+        "stage_c_package/stage_c_end_to_end_funnel.ipynb"
+      ],
+      "result": "n=1,505, approximately 31.8%pos; detectorP/R/F1 .719/.781/.749; +C .876/.503/.639.",
+      "note": "No row decisions or reproduction of original rule baseline; not raw-PDF front-end validation."
+    },
+    {
+      "id": "D01",
+      "name": "FWS breadth funnel",
+      "evidence": "Saved aggregate JSON",
+      "placement": "Main",
+      "paper_refs": [
+        "T:breadth"
+      ],
+      "sources": [
+        "stage_c_package/breadth_results.json",
+        "stage_c_package/breadth_funnel.py"
+      ],
+      "result": "1,506/220 positives; AB F1 .667 -> ABC .707.",
+      "note": "Exact training-sentence exclusions do not prove paper-disjointness; different pool from baseline grid."
+    },
+    {
+      "id": "D02",
+      "name": "Sci-Sentence author-gap breadth run",
+      "evidence": "Saved aggregate JSON",
+      "placement": "Main",
+      "paper_refs": [
+        "T:breadth"
+      ],
+      "sources": [
+        "stage_c_package/breadth_results.json",
+        "stage_c_package/breadth_funnel.py"
+      ],
+      "result": "140/40 positive; .612 -> .600; prior-work target mismatched.",
+      "note": "Not evidence of universally beneficial verification."
+    },
+    {
+      "id": "D03",
+      "name": "Intended gap-matched Sci-Sentence prompt",
+      "evidence": "Markdown logged aggregate + code",
+      "placement": "Main + appendix",
+      "paper_refs": [
+        "T:adaptation"
+      ],
+      "sources": [
+        "docs/experiments/cross_domain_breadth.md",
+        "stage_c_package/breadth_diag.py"
+      ],
+      "result": "P/R/F1 1.000/.575/.730.",
+      "note": "Base allows prior work but shared wrapper rejects it; no raw decisions; exploratory test feedback."
+    },
+    {
+      "id": "D04",
+      "name": "Sci-Sentence in-domain/recall-first adaptation",
+      "evidence": "Markdown logged aggregate + code",
+      "placement": "Main + appendix",
+      "paper_refs": [
+        "T:adaptation"
+      ],
+      "sources": [
+        "docs/experiments/cross_domain_breadth.md",
+        "stage_c_package/scisent_recall_first.py"
+      ],
+      "result": "bge/LR threshold.5 F1 .814; threshold.3 .772; +intended-gap judge .880.",
+      "note": "140-row binary task, not seven-class leaderboard; wrapper conflict; no final untouched test."
+    },
+    {
+      "id": "D05",
+      "name": "FWS in-domain threshold sweep",
+      "evidence": "Implemented, no result output",
+      "placement": "Appendix; no measured row",
+      "paper_refs": [
+        "A:breadth-adaptation"
+      ],
+      "sources": [
+        "stage_c_package/fws_recall_first.py"
+      ],
+      "result": "Threshold.5/.4/.3/.2; optional StageC@.3.",
+      "note": "Different pool from breadth; cannot invent results from script intent."
+    },
+    {
+      "id": "D06",
+      "name": "FWS kept-negative inspection",
+      "evidence": "Implementation + narrative examples",
+      "placement": "Appendix; no corrected scores",
+      "paper_refs": [
+        "A:breadth-adaptation"
+      ],
+      "sources": [
+        "stage_c_package/breadth_diag.py",
+        "docs/experiments/cross_domain_breadth.md"
+      ],
+      "result": "Candidate disagreement inspection.",
+      "note": "Examples are not independently adjudicated gold corrections."
+    },
+    {
+      "id": "E01",
+      "name": "Forty-paper input-token accounting",
+      "evidence": "Saved per-paper CSV",
+      "placement": "Main; recomputed",
+      "paper_refs": [
+        "T:tokens"
+      ],
+      "sources": [
+        "stage_c_package/cost_tokens.csv",
+        "stage_c_package/cost_tokens.py",
+        "docs/experiments/cost_analysis.md"
+      ],
+      "result": "282846/75622=3.7403; input reduction73.3%.",
+      "note": "Estimated cl100k profile with wrappers/context; not billed total cost or faithful request log."
+    },
+    {
+      "id": "E02",
+      "name": "Ten-paper full-article LLM pilot",
+      "evidence": "Saved aggregate JSON + run description",
+      "placement": "Main",
+      "paper_refs": [
+        "T:full-paper"
+      ],
+      "sources": [
+        "stage_c_package/cost_fullpaper_results.json",
+        "stage_c_package/cost_fullpaper.py",
+        "docs/experiments/cost_analysis.md"
+      ],
+      "result": "n10; P .559/R .345; derived F1 approximately 0.427; reported input6540/paper.",
+      "note": "Raw responses unavailable; two parse failures described; no robust chunk/retry baseline. Older .429 F1 corrected."
+    },
+    {
+      "id": "E03",
+      "name": "Ten-paper per-stage funnel",
+      "evidence": "Saved aggregate counts",
+      "placement": "Main; arithmetic verified",
+      "paper_refs": [
+        "T:full-paper"
+      ],
+      "sources": [
+        "stage_c_package/cost_perstage_results.json",
+        "stage_c_package/cost_perstage.py"
+      ],
+      "result": "2053 sentences/55gold; A498/55TP; AB109/51; ABC77/45, F1 .682.",
+      "note": "Same selected ten-paper sample; no combining its actual input with40-paper estimates into a billed ratio."
+    },
+    {
+      "id": "E04",
+      "name": "Batching/caching/long-paper dollar projections",
+      "evidence": "Scenario calculations in notes",
+      "placement": "Discussion only; numerical savings projections excluded",
+      "paper_refs": [
+        "S:discussion"
+      ],
+      "sources": [
+        "docs/experiments/cost_analysis.md"
+      ],
+      "result": "Cross-paper/caching totals64248/55508 and long-paper13.2x are hypothetical profiles.",
+      "note": "No saved scenario request traces, runtime or billing; no measured efficiency claim from projections."
+    },
+    {
+      "id": "G01",
+      "name": "Expanded three-type reference collection",
+      "evidence": "Datasheet-only statistics",
+      "placement": "Method + appendix; explicitly documented",
+      "paper_refs": [
+        "S:reference-protocol",
+        "T:reference-construction"
+      ],
+      "sources": [
+        "annotations/README.md"
+      ],
+      "result": "230 papers/68719 sentences/4462 positives; 190arXiv+40SAL; typed/domain totals reconcile.",
+      "note": "Full manifest/labels, generating scripts and provider logs absent; not a validated released benchmark."
+    },
+    {
+      "id": "G02",
+      "name": "Two-model agreement and adjudication tiers",
+      "evidence": "Datasheet-only statistics",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:reference-construction"
+      ],
+      "sources": [
+        "annotations/README.md"
+      ],
+      "result": "2960 agreement+1502 adjudicated;1737 candidates=1502accepted+235rejected.",
+      "note": "Model-agreement tier is not human confidence calibration; identifiers unverified request metadata."
+    },
+    {
+      "id": "G03",
+      "name": "Inter-model kappa and SAL overlap checks",
+      "evidence": "Datasheet-only statistics",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:reference-construction"
+      ],
+      "sources": [
+        "annotations/README.md"
+      ],
+      "result": "Any-gap kappa.778; typed kappas; SAL binaryrecall.956/limitationrecall.927.",
+      "note": "Not human agreement; not an independent holdout; .927=190/205, typed and binary recall differ."
+    },
+    {
+      "id": "G04",
+      "name": "Third-model check and annotation expenditure",
+      "evidence": "Datasheet-only statistics",
+      "placement": "Appendix",
+      "paper_refs": [
+        "T:reference-construction"
+      ],
+      "sources": [
+        "annotations/README.md"
+      ],
+      "result": "116/227 extras accepted; documented spend approximately USD37.5.",
+      "note": "Another model is not a human gold adjudicator; no request/billing records.227 is not saved-funnel FP count."
+    },
+    {
+      "id": "G05",
+      "name": "Blind human-validation interface",
+      "evidence": "Generated targets + builder",
+      "placement": "Method + appendix; UI counts verified",
+      "paper_refs": [
+        "S:reference-protocol"
+      ],
+      "sources": [
+        "annotations/annotate.html",
+        "scripts/dataset/build_annotate_html.py",
+        "annotations/README.md"
+      ],
+      "result": "362 numbered targets/40papers, no embedded system-label fields; four documented strata; seed13.",
+      "note": "Only biomedical disagreements/control sample; does not validate all190arXiv papers. Builder imports absent gold_label_full."
+    },
+    {
+      "id": "G06",
+      "name": "Human annotation merge/scoring",
+      "evidence": "Implemented; no completed answers",
+      "placement": "Protocol only; human results excluded",
+      "paper_refs": [
+        "S:reference-protocol"
+      ],
+      "sources": [
+        "scripts/dataset/gold_human_merge.py",
+        "annotations/README.md"
+      ],
+      "result": "Coverage,kappa,consensus-only and either-positive summaries implemented.",
+      "note": "No completed exports/key/report supplied. Excluding disagreements is not independent adjudication or population precision."
+    },
+    {
+      "id": "H01",
+      "name": "Alternative19/33-item target-only references",
+      "evidence": "Markdown development logs",
+      "placement": "Main sensitivity + appendix",
+      "paper_refs": [
+        "A:development"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/GOLD_CLEAN_EVAL.md"
+      ],
+      "result": "33:reach23/33/recovery.455;19:reach14/19/recovery.632; different model references on samearticles.",
+      "note": "Incomplete long-paper reading/40k cap; not a system improvement or human benchmark."
+    },
+    {
+      "id": "H02",
+      "name": "49-item silver-reference validation",
+      "evidence": "Markdown development log",
+      "placement": "Method + appendix",
+      "paper_refs": [
+        "S:data",
+        "A:development"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/GOLD_VALIDATION.md"
+      ],
+      "result": "49 source-overlap checks,25target labels,42/49reachable; non-target classes separated.",
+      "note": "Token containment is not a literal quotation proof; no raw49file inbranch; historic paper-folder19item file not assumed same set."
+    },
+    {
+      "id": "H03",
+      "name": "Historical LimGen binary detection",
+      "evidence": "Comparison-note log only",
+      "placement": "Performance excluded",
+      "paper_refs": [
+        "A:excluded"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/MODEL_COMPARISON.md",
+        "docs/experiments/comparison_plan.md"
+      ],
+      "result": "Logged DistilBERT.629/SciBERT.743; source generation corpus repurposed.",
+      "note": "No producing predictions/checkpoints/harness inminimal; not an official detection leaderboard result."
+    },
+    {
+      "id": "H04",
+      "name": "Historical BAGELS positive coverage",
+      "evidence": "Comparison-note log only",
+      "placement": "Performance excluded",
+      "paper_refs": [
+        "A:excluded"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/MODEL_COMPARISON.md",
+        "docs/experiments/comparison_plan.md"
+      ],
+      "result": "Logged coverage .738 -> .434 afterC.",
+      "note": "No producing artifact/harness; coverage cannot establish precision.Study remains in related-workTable1."
+    },
+    {
+      "id": "H05",
+      "name": "Older reconstructed FWS/SAL leaderboard runs",
+      "evidence": "Comparison-note logs",
+      "placement": "Excluded as primary results",
+      "paper_refs": [
+        "A:excluded",
+        "A:development"
+      ],
+      "sources": [
+        "stage_b_package/v100_results/MODEL_COMPARISON.md",
+        "docs/experiments/comparison_plan.md"
+      ],
+      "result": "FWS.879/.877/.864 andSAL.762 -> .810 -> .812 logged.",
+      "note": "Not saved-prediction current protocol; published-paper leakage/SOTA allegations not established by supplied outputs."
+    },
+    {
+      "id": "H06",
+      "name": "Copied corrected legacy audit / N100 / idea tooling",
+      "evidence": "Historical audit prose",
+      "placement": "Excluded from current research evidence",
+      "paper_refs": [
+        "A:excluded"
+      ],
+      "sources": [
+        "stage_a_package/AUDIT_CORRECTED.md"
+      ],
+      "result": "Old refs and local-data claims refer to another checkout.",
+      "note": "No N100 corpus or idea-generation evaluation inminimal; do not resurrect original40-family audit as current evidence."
+    },
+    {
+      "id": "P01",
+      "name": "Additional comparisons, annotation, idea evaluation",
+      "evidence": "Plans or unavailable studies",
+      "placement": "Not completed-result claims",
+      "paper_refs": [
+        "A:excluded"
+      ],
+      "sources": [
+        "PUBLICATION_PLAN.md",
+        "docs/experiments/comparison_plan.md",
+        "docs/experiments/dataset_citation_audit.md"
+      ],
+      "result": "Regularized/cross-provider baselines and64/800studies not evidenced inthissnapshot.",
+      "note": "Citation-reuse counts are a title/abstract scan, not a systematic proof that no shared benchmarks exist."
+    }
+  ],
+  "file_coverage": {
+    ".env.example": [],
+    ".gitignore": [],
+    "PUBLICATION_PLAN.md": [
+      "P01"
+    ],
+    "README.md": [],
+    "annotations/README.md": [
+      "G01",
+      "G02",
+      "G03",
+      "G04",
+      "G05",
+      "G06"
+    ],
+    "annotations/annotate.html": [
+      "G05"
+    ],
+    "docs/experiments/REPRODUCIBILITY.md": [],
+    "docs/experiments/comparison_plan.md": [
+      "B10",
+      "H03",
+      "H04",
+      "H05",
+      "P01"
+    ],
+    "docs/experiments/cost_analysis.md": [
+      "E01",
+      "E02",
+      "E04"
+    ],
+    "docs/experiments/cross_domain_breadth.md": [
+      "D03",
+      "D04",
+      "D06"
+    ],
+    "docs/experiments/dataset_citation_audit.md": [
+      "P01"
+    ],
+    "docs/experiments/sal_stage_c_summary.md": [
+      "C05",
+      "C12"
+    ],
+    "pipeline_package/run_all_stages.ipynb": [],
+    "pyproject.toml": [],
+    "requirements.txt": [],
+    "scripts/bench/dump_sal_preds.py": [],
+    "scripts/dataset/build_annotate_html.py": [
+      "G05"
+    ],
+    "scripts/dataset/gold_human_merge.py": [
+      "G06"
+    ],
+    "scripts/run_extraction_pipeline.py": [
+      "B11"
+    ],
+    "scripts/span_eval.py": [
+      "C11"
+    ],
+    "src/gap2idea/__init__.py": [],
+    "src/gap2idea/pipeline/__init__.py": [],
+    "src/gap2idea/pipeline/gap_funnel.py": [
+      "A02",
+      "A03",
+      "B06"
+    ],
+    "src/gap2idea/pipeline/gap_llm_filter.py": [],
+    "src/gap2idea/pipeline/gap_prefilter.py": [],
+    "src/gap2idea/pipeline/llm.py": [],
+    "src/gap2idea/pipeline/sections.py": [
+      "A03"
+    ],
+    "src/gap2idea/pipeline/stage_c_prompts.py": [],
+    "src/gap2idea/utils.py": [],
+    "stage_a_package/AUDIT_CORRECTED.md": [
+      "H06"
+    ],
+    "stage_a_package/README.md": [],
+    "stage_a_package/stage_a_all_experiments.ipynb": [
+      "A01",
+      "A02"
+    ],
+    "stage_a_package/stage_a_final.ipynb": [
+      "A01",
+      "A02",
+      "A03"
+    ],
+    "stage_a_package/stage_a_optimization.ipynb": [
+      "A04",
+      "A05",
+      "A06"
+    ],
+    "stage_b_package/DATASETS.md": [],
+    "stage_b_package/README.md": [
+      "B11"
+    ],
+    "stage_b_package/stage_b_all_experiments.ipynb": [
+      "B01",
+      "B03",
+      "B04",
+      "B05",
+      "B06"
+    ],
+    "stage_b_package/stage_b_final.ipynb": [
+      "B02"
+    ],
+    "stage_b_package/stage_b_model_comparison.ipynb": [
+      "B07",
+      "B08",
+      "B09"
+    ],
+    "stage_b_package/v100_results/ALL_METRICS.md": [
+      "B01",
+      "B02",
+      "B03",
+      "B04"
+    ],
+    "stage_b_package/v100_results/GOLD_CLEAN_EVAL.md": [
+      "H01"
+    ],
+    "stage_b_package/v100_results/GOLD_VALIDATION.md": [
+      "H02"
+    ],
+    "stage_b_package/v100_results/MODEL_COMPARISON.md": [
+      "B05",
+      "B12",
+      "H03",
+      "H04",
+      "H05"
+    ],
+    "stage_b_package/v100_results/RESULTS.md": [
+      "B01"
+    ],
+    "stage_b_package/v100_results/RESULTS_sal.md": [
+      "B02"
+    ],
+    "stage_b_package/v100_results/RESULTS_sweep.md": [
+      "B03",
+      "B12"
+    ],
+    "stage_c_package/README.md": [],
+    "stage_c_package/baseline_grid.py": [
+      "B10"
+    ],
+    "stage_c_package/baseline_grid_results.json": [
+      "B10"
+    ],
+    "stage_c_package/breadth_diag.py": [
+      "D03",
+      "D06"
+    ],
+    "stage_c_package/breadth_funnel.py": [
+      "D01",
+      "D02"
+    ],
+    "stage_c_package/breadth_results.json": [
+      "D01",
+      "D02"
+    ],
+    "stage_c_package/cost_fullpaper.py": [
+      "E02"
+    ],
+    "stage_c_package/cost_fullpaper_results.json": [
+      "E02"
+    ],
+    "stage_c_package/cost_perstage.py": [
+      "E03"
+    ],
+    "stage_c_package/cost_perstage_results.json": [
+      "E03"
+    ],
+    "stage_c_package/cost_tokens.csv": [
+      "E01"
+    ],
+    "stage_c_package/cost_tokens.py": [
+      "E01"
+    ],
+    "stage_c_package/fws_recall_first.py": [
+      "D05"
+    ],
+    "stage_c_package/sal_criteria/README.md": [],
+    "stage_c_package/sal_criteria/ab_prev_funnel_results.json": [
+      "C08"
+    ],
+    "stage_c_package/sal_criteria/faithful_pubmed_verdicts.json": [
+      "C09",
+      "C10",
+      "C11"
+    ],
+    "stage_c_package/sal_criteria/funnel_salcriteria_results.json": [
+      "C06"
+    ],
+    "stage_c_package/sal_criteria/newcriteria_sweep_results.json": [
+      "C07"
+    ],
+    "stage_c_package/sal_criteria/sal_test_allmodels.json": [
+      "C03",
+      "C11"
+    ],
+    "stage_c_package/sal_criteria/stagec_faithful_pubmed.py": [
+      "C09",
+      "C10"
+    ],
+    "stage_c_package/sal_criteria/stagec_newcriteria_ab_prev.py": [
+      "C08"
+    ],
+    "stage_c_package/sal_criteria/stagec_newcriteria_sweep.py": [
+      "C07"
+    ],
+    "stage_c_package/scisent_recall_first.py": [
+      "D04"
+    ],
+    "stage_c_package/stage_c_all_experiments.ipynb": [
+      "C01",
+      "C02"
+    ],
+    "stage_c_package/stage_c_end_to_end_funnel.ipynb": [
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C12",
+      "C13"
+    ],
+    "stage_c_package/stage_c_final.ipynb": [
+      "C01"
+    ]
+  },
+  "support_notes": {
+    "README.md": "Overview; several historical headlines are superseded by candidate-specific evidence.",
+    "stage_a_package/README.md": "Package overview; source notebooks take precedence over stale v2-only label.",
+    "stage_c_package/README.md": "Package overview; broad0.701 superseded for principal result.",
+    "stage_c_package/sal_criteria/README.md": "Experiment guide; no independent support for corrected precision.",
+    "stage_b_package/DATASETS.md": "Training label maps and resource inventory; checked against notebook transforms.",
+    "docs/experiments/REPRODUCIBILITY.md": "Regeneration and cache constraints; checked against actual scripts.",
+    "scripts/bench/dump_sal_preds.py": "Frozen-head regeneration recipe; preservesFT columns; no inference rerun here.",
+    "src/gap2idea/pipeline/stage_c_prompts.py": "Exact current SAL/GAP base instructions and examples.",
+    "src/gap2idea/pipeline/gap_llm_filter.py": "Verifier request composition, wrapper conflict, schema, fallback and protection behavior.",
+    "pipeline_package/run_all_stages.ipynb": "Runnable demonstration wrapper; no executed research-result output."
+  }
+}

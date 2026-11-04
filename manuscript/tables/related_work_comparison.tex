@@ -1,0 +1,45 @@
+% Restores every study in the original supervisor-required comparison table.
+\begin{landscape}
+\begingroup
+\setstretch{1.04}
+\footnotesize
+\setlength{\tabcolsep}{2.3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{2.65cm}>{\raggedright\arraybackslash}p{2.65cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.5cm}@{}}
+\caption{Selected related work in ascending year order for the cited version. The relevance column explains each connection to the extraction task and research questions. Gap-distribution analysis excludes tests of classifier performance. The final row concerns the evidence reported here.}\label{T:related-work}\\
+\toprule
+\textbf{Study/year} & \textbf{Evaluated domain} & \textbf{Statement type} & \textbf{Statement origin} & \textbf{Approach} & \textbf{Dataset coverage} & \textbf{Processing unit} & \textbf{Gap-distribution analysis} & \textbf{Why related to our study}\\
+\midrule
+\endfirsthead
+\multicolumn{9}{l}{\tablename\ \thetable\ (continued)}\\
+\toprule
+\textbf{Study/year} & \textbf{Evaluated domain} & \textbf{Statement type} & \textbf{Statement origin} & \textbf{Approach} & \textbf{Dataset coverage} & \textbf{Processing unit} & \textbf{Gap-distribution analysis} & \textbf{Why related to our study}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{9}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+2016: Dr. Inventor corpus \citep{fisas2016multilayered} & Computer Graphics & Limitations; future work & Author-stated; separate annotation layers & Human multi-layer annotation & 40 full articles & Sentences in full articles & Descriptive label distributions & Precedent for full-text annotations containing both statement types in distinct layers.\\
+2018: Limitation recognition \citep{kilicoglu2018automatic} & Clinical research & Limitations & Author-stated & Rules; supervised and semi-supervised classification & 1{,}197 source articles & Sentences & Not investigated & Direct precedent for heading/keyword localization and learned author-limitation recognition (RQ1).\\
+2019: Future-research recognition \citep{zhu2019recognizing} & Information science; JASIST & Future work & Author-stated & BERT classification; clustering & JASIST training and application collections & Sentences in full articles & Descriptive cluster analysis & Connects full-text future-work recognition to subsequent thematic analysis (RQ2).\\
+2020: ACL FWS-RC \citep{hao2020acl} & NLP; ACL papers & Future work & Author-stated & Manual annotation; taxonomy & 4{,}024 papers; 3{,}067 future-work sentences & Sentences & Descriptive categories and yearly trends & Provides future-work labels/taxonomy; distinguishes recognition from characterization.\\
+2022: FWS recognition/typing \citep{zhang2023fws} & NLP; academic articles & Future work & Author-stated & Lexical/neural recognition; type classification & Annotated FWS recognition/typing corpora & Sentences & Keyword/content and later-research similarity analysis & Direct recognition comparator; positive/macro/weighted F1 and sample protocols must align.\\
+2024: LimGen \citep{faizullah2024limgen} & NLP; ACL Anthology & Limitations & Generated; author-stated references & Dataset; LLM generation & 4{,}068 papers & Paper & No corpus-level inferential analysis & Source of author-written limitation references; generation and section supervision differ from detection.\\
+2024: Limitation categorization \citep{lan2024automatic} & Biomedical RCT publications & Limitations & Author-stated & PubMedBERT detection and type classification & 200 annotated articles; about 12k in application & Sentences & Corpus distributions; annotated-sample confidence intervals & Provides the principal author-limitation target; distinguishes detection, typing, and corpus analysis.\\
+2024: LLM-SSC \citep{lan2024multilabel} & Biomedicine; computer science; physical/chemical sciences & Rhetorical roles & Author-written text; role labels & LLM prompting and fine-tuning & Multiple abstract datasets & Abstract sequence & Not investigated & Context-aware LLM sentence labeling is adjacent to candidate verification, with different labels.\\
+2024: Problem/method extraction \citep{zhang2024extracting} & NLP & Problem; method & Author-written text; sentence labels & Context-enhanced transformer & 305 abstracts; 74 full papers & Target sentence with adjacent context & Not investigated & Motivates local context for sparse target sentences; problem/method labels are not gap labels.\\
+2024: Cross-domain SSC \citep{brack2024sequential} & Multiple scientific domains & Rhetorical roles & Author text; rhetorical labels & Hierarchical cross-domain multi-task classification & Multiple abstract and full-paper datasets & Sentence sequence & Role and transfer analysis & Motivates detector/context alternatives and explicit transfer conditions (RQ2).\\
+2024: Future work at SOUPS \citep{suray2024future} & Usable security/privacy & Future work & Author-stated & Source-statement and citing-publication analysis & SOUPS proceedings and citing publications & Statement; citing paper & Characterization and subsequent engagement & Motivates later corpus use; recognition alone does not establish a direction remains open.\\
+2025: BAGELS \citep{alazher2025bagels} & NLP; ML; biology & Limitations & Author-stated; reviewer-identified; generated & Rules and parsing; LLM extraction and generation & ACL, NeurIPS, and PeerJ collections & Paper & Corpus-level analysis proposed as future work & Closest extraction/generation precedent; motivates source grounding and section-aware evaluation.\\
+2025: FutureGen \citep{alazher2025futuregen} & NLP; ML & Future work & Author-stated; reviewer directions; generated & LLM extraction; RAG generation & Several thousand ACL/NeurIPS papers & Paper & No corpus-level inferential analysis & Future-work extraction feeds generation; motivates selective input while keeping the tasks distinct.\\
+2025: GAPMAP \citep{salem2025gapmap} & Biomedicine; biodiversity; multi-domain pilot & Knowledge gaps & Explicit; context-inferred & Dataset; LLM gap detection and inference & About 1,500 mixed-unit inputs; small full-text pilot & Paragraph; section; paper & No corpus-level inferential analysis & Clarifies explicit versus inferred gaps and the importance of the input unit.\\
+2025: LimitGen \citep{xu2025llms} & AI; NLP and ICLR papers & Limitations & Synthetic; reviewer-identified & Benchmark; LLM and agent evaluation & Synthetic and reviewer-based benchmark cases & Paper & Descriptive aspect distribution & Defines an adjacent critical-limitation task; reviewer/synthetic targets differ from quoted author claims.\\
+2025: Sci-Sentence \citep{bolanos2025scisentence} & Literature reviews across disciplines & Gap; limitation; other roles & Human rhetorical labels; augmented training text & Seven-class models; LLM/encoder comparisons & 700 human-labelled sentences; augmented variant & Sentence & Rhetorical-class/error analysis & Auxiliary target includes prior-work criticism; requires label/prompt alignment (RQ2).\\
+2026: Tree-of-Concerns \citep{mishra2026tree} & ML; NLP; computer vision & Limitations & Inferred; reviewer/citation references & Hierarchical multi-agent critique & ToC-Bench: 414 papers; 1,905 limitations & Paper & No corpus-level inferential analysis & Addresses unstated critique rather than author-stated extraction; bounds downstream claims.\\
+\midrule
+\textbf{This study} & Biomedical full articles; NLP future work; auxiliary literature gaps & Author limitations/future work; separate auxiliary gap task & Existing author text; dataset-specific labels & Structural localization; detectors; selective LLM verification & 40-article principal SAL stream; separate auxiliary subsets & Source sentence; article-level resampling & Not reported in the present extraction evaluation & Measures stage contribution (RQ1), target dependence (RQ2), and estimated input efficiency (RQ3).\\
+\end{longtable}
+\endgroup
+\end{landscape}

@@ -1,0 +1,258 @@
+\section{Results}
+\label{S:results}
+
+The principal SAL tables are recomputed from saved row-level artifacts. The other tables distinguish
+aggregate result files from development notes. All values describe the recorded configurations;
+none is treated as an untouched-test estimate of a universal final pipeline.
+
+\subsection{RQ1: localization, detection, and verification}
+
+\paragraph{Localizer development.}
+The internal ten-paper notebook retains executed outputs for the terminal-window and
+mid-paper-anchor localizers. The former keeps 433 sentences and the latter 559, while reported
+localization at 0.70 token containment rises from 0.633 to 0.857. Drop rates are 87.3\% and
+83.6\%. This reference includes scope and assumption statements as well as limitations and
+future work; these are region-coverage observations, not strict two-class extraction scores.
+At 0.90 containment, localization is lower (0.429 and 0.633), showing dependence on the overlap
+criterion. Full values and the logged section-aware comparison are in \Cref{A:development}.
+
+The separate SAL-training development notebook reports five grouped-fold summaries of 0.861
+mean reachability for anchor localization and 0.988 for whole target sections. The latter uses
+supplied section names; it does not measure PDF heading recovery. Its cue-augmented count adds
+potentially overlapping windows without full deduplication, so the archived augmented drop rates
+are approximate. These summaries describe a development protocol with token-containment scoring;
+they are not alternative estimates of the strict 40-paper evaluation below.
+
+\paragraph{Fixed SAL test stream.}
+Of 7,968 SAL sentences, 1,885 belong to the recovered Discussion or Conclusion sections.
+This gate discards 76.3\% of the input while retaining 203 of 205 labelled limitations
+(reachability 0.990). Prevalence rises from 2.57\% in the full stream to 10.77\% in the retained
+pool. This is a conditional localization result using recovered tags rather than automatically
+parsed PDF headings.
+
+\begin{table}[t]
+\centering
+\small
+\caption{SAL stage contributions on 40 articles, with all 205 labelled positives in the recall
+denominator. TP denotes retained labelled positives. Both Stage-C rows use complete cached
+judgments on the same 391 PubMedBERT candidates.}
+\label{T:sal-stages}
+\input{tables/sal_stages}
+\end{table}
+
+\Cref{T:sal-stages} shows the resulting trade-off. PubMedBERT after localization retains
+391 sentences, including 180 labelled positives. The RCT verifier removes 98 of the 211 detector
+false positives (46.4\%), but also removes 24 of its 180 true positives. True-positive retention
+is therefore 86.7\%. Precision increases from 0.460 to 0.580; recall decreases from 0.878 to 0.761;
+$F_1$ increases from 0.604 to 0.658. The SAL keep-biased alternative retains fewer sentences
+and achieves slightly higher precision, 0.594, but lower recall, 0.722, and $F_1$, 0.652.
+
+The paired descriptive bootstrap interval for the RCT-prompt $F_1$ change is
+$[0.026,0.083]$, around an observed increase of 0.054. The corresponding intervals for A+B and
+A+B+C are $[0.554,0.654]$ and $[0.604,0.710]$. These intervals concern the saved-run comparison
+only. Prompt refinement used benchmark feedback, so the positive interval does not establish a
+confirmatory generalization claim.
+
+An earlier notebook reports $F_1=0.701$ after judging a union of several detectors' candidates.
+That run and the candidate-specific cached run are not interchangeable, because batch composition
+and prompt configuration differ. We use the latter for the principal result. Nor is our full-stream
+$F_1$ directly comparable to the published 0.821 recognition result of
+\citet{lan2024automatic}, which used a different candidate-selection and model-development protocol.
+
+\begin{table}[t]
+\centering\small
+\caption{SAL prevalence sensitivity with fixed predictions/verdicts. The section pool has
+203 reachable positives; matching retains them and samples 778 negatives, averaging over eight
+seeds. Full-stream scores retain all 205 positives in the recall denominator.}
+\label{T:prevalence}
+\input{tables/sal_prevalence}
+\end{table}
+
+The recomputed prevalence analysis makes this distinction explicit (\Cref{T:prevalence}).
+With negative subsampling to approximately 20.7\%, detector $F_1$ is 0.749, RCT-verified $F_1$
+is 0.757, and SAL-verified $F_1$ is 0.741. Thus the RCT verifier's advantage narrows, and the SAL
+variant no longer improves this measure. These are rescorings of fixed decisions, not new LLM
+runs. They demonstrate dependence on the evaluated negative pool, without establishing a
+universal prevalence threshold at which verification becomes useful.
+
+Other prompt and model experiments have different judging populations. The stored
+120-candidate balanced hard-sample sweep reports $F_1$ of 0.789, 0.779, and 0.784 for the three
+Yandex variants. Aggregate union-candidate runs include the strict SAL result of 0.568 and
+keep-biased SAL result of 0.554 for PubMedBERT; neither replaces its candidate-specific result
+of 0.652. Model, prompt and batch membership differ across some runs, preventing attribution
+of those differences solely to prompt wording. \Cref{A:verifiers} reports these development
+results separately.
+
+\subsection{RQ2: detector and reference dependence}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Eight saved SAL detector vectors scored on the full stream and after the same
+Discussion/Conclusion gate. These are positive-class metrics; the artifact permits metric
+recomputation but does not fully reconstruct each training job.}
+\label{T:sal-detectors}
+\input{tables/sal_detectors}
+\end{table}
+
+Localization raises $F_1$ for every saved SAL detector vector (\Cref{T:sal-detectors}).
+PubMedBERT has the highest A+B $F_1$ in this comparison, followed by SciBERT and DistilBERT.
+The frozen heads retain useful recall but produce more false positives. This supports the
+localization mechanism for these fixed predictions; it does not establish that parameter count,
+pretraining domain, or fine-tuning alone caused the observed ranking.
+
+\paragraph{Classical and frozen baselines.}
+The saved native-prevalence baseline grid is reported in \Cref{T:baseline-grid}. On the full
+SAL stream, TF-IDF/logistic regression has $F_1=0.443$, compared with 0.273 for its separately
+fitted bge-small head; the cached bge-small column in \Cref{T:sal-detectors} has 0.282. These are
+different saved fits, not rounding variants of one run. On the grid's FWS split, TF-IDF/logistic
+regression reaches 0.714, and on binary Sci-Sentence the in-domain bge-small head reaches 0.814.
+All-negative predictions have zero positive-class $F_1$. These results establish useful
+classical baselines and show why encoder size alone is an inadequate explanation of performance.
+The FWS grid score must not be treated as a paired comparison with the 0.707 breadth result,
+because their test pools differ.
+
+\begin{table}[t]
+\centering\small
+\caption{Saved baseline-grid aggregates: positive-class metrics. SAL uses the 7,968-row full
+stream; FWS uses a separate paper-level 20\% holdout, whose exact test count is not stored in
+the aggregate; SciSentence uses the supplied 140-row binary test.}
+\label{T:baseline-grid}
+\input{tables/baseline_grid}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Aggregate breadth results. FWS targets author-stated future work; Sci-Sentence merges
+Limitation and Research Gap and includes prior-work criticism. Neither row evaluates raw-PDF
+localization. The Sci-Sentence filter here uses the author-gap prompt and is deliberately
+reported as a target mismatch.}
+\label{T:breadth}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Subset & Configuration & Precision & Recall & $F_1$ \\
+\midrule
+FWS ($n=1{,}506$) & A+B & 0.723 & 0.618 & 0.667 \\
+ & A+B+C, future-work prompt & 0.843 & 0.609 & 0.707 \\
+Sci-Sentence ($n=140$) & Detector & 0.578 & 0.650 & 0.612 \\
+ & Detector+C, author-gap prompt & 0.900 & 0.450 & 0.600 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The aggregate FWS run raises precision with little recorded recall loss, whereas the
+Sci-Sentence run raises precision at a larger recall cost and slightly reduces $F_1$
+(\Cref{T:breadth}). The latter's label definition permits prior-work gaps that an author-gap
+prompt rejects. Subsequent notes record target-matched prompt and in-domain threshold adaptation,
+but complete decisions for those additional runs are not available in the supplied snapshot.
+The development log reports $F_1=0.730$ for the intended gap-matched prompt with the existing
+cross-domain detector, and 0.880 for an in-domain bge-small head at threshold 0.3 followed by
+that prompt. Before verification, the latter retains 39 of 40 positives among 61 candidates;
+after verification it retains 33 positives among 35 candidates. These logged counts are
+arithmetically consistent with precision 0.943 and recall 0.825, but their full decisions are
+not supplied. The contradictory shared prompt suffix described in \Cref{S:stage-c}, together
+with test-informed development, limits interpretation as a clean policy-alignment experiment.
+\Cref{A:breadth-adaptation} records the configurations; none is an independent confirmation
+that the verifier is nearly error-free.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Internal arXiv development notes, restricted to the 11 limitation and 14 future-work
+reference statements. The 49-statement mixed-type denominator is not used. Retained-sentence
+counts indicate candidate load, not validated precision. No new training replication was performed.}
+\label{T:transfer}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Rules + detector & \shortstack{Limitation\\recall} & \shortstack{Future-work\\recall} & \shortstack{Retained\\sentences} \\
+\midrule
+bge-small (frozen; mixed-source training) & 0.545 & 0.786 & 97 \\
+MiniLM-L6 (frozen; mixed-source training) & 0.636 & 0.857 & 170 \\
+mpnet (frozen; mixed-source training) & 0.455 & 0.786 & 186 \\
+PubMedBERT (fine-tuned; mixed-source training) & 0.364 & 0.714 & 65 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The internal reference illustrates a different operating-point trade-off
+(\Cref{T:transfer}). MiniLM retains more target statements and more candidates than bge-small.
+The full fine-tuned model has lower recorded target recall on this small silver set. The result
+cannot establish that frozen encoders generally transfer better: the set is small, its reference
+coverage is incomplete, training-label mappings differ from the principal task, and precision
+was not independently measured. It also explains why the selected development notebook and the
+portable runner currently name different default heads. The complete logged head-only and
+hybrid comparisons, class-balancing checks, and within-corpus benchmark tables are retained in
+\Cref{A:development}. Validation macro-$F_1$ and positive-reference recovery answer different
+questions. Lower recovery after transfer is compatible with distribution shift, label-policy
+mismatch, incomplete silver references, or overfitting; these observations do not isolate one
+cause or establish a universal frozen-versus-fine-tuned ranking.
+
+Alternative references further change the interpretation. The development notes describe a
+33-statement two-target model reference and a stricter 19-statement reference. MiniLM's reported
+recovery changes from 0.455 to 0.632, while Stage-A reachability changes from 23/33 to 14/19.
+The latter reference was collected with incomplete reading of three long papers. This is
+sensitivity to annotation coverage and policy on the same articles, not a measured system
+improvement. The larger documented 230-paper reference and its pending human protocol are
+summarized in \Cref{A:reference}. They supply no completed human accuracy result.
+
+Neighbor-position scoring on the saved SAL stream also changes the numbers. For A+B, $F_1$
+rises from 0.604 under strict scoring to 0.743 at $W=1$; RCT-verified output rises from 0.658 to
+0.821. The latter number is coincidentally equal, after rounding, to the published SAL detector
+score under a different protocol. It is not evidence of matching that system. Neighbor scoring
+can credit multiple predictions around one gold sentence and does not establish semantic
+correctness or repaired annotations (\Cref{T:neighbor}).
+
+\subsection{RQ3: input volume and full-article prompting}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Estimated input volume over the 40 SAL articles. The accounting includes repeated
+verification prompts and local context, using \texttt{cl100k\_base} and approximate wrapper
+constants. It excludes output tokens, inference latency, local detector work, and retries.}
+\label{T:tokens}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Input accounting & Total input tokens & Mean per article \\
+\midrule
+Full-article prompting & 282,846 & 7,071.2 \\
+Selective verification & 75,622 & 1,890.6 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The accounting file gives a ratio of $282{,}846/75{,}622=3.740$,
+a 73.3\% reduction in estimated LLM input (\Cref{T:tokens}). Only 391 of 7,968 source sentences
+reach verification, about 9.8 candidates per article. The token ratio is smaller than the
+sentence-count ratio because repeated prompts and neighboring context contribute substantial
+overhead. It is not a measured monetary saving, throughput increase, or constant per-article cost.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Recorded ten-article SAL comparison: 2,053 sentences and 55 positives, sampled from
+articles having at least two labelled limitations. The complete stage-count file survives;
+full-article extraction survives as aggregate precision/recall and mean API input only.
+The baseline $F_1$ is approximately 0.427, computed from its rounded precision and recall.}
+\label{T:full-paper}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Configuration & Kept & Precision & Recall & $F_1$ \\
+\midrule
+Stage A & 498 & 0.110 & 1.000 & 0.199 \\
+A+B: PubMedBERT & 109 & 0.468 & 0.927 & 0.622 \\
+A+B+C: RCT verifier & 77 & 0.584 & 0.818 & 0.682 \\
+Full-article LLM & --- & 0.559 & 0.345 & $\approx$0.427 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In this selected sample, A+B+C has higher recorded recall and $F_1$ than the full-article
+baseline using the same model family (\Cref{T:full-paper}). The baseline's mean reported API input
+is 6,540 tokens per article, while the 40-article accounting table concerns a different sample
+and an estimated rather than billed input measure. We do not combine those two measures into a
+sample-specific cost ratio. The baseline also lacks a robust chunking/retry protocol; two replies
+were recorded as empty or unparseable. Consequently, the comparison includes both semantic
+extraction and response-format robustness and is not evidence that a well-engineered full-article
+LLM baseline, or a stronger model, would have the same performance.

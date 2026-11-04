@@ -1,0 +1,121 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Research papers often tell their readers where a study falls short and what should be investigated
+next. In clinical research, self-acknowledged limitations help readers interpret findings in light
+of study design, data, and applicability~\citep{kilicoglu2018automatic}. In other disciplines,
+future-work statements identify extensions, unresolved questions, and further evaluations that
+authors consider worth pursuing~\citep{zhu2019recognizing,zhang2023fws}. We refer to these passages
+as \emph{author-stated research gaps}: limitations and future-work directions expressed about the
+authors' own work. Their extraction provides a way to make this information searchable without
+requiring a model to invent a criticism or a research direction.
+
+A collection of such statements can support several activities. A researcher may look for
+recurring restrictions in evaluation, identify settings that authors have left untested, or
+compare how studies describe future directions. A reviewer may use extracted statements to
+locate the authors' discussion of evidence and applicability. Corpus-level work already analyzes
+limitation reporting and future-work categories, and traces whether later publications engage
+with earlier research directions~\citep{lan2024automatic,hao2020acl,suray2024future}. These uses
+motivate a reliable extraction layer, but their interpretation remains conditional: an author's
+statement records a reported limitation or direction, not an independently established open
+problem. Later work may have addressed it, and the author may not have acknowledged every
+important weakness.
+
+The first challenge is therefore definitional. A sentence criticizing prior research can be
+useful in a literature review yet lie outside the extraction of a study's own limitations.
+Similarly, a statement about how the current paper extends earlier work need not describe
+future research. Annotation schemes distinguish these functions in different ways. Argumentative
+zoning and scientific-concept annotation include categories related to gaps, failures, and future
+work~\citep{liakata2010corpora}, while full-text resources annotate limitations and rhetorical
+roles in separate layers~\citep{fisas2016multilayered}. Sci-Sentence provides explicit
+Research Gap, Limitation, and Extension categories for literature-review analysis~\citep{bolanos2025scisentence}.
+Their names are related to our objective, but their definitions and attribution targets are not
+interchangeable. An extraction study must state which source claims count before comparing methods.
+
+The second challenge is structural. Authors may place limitations in a dedicated section,
+within a discussion or conclusion, or alongside a particular methodological choice. Dedicated
+sections facilitate localization, but their surrounding text also contains results, mitigation,
+contribution claims, and descriptions of other studies. Restricting attention to terminal
+sections can remove irrelevant material cheaply, while also excluding mid-paper statements.
+PDF reading order, broken hyphenation, and sentence boundaries add a further source of error.
+A correct sentence classifier cannot recover a gold statement that the parser or localizer has
+already omitted. Evaluating localization and detection separately is therefore necessary to
+understand the recall of the complete system.
+
+Prior extraction work provides useful precedents. Clinical limitation recognition uses headings,
+lexical cues, and supervised or semi-supervised classifiers~\citep{kilicoglu2018automatic}.
+Later work on randomized controlled trials (RCTs) separates limitation-sentence detection from
+classification into limitation types~\citep{lan2024automatic}. Future-research recognition in
+JASIST articles and future-work recognition in NLP similarly separate locating relevant sentences
+from grouping or classifying their content~\citep{zhu2019recognizing,zhang2023fws}.
+These studies motivate the use of inexpensive structural and lexical evidence before more
+flexible semantic classification. They do not imply that one detector transfers equally well
+between biomedical full articles, NLP conclusions, and literature-review sentences.
+
+Large language models (LLMs) offer another route, but they introduce a distinct allocation problem.
+A full-article prompt presents many sentences unrelated to the extraction target, whereas a
+candidate-only prompt depends on the recall of the earlier stages. LLM-based work also combines
+source extraction with generation: LimGen uses author-written limitation sections as reference
+material, BAGELS evaluates limitation extraction and generation, and FutureGen extracts and
+then generates future-work text~\citep{faizullah2024limgen,alazher2025bagels,alazher2025futuregen}.
+Critical-limitation and unstated-limitation studies instead ask models to identify weaknesses
+that may not have been explicitly acknowledged~\citep{xu2025llms,mishra2026tree}.
+The ability to produce a plausible criticism does not establish the ability to identify an
+existing author-stated sentence. Our objective is the latter, with source attribution retained.
+
+We investigate a \emph{selective verification funnel} that divides this extraction task into
+three stages. Stage~A selects candidate regions using document structure. Stage~B combines sentence
+detection, with lexical cues in the hybrid configuration. Stage~C optionally asks an LLM to verify the surviving candidates
+against the task's attribution policy. Each stage selects existing parsed sentences rather than
+rewriting them. This design makes the consequences of compression visible: we can measure how
+many labelled positives remain after localization, how many candidates the detector passes on,
+and which true and false positives the verifier removes.
+
+The present experiments examine this mechanism under several distinct input conditions. The
+principal analysis uses reconstructed full-article SAL records from biomedical RCT reports, with
+complete saved detector predictions and verifier decisions. Separate studies concern curated
+future-work sentences in NLP, a literature-gap classification task, and a small arXiv development
+reference. Development studies further compare localizer variants, lexical baselines, class
+balancing, and alternative reference sets. A documented model-labelled corpus and its implemented
+human-validation workflow are distinguished from completed human evaluation. We also compare estimated LLM input and a recorded small full-article prompting baseline.
+Dataset-specific labels, prevalence, and processing units are kept explicit because pooling them
+would obscure what each experiment measures. These experiments concern extraction and its
+processing requirements; corpus-level characterization is a separate empirical objective.
+
+\paragraph{Research questions.}
+We ask three questions for the evidence reported in this paper:
+\begin{itemize}
+  \item \textbf{RQ1 (Stage contribution).} How do structural localization, sentence detection,
+        and selective LLM verification change limitation-detection precision, recall, and $F_1$
+        on a full-article stream?
+  \item \textbf{RQ2 (Detector and reference dependence).} How does the observed trade-off vary
+        across detector families, annotation targets, and reference construction, including
+        author-stated future work and literature-gap recognition?
+  \item \textbf{RQ3 (Input efficiency).} How much LLM input is avoided by selecting candidate
+        sentences, and what effectiveness is recorded in a same-model full-article comparison?
+\end{itemize}
+
+\paragraph{Contributions.}
+The study makes three contributions:
+\begin{enumerate}
+  \item An extractive pipeline with explicit interfaces for localization, detection, and
+        verification, together with the rationale for allocating structural, lexical, learned,
+        and LLM processing to different stages.
+  \item A full-article stage analysis recomputed from saved sentence-level predictions and
+        verifier decisions, accompanied by detector comparisons and separate auxiliary-task
+        results that make the input condition and attribution target visible, alongside development
+        ablations and reference-sensitivity analysis.
+  \item An input-token accounting study and a small same-model full-article comparison,
+        reporting effectiveness and processing-volume trade-offs separately from unmeasured
+        total billing or throughput.
+\end{enumerate}
+Prompt development used benchmark feedback, so the verifier results are exploratory.
+The claim is a measured trade-off for the examined configurations, rather than general superiority
+of LLMs, independent validation across all disciplines, or demonstrated idea-generation quality.
+
+\paragraph{Paper structure.}
+\Cref{S:related-works} develops the literature comparison, including the chronological
+study-by-study table. \Cref{S:methodology} traces data acquisition, preparation, extraction,
+scoring, and the analyses used to answer each RQ. \Cref{S:results} reports the verified and
+aggregate results with their evidence status. \Cref{S:discussion} interprets the mechanisms and
+validity limits, and \Cref{S:conclusion} summarizes the answers and the next evaluation steps.

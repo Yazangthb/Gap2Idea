@@ -1,0 +1,135 @@
+\section{Discussion}
+\label{S:discussion}
+
+\subsection{What the stage comparison establishes}
+
+The principal finding is a measured allocation trade-off. On the fixed SAL prediction artifact,
+structural localization removes many non-target sentences with little loss of labelled positives.
+The detector then reduces candidate load, and selective verification improves precision while
+sacrificing some of the detector's recall. The RCT-prompt $F_1$ increase of 0.054 is useful for
+this configuration, but its 13.3\% loss of detector true positives is also material. Verification
+is therefore an optional operating-point choice, not a universally beneficial final step.
+
+The result depends on where a stage is evaluated. A full-article detector sees a low-prevalence
+stream, whereas curated conclusion sentences or a balanced recognition sample present a different
+false-positive burden. Changing the negative sample changes precision and $F_1$ even when positive
+recall is unchanged. Published values must consequently be matched by label definition, candidate
+pool, prevalence, and metric before being treated as head-to-head comparisons.
+
+\subsection{How the findings answer the research questions}
+
+For RQ1, the stage counts explain both the gain and its cost. Localization retains almost all
+labelled positives, whereas most of the final recall loss occurs in detection and verification.
+A practitioner prioritizing discovery can retain the detector's broader candidate set; a reader
+prioritizing a shorter review list may prefer the verified output. Both outputs preserve the
+original sentence and can be exposed with their decision provenance. The experiment supports
+this operating-point distinction rather than a single mandatory setting for every application.
+
+For RQ2, the recorded SAL comparison favors the fine-tuned biomedical detector among the eight
+saved vectors, while the separate full-stream baseline grid also shows a strong lexical baseline.
+The breadth results caution against assuming that its ranking or verifier policy transfers unchanged.
+Future-work recognition, own-study limitation recognition, and broader research-gap recognition
+require different judgments. A reusable system should therefore expose the target policy and
+its corresponding evaluation. The conflicting suffix in the current gap-matched experiment
+also shows that policy must be checked in the assembled request, not just in the base prompt.
+The present evidence is strongest for the saved SAL configuration and weaker for aggregate-only
+transfer studies and silver-label internal observations.
+
+For RQ3, selective processing provides a clear reduction in estimated verifier input under the
+specified accounting profile. This result explains why the staged design is attractive when
+many articles must be inspected. It does not determine the best overall deployment architecture:
+a small local detector adds its own preparation and maintenance costs, and a hosted model's
+response reliability affects both effectiveness and retries. These quantities should be measured
+when making a system-level efficiency claim. The branch's projected cross-paper batching, prompt
+caching and long-paper savings are scenarios rather than measured deployment improvements;
+we do not promote them to billed-cost or throughput results.
+
+\subsection{Attribution policy and reference labels}
+
+The Sci-Sentence development experiments illustrate the importance of matching the intended
+prompt policy to the reference task, although the conflicting shared wrapper prevents a clean
+causal test of that change. A verifier instructed to reject criticism of prior studies can correctly follow that
+instruction while disagreeing with a dataset that labels those criticisms as Research Gap or
+Limitation. This is a target mismatch, not evidence that either definition is intrinsically wrong.
+Likewise, a statement about a study's methodological constraint and an adjacent consequence can
+be scored differently under sentence- or span-oriented guidelines.
+
+Inspection of disagreements can reveal annotation ambiguities, missed labels, model errors,
+and sentence-boundary errors. It cannot by itself establish that most false positives are correct
+or that an LLM achieves a much higher ``true'' precision than its measured precision. Such a claim
+requires independent, preferably domain-expert, adjudication of a representative disagreement
+sample. We therefore retain the original benchmark labels in all reported metrics. Neighbor-credit
+scores, if used, should be interpreted as positional sensitivity rather than corrected gold.
+
+Source grounding has similar limits. Returning an existing parsed sentence avoids inventing the
+sentence's wording, but does not establish that it is a genuine author-stated gap, that its subject
+is the authors' own work, or that the gap remains unresolved. Future downstream systems would need
+separate attribution, resolution, and novelty checks before using these extractions to propose research.
+
+\subsection{Efficiency and deployment}
+
+Selecting candidate sentences substantially reduces estimated LLM input in the measured SAL
+accounting profile. The 3.74-fold ratio incorporates some repeated-prompt and context overhead,
+which makes it more informative than simply quoting the percentage of sentences removed.
+However, a complete system cost also includes parsing, embeddings, detector training and inference,
+response retries, and output tokens. API billing depends on the actual tokenizer and provider
+pricing. Prompt caching and cross-paper batching could change that profile, but their projected
+savings are not measured deployment results here.
+
+The ten-article full-LLM comparison is encouraging but limited. It uses one economical model,
+one selected sample, a different extraction prompt, and a baseline with response-format failures.
+A stronger comparison would hold the annotation policy fixed, save all responses, use equivalent
+retry/chunking budgets, and measure both stage-wise effectiveness and actual resource use.
+The present result should guide that evaluation rather than substitute for it.
+
+\subsection{Implications for evidence-based research support}
+
+An extracted statement is useful as a traceable starting point for literature analysis. It can
+help readers locate a paper's qualifications, collect proposed follow-up studies, and compare
+how a topic is framed across articles. Keeping the source wording and identifier allows those
+readers to inspect the surrounding argument rather than relying on an isolated model summary.
+However, aggregation requires further decisions: two sentences can express the same issue,
+a proposed study may already have been completed, and a frequently mentioned limitation may
+reflect reporting convention rather than scientific priority.
+
+Broader human evaluation and venue-corpus analysis can address some of these questions. Such
+analyses must connect their article samples, annotation definitions, and run configurations to
+the extraction protocol. Annotation agreement, venue-level statement frequencies, and the
+usefulness of generated research ideas each require their own measurements. They cannot be
+inferred from a sentence-detection score or a reduction in verifier input alone.
+
+\subsection{Threats to validity}
+
+\paragraph{Selection and sampling.}
+The verifier prompts were refined after inspecting benchmark feedback. Descriptive bootstrap
+intervals capture variation among the saved articles, not the optimism introduced by that
+selection. The next evaluation should freeze prompts, head, threshold, context, and batching before
+examining an independent article set. The cost subset is additionally conditioned on at least two
+labelled limitations per article; its outcomes need not describe papers with few or no such statements.
+The FWS breadth selection excludes exact training sentences but does not certify exclusion of
+all related or same-paper training material.
+
+\paragraph{Measurement and transfer.}
+Recovered BioC tags simplify full-article localization relative to noisy PDFs. Curated FWS and
+Sci-Sentence inputs do not test that front end at all. The internal arXiv references and the larger documented reference are model-labelled.
+The 362-row interface has no completed human results and samples biomedical disagreements,
+so it cannot establish reference accuracy across both domains. Inter-model kappa is not a
+substitute for human agreement. The small arXiv reference is silver,
+positive-only, and contains an expanded label ontology; it supports limited target-specific
+recall observations, not population accuracy or human agreement. Proxy training-label mappings,
+including Extension to future work, further limit interpretation of cross-domain rankings.
+
+\paragraph{Reproducibility.}
+Principal SAL decisions survive and their scores can be checked without an API, but the fine-tuned detectors
+still lack checkpoints and full training provenance; the newly supplied frozen-head regenerator
+resolves only part of that gap. Some experiment scripts retain machine-specific paths or imports
+of helpers absent from the minimal branch. Experiment base prompts have been centralized, but the historic RCT alias still needs to be
+archived with its exact resolved wording. Models referenced through a provider's \texttt{latest}
+alias may change, and temperature zero does not establish repeatability across versions or batch
+compositions. Aggregate-only breadth and full-article results cannot support additional paired
+significance analyses or error adjudication without their original predictions and responses.
+
+These limits bound the current conclusions: a particular saved full-article funnel improves
+its recorded precision and $F_1$, and selective processing reduces estimated input volume.
+Independent human-annotated results, broader venue findings, and evaluated research-idea quality
+are outside the evidence reported in this study.

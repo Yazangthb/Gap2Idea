@@ -1,0 +1,159 @@
+\section{Related Work}
+\label{S:related-works}
+
+Our study connects the recognition of author-stated limitations and future work with rhetorical
+sentence classification, LLM-supported scholarly-text processing, and analysis of reported research
+directions. These areas share input documents and some methods, but their output claims differ.
+We review that relationship before positioning the current extraction evaluation.
+
+\subsection{Rhetorical annotation and scientific sentence classification}
+\label{S:rw-background}
+
+Argumentative zoning provides an early account of sentences according to their role in scientific
+argument~\citep{teufel2002summarizing}. \citet{liakata2010corpora} describe AZ-II alongside Core
+Scientific Concepts (CoreSC), illustrating two complementary views of scholarly content. Roles
+such as future work, weaknesses in prior research, and failures of an author's approach can all
+help locate research-relevant statements, but they do not constitute a single uniform author-gap
+label. The attribution target and the distinction between a statement's rhetorical role and its
+semantic content remain part of the annotation definition.
+
+Full-text annotation is also an established setting. The Dr.~Inventor corpus contains 40 Computer
+Graphics articles with multiple annotation layers, including argumentative roles and statements
+about advantages or disadvantages~\citep{fisas2016multilayered}. The presence of limitation and
+future-work information in separate layers is relevant to our task: it shows why a joint extraction
+interface can draw on earlier annotation work without claiming to introduce the first full-text
+resource containing both kinds of statement.
+
+Abstract classification resources offer a different input condition. PubMed~200k~RCT
+provides biomedical abstract roles, while CSAbstruct supports classification of computer-science
+abstract sentences~\citep{dernoncourt2017pubmed,cohan2019pretrained}.
+MAZEA and Emerald~110k broaden the available rhetorical annotation
+schemes~\citep{dayrell2012rhetorical,stead2019emerald}. Such resources support document understanding,
+but an abstract role such as conclusion or objective does not establish that a sentence expresses
+an author-stated limitation. Treating every non-gap-specific role as a reliable negative would
+also require checking whether gap statements can occur inside that role.
+
+Context matters for classification because a short sentence may inherit its subject or purpose
+from nearby text. \citet{jin2018hierarchical} use a hierarchical sequence model to incorporate
+surrounding sentences in medical abstracts. \citet{brack2024sequential} examine cross-domain
+multi-task learning for scientific sentence classification, and \citet{lan2024multilabel} study
+multi-label classification with LLMs. These studies motivate explicit treatment of context, but
+they do not establish that complete-sequence modeling is always appropriate for sparse gap labels
+in full papers. \citet{zhang2024extracting} instead investigate context-enhanced problem/method
+sentence extraction, an adjacent task in which local context helps interpret a target sentence.
+Our verifier uses neighboring source sentences for attribution without replacing the task by
+whole-document rhetorical classification.
+
+\subsection{Author-stated limitation recognition}
+\label{S:rw-authorstated}
+
+\citet{kilicoglu2018automatic} recognize self-acknowledged limitations in clinical research using
+rules and learned approaches. Their heading and lexical evidence provides a direct precedent for
+our localization and cue stages. The important relationship is mechanistic: document structure
+reduces the search space, while sentence-level evidence distinguishes limitation claims from
+surrounding exposition. This is more specific than treating all methods that process scientific
+text as equivalent extraction baselines.
+
+\citet{lan2024automatic} extend clinical limitation work to 200 annotated RCT publications with
+15 categories and 24 subcategories. Their reported binary detector $F_1$ of 0.821 differs from the
+limitation-type classification result. Their at-scale application also characterizes limitation
+reporting. The dataset is useful to us because it supplies author-gap labels and non-positive
+sentences in an article-based setting. However, a reported candidate-pool recognition score cannot
+be compared directly with a reconstructed full-stream score: section filtering, label prevalence,
+training choices, and the recall denominator must first be aligned.
+
+LimGen contributes author-written limitation sections from 4,068 ACL papers for suggestive
+limitation generation~\citep{faizullah2024limgen}. These sections provide useful reference and
+training material, but section membership is a form of supervision rather than proof that every
+sentence is a semantic limitation. The distinction matters when a precision filter rejects a
+method description, result statement, or checklist item occurring inside a Limitations section.
+Nor is the original generation task an official binary-detection baseline simply because its
+references can be transformed into sentence labels.
+
+BAGELS combines source parsing and LLM processing with limitation generation across NLP, ML, and
+biology~\citep{alazher2025bagels}. Its extraction evaluation reports different performance for
+ACL and NeurIPS samples, which the authors discuss in relation to explicit versus scattered
+limitation reporting. That comparison motivates evaluating structural accessibility, but does not
+isolate section placement from every other corpus difference. Reviewer evidence is another
+important distinction: author statements and reviewer-identified limitations are related sources
+of critique, not the same attribution target. We preserve that distinction in comparisons with
+our authors'-own extraction task.
+
+\subsection{Future-work recognition and characterization}
+\label{S:rw-future}
+
+\citet{zhu2019recognizing} study future-research sentences in full JASIST articles using BERT-based
+recognition and subsequent clustering. Their work links sentence extraction to thematic analysis:
+retrieval locates source statements, whereas clustering characterizes what those statements concern.
+The two stages therefore answer different questions, and a useful thematic grouping does not
+independently verify that a stated research direction remains open.
+
+ACL FWS-RC introduces an annotated future-work corpus and taxonomy~\citep{hao2020acl}.
+The later recognition and classification study of \citet{zhang2023fws} compares machine-learning
+methods and reports macro-$F_1=0.9073$ for recognition and weighted $F_1=0.7263$ for typing.
+These numbers must remain attached to their own tasks and evaluation protocols. The resource is
+particularly relevant to our future-work branch, while its curated sentence input makes it a
+different test from parsing and scanning a complete article. We accordingly report the FWS
+breadth experiment as sentence recognition rather than general full-PDF extraction.
+
+\citet{suray2024future} analyze future-work statements in usable-security and privacy research and
+investigate their relationship with citing publications. This extends the purpose of extraction
+from locating sentences to examining how research agendas are articulated and subsequently used.
+It also makes interpretation cautious: a future-work statement can be vague, and later research
+can engage with a direction without repeating its wording. Such tracking would require additional
+corpus and citation evidence beyond the stage-level recognition experiments reported here.
+
+\subsection{LLM extraction, inferred gaps, and generated critique}
+\label{S:rw-methods}
+
+LLMs can serve several roles in scholarly-text analysis. An extractor selects source passages;
+a verifier judges a candidate's fit to a definition; a generator proposes statements that need not
+appear in the source. BAGELS and FutureGen include both extraction and generation workflows
+\citep{alazher2025bagels,alazher2025futuregen}. FutureGen's retrieval-augmented generation of
+future-work text is a downstream use of evidence, while our Stage~C returns only a decision about
+an existing candidate. The shared use of an LLM does not make their outputs or evaluation measures
+interchangeable.
+
+GAPMAP distinguishes explicitly expressed knowledge gaps from gaps inferred through
+context~\citep{salem2025gapmap}. Its evaluation includes multiple input units, from paragraphs
+and sections to a small full-text pilot. This is relevant to the document-level interpretation
+of gap claims, while also showing why dataset coverage must be separated from processing unit.
+A collection of paragraph-level cases cannot by itself establish a full-article extractor's
+localization performance, and inferred missing knowledge need not correspond to one quoted
+sentence from the authors.
+
+LimitGen is a separate benchmark from LimGen. It evaluates critical-limitation identification on
+synthetic and reviewer-based AI research references~\citep{xu2025llms}. Tree-of-Concerns addresses
+unstated limitations using hierarchical multi-agent critique~\citep{mishra2026tree}.
+Both concern scientific weaknesses that a system may identify without the authors acknowledging
+them. They therefore help delimit our objective and possible downstream extensions rather than
+providing an automatically comparable extraction score. Retaining the original sentence can
+support provenance, but it does not establish the substantive validity or novelty of a generated
+criticism or research idea.
+
+\subsection{Comparison dimensions and the research question addressed}
+\label{S:rw-gap}
+
+\Cref{T:related-work} compares the selected studies in chronological order by the
+year of the cited version. It separates evaluated domain, target statement, origin of the reference,
+method, dataset coverage, and processing unit. The gap-distribution column describes characterization
+of extracted or annotated statements, not hypothesis tests of classifier performance. The final
+column explains the connection of each study to our extraction design or research questions.
+Dataset coverage denotes the evaluated resource rather than a claim about where the method can
+be applied universally.
+
+Several comparison decisions follow. Authors' own limitations and criticisms of prior work require
+different attribution policies. Binary recognition and fine-grained typing require different
+metrics and denominators. Full-article inputs and curated sentences impose different localization
+burdens. Author-written, reviewer-written, and generated references have different evidential
+origins. Finally, extraction effectiveness, corpus characterization, and research-idea usefulness
+are separate outcomes. These distinctions motivate our dataset-specific tables and the separation
+of input accounting from total system cost.
+
+The present contribution concerns the allocation and evaluation of processing within an extractive
+funnel. Structural filtering, lexical rules, learned classifiers, and LLM refinement all have prior
+precedents. We examine their measured combination through a common full-article stage comparison,
+auxiliary target-dependent recognition results, and input-volume analysis. The resulting comparison positions selective verification as an allocation strategy whose
+effectiveness must be evaluated under an explicit target and input condition.
+
+\input{tables/related_work_comparison}

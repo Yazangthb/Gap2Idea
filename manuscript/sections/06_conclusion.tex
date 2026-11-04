@@ -1,0 +1,25 @@
+\section{Conclusion}
+\label{S:conclusion}
+
+We studied an extractive funnel that localizes candidate regions, detects author-stated gap
+sentences, and optionally verifies candidates with an LLM. In the reconstructed 40-article SAL
+stream, localization retains 203 of 205 labelled limitations while discarding 76.3\% of sentences.
+For the saved PubMedBERT predictions, selective verification raises precision from 0.460 to 0.580
+and $F_1$ from 0.604 to 0.658, at a recall decrease from 0.878 to 0.761. These results answer RQ1
+for the recorded configuration rather than for an independently frozen test protocol.
+
+For RQ2, classical baselines, detector-development studies and auxiliary tasks show that
+candidate load, domain, annotation target and reference coverage affect the operating point.
+Group-partition localization summaries, alternative silver references and positional sensitivity
+scores support narrower conclusions than a single pooled accuracy figure. A literature-gap label policy must not be silently
+replaced by an authors'-own limitation policy. For RQ3, accounting on the 40 articles gives a
+3.74-fold reduction in estimated LLM input; the selected ten-article baseline study records higher
+funnel recall and $F_1$, but does not establish a general advantage over all full-article LLM methods.
+
+The branch additionally supplies a model-labelled reference-construction account and a blind
+human-validation interface. Their existence does not establish completed human validation.
+The shared prompt-wrapper conflict should be resolved and the revised request frozen before
+new inference is evaluated. The next step is an independent evaluation with frozen configurations, complete training and
+prediction provenance, adjudicated errors, and measured total processing cost. Reliable source
+extraction may support later idea-generation systems, but their novelty and usefulness require
+separate experiments.

@@ -1,0 +1,359 @@
+\section{Configurations and supplementary experiments}
+\label{A:configuration}
+
+The manuscript concerns the \texttt{minimal} branch at \texttt{28a6c2d}. Source-level experiment
+coverage is provided in the accompanying \texttt{EXPERIMENT\_COVERAGE.md}. Supplementary tables
+preserve completed development comparisons without elevating notebook prose or aggregate-only
+runs to the evidential status of saved sentence decisions. All comparisons retain their own
+task, denominator, sampling procedure, and scoring convention.
+
+\subsection{Implementation configurations and reproduction}
+\label{A:implementation}
+
+\begin{table}[H]
+\centering\small
+\caption{Distinct configurations in the branch. A shared stage decomposition does not imply
+identical detector training or API requests.}
+\label{T:configurations}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}YYY@{}}
+\toprule
+Configuration & Localization & Detection & Verification \\
+\midrule
+Command-line runner & Anchors union whole target sections; local PDF blocks & bge-small, cached three-class head; cues or threshold 0.5 & General/RCT base; protected rules; default chunk 40 \\
+Final Stage-B notebook & Cached internal candidate regions & MiniLM, mixed Sci-Sentence/FWS/SAL; cues or head argmax & Not part of that notebook's metric \\
+SAL primary test & Recovered Discussion/Conclusion labels & Eight saved binary vectors; PubMedBERT supplies 391 candidates & Two cached prompts, chunk 20, same-paper neighboring context, every candidate judged \\
+FWS breadth & Curated sentences; pass-through & Production-style bge hybrid & Future-work mode, chunk 20 \\
+Sci-Sentence adaptation & No section gate & Cross-domain hybrid or in-domain binary bge head & Intended gap override with conflicting shared suffix \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The offline verifier checks all 391 candidate IDs against both cached verdict maps, recomputes
+strict scores, paired bootstrap intervals, negative-subsampling sensitivity and positional
+scores, and sums the token-accounting CSV. Source hashes and the complete tracked-file manifest
+identify the analyzed snapshot. No training or API calls are required for these computations.
+The new frozen-head regenerator specifies the five binary encoder-head recipes but requires the
+external SAL training CSV. Fine-tuned predictions remain cached until their original checkpoints
+are supplied. Both frozen-head regeneration and new judging are separate from score reproduction.
+
+The principal SAL prediction fixture and its two complete verdict maps support offline scoring.
+Separate files store the baseline-grid, breadth, token-accounting and ten-article pilot results.
+Model and prompt sweeps preserve additional aggregate comparisons. Internal transfer and
+public-benchmark development values survive in notebook reference tables and the Stage-B
+result summaries; their referenced prediction/checkpoint files are not supplied. The companion
+experiment inventory maps each result to its exact repository path and manuscript location.
+
+\subsection{Localization and detector development}
+\label{A:development}
+
+\begin{table}[H]
+\centering\small
+\caption{Executed internal localizer outputs: ten articles, 49 mixed-type silver statements.
+Localization is token containment within the concatenated selected region text, not one-to-one
+sentence matching.}
+\label{T:localizer-development}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Variant & Kept & Drop (\%) & Loc@0.70 & Loc@0.80 & Loc@0.90 \\
+\midrule
+Terminal windows (v1) & 433 & 87.3 & 0.633 & 0.551 & 0.429 \\
+Mid-paper anchors (v2) & 559 & 83.6 & 0.857 & 0.735 & 0.633 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The notebook's narrative states that section-aware v3 matches v2 on the fragmented internal
+blocks; no independently executed v3 metric row survives. The final-notebook PDF front end is
+implemented and demonstrated, but no exhaustive PDF parsing/heading accuracy study is supplied.
+GROBID section slicing is also implemented as an alternative; its presence is not an evaluated
+GROBID-versus-local-parser comparison.
+
+\begin{table}[H]
+\centering\small
+\caption{Notebook reference values for SAL-training localization development. Values are means
+and standard deviations across five article-grouped partitions. Reachability uses token
+containment at 0.70. Cue-augmented drop accounting can count overlapping windows more than once.}
+\label{T:localizer-cv}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Selection rule & Reachability & Reported drop (\%) \\
+\midrule
+Anchor localizer & $0.861\pm0.054$ & 82.2 \\
+Anchors + curated cues & $0.880\pm0.047$ & 79.5 \\
+Whole target sections & $0.988\pm0.020$ & 75.8 \\
+Whole sections + cues (logged) & $0.990\pm0.020$ & 75.4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The same development notebook reports single-split anchor reachability of 0.861/0.766/0.935
+for train/validation/test and 0.882/0.798/0.946 after curated cues. It attributes the remaining
+misses mainly to cue-less Discussion statements. These observations motivate whole-section
+retention; their fold variability is descriptive, not a significance test. The archived cue
+list is fixed across the grouped-fold summaries rather than re-mined inside every fold.
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Logged detector development on the internal reference. SF means Sci-Sentence+FWS;
+SFS adds SAL. Validation is pooled macro-$F_1$; L/F are limitation/future-work recovery against
+11/14 silver reference statements. Head and hybrid columns share the cached localizer input.
+Retained counts do not measure precision.}
+\label{T:internal-full}
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+Detector & Train & Val macro & Head L & Head F & Hybrid L & Hybrid F & Kept \\
+\midrule
+bge-small & SF & 0.633 & 0.273 & 0.714 & 0.455 & 0.786 & 104 \\
+DistilBERT-FT & SF & 0.745 & 0.000 & 0.643 & 0.182 & 0.714 & 63 \\
+SciBERT-FT & SF & 0.846 & 0.000 & 0.643 & 0.273 & 0.714 & 61 \\
+bge-small & SFS & 0.718 & 0.364 & 0.786 & 0.545 & 0.786 & 97 \\
+PubMedBERT-FT & SFS & 0.890 & 0.182 & 0.714 & 0.364 & 0.714 & 65 \\
+bge-base & SFS & 0.742 & 0.273 & 0.786 & 0.455 & 0.786 & 76 \\
+e5-base & SFS & 0.753 & 0.273 & 0.786 & 0.455 & 0.786 & 71 \\
+mpnet & SFS & 0.668 & 0.364 & 0.714 & 0.455 & 0.786 & 186 \\
+MiniLM-L6 & SFS & 0.656 & 0.364 & 0.714 & 0.636 & 0.857 & 170 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The original SF training report describes 6,700 rows, including only 101 limitations, and
+full fine-tuning with AdamW, learning rate $2\times10^{-5}$, three epochs and class-weighted
+loss. The later mixed-source report lists 7,706 training rows. These are development mixtures,
+not the command-line runner's unavailable self-distilled training cache. The larger frozen
+representations have 768-dimensional embeddings; bge-small and MiniLM use 384 dimensions.
+Reported validation macro-$F_1$ increases under full fine-tuning do not imply improved transfer.
+The retained notes disagree on some per-dataset macro conventions; we use the consistent pooled
+values and target-specific internal recoveries rather than mixing incompatible columns.
+
+The MiniLM balancing notebook reports mixed-ontology recovery of 0.571 with balanced class
+weights, 0.265 without weights, 0.551 with explicit resampling, and 0.571 with additional
+paraphrases. The denominator is all 49 statements, including non-target types, and the
+per-class decisions do not survive. These numbers document a development choice; they are
+not two-target accuracy estimates or evidence that weighting is universally optimal.
+
+Cue optimization is also recorded separately. On a paper-disjoint FWS development test, the
+reported precision/recall/$F_1$ changes from 0.843/0.448/0.585 to 0.819/0.538/0.650 with curated
+intent cues. Limitation-cue $F_1$ on SAL changes only from 0.267 to 0.275. A more permissive
+future-keyword variant was rejected after development feedback and is not used as a held-out
+performance claim. Its selection history further motivates caution about generalization.
+
+\begin{table}[H]
+\centering\small
+\caption{Logged within-corpus benchmark development, separate from the saved baseline grid.
+FWS is a balanced paper-grouped split, SAL samples about four negatives per positive from
+training articles before a new split, and Sci-Sentence collapses seven labels into three proxy
+classes on a new grouped split. Macro and positive/type $F_1$ are distinct measures.}
+\label{T:within-corpus}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Task & Method & Macro-$F_1$ & Positive/type $F_1$ \\
+\midrule
+FWS binary & Cues & 0.676 & 0.585 \\
+ & bge-small & 0.836 & 0.833 \\
+ & MiniLM & 0.791 & 0.787 \\
+ & TF-IDF/SVM & 0.835 & 0.833 \\
+ & Counts/chi-squared/NB & 0.837 & 0.829 \\
+ & SciBERT-FT & 0.876 & 0.880 \\
+\midrule
+SAL binary & Cues & 0.581 & 0.256 \\
+ & bge-small & 0.813 & 0.710 \\
+ & MiniLM & 0.729 & 0.584 \\
+ & TF-IDF/SVM & 0.833 & 0.735 \\
+ & Counts/chi-squared/NB & 0.834 & 0.729 \\
+ & SciBERT-FT & 0.900 & 0.843 \\
+\midrule
+Sci-Sentence proxy & bge-small & 0.714 & L 0.744; F 0.643 \\
+ & MiniLM & 0.622 & L 0.667; F 0.517 \\
+ & TF-IDF/SVM & 0.652 & L 0.458; F 0.684 \\
+ & Counts/chi-squared/NB & 0.358 & L 0.087; F 0.356 \\
+ & SciBERT-FT & 0.856 & L 0.706; F 0.916 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These notebook reference tables do not establish superiority to the original papers' results:
+the split, negative sampling, class maps and sometimes the averaging convention differ.
+Earlier logged FWS recognition values (including 0.879 for bge-small) concern another run;
+they are not substituted for the 0.836 macro-$F_1$ table above. Claims that an original FWS
+result is inflated by leakage cannot be independently established from this branch's missing
+reproduction outputs. Regularized fine-tuning and SPECTER2 are described as unrun or failed,
+so they have no performance row. The older ACL-cap/self-distillation sequence is described in
+a package README but not supported by completed outputs in the current all-experiments notebook.
+
+Alternative model-built references on the internal articles contain 33 target statements
+(40,000-character full-text cap) or 19 target statements in nine articles (9 limitations,
+10 future-work statements). On the former, MiniLM recovery is 0.455 overall, 0.500 for limitation
+and 0.421 for future work, with 23/33 reachable. On the latter, MiniLM and bge-small hybrid
+recovery is 0.632, with per-type values 0.444/0.800 and 14/19 reachable; head-only recovery is
+0.579. Their retained loads are 167/102 for the hybrids and 157/91 for the heads. Incomplete
+reading of three long papers and differing annotation policies preclude treating either
+reference as exhaustive human gold.
+
+\subsection{Verifier model, prompt and judging-population experiments}
+\label{A:verifiers}
+
+\begin{table}[H]
+\centering\small
+\caption{Saved balanced hard-sample sweep: 120 detector candidates, 60 positive and 60 negative,
+SAL keep-biased prompt, batches of 20. These selected-candidate results are not full-stream
+extraction scores. Calls are the recorded counts, not dollar cost or latency.}
+\label{T:verifier-sweep}
+\input{tables/verifier_sweep}
+\end{table}
+
+An earlier notebook implements a five-model by three-batch probe on 30 positive and 30 negative
+SAL sentences (batch sizes 10, 20 and 40), but supplies no executed numerical table. Its qualitative
+selection of the lite model at batch 20 is therefore a documented development decision, not an
+independently checked optimum. A later context/batch/prompt diagnosis logs a best hard-sample
+$F_1$ near 0.827 without full decisions or a recoverable configuration table. The development
+summary also reports that 56/60 gold positives were kept in one mixed batch setting versus
+37/60 in a denser stream. These observations motivate candidate-specific judging, but the
+missing batch-level records prevent a controlled causal estimate of the batch effect.
+
+\begin{table}[H]
+\centering\small
+\caption{Saved aggregate union-candidate runs. Strict SAL uses a different recorded judge/run
+from the lite keep-biased variants; columns are not a controlled prompt-only ablation. Each
+verifier run judged the union of 1,036 detector candidates before scoring a detector's subset.}
+\label{T:union-runs}
+\input{tables/union_runs}
+\end{table}
+
+An earlier broad-prompt union table survives only as notebook reference values. Its eight
+A+B+C $F_1$ values are 0.576 (MiniLM), 0.623 (mpnet), 0.616 (bge-small), 0.620 (bge-base),
+0.648 (e5-base), 0.691 (DistilBERT), 0.686 (SciBERT), and 0.701 (PubMedBERT). The candidate-specific
+RCT result of 0.658 supersedes the latter as the principal deployment-stream estimate; differences
+also involve run configuration. A verdict is not detector-independent when the model receives
+several candidates jointly. The saved aggregate union runs demonstrate that verification can
+also lower $F_1$: PubMedBERT's 0.604 A+B becomes 0.554 or 0.567 in the two keep-biased union runs.
+
+A single-reader analysis in the development summary categorizes 22 of the SAL keep-biased
+run's 101 false positives, suggesting a mixture of missed labels, policy differences, and
+model errors. This is useful for hypothesis formation, but the sampling rule and independent
+adjudication are unavailable. We neither replace the benchmark labels nor report the summary's
+projected corrected precision.
+
+The Kilicoglu cross-check is likewise a notebook-only report: 1,505 test sentences, approximately
+31.8\% positive, bge/logistic detection at P/R/$F_1$ 0.719/0.781/0.749 and subsequent verification
+at 0.876/0.503/0.639. No row predictions or implemented reproduction of the original authors'
+rule-based baseline are supplied. This recorded precision increase and recall loss does not
+establish widespread gold-label errors or evaluate the full PDF front end.
+
+\subsection{Breadth adaptation and scoring sensitivity}
+\label{A:breadth-adaptation}
+
+\begin{table}[H]
+\centering\small
+\caption{Logged Sci-Sentence adaptation, all on the 140-sentence binary test. The base prompt
+is intended to allow prior-work gaps but retains an incompatible authors'-own wrapper suffix.
+Threshold/prompt selection was exploratory; complete row decisions are absent.}
+\label{T:adaptation}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Configuration & Precision & Recall & $F_1$ \\
+\midrule
+Cross-domain hybrid + intended gap override & 1.000 & 0.575 & 0.730 \\
+In-domain binary bge, threshold 0.5 & 0.761 & 0.875 & 0.814 \\
+In-domain binary bge, threshold 0.3 & 0.639 & 0.975 & 0.772 \\
+Same threshold 0.3 + intended gap override & 0.943 & 0.825 & 0.880 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The in-domain Sci-Sentence script explores thresholds 0.5, 0.4, 0.3 and 0.2 and can judge the
+last two settings. Only the reported settings above have supplied numerical summaries.
+The analogous FWS recall-first script is implemented, with a different article split and
+threshold sweep, but no completed output is supplied. Neither script's mere presence supplies
+additional measured operating points. FWS disagreement examples are hypotheses about label
+coverage, not adjudicated evidence of reference error.
+
+\begin{table}[H]
+\centering\small
+\caption{Recomputed positional sensitivity on the fixed SAL decisions. Neighbor credit uses
+many-to-many positional matching within each article; it is not a semantic span annotation or
+an adjudicated correction of the benchmark.}
+\label{T:neighbor}
+\input{tables/sal_neighbor}
+\end{table}
+
+\subsection{Documented reference construction and pending validation}
+\label{A:reference}
+
+\begin{table}[H]
+\centering\small
+\caption{Construction totals reported in the branch's annotation datasheet. These values are
+arithmetically consistent but not recomputed from the unavailable corpus/vote files. They are
+model-labelled reference statistics, not independently validated extraction results.}
+\label{T:reference-construction}
+\begin{tabularx}{\linewidth}{@{}p{4.3cm}Y@{}}
+\toprule
+Item & Documented value \\
+\midrule
+Articles / sentences & 230 / 68,719 (190 arXiv articles and the same 40 SAL articles) \\
+Positive statements & 4,462: 2,234 research gaps, 1,543 limitations, 685 future-work statements \\
+Positive statements by domain & 3,751 arXiv; 711 SAL \\
+Model-agreement / adjudicated tiers & 2,960 / 1,502 \\
+Adjudication candidates & 1,737; 1,502 accepted and 235 rejected \\
+Inter-model Cohen's kappa & Any gap 0.778; limitation 0.748; future work 0.869; research gap 0.725 \\
+SAL reference recovery & Any-gap recall 0.956; limitation-specific recall 0.927 (190/205) \\
+SAL limitation extras & 227; a further model pass accepts 116/227 (51.1\%) \\
+Reported annotation expenditure & Approximately USD 37.5, including labeling, adjudication and the additional model pass \\
+Human study & 362-row interface present; completed answers/results absent \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The reported model strings are \texttt{claude-opus-5-5}, \texttt{claude-sonnet-5-5}, and
+\texttt{claude-fable-5-1} with an Opus fallback. They are transcribed provenance identifiers
+from the datasheet, not independently verified provider versions. No request/usage records
+support exact rerunning or billing reconstruction. The 227 extras belong to this reference
+construction, not to the 113 or 101 false positives of the two saved funnel configurations.
+Likewise, limitation-specific recovery and any-gap recovery have different positive definitions.
+
+Inter-model agreement must not be equated with human agreement or a human performance ceiling.
+Another LLM's acceptance of 116 extras cannot determine that the remaining items are errors,
+nor that the accepted ones are definitively correct. Quote alignment verifies text identity,
+not label semantics. The planned human protocol in \Cref{S:reference-protocol} is an appropriate
+next check, but supplies no completed validation result here. Its biomedical, disagreement-enriched
+sample would not by itself validate every type and domain in the documented corpus.
+
+\subsection{Exact surviving instructions and composition}
+\label{A:prompts}
+
+The verifier's batch schema returns a \texttt{results} array of integer \texttt{id} and Boolean
+\texttt{keep}. Missing batch decisions fall back to a single-target call, which loses the supplied
+neighbor context; an empty single-target response is kept conservatively. The current module
+centralizes two experiment base prompts. The complete request additionally contains a shared
+wrapper, calibration examples and numbered candidates. The following instruction is the surviving
+SAL keep-biased base, followed by its examples.
+
+\input{sections/prompts_sal}
+
+\paragraph{Intended gap-matched base instruction.}
+\input{sections/prompt_gap}
+
+\paragraph{Shared decision suffix (verbatim).}
+\begin{quote}\small
+\input{sections/prompt_wrapper}
+\end{quote}
+This suffix conflicts with the gap-matched base's permission for prior-work criticism. Recording
+it is necessary to interpret the saved results faithfully. The historical RCT-loose alias is
+still imported from an absent helper and should not be replaced silently by the shipped RCT
+instruction. Centralizing the SAL/GAP bases improves future maintainability but does not recover
+that missing historical request.
+
+\subsection{Evidence outside the reported experiments}
+\label{A:excluded}
+
+Historical LimGen binary-detection, BAGELS coverage and alternative FWS/SAL leaderboard values
+appear in comparison notes without their producing scripts, checkpoints or predictions in this
+snapshot. They establish development history, not independently checkable benchmark superiority.
+The corresponding inventory entries record their values and exclusion reasons. Proposed
+cross-provider LLM baselines, regularized fine-tuning and idea-generation evaluation have no
+completed supporting results in this branch. Project plans are not experiment outcomes.
+
+The previously discussed 64-article human study and 800-article venue corpus have no supplied
+results in this snapshot. They are not replaced by the newer 362-row validation interface or
+the documented 230-paper model-labelled collection: these are distinct samples and protocols.
+No human agreement, venue distribution, temporal trend, or idea-generation quality is inferred
+from their descriptions.

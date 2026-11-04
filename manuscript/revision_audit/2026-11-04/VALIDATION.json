@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-04",
+  "source_commit": "28a6c2dbfad8ad332a66dd11e7b16f74d3ec4267",
+  "branch": "minimal",
+  "tracked_source_files": 72,
+  "registry_entries": 54,
+  "pages": 41,
+  "numbered_tables": 21,
+  "cited_works": 28,
+  "font_types": [
+    "Type1"
+  ],
+  "warnings": [],
+  "visual_review": "All 41 final pages rendered with Poppler and reviewed; detailed numerical-table, prompt, related-work-table and pipeline inspection.",
+  "source_repo_clean": true,
+  "source_hashes_unchanged": true,
+  "compiled_sources_equal_current_sources": true,
+  "delivered_pdf_sha256": "a4671bdc6f042b6b511eb0e10b1f54d0e705ad1d74389d88b246ee74ae451c39",
+  "delivered_matches_reviewed_build": true,
+  "new_training_or_paid_inference": false,
+  "coverage_locations_resolve": true,
+  "scientific_status": "Complete branch-grounded draft for final human review; exploratory findings and missing external evidence remain explicitly bounded."
+}
