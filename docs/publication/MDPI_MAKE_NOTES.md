@@ -15,7 +15,8 @@ Use this file as the checklist while porting the paper section by section.
 | 2026-11-04 | Authors | Yazan Alnakri, Osama Orabi, Hamza Aldaghstany (single Innopolis affiliation). Supervisor **Rustam** to be added later (last author, likely corresponding). Firas Jolha and Giancarlo Succi are **not** authors. |
 | 2026-11-04 | Corresponding author | Yazan for now (placeholder until supervisor added) |
 | 2026-11-04 | Terminology | Stage B = **sentence classifier** (covers frozen/fine-tuned encoders and zero-shot NLI cross-encoders); Stage C = **LLM (precision) filter**, not "verifier". The draft says "verifier/verification" throughout, so rename it in every section as we port. Sci-Sentence task = "research-gap sentence classification" (not "auxiliary literature-gap task"). |
-| open | Scope: add the newer gold-dataset experiments (230-paper LLM-ensemble gold, funnel v2, Stage-B encoder sweep, NLI cross-encoders)? The draft only covers the `minimal` branch (SAL-40). | DECIDE |
+| 2026-11-04 | Scope | **Include** the gold-dataset experiments (230-paper LLM-ensemble gold, funnel v2, Stage-B encoder sweep, NLI cross-encoders, Stage A section-recovery negative result) alongside SAL-40. Report gold numbers as provisional until human validation is done. |
+| open | ModernBERT-large-nli and fine-tuned bge-small results (Oct 27, V100) have **no saved outputs in the repo**, only the 2026-11-02 progress PDF. Recover them before submission. | TODO |
 | open | ORCIDs, exact affiliation address/department, Hamza's surname capitalisation | TODO |
 
 Template gotchas found: this version has **no `\AuthorCitation`** command (remove it if copying from older templates).
