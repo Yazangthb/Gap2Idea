@@ -154,3 +154,13 @@ data/external/
 data/gold/*PRIVATE*
 # Office lock files
 ~$*
+
+data/gold/nli_val_scores.npz
+data/gold/nli_test_scores.npz
+data/gold/nli_sal_dev_scores.npz
+data/gold/nli_sal_test_scores.npz
+data/gold/nli_fws_dev_scores.npz
+data/gold/nli_fws_test_scores.npz
+
+# human study sample, key and answers (never push)
+data/gold/human_study/

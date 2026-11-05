@@ -1,73 +1,93 @@
-# Gap2Idea human study — CHOSEN design (decided 2026-10-27)
+# Gap2Idea human study: chosen design
 
-Decision record for the human-labelling study. **Chosen: 2 raters + 1 external tie-breaker, ~94
-pooled items (biomed/SAL first).** Full rationale and the E5 lineage are in
-[human_study_design.md](human_study_design.md); this file freezes the operational choice so we don't
-re-litigate it. **Status: design frozen, NOT implemented, no labelling started.** Freeze the sample
-key + SHA-256 and the hypotheses before any rater sees an item; log dated deviations.
+**Revised 2026-11-05 for the final funnel. Status: built and sample frozen ([human_study_freeze.md](human_study_freeze.md)), no labelling started.** Freeze the sample key, its SHA-256 and the hypotheses before any rater sees an item, and log dated deviations. Rationale and lineage: [human_study_design.md](human_study_design.md). The original 2026-10-27 strata are at the end of this file.
 
-## What we validate (settled)
-We human-validate **our gold's labels**, not SAL (already human) and not a moving pipeline. One
-**pooled, blind** round, biomed/SAL papers first (that is where the SAL comparison lives; arXiv gold
-is a later round). The same labels answer three questions at once:
-1. is the gold a valid benchmark (precision + recall vs humans)?
-2. what is the funnel's **true** precision (measured against humans, gold-independent)?
-3. does SAL **under-label** (our extras are real)?
+## What changed and why
 
-## The design in one table
+| Before | Now | Why |
+|---|---|---|
+| Biomedical first, arXiv in a later round | One pooled round covering SAL-40 and arXiv | 428 of 455 gold false positives were arXiv, and arXiv has no human labels |
+| Main question: are our SAL extras real? | Main question: **how many extracted gaps are true?** | Precision is now the project's priority |
+| Pipeline positives from `funnel_v2` candidates | Output of the final funnel, high precision mode | That is the system the paper reports |
+| About 94 items | **136 items** | arXiv needs its own estimate |
+
+## What it answers
+
+1. **True precision of the final funnel** on arXiv and SAL-40, measured against humans.
+2. **Does SAL under-label?** Are sentences SAL rejects but our funnel and LLM labels accept real limitations?
+3. **Are the LLM gold labels trustworthy?** Do humans agree with them on kept sentences, including those it calls false positives?
+
+It doesn't measure recall, which needs people to read whole papers. Recall stays reported against SAL and LLM labels.
+
+## Design
+
 | | |
 |---|---|
-| **Primary hypothesis** | Share of our **SAL-extras** that are real gaps: H₀ p ≤ 50% vs H₁ > 50%, one-sided, α = 0.05 |
-| **Power** | 80% at a true share of 70% (effect 0.20); n ≈ 37 suffices for the exact binomial test |
-| **Raters** | **2 independent raters per item** + **1 external blind tie-breaker** → majority-of-three |
-| **Blindness** | No source / tier / SAL-membership / control-role shown; private key never embedded in the page |
-| **Validity gate** | Claim only if ≤ 2 of 12 decoys are labelled "gap" (leaning "gap" fails the gate) |
-| **Adjudication** | Tie-breaker rates every disagreement, blind to the two votes; leftovers decided by the two raters + tie-breaker; unresolved → *not a gap*. No author decides. |
-| **Calibration** | None (raters use the guideline + type definitions + shown context) |
-| **Analysis** | weighted share + one-sided 95% lower bound; Rogan–Gladen corrected share (robustness only); Krippendorff's α + % agreement; gate |
+| **Primary test 1, arXiv** | Weighted true precision of high precision mode, one-sided 95% lower bound. Claim "most extracted gaps are true" only if the bound is above **70%** |
+| **Primary test 2, SAL** | Share of stratum S2 that are real limitations. H₀ p ≤ 50%, H₁ p > 50%, exact binomial, one-sided, α = 0.05 |
+| **Raters** | 2 independent raters per item + 1 external blind tie-breaker, majority of three |
+| **Who can rate** | Nobody who has seen gold labels, SAL labels or funnel outputs, including whoever works on tasks 2, 5, 6 or 7. No author adjudicates |
+| **Blindness** | No source, stratum, label or dataset shown. Items shuffled together. The private key is never embedded in the page |
+| **Question asked** | Is this sentence a gap stated by the authors? If yes: limitation, future work or research gap |
+| **Validity gate** | Report claims only if at most 2 of 12 decoys are labelled a gap |
+| **Disagreements** | The tie-breaker rates each one, blind to both votes. Unresolved items count as not a gap |
+| **Analysis** | Weighted precision with finite-population variance per track; Krippendorff's α and % agreement; gate result; each stratum's share reported separately |
 
-## Pooled strata — minimized item counts
-| stratum | n | role |
-|---|---|---|
-| **A. SAL-extras** (gold `limitation`, not in SAL) | **40** | primary test + "SAL under-labels" claim |
-| **B. pipeline positives** (funnel+Stage C, gold `none`) | **30** | **true precision** of the funnel, gold-independent (CI ±~15%) |
-| **C. positive controls** (high-confidence gold gaps) | **12** | gold precision (strong tier) + rater sanity |
-| **D. decoys** (negatives) | **12** | specificity + validity gate |
-| (E. SAL-missed — optional) | 0–10 | gold recall hole; omit to minimise |
-| **total distinct** | **~94** | ~210 ratings (2× + ~20 tie-breaks) |
+## Strata
 
-Sources: `data/gold/disagreement_pools.json` (extras, missed), the both-agree∩SAL gold (controls),
-neither-judge∩not-SAL negatives (decoys), `data/gold/funnel_v2_candidates*.json` (pipeline positives).
+All items come from the test splits. "Kept" means high precision mode of NLI + Qwen kept the sentence.
 
-## Workload (chosen: 2 raters, full overlap)
-≈ 30 s per item (sentence + ±1 context, one-key Yes/No → type, autosave):
-- **each rater: ~94 items ≈ 45–55 min**
-- **tie-breaker: ~20 disputed items ≈ 10–15 min**
-- **total ≈ 2 person-hours** across 3 people.
+| Stratum | Population | n | Role |
+|---|---|---|---|
+| **B1. arXiv, kept, gold `none`** | 56 | **30** | Are the funnel's false positives really false? |
+| **B2. arXiv, kept, gold gap** | 281 | **30** | Are its true positives really true? Also checks LLM gold |
+| **S1. SAL-40, kept, SAL yes** | 174 | **12** | Positive control and rater check |
+| **S2. SAL-40, kept, SAL no, LLM gap** | 77 | **40** | Primary test 2: does SAL under-label? |
+| **S3. SAL-40, kept, SAL no, LLM none** | 12 | **12** (all) | Sentences both label sets reject |
+| **D. Decoys, not kept, all labels none** | Large | **12** (6 arXiv, 6 SAL) | Validity gate |
+| **Total** | | **136** (135 after exclusions, see freeze file) | About 300 ratings |
 
-Scaling knob (recorded, not chosen): splitting items across **4 raters → ~25 min each**, or **6 →
-~17 min each** — same validity (the pooled test is unaffected by who rates which item; rater/stratum
-confounding is an accepted limitation). We chose **2+1** to minimise *recruiting*, accepting ~50
-min/rater.
+Counts were checked on 2026-11-05 against the saved verdicts. Exact sampling draws at random within each stratum with a recorded seed.
 
-## Why these numbers (so we don't second-guess later)
-- **A = 40:** the primary one-sided binomial test reaches 80% power at p=0.70 vs H₀=0.50 by n≈37; 40 gives margin. (E5 needed 60 only because its effect was smaller, 0.20→0.15 band.)
-- **B = 30:** an estimate, not a test → ±~15% 95% CI, enough to show true precision ≫ gold-measured.
-- **C = D = 12:** controls/decoys are shared validity overhead; 12 decoys with a ≤2 gate keep the
-  accidental false-pass probability <5%.
-- **2 raters + tie-breaker (not 1):** most items' correctness is contested; a single rater's errors
-  bias the share. Two independent + a blind external tie-breaker ≈ majority-of-three (the E5 argument).
-- **No practice round:** matches E5 design B; raters rely on the written guide.
+**Estimates**
+- arXiv precision = (281 × B2 share + 56 × B1 share) / 337.
+- SAL-40 precision = (174 × S1 share + 77 × S2 share + 12 × S3 share) / 263. Count only the limitation type as correct, since that is what this track extracts; report any gap type as a second reading.
 
-## What's intentionally deferred
-- arXiv/CS gold validation (no SAL reference there) → a later direct-labelling round.
-- Full-paper (vs sentence+context) judgement.
-- A pre-registered external registration (this is a frozen, time-stamped protocol, not a registration).
+**Why these sizes**
+- B1 and B2: if B2 is about 90% and B1 about 50%, arXiv precision is about 83% with a standard error near 4.5 points. The chance of clearing 70% is about 90% at a true 83%, and about 70% at a true 80%.
+- S2: 40 items keep the original test's 80% power at a true share of 70%.
+- D: 12 decoys with a limit of 2 keep the chance of an accidental pass below 5%, as in the original design.
 
-## To build (mirrors lr-ai E5 scripts)
-1. `scripts/dataset/human_study_sample.py` — balanced draw of A–D(+E) + private key + sample SHA-256.
-2. blind per-rater pages (extend `annotate.html`: rater ID + hash, hard-stop, decoy role hidden).
-3. `scripts/dataset/human_study_analyze.py` — gate + one-sided test + Rogan–Gladen + Krippendorff α;
-   rejects incomplete/foreign files.
+## Workload
 
-_Decided 2026-10-27. Adapted from `lr-ai-paper/results/E5_chosen_design.md` (design B)._
+At about 30 s per item:
+- Each rater: 136 items, **65–75 minutes**.
+- Tie-breaker: about 30 items, **15 minutes**.
+- Total: **about 2.5 person-hours** across 3 people.
+
+Splitting items across 4 raters brings this to about 35 minutes each with the same validity.
+
+## Before sampling
+
+- Exclude sentences that appear in the public `data/gold/human_validation_worksheet.csv`, which shows labels. At least 23 kept sentences are affected. Report how many each stratum loses; S3 may fall below 12.
+- Freeze the funnel. Any later change to its setup means redrawing the sample.
+- Check for the same sentence in two strata, and keep one copy.
+
+## Limits to state in the paper
+
+- Simple random sampling ignores clustering within papers, and 5 long papers hold most arXiv false positives. Report how many B1 items come from them.
+- 30 s per sentence with ±1 context is not a full-paper reading.
+- Biomedical items are clinical trial reports only.
+- The 70% bar was set on 2026-11-05, after the LLM-based precision estimate of 83.4% was known but before any human label.
+
+## Built
+
+1. `scripts/dataset/human_study_sample.py`: draws the groups and writes the private key, manifest and blind rater pages. It refuses to redraw once a key exists.
+2. `data/gold/human_study/rater_R1.html` and `rater_R2.html`: self-contained, with autosave and a hard stop until every item is answered. Each rater sees a different order.
+3. `scripts/dataset/human_study_analyze.py`: tie-breaker page, gate, both primary tests, weighted precision and Krippendorff's α. It rejects incomplete, foreign or repeated files.
+
+## Original strata (2026-10-27, superseded)
+
+A. SAL extras, 40. B. Pipeline positives with gold `none`, 30. C. Positive controls, 12. D. Decoys, 12. E. SAL-missed, optional 0–10. About 94 items in total, biomedical papers only, with arXiv deferred.
+
+_Adapted from `lr-ai-paper/results/E5_chosen_design.md` (design B)._
