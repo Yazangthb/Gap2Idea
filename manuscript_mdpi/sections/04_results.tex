@@ -1,2 +1,117 @@
 \section{Results}
-% TODO: port from origin/paper-writing:manuscript/sections/
+\label{sec:results}
+
+\subsection{Contribution of each stage (RQ1)}
+
+Table~\ref{tab:stages} follows the positives through the funnel in high precision mode. Stage~A removes most non-gap text in SAL at almost no recall cost, but little in the gold corpus, where it only drops junk. Stage~B raises precision about threefold (2.7 to 3.6 times) while keeping about 90\% of positives, as its threshold rule requires. Stage~C then raises precision again, by 37 points on SAL, 28 on FWS and 63 against the gold labels, at a recall cost of 6, 12 and 34 points.
+
+\begin{table}[H]
+\caption{Sentences and positives kept after each stage, high precision mode. Precision and recall in \%. Gold results use LLM labels.\label{tab:stages}}
+\small
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}Xrrrr@{}}
+\toprule
+\textbf{Dataset} & \textbf{After stage} & \textbf{Sentences} & \textbf{Positives} & \textbf{Precision} & \textbf{Recall}\\
+\midrule
+\multirow{4}{*}{SAL-40 test} & Input & 7968 & 205 & 2.6 & 100\\
+ & A. Discussion and Conclusion sections & 1885 & 203 & 10.8 & 99.0\\
+ & B. NLI, $\tau = 0.7286$ & 639 & 186 & 29.1 & 90.7\\
+ & C. LLM filter & 263 & 174 & 66.2 & 84.9\\
+\midrule
+\multirow{3}{*}{FWS test} & Input (no Stage A) & 1506 & 220 & 14.6 & 100\\
+ & B. NLI, $\tau = 0.1922$ & 400 & 193 & 48.2 & 87.7\\
+ & C. LLM filter & 217 & 166 & 76.5 & 75.5\\
+\midrule
+\multirow{4}{*}{Gold test} & Input & 11,741 & 664 & 5.7 & 100\\
+ & A. Junk filter & 9604 & 644 & 6.7 & 97.0\\
+ & B. NLI, $\tau = 0.354$ & 2522 & 606 & 24.0 & 91.3\\
+ & C. LLM filter & 440 & 381 & 86.6 & 57.4\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Precision control with three filter modes (RQ2)}
+
+Table~\ref{tab:modes} reports all three modes on every evaluation set. On each set, precision rises and recall falls from high recall to balanced to high precision, as intended. High precision mode reaches 66.2\% precision on SAL-40, 76.5\% on FWS and 86.6\% against the gold labels (83.4\% on arXiv papers, 97.1\% on the six biomedical papers).
+
+\begin{table}[H]
+\caption{Results of the three filter modes. Precision and recall in \%, with 95\% confidence intervals from resampling papers. Gold results use LLM labels. Kept: sentences returned.\label{tab:modes}}
+\begin{adjustwidth}{-\extralength}{0cm}
+\small
+\begin{tabularx}{\fulllength}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}Xrccc@{}}
+\toprule
+\textbf{Evaluation set} & \textbf{Setting} & \textbf{Kept} & \textbf{Precision} & \textbf{Recall} & \textbf{$F_1$}\\
+\midrule
+\rowsfrom{tables/modes_rows.tex}
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
+
+The ranking of the modes by $F_1$ depends on the dataset. On SAL-40 high precision has the highest $F_1$ and on FWS the three are within 0.007. On the gold corpus balanced is highest: its $F_1$ exceeds high recall by 0.055 (paired 95\% CI 0.025 to 0.080) and high precision by 0.045 (0.006 to 0.095), while high precision and high recall do not differ ($+0.011$, $-0.054$ to $+0.060$). The SAL dev papers, which no prompt was written on, show the same pattern as SAL-40 at slightly lower values: high precision gives 64.3\% precision, 80.0\% recall and $F_1$ 0.713.
+
+The modes behaved the same way on the gold validation split before the test runs: in high precision mode the filter kept 60.3\% of the gaps it received and removed 97.7\% of non-gaps, against 94.1\% and 82.9\% in high recall mode, giving precision of 90.4\% and 66.8\% respectively. On the test split, excluding the 196 candidates used during development changes high precision $F_1$ from 0.690 to 0.675, balanced from 0.735 to 0.723 and high recall from 0.679 to 0.664. Repeating the high-recall run on the 2522 gold test candidates changed 32 verdicts (1.3\%), five of them on gaps, and $F_1$ moved from 0.678 to 0.679.
+
+Table~\ref{tab:types} shows the cost of precision by gap type on the gold corpus. Future-work recall is stable across modes (82.5--86.6\%), while research-gap recall falls from 89.3\% to 51.3\% and limitation recall from 79.5\% to 55.9\%. Research gaps make up half of the gold labels and are the easiest type for the earlier stages, so scores that pool all types depend on them. Scored without research gaps, high precision mode is the best of the three ($F_1$ 0.701 against 0.595 and 0.509).
+
+\begin{table}[H]
+\caption{Gold test split (LLM labels) by gap type: recall per type, and scores when research-gap sentences are excluded from scoring. In \% except $F_1$.\label{tab:types}}
+\small
+\begin{tabularx}{\textwidth}{@{}l*{6}{>{\centering\arraybackslash}X}@{}}
+\toprule
+ & \multicolumn{3}{c}{\textbf{Recall by type}} & \multicolumn{3}{c}{\textbf{Without research gaps}}\\
+\cmidrule(lr){2-4}\cmidrule(l){5-7}
+\textbf{Mode} & \textbf{Limitation (220)} & \textbf{Future work (97)} & \textbf{Research gap (347)} & \textbf{Precision} & \textbf{Recall} & \textbf{$F_1$}\\
+\midrule
+\rowsfrom{tables/types_rows.tex}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Training-free versus supervised classification (RQ3)}
+
+On SAL-40, we ran the same three modes with the supervised PubMedBERT classifier as Stage~B. Before Stage~C, PubMedBERT gives 46.0\% precision and 87.8\% recall ($F_1$ 0.604) on 391 candidates, the best of eight SAL-trained classifiers (SciBERT 0.553, DistilBERT 0.523, frozen encoders 0.371--0.457). After Stage~C in high precision mode it reaches 74.5\% precision (95\% CI 68.4--80.7), 78.5\% recall and $F_1$ 0.765. Table~\ref{tab:salcmp} compares it with the NLI classifier. With PubMedBERT the funnel is 6.9 to 9.0 points more precise in every mode, but in high precision mode the $F_1$ difference is not significant ($-0.021$, CI $-0.053$ to $+0.014$). The NLI classifier used no SAL labels at all; its only SAL-specific setting is the threshold.
+
+\begin{table}[H]
+\caption{SAL-40 test. Left: NLI minus PubMedBERT as Stage B, same mode, paired over resampled papers (precision in points; 95\% CI in brackets). Right: precision of the NLI funnel's output when scored against the LLM ensemble's labels instead of SAL's human labels, in \%.\label{tab:salcmp}}
+\begin{adjustwidth}{-\extralength}{0cm}
+\small
+\begin{tabularx}{\fulllength}{@{}l*{4}{>{\centering\arraybackslash}X}@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{NLI minus PubMedBERT}} & \multicolumn{2}{c}{\textbf{Precision against LLM labels}}\\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+\textbf{Mode} & \textbf{Precision} & \textbf{$F_1$} & \textbf{Limitation} & \textbf{Any gap type}\\
+\midrule
+\rowsfrom{tables/salcmp_rows.tex}
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
+
+On the gold corpus, the NLI classifier also compares well with other training-free and lightly trained options. On the validation split, the three short hypotheses reached about 79\% recall at 39.2\% precision, where a bge-small head trained on the gold training split reached 28.2\% precision at matched recall. On the test split, the NLI funnel in high precision mode exceeds the same ModernBERT model used alone with a single long hypothesis ($F_1$ 0.614) by 0.076 (CI 0.020 to 0.132), and does not differ significantly from a funnel with the bge-small head and the high-recall filter ($F_1$ 0.665; difference $+0.025$, CI $-0.037$ to $+0.087$).
+
+\subsection{Label source}
+
+The right side of Table~\ref{tab:salcmp} scores the same SAL-40 output against two label sets. Of the 263 sentences returned in high precision mode, SAL's annotators marked 174 as limitations, while the LLM ensemble marked 245 as limitations and 250 as some gap type. Seventy-seven sentences are gaps by the LLM labels but not by SAL; only 12 are negative under both. Precision is therefore 66.2\% against SAL and 93.2--95.1\% against the LLM labels. Which label set is right on these 77 sentences decides the true precision, and our human study (Section~\ref{sec:discussion}) is designed to settle it.
+
+\subsection{Cost}
+
+Table~\ref{tab:cost} estimates LLM input tokens in high precision mode; the other modes differ by under 2\% because only the final instruction changes. Compared with judging every sentence, the funnel sends 3.7 to 13.1 times fewer tokens. Compared with a single whole-paper call, the saving is smaller: 3.1 times on SAL-40, 2.0 times on FWS and 1.25 times on the gold corpus. On arXiv papers, Stage~B passes about one sentence in five, and each candidate carries its context, so the funnel sends almost as much text as the whole paper. Whether this is worthwhile depends on whether whole-paper prompting finds the same gaps, which the comparison in progress will show.
+
+\begin{table}[H]
+\caption{Estimated LLM input tokens (\texttt{cl100k\_base}), high precision mode, all test papers. Savings are funnel tokens divided into the alternative's tokens.\label{tab:cost}}
+\begin{adjustwidth}{-\extralength}{0cm}
+\small
+\begin{tabularx}{\fulllength}{@{}>{\raggedright\arraybackslash}p{3.7cm}*{7}{>{\raggedleft\arraybackslash}X}@{}}
+\toprule
+\textbf{Dataset, Stage B} & \textbf{Candidates} & \textbf{Calls} & \textbf{Funnel} & \textbf{Whole paper} & \textbf{Every sentence} & \textbf{Saving vs whole paper} & \textbf{Saving vs every sentence}\\
+\midrule
+\rowsfrom{tables/cost_rows.tex}
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
+
+\subsection{Letter case reveals the label in FWS}
+\label{sec:fws-case}
+
+In the FWS recognition corpus as we obtained it (64,896 sentences from 9013 papers), every one of the 9009 positive sentences is entirely lowercase, and almost none of the negatives is. The rule ``a sentence is positive if it is all lowercase'' therefore scores 99.8\% precision and 100\% recall. Our copy has the same size in bytes as the published file~\cite{fwsrepo}, so the artefact appears to be in the released corpus, although we did not compare the two files directly. Any case-sensitive model, and any LLM given the raw text, can exploit it. We lowercased all FWS text for the results above, and we do not use our earlier FWS result on raw text.

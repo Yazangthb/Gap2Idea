@@ -1,2 +1,4 @@
 \section{Conclusions}
-% TODO: port from origin/paper-writing:manuscript/sections/
+\label{sec:conclusions}
+
+We presented a three-stage funnel that extracts author-stated research gaps as unmodified source sentences: rules discard unlikely text, a zero-shot NLI classifier flags candidates without training labels, and an LLM filter with three instruction-set modes removes false positives. On human-labelled limitation and future-work benchmarks, high precision mode reached 66.2\% and 76.5\% precision at 84.9\% and 75.5\% recall, results confirmed on held-out SAL papers; against LLM labels on a 230-paper, three-type corpus it reached 86.6\% precision at 57.4\% recall. The modes moved precision and recall in the intended direction on every dataset, and the training-free classifier came close to a supervised one on SAL. The funnel's cost advantage is clear against judging every sentence and modest against whole-paper prompting. Next steps are the human validation of the corpus, comparisons with whole-paper prompting and published methods, and the use of the extracted gaps for automated research-idea generation.

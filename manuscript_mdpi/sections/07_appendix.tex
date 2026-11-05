@@ -1,0 +1,28 @@
+\section{Stage C prompt}
+\label{app:prompts}
+
+The system prompt used on the gold corpus is reproduced below. The modes differ only in the paragraph marked [MODE]. For SAL and FWS, the decision rule keeps only item (a) or (b) respectively, the other two items are added to the list of sentences to drop, and the words ``gap'' and ``research gap'' are replaced by ``limitation'' or ``future-work direction''. All prompts are in the code repository (\texttt{scripts/bench/stage\_c\_rubric\_val.py}, \texttt{stage\_c\_sal40\_modes.py}, \texttt{nli\_sal\_fws.py}).
+
+\begin{quote}\small\raggedright
+You are a precision filter for a research-gap extraction pipeline. Judge each candidate sentence: does it genuinely state a research gap?
+
+Each item has: ``i'' (integer id), ``type'' (the predicted gap type), ``sentence'' (the candidate to judge), and ``context'' (surrounding text). Judge the ``sentence'', using ``context'' only to disambiguate.
+
+Decision --- answer YES (keep) if the sentence states ANY of:
+(a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, ``we did not / could not \ldots'', ``a limitation is \ldots'');
+(b) an explicit FUTURE-WORK direction the authors propose (``in future work we will \ldots'', ``future research should \ldots'', ``it would be interesting to \ldots'');
+(c) an unsolved problem / missing capability / open research gap in the field or prior work (``it remains unknown \ldots'', ``no existing method \ldots'', ``current approaches struggle with \ldots'').
+
+Answer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (``we propose/show/achieve \ldots''), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.
+
+[MODE]
+
+Return JSON of the form \{``results'':[\{``id'':\textless i\textgreater, ``keep'':\textless bool\textgreater\}, \ldots]\} with EXACTLY one entry per input item, where id is the item's ``i'' and keep=true means YES.
+\end{quote}
+
+\noindent The [MODE] paragraph:
+\begin{itemize}
+  \item \textbf{High recall:} ``Be KEEP-BIASED: when you are genuinely uncertain whether a sentence is a real gap, answer YES. Only answer NO when it clearly is NOT a gap by the rules above.''
+  \item \textbf{Balanced:} ``Judge each sentence on the rules above, without favouring YES or NO.''
+  \item \textbf{High precision:} ``Be STRICT. Answer YES only when the sentence itself explicitly states the limitation, the proposed direction, or the unsolved problem. Also answer NO for: a general property or difficulty of a method or domain given as background or motivation; a statement of why the authors' approach is needed; an observed experimental outcome; and a passing remark that names no specific gap. When genuinely uncertain, answer NO.''
+\end{itemize}

@@ -1,2 +1,101 @@
 \section{Materials and Methods}
-% TODO: port from origin/paper-writing:manuscript/sections/
+\label{sec:methods}
+
+\subsection{Task}
+
+The input is the sentence stream of a full paper. The output is the set of sentences that state an author-stated research gap of one of three types:
+\begin{itemize}
+  \item \textbf{Limitation}: a weakness, caveat, bias, constraint or assumption the authors acknowledge about their own work;
+  \item \textbf{Future work}: an explicit direction the authors propose for future research;
+  \item \textbf{Research gap}: an unsolved problem, missing capability or open challenge the authors point to in the field or in prior work.
+\end{itemize}
+Each output is an unmodified source sentence. Scoring is binary at the sentence level: a predicted sentence is correct if its label is any gap type covered by the benchmark. SAL labels only limitations and FWS only future work, so on those benchmarks the funnel targets that one type.
+
+\subsection{Data}
+
+Table~\ref{tab:data} summarises the evaluation data. All splits are by paper.
+
+\begin{table}[H]
+\caption{Evaluation data. Positives are sentences labelled with a gap type the benchmark covers.\label{tab:data}}
+\begin{adjustwidth}{-\extralength}{0cm}
+\small
+\begin{tabularx}{\fulllength}{@{}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{2.6cm}rrr>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Dataset (split)} & \textbf{Labels} & \textbf{Gap types} & \textbf{Papers} & \textbf{Sentences} & \textbf{Positives} & \textbf{Use}\\
+\midrule
+SAL (test) & Human & Limitation & 40 & 7968 & 205 & Main evaluation\\
+SAL (dev) & Human & Limitation & 40 & 7729 & 180 & Threshold; held-out check\\
+FWS (test) & Human & Future work & 209 & 1506 & 220 & Evaluation\\
+FWS (dev) & Human & Future work & 418 & 3005 & 418 & Threshold\\
+Gold corpus (test) & LLM ensemble & All three & 34 & 11,741 & 664 & Evaluation\\
+Gold corpus (validation) & LLM ensemble & All three & 34 & 11,201 & 699 & Design choices; thresholds\\
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
+
+\paragraph{SAL.} SAL contains 200 RCT publications with sentence-level limitation labels, split into 120 training, 40 development and 40 test papers~\cite{lan2024automatic,salrepo}. We use full papers, not a section-filtered pool. Section types were recovered by matching each sentence to the PubMed Central BioC version of its article, and sentences of fewer than three words were removed; none of the removed test sentences is a limitation. The training split is used only to train the supervised comparison classifiers.
+
+\paragraph{FWS.} The FWS recognition corpus holds conclusion-section sentences from ACL papers labelled as future work or not~\cite{hao2020acl,zhang2023fws,fwsrepo}. Because it contains conclusion sections only, it has no full-paper structure. We use a fixed test sample of 209 papers (1506 sentences) and a development sample of the next 418 papers in the same random order, after removing sentences that appear in an earlier training set of ours. In this corpus every positive sentence is entirely lowercase and almost no negative is (Section~\ref{sec:fws-case}), so we lowercase all FWS text before any processing.
+
+\paragraph{Gold corpus.} We built a three-type corpus of 230 papers and 68,719 sentences: 190 arXiv computer-science and machine-learning papers, converted from PDF with PyMuPDF and split into sentences after removing reference lists, and the 40 SAL test papers with their original sentence boundaries. Two LLMs, Claude Opus~5.5 and Claude Sonnet~5.5, each labelled every sentence of every paper in one call per paper, following a written guideline with the three definitions above. Sentences marked by both with the same type form the high-confidence tier (2960 sentences). The other 1737 candidates marked by only one model, or with different types, were adjudicated by Claude Opus~5.5 with $\pm$3 sentences of context, which confirmed 1502. The final corpus has 4462 gap sentences: 2234 research gaps, 1543 limitations and 685 future-work statements. Agreement between the two labelling models on whether a sentence is a gap was $\kappa = 0.778$~\cite{cohen1960kappa}; this is agreement between models, not with humans. On the 40 SAL papers, the ensemble labelled 196 of SAL's 205 human-labelled limitations as a gap. SAL labels were not shown to the labelling models. Papers were split into 162 training, 34 validation and 34 test papers. The test split has 664 gaps (220 limitations, 97 future work, 347 research gaps); 28 test papers are arXiv (527 gaps) and 6 are SAL papers (137 gaps). Labelling cost about US\$36.
+
+\subsection{The funnel}
+
+Figure~\ref{fig:funnel} shows the three stages and the gold-test counts at each.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2pt, align=center, minimum height=1.25cm, text width=2.55cm, font=\footnotesize},
+  arr/.style={-{Stealth[length=2.2mm]}, thick},
+  lab/.style={font=\scriptsize, align=center}]
+\node[box] (in) {Full paper\\11,741 sentences\\664 gaps};
+\node[box, right=0.55cm of in] (a) {\textbf{A. Localise}\\rules\\9604 kept, 644 gaps};
+\node[box, right=0.55cm of a] (b) {\textbf{B. Classify}\\zero-shot NLI\\2522 kept, 606 gaps};
+\node[box, right=0.55cm of b, text width=3.0cm] (c) {\textbf{C. Filter}\\LLM, three modes\\440 / 776 / 1011 kept\\381 / 529 / 569 gaps};
+\draw[arr] (in) -- (a); \draw[arr] (a) -- (b); \draw[arr] (b) -- (c);
+\node[lab, below=0.15cm of a] {no model};
+\node[lab, below=0.15cm of b] {no training labels};
+\node[lab, below=0.15cm of c] {high precision / balanced / high recall};
+\end{tikzpicture}
+\caption{The funnel, with counts on the gold test split (34 papers, LLM labels). Each stage selects existing sentences; none rewrites text.\label{fig:funnel}}
+\end{figure}
+
+\paragraph{Stage A: localisation.} For SAL, Stage~A keeps sentences in Discussion and Conclusion sections, which retains 203 of 205 test limitations while removing 76.3\% of sentences. For the gold corpus, Stage~A is a rule-based junk filter with no section gate: it drops titles, tables, figure captions, abbreviation lists, competing-interest, author-contribution, funding and supplementary sections where section types are known, bibliography-like strings, and implausible sentences (under 25 characters or six tokens, starting mid-word, dot leaders, or mostly non-letters). A section gate is not used for arXiv papers because their gaps are spread through the body (Section~\ref{sec:discussion}). FWS has no Stage~A, because it already consists of conclusion sections, and our junk filter rejects nearly all of its lowercase positives.
+
+\paragraph{Stage B: zero-shot NLI classifier.} Each sentence is scored by an NLI cross-encoder, ModernBERT-large fine-tuned on NLI data~\cite{warner2024modernbert,modernbertnli} (revision \texttt{ca476cb9}), used as a zero-shot classifier~\cite{yin2019zeroshot}. The sentence is the premise and a short hypothesis states the gap type: ``This is a limitation.'', ``This is future work.'' or ``This is a research gap.'' The score is the entailment probability divided by the sum of the entailment and contradiction probabilities. On the gold corpus a sentence is a candidate if its maximum score over the three hypotheses reaches a threshold $\tau$, and its predicted type is the hypothesis with the highest score. On SAL only the limitation hypothesis is used, and on FWS only the future-work hypothesis. Inputs are truncated to 256 tokens.
+
+\paragraph{Stage C: LLM filter.} Candidates are sent in reading order, 20 per request, to Qwen3.8-27B (FP8, revision \texttt{017b9c7a}), self-hosted with vLLM~\cite{kwon2023vllm}. This model played no part in making any labels. Each item contains the predicted type, the sentence (up to 400 characters) and its context, the previous and next sentence of the same paper (up to 600 characters). The model returns a keep or drop verdict for each item as JSON constrained by a schema. Decoding uses temperature 0, seed 0 and no reasoning mode. The system prompt (Appendix~\ref{app:prompts}) gives the three definitions, a list of sentence kinds to drop (results, method descriptions, contribution claims, background, citations, captions and similar), and a final instruction that sets the mode:
+\begin{itemize}
+  \item \textbf{High recall}: when genuinely uncertain, keep the sentence;
+  \item \textbf{Balanced}: favour neither keeping nor dropping;
+  \item \textbf{High precision}: keep a sentence only if it explicitly states the gap itself, drop general background, motivation, observed outcomes and passing remarks, and when uncertain, drop it.
+\end{itemize}
+For SAL and FWS the definitions are narrowed to the benchmark's single type, and the other two types are added to the drop list. The wording of each mode is otherwise identical across datasets.
+
+\subsection{How design choices were made}
+
+Because several choices were tuned, we record where each was made.
+\begin{itemize}
+  \item \textbf{NLI hypotheses.} Hypothesis variants (long definitions, short type names, a single combined hypothesis, adding context, competing negative hypotheses) were compared on one half of the gold validation papers and confirmed on the other half. Short type names were best; context and negative hypotheses hurt.
+  \item \textbf{Thresholds.} $\tau$ is the highest value whose overall recall, counting sentences lost in Stage~A, is at least 90\% on development data: gold validation ($\tau = 0.354$), SAL dev ($\tau = 0.7286$) and FWS dev ($\tau = 0.1922$).
+  \item \textbf{Stage C model and rubric.} The model, batch size, use of context and the high-recall rubric were chosen during development using 196 candidates from gold test papers; we report gold results with and without these sentences. The balanced and high-precision wording was written after reading false positives from a high-recall run on gold test papers, and was then checked on the gold validation split before any further test run. All three modes were run on every test set and are reported, so no mode was selected by its test score.
+  \item \textbf{Held-out check.} The SAL dev papers were used only to set $\tau$; no prompt was written or chosen on them. We run the full funnel on them as a check on unseen papers.
+\end{itemize}
+
+\subsection{Comparison systems}
+
+\paragraph{Supervised classifiers on SAL.} We trained eight classifiers on the SAL training split: three fine-tuned encoders, PubMedBERT~\cite{gu2021pubmedbert} (\texttt{BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext}), SciBERT~\cite{beltagy2019scibert} and DistilBERT~\cite{sanh2019distilbert}, each trained for three epochs (learning rate $3\times10^{-5}$, batch 32, class-weighted loss) with a threshold chosen on the SAL dev split; and five frozen sentence encoders~\cite{reimers2019sentencebert,xiao2023cpack} with logistic regression. PubMedBERT was the strongest and serves as the supervised Stage~B comparison; it is also the model family used by Lan et al.~\cite{lan2024automatic}.
+
+\paragraph{Other Stage B options on the gold corpus.} A frozen bge-small encoder~\cite{xiao2023cpack} with a logistic-regression head trained on the gold training split, and the same ModernBERT NLI model with a single long hypothesis covering all gap types (threshold 0.75 chosen on validation).
+
+\paragraph{Whole-paper LLM prompting and published methods.} Comparisons with whole-paper and every-sentence LLM prompting on the same test papers, and reproductions of published methods, are in progress and are not reported in this version.
+
+\subsection{Evaluation}
+
+We report positive-class precision, recall and $F_1$ at the sentence level. The recall denominator is every positive sentence in the test papers, including those removed by Stage~A. Confidence intervals are 95\% percentile intervals from 2000 bootstrap resamples of papers~\cite{efron1993bootstrap}, since sentences from one paper are not independent. Comparisons between two systems are paired: both are scored on the same resampled papers, and we report the interval of the difference. LLM input cost is estimated with the \texttt{cl100k\_base} tokenizer~\cite{tiktoken} on the prompts and items exactly as sent; output tokens and Stage~A and B computation are excluded. For comparison we count the input of one whole-paper call (the high-precision prompt followed by the numbered sentences) and of judging every sentence in batches of 20 in the funnel's format. We measured run-to-run stability by repeating the high-recall run on the gold test candidates.
+
+\subsection{Software and use of generative AI}
+
+Experiments used Python with PyTorch, Hugging Face Transformers, sentence-transformers, scikit-learn and vLLM; exact versions are pinned in the repository's lock file. Code is available at the repository listed in the Data Availability Statement. Generative AI is part of the method in two places: Claude Opus~5.5 and Claude Sonnet~5.5 produced the gold-corpus labels, and Qwen3.8-27B is the Stage~C filter. Use of AI assistance in preparing the study and manuscript is declared in the Acknowledgments.

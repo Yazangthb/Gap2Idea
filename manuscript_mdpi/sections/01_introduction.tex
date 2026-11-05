@@ -1,2 +1,31 @@
 \section{Introduction}
-% TODO: port from origin/paper-writing:manuscript/sections/
+\label{sec:introduction}
+
+Research papers often tell readers where a study falls short and what should be investigated next. In clinical research, self-acknowledged limitations help readers interpret findings in light of study design, data and applicability~\cite{kilicoglu2018automatic}. In other fields, future-work statements name extensions, open questions and further evaluations that authors consider worth pursuing~\cite{zhu2019recognizing,zhang2023fws}. Authors also point to unsolved problems in their field when they motivate a study. We call these statements \emph{author-stated research gaps}: limitations of the authors' own work, future-work directions they propose, and open problems they identify. Collected across many papers, such statements are a candidate input for automated idea generation, because each one is a claim, made by a domain expert, about what is still missing.
+
+Extracting these statements at scale is harder than it looks. Gap statements are sparse: in the corpora studied here they make up between 2.6\% and 14.6\% of sentences. They are also scattered. Authors may put limitations in a dedicated section, inside a discussion, or next to a methodological choice, and in computer-science papers many gaps sit in the methods and experiments sections rather than at the end. A sentence that criticises prior work, restates a result or describes a mitigation can look like a gap without being one. Finally, the output must stay attributable: a system that generates plausible criticism is answering a different question from one that finds what the authors actually wrote~\cite{xu2025llms,mishra2026tree}.
+
+Large language models (LLMs) can judge whether a sentence is a gap, but sending every sentence, or every whole paper, to an LLM is costly and gives no control over which errors the model makes. Earlier extraction work suggests a cheaper division of labour. Clinical limitation recognition uses headings, lexical cues and supervised classifiers~\cite{kilicoglu2018automatic}; later work on randomized controlled trial (RCT) reports separates limitation detection from limitation typing~\cite{lan2024automatic}; and future-work recognition separates locating sentences from classifying them~\cite{zhu2019recognizing,zhang2023fws}. These studies motivate placing cheap structural and lexical evidence before more flexible semantic judgement.
+
+We study a three-stage funnel built on this idea. Stage~A discards text that is unlikely to contain gaps, Stage~B flags candidate sentences with a classifier, and Stage~C asks an LLM to filter the candidates. Every stage selects existing sentences and never rewrites them, so each output can be traced to its source. Two design choices distinguish the version reported here. First, Stage~B is a zero-shot natural-language-inference (NLI) cross-encoder that needs no task-specific training labels, so the same funnel runs on biomedical and computer-science papers. Second, Stage~C has three modes set by a single instruction: high precision, balanced and high recall. Because the extracted gaps are meant to feed idea generation, where a false gap wastes effort, we treat precision as the primary goal and use high precision as the main mode.
+
+We evaluate the funnel on two benchmarks with human labels, randomized-trial reports with limitation labels (SAL)~\cite{lan2024automatic} and future-work sentences from NLP papers (FWS)~\cite{zhang2023fws}, and on a corpus of 230 arXiv and biomedical papers that we labelled for three gap types with an ensemble of LLMs. Results on the LLM-labelled corpus are reported as provisional until human validation, which is in progress, is complete.
+
+\paragraph{Research questions.}
+\begin{itemize}
+  \item \textbf{RQ1 (Stage contribution).} How much does each stage change precision and recall on full-paper sentence streams?
+  \item \textbf{RQ2 (Precision control).} Can a single instruction set the precision--recall trade-off of the LLM filter, and do the settings behave consistently across datasets?
+  \item \textbf{RQ3 (Classifier and cost).} Does a training-free NLI classifier suffice for Stage~B compared with supervised classifiers, and how much LLM input does the funnel save?
+\end{itemize}
+
+\paragraph{Contributions.}
+\begin{enumerate}
+  \item A source-preserving funnel for author-stated research gaps with a training-free Stage~B and an LLM filter whose precision--recall trade-off is set by one instruction (Section~\ref{sec:methods}).
+  \item An evaluation on two human-labelled benchmarks, including a check on held-out SAL papers that no prompt or threshold decision used, and on a 230-paper, three-type LLM-labelled corpus, with paper-level confidence intervals and paired comparisons (Section~\ref{sec:results}).
+  \item Evidence that the filter modes behave as intended on every dataset: high precision mode reaches 66.2\% precision on SAL, 76.5\% on FWS and 86.6\% against the LLM labels, and the training-free classifier comes within 0.021 $F_1$ of a supervised PubMedBERT on SAL, a difference that is not statistically significant.
+  \item Two findings about evaluation data: letter case alone reveals the label in the public FWS corpus, and SAL and our LLM labels disagree on most sentences the filter keeps that SAL marks negative (Section~\ref{sec:discussion}).
+\end{enumerate}
+
+The scope is extraction. Whether the extracted gaps are still open, and whether they lead to useful research ideas, are separate questions for future work.
+
+Section~\ref{sec:related} reviews related work, Section~\ref{sec:methods} describes data, funnel and evaluation, Section~\ref{sec:results} reports results, Section~\ref{sec:discussion} discusses them and their limitations, and Section~\ref{sec:conclusions} concludes.

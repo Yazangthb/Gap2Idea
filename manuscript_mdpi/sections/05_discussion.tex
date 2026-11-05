@@ -1,2 +1,34 @@
 \section{Discussion}
-% TODO: port from origin/paper-writing:manuscript/sections/
+\label{sec:discussion}
+
+\subsection{Answers to the research questions}
+
+\paragraph{RQ1: stage contribution.} The three stages do different work. Stage~A is cheap and, when sections are meaningful as in RCT reports, removes three quarters of the text at almost no recall cost. Stage~B sets the recall ceiling, about 88--91\% in our runs, because the threshold rule fixes it on development data. Stage~C does most of the precision work, raising precision by 28 to 63 points. Every reported gap is still a sentence the authors wrote.
+
+\paragraph{RQ2: precision control.} A single change to the final instruction moves the filter along the precision--recall curve in the expected order on all six evaluation sets, and the order already held on the gold validation split before any test run. This makes the funnel adjustable to its use: high precision suits idea generation, where a false gap costs a downstream model or a person time, while high recall suits a reviewer who wants to see every candidate. On human labels, high precision mode does not lose $F_1$: it is the best mode on SAL-40 and level on FWS. On the LLM-labelled corpus it loses recall, mostly on research gaps, which suggests that the high-precision wording, which asks for an explicit statement of the gap, is strictest with the statements authors use to motivate their own work.
+
+\paragraph{RQ3: classifier and cost.} A zero-shot NLI classifier with three short hypotheses is a workable Stage~B. It needs no training labels, transfers from biomedical to computer-science text, and on SAL comes within 0.021 $F_1$ of a supervised PubMedBERT that was trained on SAL's own labels. The supervised classifier is more precise, by 8.4 points in high precision mode, so a project with in-domain labels should still use them. The cost saving over judging every sentence is 3.7 to 13 times. The saving over a single whole-paper call is modest and on arXiv nearly vanishes, so the case for the funnel there rests on control and attribution rather than cost, unless whole-paper prompting proves less accurate.
+
+\subsection{How good are the extracted gaps?}
+
+The answer depends on the labels. On SAL-40, 66.2\% of the sentences returned in high precision mode are limitations by SAL's annotators and 93.2\% by the LLM ensemble's. Either label set may be wrong on the 77 sentences where they disagree: SAL's annotators may have left some limitation statements unlabelled, and the ensemble's labels are inclusive by construction, since adjudication added sentences marked by only one model. True precision is therefore likely to lie between the two readings. On the gold corpus, most false positives come from a few long arXiv papers with few labels: in an earlier high-recall run, five of the 34 test papers held 59\% of the false positives, and each of them had only about 18--24 gold gaps despite having 220 to 824 sentences, which may indicate under-labelling of long papers. We have designed a blind human study with two raters and an independent tie-breaker on a frozen sample of 135 sentences, drawn from the high-precision output on arXiv and SAL-40 and from decoys, to measure true precision against people. Its results will be added in a later version.
+
+\subsection{Localisation does not transfer from clinical to computer-science papers}
+
+Section structure helps on RCT reports, where limitations cluster in Discussion and Conclusion sections. On arXiv papers it did not help in our development work: restricting candidates to sections recovered from LaTeX sources did not improve localisation recall (55.6\% without and 55.2\% with recovered sections), and 82\% of the gaps the section-based localiser missed were in methods, experiments or results sections. These figures come from a single development run that we have not recomputed for this version. We therefore use only a junk filter as Stage~A for arXiv papers, which keeps 97\% of gaps, and leave narrowing to Stage~B.
+
+\subsection{Evaluation data needs checking}
+
+The FWS case artefact (Section~\ref{sec:fws-case}) shows that a published benchmark can carry a trivial signal that a modern model will find. Results on FWS from case-sensitive models or LLMs given raw text, including our own earlier ones, should be treated with caution until the text is normalised. More generally, our results differ by label source more than by method: the same SAL output scores 66\% or 93\% depending on whose labels are used. Reporting which labels a number rests on is as important as reporting the number.
+
+\subsection{Limitations}
+
+\begin{itemize}
+  \item \textbf{LLM labels.} All gold-corpus results rest on labels from an ensemble of Claude models; human validation is designed and its sample frozen, but not yet done. The inter-model agreement of $\kappa = 0.778$ does not measure accuracy.
+  \item \textbf{Development on test papers.} The Stage~C model, batch size, context use and high-recall rubric were chosen using 196 gold test candidates, and the balanced and high-precision wording was written after reading gold test false positives. We report results without the 196 candidates, ran all modes everywhere, and checked the modes on validation first, but the gold test split is not untouched. The SAL dev papers are the cleanest check, and they agree with SAL-40.
+  \item \textbf{Scope of the benchmarks.} SAL covers RCT reports only, FWS covers NLP conclusion sections only, and each labels one gap type. The six biomedical gold papers are also SAL papers.
+  \item \textbf{Research gaps.} Half of the gold labels are research gaps, which score higher than the other types in the earlier stages; we therefore report per-type recall and scores without them.
+  \item \textbf{Comparisons in progress.} Whole-paper LLM prompting on the same papers and reproductions of published methods are not yet included.
+  \item \textbf{Cost.} Token counts are estimates with a vendor-neutral tokenizer and cover LLM input only.
+  \item \textbf{One LLM.} Stage~C uses one model; results with other models may differ. Repeated runs changed 1.3\% of verdicts.
+\end{itemize}
