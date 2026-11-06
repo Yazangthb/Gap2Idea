@@ -1,0 +1,64 @@
+{
+  "tfidf_lr": {
+    "method": "tfidf_lr",
+    "seed": 0,
+    "objective": "f1",
+    "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+    "max_features": 200000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "min_df": 2,
+    "sublinear_tf": true,
+    "C": 4,
+    "class_weight": "balanced"
+  },
+  "binary_nb": {
+    "method": "binary_nb",
+    "seed": 0,
+    "objective": "f1",
+    "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+    "max_features": 200000,
+    "ngram_range": [
+      1,
+      4
+    ],
+    "binary": true,
+    "min_df": 2,
+    "alpha": 1,
+    "chi2_k": null,
+    "note": "Raw-text held-out adaptation; vocabulary and chi2 fit on train only; not published lemmatized balanced CV"
+  },
+  "kilicoglu_section_proxy": {
+    "method": "kilicoglu_section_proxy",
+    "seed": 0,
+    "objective": "f1",
+    "threshold_grid": "none; deterministic rules at .5",
+    "max_features": 200000,
+    "note": "Python lexical port of Java rule logic; regex tokenization approximates original parser",
+    "paragraph_policy": "contiguous section as one paragraph (approximation)",
+    "target": "limitation only (arXiv extension, separate target from any-gap models)"
+  },
+  "modernbert_nli": {
+    "method": "modernbert_nli",
+    "seed": 0,
+    "objective": "f1",
+    "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+    "max_features": 200000,
+    "model": "tasksource/ModernBERT-large-nli",
+    "revision": "ca476cb923a8637073d4ceb0f19f7fc236e260d4",
+    "max_length": 256,
+    "attention": "eager",
+    "reference_compile": false,
+    "inference_dtype": "float16 on CUDA; float32 on CPU",
+    "weight_loading": "Windows: tensor-wise safetensors decode/copy; other OS: HF safetensors loader",
+    "hypotheses": [
+      "This sentence points out a limitation, weakness, shortcoming, open research problem, or future-work direction of the research described."
+    ],
+    "score": "max over hypotheses of entailment/(entailment+contradiction)",
+    "batch_size": 4,
+    "device": "auto",
+    "note": "Original baseline uses broad hypothesis; typed is a separately registered variant; neither uses LLM/junk gating"
+  }
+}

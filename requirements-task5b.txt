@@ -1,0 +1,10 @@
+# Install the appropriate PyTorch build for your CUDA driver separately if needed.
+# The run manifest records exact installed versions. No sentence-transformers or API keys needed.
+numpy>=1.26,<3
+scipy>=1.11,<2
+scikit-learn>=1.4,<2
+joblib>=1.3,<2
+torch>=2.6,<3
+transformers>=4.48,<5
+safetensors>=0.4.3,<1
+huggingface-hub>=0.28,<1

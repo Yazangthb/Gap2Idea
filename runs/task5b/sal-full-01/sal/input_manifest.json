@@ -1,0 +1,86 @@
+{
+  "dataset": "sal",
+  "mode": "full",
+  "created_utc": "2026-11-05T19:03:49.771074+00:00",
+  "stats": {
+    "train": {
+      "papers": 120,
+      "sentences": 25676,
+      "positives": 567,
+      "labels": {
+        "none": 25109,
+        "limitation": 567
+      }
+    },
+    "val": {
+      "papers": 40,
+      "sentences": 8650,
+      "positives": 180,
+      "labels": {
+        "none": 8470,
+        "limitation": 180
+      }
+    },
+    "test": {
+      "papers": 40,
+      "sentences": 7968,
+      "positives": 205,
+      "labels": {
+        "none": 7763,
+        "limitation": 205
+      }
+    },
+    "exact_text_overlap": {
+      "train/val": 186,
+      "train/test": 63,
+      "val/test": 26
+    }
+  },
+  "notes": {
+    "raw_test_rows": 8882,
+    "omitted_negative_fragments": 914,
+    "section_source": "raw section_name aligned by paper, exact text after outer whitespace strip, and order; model input is unchanged fixture text",
+    "rules_limitation": "SAL CSV lacks paragraph boundaries; requires aligned structure file"
+  },
+  "input_sha256": {
+    "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\external\\sal_rct\\train.csv": "18de935697a1557eda514f4a05e217f111125b9caa94013cc00f945bfadaec6c",
+    "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\external\\sal_rct\\dev.csv": "c535a51647c5614a850b1c2447ce3cb6c7c4b09073d84fe873c90b01d4ec0b8e",
+    "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\external\\sal_rct\\test.csv": "1a9403a601980f0726a2fde420d856f29bd5ef72d8e8a370ea1fe6df8fb6d138",
+    "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\stage_c_package\\sal_criteria\\sal_test_allmodels.json": "f4cf4d33aa52bd5d4417d4ed2295f24b2f58db70f1059fe1b04bad4f30c83e6d"
+  },
+  "prepared_sha256": {
+    "train": "0892be985d0c133157e0711b5ca0132c414945085cc7f725f59947879ca02225",
+    "val": "533faef96a6d33be60e4cc8a8c768cf4c8c84d5b41361cd8922a52b3330e3b51",
+    "test": "2a9abeef287aec808ad8dd0db1b9471ee287b989314bb76450cbffa9cc7c5155"
+  },
+  "provenance": {
+    "git_commit": "f0f242f4f1fc7fe1198418d6a538f0a53288c906",
+    "branch": "experiment/task-5b-comparison-methods",
+    "dirty_status": [
+      " M .gitignore",
+      "?? Task_5b_Comparison_methods.pdf",
+      "?? requirements-task5b.txt",
+      "?? scripts/bench/task5b.py",
+      "?? src/gap2idea/experiments/"
+    ],
+    "source_sha256": {
+      "src/gap2idea/experiments/task5b/__init__.py": "37ec6e0273ab6fa4d963e81b3ef853d94e5b626bfe4709ea6b093fb918c1cf6d",
+      "src/gap2idea/experiments/task5b/data.py": "163fa4c3512e1a0a599978bd037e636b9f4e99fda19247caf74ae34e1afb2409",
+      "src/gap2idea/experiments/task5b/metrics.py": "05da7abc76a743773972c1fc5462ce6067497693c140a9b9186d7790a310ff86",
+      "src/gap2idea/experiments/task5b/models.py": "74bb738d00b19141a5da65d6624b29b651815e7c57fcd4eec02505a7c45cc64b",
+      "src/gap2idea/experiments/task5b/runner.py": "be48f30829b39a84d929e6915e77ecbc41543d47d324c9bf1bd48e7eda69ed41",
+      "scripts/bench/task5b.py": "94dc93c5bafd46155e6c43a5e7d09a6582d2e4c3af9f15cd66c17c1fd0ca1084"
+    },
+    "python": "3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "packages": {
+      "numpy": "1.26.4",
+      "scipy": "1.17.1",
+      "scikit-learn": "1.7.1",
+      "joblib": "1.5.1",
+      "torch": "2.8.0+cu129",
+      "transformers": "4.53.3",
+      "safetensors": "0.6.2"
+    }
+  }
+}

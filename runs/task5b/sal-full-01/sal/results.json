@@ -1,0 +1,182 @@
+{
+  "tfidf_lr": {
+    "dataset": "sal",
+    "method": "tfidf_lr",
+    "target": "limitation",
+    "mode": "full",
+    "n_sentences": 7968,
+    "n_papers": 40,
+    "positives": 205,
+    "metrics": {
+      "precision": 0.4727272727272727,
+      "recall": 0.3804878048780488,
+      "f1": 0.42162162162162165,
+      "macro_f1": 0.7039368547527356,
+      "tp": 78,
+      "fp": 87,
+      "fn": 127,
+      "tn": 7676
+    },
+    "ci95": {
+      "precision": [
+        0.39377578679715985,
+        0.5533333333333333
+      ],
+      "recall": [
+        0.31363127544097696,
+        0.45360950465174754
+      ],
+      "f1": [
+        0.35492957746478876,
+        0.4875509847972604
+      ],
+      "macro_f1": [
+        0.6699951313404607,
+        0.7375174647824082
+      ]
+    },
+    "bootstrap": {
+      "unit": "paper",
+      "replicates": 2000,
+      "seed": 0
+    },
+    "threshold": 0.72,
+    "settings_sha256": "7a7f0444e92379fa58dbd02756bc89b98b5fb934dfd320743ff6716c9866fd0b",
+    "predictions_sha256": "a0d15d6e06f72db5d3a66fcfca8102a5b9b0c7c846e179d1e1ce55d48a61e0ff"
+  },
+  "binary_nb": {
+    "dataset": "sal",
+    "method": "binary_nb",
+    "target": "limitation",
+    "mode": "full",
+    "n_sentences": 7968,
+    "n_papers": 40,
+    "positives": 205,
+    "metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "macro_f1": 0.4934197978256723,
+      "tp": 0,
+      "fp": 2,
+      "fn": 205,
+      "tn": 7761
+    },
+    "ci95": {
+      "precision": [
+        0.0,
+        0.0
+      ],
+      "recall": [
+        0.0,
+        0.0
+      ],
+      "f1": [
+        0.0,
+        0.0
+      ],
+      "macro_f1": [
+        0.4922975521532789,
+        0.49442825299512044
+      ]
+    },
+    "bootstrap": {
+      "unit": "paper",
+      "replicates": 2000,
+      "seed": 0
+    },
+    "threshold": 0.5,
+    "settings_sha256": "71dab3168135e67eaed3b922af6d1669fbcbb82f64543edf1ad90c9e0868eb28",
+    "predictions_sha256": "b53fb77e38a7a4d9bfa4c74b42cd675afe8219727066a1bce4d173723b4325c0"
+  },
+  "kilicoglu_section_proxy": {
+    "dataset": "sal",
+    "method": "kilicoglu_section_proxy",
+    "target": "limitation",
+    "mode": "full",
+    "n_sentences": 7968,
+    "n_papers": 40,
+    "positives": 205,
+    "metrics": {
+      "precision": 0.4666666666666667,
+      "recall": 0.47804878048780486,
+      "f1": 0.472289156626506,
+      "macro_f1": 0.7290896205141422,
+      "tp": 98,
+      "fp": 112,
+      "fn": 107,
+      "tn": 7651
+    },
+    "ci95": {
+      "precision": [
+        0.3842574693201236,
+        0.5615566037735849
+      ],
+      "recall": [
+        0.31576973684210524,
+        0.6345522582324611
+      ],
+      "f1": [
+        0.3630845238095238,
+        0.5594207920792079
+      ],
+      "macro_f1": [
+        0.6747703070724528,
+        0.7736799893479638
+      ]
+    },
+    "bootstrap": {
+      "unit": "paper",
+      "replicates": 2000,
+      "seed": 0
+    },
+    "threshold": 0.5,
+    "settings_sha256": "aaddf82e72b226d79c84e40174af8a2fb6837450efc787c6f9444f8062d78e86",
+    "predictions_sha256": "f1ef68a178e0d5af7f1abf59d1f127da4aea4c977853b4a79b78b93039fb6ef8"
+  },
+  "modernbert_nli": {
+    "dataset": "sal",
+    "method": "modernbert_nli",
+    "target": "limitation",
+    "mode": "full",
+    "n_sentences": 7968,
+    "n_papers": 40,
+    "positives": 205,
+    "metrics": {
+      "precision": 0.3305785123966942,
+      "recall": 0.5853658536585366,
+      "f1": 0.4225352112676056,
+      "macro_f1": 0.7005960803865358,
+      "tp": 120,
+      "fp": 243,
+      "fn": 85,
+      "tn": 7520
+    },
+    "ci95": {
+      "precision": [
+        0.2865164670195314,
+        0.3819257827354544
+      ],
+      "recall": [
+        0.5305143906919779,
+        0.6369123754152823
+      ],
+      "f1": [
+        0.3765964082159372,
+        0.46999235837577763
+      ],
+      "macro_f1": [
+        0.6772872267976449,
+        0.7251020737240492
+      ]
+    },
+    "bootstrap": {
+      "unit": "paper",
+      "replicates": 2000,
+      "seed": 0
+    },
+    "threshold": 0.84,
+    "settings_sha256": "043e7c39c0664b9d7d80828ea5aca4a7f612bc7be7a03cfdec16a06224b86eb1",
+    "predictions_sha256": "f6a2d7963f365c510d7114ae914ed978fea3be13e4c11ce0b9d67410e97282d5"
+  }
+}

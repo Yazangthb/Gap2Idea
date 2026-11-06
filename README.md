@@ -8,6 +8,11 @@ paper(s) → Stage A (localize) → Stage B (classify) → Stage C (LLM filter) 
 ```
 
 ## Layout
+
+Task 5b comparison experiments: see [the runbook](docs/experiments/task5b_runbook.md)
+and [registered methods](docs/experiments/baseline_methods.md). Entry point:
+`python scripts/bench/task5b.py --help` (offline baselines, no LLM API keys).
+
 ```
 scripts/run_extraction_pipeline.py   # the full pipeline (list of papers → gaps.tsv/json)
 src/gap2idea/pipeline/               # the funnel code the pipeline + notebooks import

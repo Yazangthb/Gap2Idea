@@ -1,0 +1,18 @@
+{
+  "tfidf_lr": {
+    "status": "frozen",
+    "threshold": 0.72
+  },
+  "binary_nb": {
+    "status": "frozen",
+    "threshold": 0.5
+  },
+  "kilicoglu_section_proxy": {
+    "status": "frozen",
+    "threshold": 0.5
+  },
+  "modernbert_nli": {
+    "status": "frozen",
+    "threshold": 0.84
+  }
+}

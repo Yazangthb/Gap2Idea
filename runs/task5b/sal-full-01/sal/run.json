@@ -1,0 +1,50 @@
+{
+  "dataset": "sal",
+  "mode": "full",
+  "created_utc": "2026-11-05T19:25:43.083861+00:00",
+  "data_dir": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\task5b\\prepared\\sal",
+  "provenance": {
+    "git_commit": "f0f242f4f1fc7fe1198418d6a538f0a53288c906",
+    "branch": "experiment/task-5b-comparison-methods",
+    "dirty_status": [
+      " M .gitignore",
+      " M README.md",
+      "?? Task_5b_Comparison_methods.pdf",
+      "?? docs/experiments/baseline_methods.md",
+      "?? docs/experiments/task5b_runbook.md",
+      "?? docs/experiments/task5b_validation.md",
+      "?? requirements-task5b.txt",
+      "?? scripts/bench/task5b.py",
+      "?? src/gap2idea/experiments/",
+      "?? tests/"
+    ],
+    "source_sha256": {
+      "src/gap2idea/experiments/task5b/__init__.py": "37ec6e0273ab6fa4d963e81b3ef853d94e5b626bfe4709ea6b093fb918c1cf6d",
+      "src/gap2idea/experiments/task5b/data.py": "910cb53f4aefd747b9a2df6729913eafcf215f35f815bc925945b82db514b6c1",
+      "src/gap2idea/experiments/task5b/metrics.py": "05da7abc76a743773972c1fc5462ce6067497693c140a9b9186d7790a310ff86",
+      "src/gap2idea/experiments/task5b/models.py": "829d8129641ff23e2c60ce4461b9fb89196ccec01c981b3c855839e73566df50",
+      "src/gap2idea/experiments/task5b/runner.py": "c9c1b850442340933901de8df3c5d43cf0d4d5e3d08eeb2cb5ed4dfefa7e25cb",
+      "src/gap2idea/experiments/task5b/safeweights.py": "637a78fbd069970481386f548e74d7f2457ecef1066f56f0e8ce6431a4846a42",
+      "src/gap2idea/experiments/task5b/secondary.py": "4271ea1f3e88a0abc6e248d7fc4e15c516fed110ad92d367470d2c0a22390da5",
+      "src/gap2idea/experiments/task5b/workers.py": "c7d67ac2dbd8c85cb7fa21c0798ebd461a9e8e31deb1b883179c4377144a9494",
+      "scripts/bench/task5b.py": "94dc93c5bafd46155e6c43a5e7d09a6582d2e4c3af9f15cd66c17c1fd0ca1084"
+    },
+    "python": "3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "packages": {
+      "numpy": "1.26.4",
+      "scipy": "1.17.1",
+      "scikit-learn": "1.7.1",
+      "joblib": "1.5.1",
+      "torch": "2.8.0+cu129",
+      "transformers": "4.53.3",
+      "safetensors": "0.6.2"
+    }
+  },
+  "requested_methods": [
+    "tfidf_lr",
+    "binary_nb",
+    "kilicoglu_section_proxy",
+    "modernbert_nli"
+  ]
+}

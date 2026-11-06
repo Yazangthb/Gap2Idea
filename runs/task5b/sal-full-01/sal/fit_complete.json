@@ -1,0 +1,9 @@
+{
+  "completed_utc": "2026-11-05T19:27:39.379150+00:00",
+  "settings_sha256": {
+    "tfidf_lr": "7a7f0444e92379fa58dbd02756bc89b98b5fb934dfd320743ff6716c9866fd0b",
+    "binary_nb": "71dab3168135e67eaed3b922af6d1669fbcbb82f64543edf1ad90c9e0868eb28",
+    "kilicoglu_section_proxy": "aaddf82e72b226d79c84e40174af8a2fb6837450efc787c6f9444f8062d78e86",
+    "modernbert_nli": "043e7c39c0664b9d7d80828ea5aca4a7f612bc7be7a03cfdec16a06224b86eb1"
+  }
+}

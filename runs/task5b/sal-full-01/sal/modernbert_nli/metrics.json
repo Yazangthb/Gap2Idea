@@ -1,0 +1,45 @@
+{
+  "dataset": "sal",
+  "method": "modernbert_nli",
+  "target": "limitation",
+  "mode": "full",
+  "n_sentences": 7968,
+  "n_papers": 40,
+  "positives": 205,
+  "metrics": {
+    "precision": 0.3305785123966942,
+    "recall": 0.5853658536585366,
+    "f1": 0.4225352112676056,
+    "macro_f1": 0.7005960803865358,
+    "tp": 120,
+    "fp": 243,
+    "fn": 85,
+    "tn": 7520
+  },
+  "ci95": {
+    "precision": [
+      0.2865164670195314,
+      0.3819257827354544
+    ],
+    "recall": [
+      0.5305143906919779,
+      0.6369123754152823
+    ],
+    "f1": [
+      0.3765964082159372,
+      0.46999235837577763
+    ],
+    "macro_f1": [
+      0.6772872267976449,
+      0.7251020737240492
+    ]
+  },
+  "bootstrap": {
+    "unit": "paper",
+    "replicates": 2000,
+    "seed": 0
+  },
+  "threshold": 0.84,
+  "settings_sha256": "043e7c39c0664b9d7d80828ea5aca4a7f612bc7be7a03cfdec16a06224b86eb1",
+  "predictions_sha256": "f6a2d7963f365c510d7114ae914ed978fea3be13e4c11ce0b9d67410e97282d5"
+}

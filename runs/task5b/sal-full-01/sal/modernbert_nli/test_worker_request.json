@@ -1,0 +1,12 @@
+{
+  "operation": "score",
+  "method": "modernbert_nli",
+  "rows": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\task5b\\prepared\\sal\\test.jsonl",
+  "output": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\sal-full-01\\sal\\modernbert_nli\\test_scores.npy",
+  "checkpoint": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\sal-full-01\\sal\\modernbert_nli\\checkpoint",
+  "batch_size": 4,
+  "device": "auto",
+  "hypotheses": [
+    "This sentence points out a limitation, weakness, shortcoming, open research problem, or future-work direction of the research described."
+  ]
+}
