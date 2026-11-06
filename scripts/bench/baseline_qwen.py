@@ -311,7 +311,7 @@ def score_run(rows, path):
            "input_tokens": sum(x["prompt_tokens"] for x in ok), "output_tokens": sum(x["completion_tokens"] for x in ok),
            "seconds": round(sum(x["seconds"] for x in recs), 1),
            "complete": len(recs) == len(list(units(rows, path.stem.split("_")[2])))}
-    if any(x["label"] in GAP_TYPES[1:] for x in rows):
+    if path.stem.startswith("gold_"):
         res["recall_by_type"] = {t: round(sum((x["pid"], x["idx"]) in kept for x in rows if x["label"] == t)
                                           / max(1, sum(x["label"] == t for x in rows)), 3) for t in GAP_TYPES}
     return kept, res
