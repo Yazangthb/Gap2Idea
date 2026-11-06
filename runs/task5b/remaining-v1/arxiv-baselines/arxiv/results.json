@@ -1,0 +1,182 @@
+{
+  "tfidf_lr": {
+    "dataset": "arxiv",
+    "method": "tfidf_lr",
+    "target": "any_gap",
+    "mode": "full",
+    "n_sentences": 10388,
+    "n_papers": 28,
+    "positives": 527,
+    "metrics": {
+      "precision": 0.44227886056971516,
+      "recall": 0.5597722960151803,
+      "f1": 0.49413735343383586,
+      "macro_f1": 0.7316463500904242,
+      "tp": 295,
+      "fp": 372,
+      "fn": 232,
+      "tn": 9489
+    },
+    "ci95": {
+      "precision": [
+        0.3799007516347474,
+        0.5119675574746178
+      ],
+      "recall": [
+        0.5093150031365133,
+        0.6195551723015846
+      ],
+      "f1": [
+        0.44240480191647596,
+        0.5504143604518917
+      ],
+      "macro_f1": [
+        0.7057432865941861,
+        0.7599831418338953
+      ]
+    },
+    "bootstrap": {
+      "unit": "paper",
+      "replicates": 2000,
+      "seed": 0
+    },
+    "threshold": 0.61,
+    "settings_sha256": "839464282e4d844823d351921f25618786eae147482728829e3f8d3c075c7b13",
+    "predictions_sha256": "eac8e234441f4be8c6de23fe7957ccd2733ea614c135738dc1113eed24c4d96d"
+  },
+  "binary_nb": {
+    "dataset": "arxiv",
+    "method": "binary_nb",
+    "target": "any_gap",
+    "mode": "full",
+    "n_sentences": 10388,
+    "n_papers": 28,
+    "positives": 527,
+    "metrics": {
+      "precision": 0.48484848484848486,
+      "recall": 0.030360531309297913,
+      "f1": 0.05714285714285714,
+      "macro_f1": 0.5155124653739612,
+      "tp": 16,
+      "fp": 17,
+      "fn": 511,
+      "tn": 9844
+    },
+    "ci95": {
+      "precision": [
+        0.32,
+        0.6333333333333333
+      ],
+      "recall": [
+        0.01443770263744855,
+        0.050440789473684196
+      ],
+      "f1": [
+        0.027490398221144127,
+        0.09263198017914995
+      ],
+      "macro_f1": [
+        0.5014836463913552,
+        0.5327697289314937
+      ]
+    },
+    "bootstrap": {
+      "unit": "paper",
+      "replicates": 2000,
+      "seed": 0
+    },
+    "threshold": 0.07,
+    "settings_sha256": "c5e3a786224b789de0fde2cab1a51404e89217099f69f000c73c5d6f28c37dc2",
+    "predictions_sha256": "4befc331134c1e6dcc377e5f2fdb7485a2c51496c960d8e65b409a78f011852f"
+  },
+  "modernbert_nli": {
+    "dataset": "arxiv",
+    "method": "modernbert_nli",
+    "target": "any_gap",
+    "mode": "full",
+    "n_sentences": 10388,
+    "n_papers": 28,
+    "positives": 527,
+    "metrics": {
+      "precision": 0.49866666666666665,
+      "recall": 0.7096774193548387,
+      "f1": 0.5857478465152701,
+      "macro_f1": 0.7793091250628559,
+      "tp": 374,
+      "fp": 376,
+      "fn": 153,
+      "tn": 9485
+    },
+    "ci95": {
+      "precision": [
+        0.4046189173343756,
+        0.589373173223662
+      ],
+      "recall": [
+        0.6430107526881721,
+        0.7616568226563682
+      ],
+      "f1": [
+        0.5079076630652261,
+        0.6533133866087623
+      ],
+      "macro_f1": [
+        0.737508977913702,
+        0.8152181905497493
+      ]
+    },
+    "bootstrap": {
+      "unit": "paper",
+      "replicates": 2000,
+      "seed": 0
+    },
+    "threshold": 0.63,
+    "settings_sha256": "6b9c9c01529c5b2d74232b93074dc55e699a21d1126c4f2a5aa9bb654913eaa3",
+    "predictions_sha256": "b107ba5d7760136c95c4137b218af47f5b64cc3c55dc63fb366a434b21f48399"
+  },
+  "modernbert_nli_typed": {
+    "dataset": "arxiv",
+    "method": "modernbert_nli_typed",
+    "target": "any_gap",
+    "mode": "full",
+    "n_sentences": 10388,
+    "n_papers": 28,
+    "positives": 527,
+    "metrics": {
+      "precision": 0.41251325556733826,
+      "recall": 0.7381404174573055,
+      "f1": 0.5292517006802722,
+      "macro_f1": 0.7467039607721262,
+      "tp": 389,
+      "fp": 554,
+      "fn": 138,
+      "tn": 9307
+    },
+    "ci95": {
+      "precision": [
+        0.3300216162287995,
+        0.5049233404353093
+      ],
+      "recall": [
+        0.6829245540589735,
+        0.7813969138255517
+      ],
+      "f1": [
+        0.45145945263218273,
+        0.601008966113583
+      ],
+      "macro_f1": [
+        0.7049130443325352,
+        0.7849359252469084
+      ]
+    },
+    "bootstrap": {
+      "unit": "paper",
+      "replicates": 2000,
+      "seed": 0
+    },
+    "threshold": 0.89,
+    "settings_sha256": "e743ebee18add3e6b53710185d4d9942295ada3291c9c69d9e5d41f81a86b5c8",
+    "predictions_sha256": "381a25d3664d55e7f79001f9c42ca25d5ccb1389dcc4125629b3a9874493f001"
+  }
+}

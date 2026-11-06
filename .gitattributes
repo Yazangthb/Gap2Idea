@@ -1,7 +1,16 @@
 # Keep the recorded experiment source hashes stable across operating systems.
 /scripts/bench/task5b.py text eol=lf
 /scripts/bench/run_task5b_remaining.py text eol=lf
+/scripts/bench/run_task5b_server.py text eol=lf
+/scripts/bench/build_task5b_handoff.py text eol=lf
 /src/gap2idea/experiments/**/*.py text eol=lf
 # Preserve the exact original result bytes used by SHA256 evidence checks.
 /runs/task5b/sal-full-01/** -text whitespace=cr-at-eol
 /Task_5b_Comparison_methods.pdf binary
+# Preserve all published run/provenance hashes across Windows and Linux.
+/runs/task5b/fws-current-gold-full-01/** -text whitespace=cr-at-eol
+/runs/task5b/remaining-v1/arxiv-baselines/** -text whitespace=cr-at-eol
+/runs/task5b/remaining-v1/arxiv-scibert/** -text whitespace=cr-at-eol
+/runs/task5b/remaining-v1/arxiv-biomedbert/** -text whitespace=cr-at-eol
+/runs/task5b/remaining-v1/suite_plan.json -text whitespace=cr-at-eol
+/artifacts/task5b/** -text whitespace=cr-at-eol

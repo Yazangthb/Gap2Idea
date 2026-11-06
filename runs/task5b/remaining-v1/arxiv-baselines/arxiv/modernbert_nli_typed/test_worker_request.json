@@ -1,0 +1,14 @@
+{
+  "operation": "score",
+  "method": "modernbert_nli_typed",
+  "rows": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\task5b\\prepared-current-gold-v1\\arxiv\\test.jsonl",
+  "output": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\remaining-v1\\arxiv-baselines\\arxiv\\modernbert_nli_typed\\test_scores.npy",
+  "checkpoint": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\remaining-v1\\arxiv-baselines\\arxiv\\modernbert_nli_typed\\checkpoint",
+  "batch_size": 4,
+  "device": "auto",
+  "hypotheses": [
+    "This is a limitation.",
+    "This is future work.",
+    "This is a research gap."
+  ]
+}

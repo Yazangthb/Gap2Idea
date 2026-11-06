@@ -1,0 +1,10 @@
+{
+  "operation": "score",
+  "method": "biomedbert_ft",
+  "rows": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\task5b\\prepared-current-gold-v1\\arxiv\\val.jsonl",
+  "output": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\remaining-v1\\arxiv-biomedbert\\arxiv\\biomedbert_ft\\validation_scores.npy",
+  "checkpoint": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\remaining-v1\\arxiv-biomedbert\\arxiv\\biomedbert_ft\\checkpoint",
+  "batch_size": 1,
+  "device": "auto",
+  "hypotheses": null
+}

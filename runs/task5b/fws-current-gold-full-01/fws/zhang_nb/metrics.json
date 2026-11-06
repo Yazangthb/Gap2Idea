@@ -1,0 +1,45 @@
+{
+  "dataset": "fws",
+  "method": "zhang_nb",
+  "target": "future_work",
+  "mode": "full",
+  "n_sentences": 1506,
+  "n_papers": 209,
+  "positives": 220,
+  "metrics": {
+    "precision": 0.7692307692307693,
+    "recall": 0.6818181818181818,
+    "f1": 0.7228915662650602,
+    "macro_f1": 0.8393048512880943,
+    "tp": 150,
+    "fp": 45,
+    "fn": 70,
+    "tn": 1241
+  },
+  "ci95": {
+    "precision": [
+      0.7068888085897171,
+      0.8343353248693054
+    ],
+    "recall": [
+      0.5990086117986798,
+      0.7602498093058733
+    ],
+    "f1": [
+      0.662737799834574,
+      0.7777838827838828
+    ],
+    "macro_f1": [
+      0.8050983797871982,
+      0.8702074854500234
+    ]
+  },
+  "bootstrap": {
+    "unit": "paper",
+    "replicates": 2000,
+    "seed": 0
+  },
+  "threshold": 0.99,
+  "settings_sha256": "64eb5c288c74f9d5cf879c12c054366f2636e9f5e2c95e6a3cd633bde15b38db",
+  "predictions_sha256": "98c0c75b79feb8f843f3037c6625065b4a1d03a0ad4e9fb60006494c19d363de"
+}

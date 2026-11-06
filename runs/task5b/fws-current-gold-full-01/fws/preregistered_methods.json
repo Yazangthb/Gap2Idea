@@ -1,0 +1,91 @@
+{
+  "tfidf_lr": {
+    "method": "tfidf_lr",
+    "seed": 0,
+    "objective": "macro_f1",
+    "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+    "max_features": 200000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "min_df": 2,
+    "sublinear_tf": true,
+    "C": 4,
+    "class_weight": "balanced"
+  },
+  "binary_nb": {
+    "method": "binary_nb",
+    "seed": 0,
+    "objective": "macro_f1",
+    "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+    "max_features": 200000,
+    "ngram_range": [
+      1,
+      4
+    ],
+    "binary": true,
+    "min_df": 2,
+    "alpha": 1,
+    "chi2_k": null,
+    "note": "Raw-text held-out adaptation; vocabulary and chi2 fit on train only; not published lemmatized balanced CV"
+  },
+  "modernbert_nli": {
+    "method": "modernbert_nli",
+    "seed": 0,
+    "objective": "macro_f1",
+    "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+    "max_features": 200000,
+    "model": "tasksource/ModernBERT-large-nli",
+    "revision": "ca476cb923a8637073d4ceb0f19f7fc236e260d4",
+    "max_length": 256,
+    "attention": "eager",
+    "reference_compile": false,
+    "inference_dtype": "float16 on CUDA; float32 on CPU",
+    "weight_loading": "Windows: tensor-wise safetensors decode/copy; other OS: HF safetensors loader",
+    "hypotheses": [
+      "This sentence points out a limitation, weakness, shortcoming, open research problem, or future-work direction of the research described."
+    ],
+    "score": "max over hypotheses of entailment/(entailment+contradiction)",
+    "batch_size": 4,
+    "device": "auto",
+    "note": "Original baseline uses broad hypothesis; typed is a separately registered variant; neither uses LLM/junk gating"
+  },
+  "modernbert_nli_typed": {
+    "method": "modernbert_nli_typed",
+    "seed": 0,
+    "objective": "macro_f1",
+    "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+    "max_features": 200000,
+    "model": "tasksource/ModernBERT-large-nli",
+    "revision": "ca476cb923a8637073d4ceb0f19f7fc236e260d4",
+    "max_length": 256,
+    "attention": "eager",
+    "reference_compile": false,
+    "inference_dtype": "float16 on CUDA; float32 on CPU",
+    "weight_loading": "Windows: tensor-wise safetensors decode/copy; other OS: HF safetensors loader",
+    "hypotheses": [
+      "This is future work."
+    ],
+    "score": "max over hypotheses of entailment/(entailment+contradiction)",
+    "batch_size": 4,
+    "device": "auto",
+    "note": "Original baseline uses broad hypothesis; typed is a separately registered variant; neither uses LLM/junk gating"
+  },
+  "zhang_nb": {
+    "method": "zhang_nb",
+    "seed": 0,
+    "objective": "macro_f1",
+    "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+    "max_features": 200000,
+    "ngram_range": [
+      1,
+      4
+    ],
+    "binary": false,
+    "min_df": 3,
+    "alpha": 1e-05,
+    "chi2_k": 14000,
+    "note": "Raw-text held-out adaptation; vocabulary and chi2 fit on train only; not published lemmatized balanced CV"
+  }
+}

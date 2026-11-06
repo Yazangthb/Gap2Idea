@@ -15,6 +15,9 @@ and [registered methods](docs/experiments/baseline_methods.md). Entry point:
 Remaining data-ready runs: `python scripts/bench/run_task5b_remaining.py --check`,
 then `--run`. See [the remaining-run plan](docs/experiments/task5b_remaining_runs.md)
 for job selection and missing external artifacts. This launcher does not push Git.
+Moving the unfinished work to a server: follow [the server handoff](docs/experiments/task5b_server_handoff.md)
+and use `python scripts/bench/run_task5b_server.py --check`, then `--run`.
+It restores the packaged data/checkpoints and retains all completed evaluations.
 
 ```
 scripts/run_extraction_pipeline.py   # the full pipeline (list of papers → gaps.tsv/json)

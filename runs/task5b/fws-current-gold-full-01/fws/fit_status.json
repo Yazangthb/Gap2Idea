@@ -1,0 +1,22 @@
+{
+  "tfidf_lr": {
+    "status": "frozen",
+    "threshold": 0.71
+  },
+  "binary_nb": {
+    "status": "frozen",
+    "threshold": 0.05
+  },
+  "modernbert_nli": {
+    "status": "frozen",
+    "threshold": 0.46
+  },
+  "modernbert_nli_typed": {
+    "status": "frozen",
+    "threshold": 0.63
+  },
+  "zhang_nb": {
+    "status": "frozen",
+    "threshold": 0.99
+  }
+}

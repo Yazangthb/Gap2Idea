@@ -1,0 +1,45 @@
+{
+  "dataset": "arxiv",
+  "method": "biomedbert_ft",
+  "target": "any_gap",
+  "mode": "full",
+  "n_sentences": 10388,
+  "n_papers": 28,
+  "positives": 527,
+  "metrics": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "macro_f1": 0.4869870117042817,
+    "tp": 0,
+    "fp": 0,
+    "fn": 527,
+    "tn": 9861
+  },
+  "ci95": {
+    "precision": [
+      0.0,
+      0.0
+    ],
+    "recall": [
+      0.0,
+      0.0
+    ],
+    "f1": [
+      0.0,
+      0.0
+    ],
+    "macro_f1": [
+      0.4833862457224771,
+      0.489713936636333
+    ]
+  },
+  "bootstrap": {
+    "unit": "paper",
+    "replicates": 2000,
+    "seed": 0
+  },
+  "threshold": 0.5,
+  "settings_sha256": "5cadec199d4ff528937eaa4693ec36360aca462e7eefc635e9fc6eadea791fe7",
+  "predictions_sha256": "299813bb1661c31d548591473f5de244a22073748f688c4f6c556b7f372c229d"
+}

@@ -1,0 +1,46 @@
+{
+  "jobs": {
+    "arxiv-baselines": {
+      "dataset": "arxiv",
+      "methods": "tfidf_lr,binary_nb,modernbert_nli,modernbert_nli_typed"
+    },
+    "arxiv-scibert": {
+      "dataset": "arxiv",
+      "methods": "scibert_ft"
+    },
+    "arxiv-biomedbert": {
+      "dataset": "arxiv",
+      "methods": "biomedbert_ft"
+    },
+    "fws-scibert": {
+      "dataset": "fws",
+      "methods": "scibert_ft"
+    },
+    "sal-cached-encoders": {
+      "dataset": "sal",
+      "methods": "legacy_scibert_ft,legacy_pubmedbert_ft"
+    }
+  },
+  "encoder_revisions": {
+    "scibert_ft": "24f92d32b1bfb0bcaf9ab193ff3ad01e87732fc1",
+    "biomedbert_ft": "e1354b7a3a09615f6aba48dfad4b7a613eef7062"
+  },
+  "batch_size": 4,
+  "device": "auto",
+  "encoder_batch_size": 1,
+  "epochs": 3,
+  "bootstrap": 2000,
+  "seed": 0,
+  "source_sha256": {
+    "src/gap2idea/experiments/task5b/__init__.py": "37ec6e0273ab6fa4d963e81b3ef853d94e5b626bfe4709ea6b093fb918c1cf6d",
+    "src/gap2idea/experiments/task5b/data.py": "d85934dae284a5e5c1a5ce1abbb3ea477ae919e53d65fabb44383daa7ef9c0e9",
+    "src/gap2idea/experiments/task5b/metrics.py": "05da7abc76a743773972c1fc5462ce6067497693c140a9b9186d7790a310ff86",
+    "src/gap2idea/experiments/task5b/models.py": "77ea0ebae9e240ac18ce284de8da3b9f2f357260fd77c5884d07e6a171593882",
+    "src/gap2idea/experiments/task5b/runner.py": "2dd7dfb4a253ba0b7f04a9b75fdd72426fc6bb9bb074ca048282af4e3785586e",
+    "src/gap2idea/experiments/task5b/safeweights.py": "637a78fbd069970481386f548e74d7f2457ecef1066f56f0e8ce6431a4846a42",
+    "src/gap2idea/experiments/task5b/secondary.py": "8e05ed95d72e3073cae31c37f681b98a09dc0d12e2f0fedcf13d57b188d2790a",
+    "src/gap2idea/experiments/task5b/workers.py": "96d15caa9748308d7f12787a0db462062685e5b8a51d210f3061c2a0c9f1f2fa",
+    "scripts/bench/task5b.py": "94dc93c5bafd46155e6c43a5e7d09a6582d2e4c3af9f15cd66c17c1fd0ca1084"
+  },
+  "launcher_sha256": "732091ec74f739126b99dbfa3cde4fcf37a60437b1afb8c9dc585e4c20684bbb"
+}

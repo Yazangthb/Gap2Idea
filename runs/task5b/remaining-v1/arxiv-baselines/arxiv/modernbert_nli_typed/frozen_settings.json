@@ -1,0 +1,45 @@
+{
+  "method": "modernbert_nli_typed",
+  "seed": 0,
+  "objective": "f1",
+  "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+  "max_features": 200000,
+  "model": "tasksource/ModernBERT-large-nli",
+  "revision": "ca476cb923a8637073d4ceb0f19f7fc236e260d4",
+  "max_length": 256,
+  "attention": "eager",
+  "reference_compile": false,
+  "inference_dtype": "float16 on CUDA; float32 on CPU",
+  "weight_loading": "Windows: tensor-wise safetensors decode/copy; other OS: HF safetensors loader",
+  "hypotheses": [
+    "This is a limitation.",
+    "This is future work.",
+    "This is a research gap."
+  ],
+  "score": "max over hypotheses of entailment/(entailment+contradiction)",
+  "batch_size": 4,
+  "device": "auto",
+  "note": "Original baseline uses broad hypothesis; typed is a separately registered variant; neither uses LLM/junk gating",
+  "input_protocol": "original dataset split",
+  "text_transform": "unchanged canonical sentence",
+  "actual_device": "cuda",
+  "n_sentences": 10087,
+  "threshold": 0.89,
+  "validation_metrics": {
+    "precision": 0.48129675810473815,
+    "recall": 0.6433333333333333,
+    "f1": 0.550641940085592,
+    "macro_f1": 0.7585406589411552,
+    "tp": 386,
+    "fp": 416,
+    "fn": 214,
+    "tn": 9071
+  },
+  "target": "any_gap",
+  "frozen_utc": "2026-11-06T04:24:38.192697+00:00",
+  "artifact_sha256": {
+    "validation_scores.npy": "5c74ec34fb72de358841905c2404c5dcd9674080355f1d99cdd3d843feb9c22e",
+    "validation_scores.npy.metadata.json": "57dcca19d075649bf8663c8a9bb628dfa2da4c94e7e131e3c3c5a347ff326cfb",
+    "validation_worker_request.json": "a4d47805eb29890042a2951f2253b1cd839c80a93ab99341bfd199614bdc7a2d"
+  }
+}

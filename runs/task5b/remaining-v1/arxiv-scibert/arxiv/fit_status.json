@@ -1,0 +1,6 @@
+{
+  "scibert_ft": {
+    "status": "frozen",
+    "threshold": 0.5
+  }
+}

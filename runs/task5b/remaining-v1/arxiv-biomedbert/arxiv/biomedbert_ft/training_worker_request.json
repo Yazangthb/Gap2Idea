@@ -1,0 +1,13 @@
+{
+  "operation": "train_encoder",
+  "method": "biomedbert_ft",
+  "rows": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\task5b\\prepared-current-gold-v1\\arxiv\\train.jsonl",
+  "checkpoint": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\remaining-v1\\arxiv-biomedbert\\arxiv\\biomedbert_ft\\checkpoint",
+  "seed": 0,
+  "epochs": 3,
+  "batch_size": 1,
+  "device": "auto",
+  "revision": "e1354b7a3a09615f6aba48dfad4b7a613eef7062",
+  "base_checkpoint": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\task5b\\hf_cache\\classifier-init\\biomedbert_ft\\e1354b7a3a09615f6aba48dfad4b7a613eef7062-seed0",
+  "output": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\remaining-v1\\arxiv-biomedbert\\arxiv\\biomedbert_ft\\training_metadata.json"
+}

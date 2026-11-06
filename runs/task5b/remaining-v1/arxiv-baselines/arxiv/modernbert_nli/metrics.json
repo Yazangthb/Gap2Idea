@@ -1,0 +1,45 @@
+{
+  "dataset": "arxiv",
+  "method": "modernbert_nli",
+  "target": "any_gap",
+  "mode": "full",
+  "n_sentences": 10388,
+  "n_papers": 28,
+  "positives": 527,
+  "metrics": {
+    "precision": 0.49866666666666665,
+    "recall": 0.7096774193548387,
+    "f1": 0.5857478465152701,
+    "macro_f1": 0.7793091250628559,
+    "tp": 374,
+    "fp": 376,
+    "fn": 153,
+    "tn": 9485
+  },
+  "ci95": {
+    "precision": [
+      0.4046189173343756,
+      0.589373173223662
+    ],
+    "recall": [
+      0.6430107526881721,
+      0.7616568226563682
+    ],
+    "f1": [
+      0.5079076630652261,
+      0.6533133866087623
+    ],
+    "macro_f1": [
+      0.737508977913702,
+      0.8152181905497493
+    ]
+  },
+  "bootstrap": {
+    "unit": "paper",
+    "replicates": 2000,
+    "seed": 0
+  },
+  "threshold": 0.63,
+  "settings_sha256": "6b9c9c01529c5b2d74232b93074dc55e699a21d1126c4f2a5aa9bb654913eaa3",
+  "predictions_sha256": "b107ba5d7760136c95c4137b218af47f5b64cc3c55dc63fb366a434b21f48399"
+}

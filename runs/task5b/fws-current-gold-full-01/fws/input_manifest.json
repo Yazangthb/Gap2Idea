@@ -1,0 +1,127 @@
+{
+  "dataset": "fws",
+  "mode": "full",
+  "created_utc": "2026-11-06T03:20:30.932840+00:00",
+  "stats": {
+    "train": {
+      "papers": 7924,
+      "sentences": 57198,
+      "positives": 7985,
+      "labels": {
+        "none": 49213,
+        "future_work": 7985
+      }
+    },
+    "val": {
+      "papers": 880,
+      "sentences": 6190,
+      "positives": 804,
+      "labels": {
+        "none": 5386,
+        "future_work": 804
+      }
+    },
+    "test": {
+      "papers": 209,
+      "sentences": 1506,
+      "positives": 220,
+      "labels": {
+        "none": 1286,
+        "future_work": 220
+      }
+    },
+    "exact_text_overlap": {
+      "train/val": 0,
+      "train/test": 2,
+      "val/test": 0
+    }
+  },
+  "notes": {
+    "protocol_id": "fws_current_gold_v1",
+    "test_protocol": "stable eligible CSV paper order; Random(0); complete paper groups until >=1500 rows",
+    "exclusion_source": "current gold TRAIN papers, all sentences",
+    "exclusion_scope": "all FWS splits",
+    "text_transform": "lowercase every sentence before exclusion, training and inference",
+    "historical_test_identity": "not established; do not pair with old funnel outputs without identity checks",
+    "gold_corpus_stats": {
+      "train": {
+        "papers": 162,
+        "sentences": 45777,
+        "positives": 3099,
+        "domains": {
+          "biomed_sal": 5501,
+          "arxiv_cs": 40276
+        }
+      },
+      "val": {
+        "papers": 34,
+        "sentences": 11201,
+        "positives": 699,
+        "domains": {
+          "biomed_sal": 1114,
+          "arxiv_cs": 10087
+        }
+      },
+      "test": {
+        "papers": 34,
+        "sentences": 11741,
+        "positives": 664,
+        "domains": {
+          "biomed_sal": 1353,
+          "arxiv_cs": 10388
+        }
+      }
+    },
+    "unique_exclusion_texts": 45123,
+    "excluded_test_sentences": 2,
+    "excluded_source_rows": [
+      32755,
+      42550
+    ],
+    "test_membership_sha256": "4621cab7428b18dd415189da68e2840ef749377dee80ac131445611e45774413",
+    "validation_protocol": "10% of remaining papers, sorted IDs then seeded shuffle",
+    "validation_seed": 0
+  },
+  "input_sha256": {
+    "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\external\\fws_corpus.csv": "748ac27fdd60c97d752f1d3771fa108c670881756c89ee4cb66cbd8a6de603c4",
+    "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\gold\\gap_gold_final.jsonl": "bd7995de7825ee21aaf33645f5cf31ed086a6a82a638b381364a7386354f8252",
+    "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\gold\\splits.json": "726aa23a3ef4d71e9ae1b0c0a526dfe5e8e771a044ddd7a8ae13841f3593ad0f",
+    "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\paper_texts.jsonl": "51d84d6d9f6aba0f5f7dda0f5ad6a55ddda6d66f9d5b07dd23edfaf4314900eb",
+    "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\stage_c_package\\sal_criteria\\sal_test_allmodels.json": "f4cf4d33aa52bd5d4417d4ed2295f24b2f58db70f1059fe1b04bad4f30c83e6d"
+  },
+  "prepared_sha256": {
+    "train": "ac4ad56c6a98f84e40c4654f23626120c2a18205eb3aafcb21717022b67dbf5f",
+    "val": "2fe6ac3b9fc11be57798051ca15a89bd044b513aa288a04b81af33a3a0c1a15c",
+    "test": "7caa67ef5c2cde0825fa6cccc3a356cb5f2366cf761f461ff0ee0f70af9107b0"
+  },
+  "provenance": {
+    "git_commit": "a030d0d6ac3321525f32f64abede9a49f1e060ac",
+    "branch": "Task_5b",
+    "dirty_status": [
+      " M src/gap2idea/experiments/task5b/data.py",
+      " M src/gap2idea/experiments/task5b/runner.py"
+    ],
+    "source_sha256": {
+      "src/gap2idea/experiments/task5b/__init__.py": "37ec6e0273ab6fa4d963e81b3ef853d94e5b626bfe4709ea6b093fb918c1cf6d",
+      "src/gap2idea/experiments/task5b/data.py": "d85934dae284a5e5c1a5ce1abbb3ea477ae919e53d65fabb44383daa7ef9c0e9",
+      "src/gap2idea/experiments/task5b/metrics.py": "05da7abc76a743773972c1fc5462ce6067497693c140a9b9186d7790a310ff86",
+      "src/gap2idea/experiments/task5b/models.py": "829d8129641ff23e2c60ce4461b9fb89196ccec01c981b3c855839e73566df50",
+      "src/gap2idea/experiments/task5b/runner.py": "a2b243d0cad69bdb4550fc4f7375ebf3a86b55eabc0d6f742046738bcd3986ca",
+      "src/gap2idea/experiments/task5b/safeweights.py": "637a78fbd069970481386f548e74d7f2457ecef1066f56f0e8ce6431a4846a42",
+      "src/gap2idea/experiments/task5b/secondary.py": "4271ea1f3e88a0abc6e248d7fc4e15c516fed110ad92d367470d2c0a22390da5",
+      "src/gap2idea/experiments/task5b/workers.py": "c7d67ac2dbd8c85cb7fa21c0798ebd461a9e8e31deb1b883179c4377144a9494",
+      "scripts/bench/task5b.py": "94dc93c5bafd46155e6c43a5e7d09a6582d2e4c3af9f15cd66c17c1fd0ca1084"
+    },
+    "python": "3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "packages": {
+      "numpy": "1.26.4",
+      "scipy": "1.17.1",
+      "scikit-learn": "1.7.1",
+      "joblib": "1.5.1",
+      "torch": "2.8.0+cu129",
+      "transformers": "4.53.3",
+      "safetensors": "0.6.2"
+    }
+  }
+}

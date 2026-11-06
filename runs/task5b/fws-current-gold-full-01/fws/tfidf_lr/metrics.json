@@ -1,0 +1,45 @@
+{
+  "dataset": "fws",
+  "method": "tfidf_lr",
+  "target": "future_work",
+  "mode": "full",
+  "n_sentences": 1506,
+  "n_papers": 209,
+  "positives": 220,
+  "metrics": {
+    "precision": 0.8020833333333334,
+    "recall": 0.7,
+    "f1": 0.7475728155339806,
+    "macro_f1": 0.8537864077669903,
+    "tp": 154,
+    "fp": 38,
+    "fn": 66,
+    "tn": 1248
+  },
+  "ci95": {
+    "precision": [
+      0.7399036803141668,
+      0.8644182317911131
+    ],
+    "recall": [
+      0.6184684797280409,
+      0.7773225957049485
+    ],
+    "f1": [
+      0.6885144457068657,
+      0.8
+    ],
+    "macro_f1": [
+      0.8199894920241902,
+      0.8831552726274114
+    ]
+  },
+  "bootstrap": {
+    "unit": "paper",
+    "replicates": 2000,
+    "seed": 0
+  },
+  "threshold": 0.71,
+  "settings_sha256": "f913b245291f965f8adfff63a6a4047860501d15e248c66bb1a108c06f86a474",
+  "predictions_sha256": "8aec063c5819d919e23b7cb8323f1127d7403e232c7856e854bc8837c5b9fae9"
+}

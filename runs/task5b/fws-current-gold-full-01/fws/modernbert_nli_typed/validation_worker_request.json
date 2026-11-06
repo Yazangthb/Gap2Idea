@@ -1,0 +1,12 @@
+{
+  "operation": "score",
+  "method": "modernbert_nli_typed",
+  "rows": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\task5b\\prepared-current-gold-v1\\fws\\val.jsonl",
+  "output": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\fws-current-gold-full-01\\fws\\modernbert_nli_typed\\validation_scores.npy",
+  "checkpoint": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\fws-current-gold-full-01\\fws\\modernbert_nli_typed\\checkpoint",
+  "batch_size": 4,
+  "device": "auto",
+  "hypotheses": [
+    "This is future work."
+  ]
+}

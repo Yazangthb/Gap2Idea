@@ -1,0 +1,13 @@
+{
+  "operation": "train_encoder",
+  "method": "scibert_ft",
+  "rows": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\task5b\\prepared-current-gold-v1\\arxiv\\train.jsonl",
+  "checkpoint": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\remaining-v1\\arxiv-scibert\\arxiv\\scibert_ft\\checkpoint",
+  "seed": 0,
+  "epochs": 3,
+  "batch_size": 1,
+  "device": "auto",
+  "revision": "24f92d32b1bfb0bcaf9ab193ff3ad01e87732fc1",
+  "base_checkpoint": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\data\\task5b\\hf_cache\\classifier-init\\scibert_ft\\24f92d32b1bfb0bcaf9ab193ff3ad01e87732fc1-seed0",
+  "output": "E:\\vs\\Gap2Idea - main code\\Gap2Idea\\runs\\task5b\\remaining-v1\\arxiv-scibert\\arxiv\\scibert_ft\\training_metadata.json"
+}

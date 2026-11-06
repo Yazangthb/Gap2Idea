@@ -1,0 +1,22 @@
+{
+  "scibert_ft": {
+    "method": "scibert_ft",
+    "seed": 0,
+    "objective": "f1",
+    "threshold_grid": "0.05..0.99 step .01; ties closest to .5, then higher",
+    "max_features": 200000,
+    "model": "allenai/scibert_scivocab_uncased",
+    "epochs": 3,
+    "batch_size": 1,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "max_length": 256,
+    "device": "auto",
+    "optimizer_foreach": false,
+    "training_precision": "CUDA: fp16 autocast + GradScaler, fp32 parameters; CPU: fp32",
+    "gradient_checkpointing": "enabled on CUDA, non-reentrant; disabled on CPU",
+    "checkpoint_selection": "fixed final epoch; validation selects threshold only",
+    "revision": "24f92d32b1bfb0bcaf9ab193ff3ad01e87732fc1",
+    "note": "Generic in-domain binary fine-tune, not the Lan EDA/PBA recipe"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "completed_utc": "2026-11-06T03:38:03.012961+00:00",
+  "settings_sha256": {
+    "tfidf_lr": "f913b245291f965f8adfff63a6a4047860501d15e248c66bb1a108c06f86a474",
+    "binary_nb": "11191166f4a6a8a3b1667782eef78b4e490e5c00966281396e7bc7f28b508d2b",
+    "modernbert_nli": "ce39d22c42d5a32811b544a9dc4360988f2b52eee560e044248fd9b50c93f840",
+    "modernbert_nli_typed": "3a059a3f849ead54168a08aa2535b8a81f072d48928ec0b97499685fa1afcfc6",
+    "zhang_nb": "64eb5c288c74f9d5cf879c12c054366f2636e9f5e2c95e6a3cd633bde15b38db"
+  }
+}

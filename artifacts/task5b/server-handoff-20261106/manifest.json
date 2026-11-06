@@ -1,0 +1,179 @@
+{
+  "format_version": 1,
+  "created_date": "2026-11-06",
+  "bundles": [
+    {
+      "name": "prepared-data",
+      "sha256": "0c61c954f518c30395c5095d1a6a863d6f44708627db76850356272accc2c382",
+      "parts": [
+        {
+          "file": "prepared-data.tar.gz.part000",
+          "size": 21573599,
+          "sha256": "0c61c954f518c30395c5095d1a6a863d6f44708627db76850356272accc2c382"
+        }
+      ],
+      "files": [
+        {
+          "path": "data/task5b/prepared/sal/manifest.json",
+          "size": 3466,
+          "sha256": "dca49a26e5056d29ed3dcbd28cca42d6f755ee164b26e2eee4d8c7d1330aee1f"
+        },
+        {
+          "path": "data/task5b/prepared/sal/test.jsonl",
+          "size": 3586560,
+          "sha256": "2a9abeef287aec808ad8dd0db1b9471ee287b989314bb76450cbffa9cc7c5155"
+        },
+        {
+          "path": "data/task5b/prepared/sal/train.jsonl",
+          "size": 10679673,
+          "sha256": "0892be985d0c133157e0711b5ca0132c414945085cc7f725f59947879ca02225"
+        },
+        {
+          "path": "data/task5b/prepared/sal/val.jsonl",
+          "size": 3526529,
+          "sha256": "533faef96a6d33be60e4cc8a8c768cf4c8c84d5b41361cd8922a52b3330e3b51"
+        },
+        {
+          "path": "data/task5b/prepared-current-gold-v1/arxiv/manifest.json",
+          "size": 3436,
+          "sha256": "b0d8774072f99187387f506018fda4530c2add3fd24d1c1ca5b5556acdf2d88d"
+        },
+        {
+          "path": "data/task5b/prepared-current-gold-v1/arxiv/test.jsonl",
+          "size": 3824595,
+          "sha256": "d7ae86998a5fd6ef0661fac727928b18878b4cdc65ee5e37b00187410713d5e3"
+        },
+        {
+          "path": "data/task5b/prepared-current-gold-v1/arxiv/train.jsonl",
+          "size": 14826906,
+          "sha256": "c24872dc7f250df1220a756b11a4f87d81691a172824c9bbbcdfcda21de355f9"
+        },
+        {
+          "path": "data/task5b/prepared-current-gold-v1/arxiv/val.jsonl",
+          "size": 3704203,
+          "sha256": "ef11cd326dff0bb8b4739c1506da39c1bad9a4994b297b2200d3af303dca3a32"
+        },
+        {
+          "path": "data/task5b/prepared-current-gold-v1/fws/manifest.json",
+          "size": 5001,
+          "sha256": "c0595b455d93b01a1a946cf42c38625fa843bb6a1d1f2f776119d17922f35c94"
+        },
+        {
+          "path": "data/task5b/prepared-current-gold-v1/fws/test.jsonl",
+          "size": 689832,
+          "sha256": "7caa67ef5c2cde0825fa6cccc3a356cb5f2366cf761f461ff0ee0f70af9107b0"
+        },
+        {
+          "path": "data/task5b/prepared-current-gold-v1/fws/train.jsonl",
+          "size": 26212046,
+          "sha256": "ac4ad56c6a98f84e40c4654f23626120c2a18205eb3aafcb21717022b67dbf5f"
+        },
+        {
+          "path": "data/task5b/prepared-current-gold-v1/fws/val.jsonl",
+          "size": 2826512,
+          "sha256": "2fe6ac3b9fc11be57798051ca15a89bd044b513aa288a04b81af33a3a0c1a15c"
+        }
+      ]
+    },
+    {
+      "name": "finished-checkpoints",
+      "sha256": "35b264258f8cfafe0fde3aca79c47f3010f7df7ae74ca4dcbbdbcf5f39a72142",
+      "parts": [
+        {
+          "file": "finished-checkpoints.tar.gz.part000",
+          "size": 67108864,
+          "sha256": "1c22290c148b580864c1af53eaf174e5c647b40afe21baa733a73e42292987c6"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part001",
+          "size": 67108864,
+          "sha256": "2951c7eda9a7a689352a0c599b44fff15e5056974f7c0e71b0a0c2d094579118"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part002",
+          "size": 67108864,
+          "sha256": "b3c63e6ef49b1283d2fbd58cd6396decc7aeb4cf45db97f47779b5c9b56c9515"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part003",
+          "size": 67108864,
+          "sha256": "73a948c5bdbf8e87fe9ba9d9c3adc8679647f75e3ef363e47c453c408ca07b4b"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part004",
+          "size": 67108864,
+          "sha256": "4fb613675dabd921a7c99ea901a332dcf643570a64679959f7b4743279076265"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part005",
+          "size": 67108864,
+          "sha256": "1bfe7d8f12da008735cebd1a290b0daa2aef55d734d20f542cf1a035ef01431a"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part006",
+          "size": 67108864,
+          "sha256": "1bbc9403d4f2546e0a0d06b6e8a77611cfc134fbda1df2b3405c76726b1b2e1f"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part007",
+          "size": 67108864,
+          "sha256": "3f3ad22d8a5fbc543c302ddc64cb8e9db45ee1687bb8567f308cd2164e2e77e0"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part008",
+          "size": 67108864,
+          "sha256": "599ff00017ddc47dfd0c4d0093926dcf776501b366b047305ad89429186e800d"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part009",
+          "size": 67108864,
+          "sha256": "8cd4648b8cbc3be44b4740604d44354d7dd32c512cb989668eb611067d885b76"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part010",
+          "size": 67108864,
+          "sha256": "e7044e5407d02e47c8dd4e92f1ea6869fa0949b290b771c0310e12efca63dd76"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part011",
+          "size": 67108864,
+          "sha256": "16eb13486c7d47e8a20099bdc374e84c0f5f4bc15ac98dc3498d6fbf3d623aa3"
+        },
+        {
+          "file": "finished-checkpoints.tar.gz.part012",
+          "size": 9692347,
+          "sha256": "f24ba9758739c98436b3b916460ff7c10097b0f04d34e234d958e3ed9f90a944"
+        }
+      ],
+      "files": [
+        {
+          "path": "runs/task5b/remaining-v1/arxiv-biomedbert/arxiv/biomedbert_ft/checkpoint/model.safetensors",
+          "size": 437958648,
+          "sha256": "6aaac09cd7453aada55f6cac61752217836621338c1c23e1fb67181fdfad5057"
+        },
+        {
+          "path": "runs/task5b/remaining-v1/arxiv-scibert/arxiv/scibert_ft/checkpoint/model.safetensors",
+          "size": 439703544,
+          "sha256": "2cd3d506b5b585abb1cbce0f462dc1089d3fd1be3bb19ed03ac94a58ce3b4fb6"
+        }
+      ]
+    }
+  ],
+  "completed_runs": [
+    "runs/task5b/sal-full-01/sal",
+    "runs/task5b/fws-current-gold-full-01/fws",
+    "runs/task5b/remaining-v1/arxiv-baselines/arxiv",
+    "runs/task5b/remaining-v1/arxiv-scibert/arxiv",
+    "runs/task5b/remaining-v1/arxiv-biomedbert/arxiv"
+  ],
+  "prepared_directories": [
+    "data/task5b/prepared/sal",
+    "data/task5b/prepared-current-gold-v1/fws",
+    "data/task5b/prepared-current-gold-v1/arxiv"
+  ],
+  "pending_jobs": [
+    "fws-scibert",
+    "sal-cached-encoders"
+  ],
+  "interrupted_training": "FWS SciBERT has no saved optimizer/training checkpoint; restart only this stage from its pinned initialization."
+}
