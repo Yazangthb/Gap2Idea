@@ -3,7 +3,15 @@
 
 \subsection{Contribution of each stage (RQ1)}
 
-Table~\ref{tab:stages} follows the positives through the funnel in high precision mode. Stage~A removes most non-gap text in SAL at almost no recall cost, but little in the gold corpus, where it only drops junk. Stage~B raises precision about threefold (2.7 to 3.6 times) while keeping about 90\% of positives, as its threshold rule requires. Stage~C then raises precision again, by 37 points on SAL, 28 on FWS and 63 against the gold labels, at a recall cost of 6, 12 and 34 points.
+Table~\ref{tab:stages} and Figure~\ref{fig:stages} follow the positives through the funnel in high precision mode. Stage~A removes most non-gap text in SAL at almost no recall cost, but little in the gold corpus, where it only drops junk. Stage~B raises precision about threefold (2.7 to 3.6 times) while keeping about 90\% of positives, as its threshold rule requires. Stage~C then raises precision again, by 37 points on SAL, 28 on FWS and 63 against the gold labels, at a recall cost of 6, 12 and 34 points.
+
+\begin{figure}[H]
+\begin{adjustwidth}{-\extralength}{0cm}
+\centering
+\includegraphics[width=\linewidth]{figures/funnel.pdf}
+\caption{Precision and recall after each stage in high precision mode, with the number of sentences kept below each stage. Gold results use LLM labels; FWS has no Stage~A.\label{fig:stages}}
+\end{adjustwidth}
+\end{figure}
 
 \begin{table}[H]
 \caption{Sentences and positives kept after each stage, high precision mode. Precision and recall in \%. Gold results use LLM labels.\label{tab:stages}}
@@ -31,7 +39,15 @@ Table~\ref{tab:stages} follows the positives through the funnel in high precisio
 
 \subsection{Precision control with three filter modes (RQ2)}
 
-Table~\ref{tab:modes} reports all three modes on every evaluation set. On each set, precision rises and recall falls from high recall to balanced to high precision, as intended. High precision mode reaches 66.2\% precision on SAL-40, 76.5\% on FWS and 86.6\% against the gold labels (83.4\% on arXiv papers, 97.1\% on the six biomedical papers).
+Table~\ref{tab:modes} reports all three modes on every evaluation set, and Figure~\ref{fig:modes} plots them. On each set, precision rises and recall falls from high recall to balanced to high precision, as intended. High precision mode reaches 66.2\% precision on SAL-40, 76.5\% on FWS and 86.6\% against the gold labels (83.4\% on arXiv papers, 97.1\% on the six biomedical papers).
+
+\begin{figure}[H]
+\begin{adjustwidth}{-\extralength}{0cm}
+\centering
+\includegraphics[width=\linewidth]{figures/modes.pdf}
+\caption{Precision against recall for the three filter modes, with 95\% confidence intervals from resampling papers, and the Stage~B output before filtering. Dotted curves mark equal $F_1$. Gold results use LLM labels.\label{fig:modes}}
+\end{adjustwidth}
+\end{figure}
 
 \begin{table}[H]
 \caption{Results of the three filter modes. Precision and recall in \%, with 95\% confidence intervals from resampling papers. Gold results use LLM labels. Kept: sentences returned.\label{tab:modes}}
@@ -51,7 +67,13 @@ The ranking of the modes by $F_1$ depends on the dataset. On SAL-40 high precisi
 
 The modes behaved the same way on the gold validation split before the test runs: in high precision mode the filter kept 60.3\% of the gaps it received and removed 97.7\% of non-gaps, against 94.1\% and 82.9\% in high recall mode, giving precision of 90.4\% and 66.8\% respectively. On the test split, excluding the 196 candidates used during development changes high precision $F_1$ from 0.690 to 0.675, balanced from 0.735 to 0.723 and high recall from 0.679 to 0.664. Repeating the high-recall run on the 2522 gold test candidates changed 32 verdicts (1.3\%), five of them on gaps, and $F_1$ moved from 0.678 to 0.679.
 
-Table~\ref{tab:types} shows the cost of precision by gap type on the gold corpus. Future-work recall is stable across modes (82.5--86.6\%), while research-gap recall falls from 89.3\% to 51.3\% and limitation recall from 79.5\% to 55.9\%. Research gaps make up half of the gold labels and are the easiest type for the earlier stages, so scores that pool all types depend on them. Scored without research gaps, high precision mode is the best of the three ($F_1$ 0.701 against 0.595 and 0.509).
+Figure~\ref{fig:types} and Table~\ref{tab:types} show the cost of precision by gap type on the gold corpus. Future-work recall is stable across modes (82.5--86.6\%), while research-gap recall falls from 89.3\% to 51.3\% and limitation recall from 79.5\% to 55.9\%. Research gaps make up half of the gold labels and are the easiest type for the earlier stages, so scores that pool all types depend on them. Scored without research gaps, high precision mode is the best of the three ($F_1$ 0.701 against 0.595 and 0.509).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/types.pdf}
+\caption{Recall by gap type on the gold test split (LLM labels) in each filter mode, in \%.\label{fig:types}}
+\end{figure}
 
 \begin{table}[H]
 \caption{Gold test split (LLM labels) by gap type: recall per type, and scores when research-gap sentences are excluded from scoring. In \% except $F_1$.\label{tab:types}}
@@ -95,7 +117,13 @@ The right side of Table~\ref{tab:salcmp} scores the same SAL-40 output against t
 
 \subsection{Cost}
 
-Table~\ref{tab:cost} estimates LLM input tokens in high precision mode; the other modes differ by under 2\% because only the final instruction changes. Compared with judging every sentence, the funnel sends 3.7 to 13.1 times fewer tokens. Compared with a single whole-paper call, the saving is smaller: 3.1 times on SAL-40, 2.0 times on FWS and 1.25 times on the gold corpus. On arXiv papers, Stage~B passes about one sentence in five, and each candidate carries its context, so the funnel sends almost as much text as the whole paper. Whether this is worthwhile depends on whether whole-paper prompting finds the same gaps, which the comparison in progress will show.
+Table~\ref{tab:cost} and Figure~\ref{fig:cost} estimate LLM input tokens in high precision mode; the other modes differ by under 2\% because only the final instruction changes. Compared with judging every sentence, the funnel sends 3.7 to 13.1 times fewer tokens. Compared with a single whole-paper call, the saving is smaller: 3.1 times on SAL-40, 2.0 times on FWS and 1.25 times on the gold corpus. On arXiv papers, Stage~B passes about one sentence in five, and each candidate carries its context, so the funnel sends almost as much text as the whole paper. Whether this is worthwhile depends on whether whole-paper prompting finds the same gaps, which the comparison in progress will show.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/cost.pdf}
+\caption{Estimated LLM input tokens per paper (\texttt{cl100k\_base}, log scale) for the funnel in high precision mode, one whole-paper call, and judging every sentence in batches.\label{fig:cost}}
+\end{figure}
 
 \begin{table}[H]
 \caption{Estimated LLM input tokens (\texttt{cl100k\_base}), high precision mode, all test papers. Savings are funnel tokens divided into the alternative's tokens.\label{tab:cost}}
