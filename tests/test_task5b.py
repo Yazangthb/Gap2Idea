@@ -174,7 +174,7 @@ class ModelTests(unittest.TestCase):
 
     def test_finetune_safetensors_roundtrip_with_tiny_local_bert(self):
         from transformers import AutoModelForSequenceClassification, BertConfig, BertTokenizerFast
-        from gap2idea.experiments.task5b.models import ENCODERS, Encoder, train_encoder
+        from gap2idea.experiments.task5b.models import ENCODERS, Encoder, train_encoder, prepare_encoder_base
         with tempfile.TemporaryDirectory() as tmp:
             base, output = Path(tmp) / "tiny_base", Path(tmp) / "trained"
             base.mkdir()
@@ -187,8 +187,11 @@ class ModelTests(unittest.TestCase):
                                 num_attention_heads=2, intermediate_size=24)
             AutoModelForSequenceClassification.from_config(config).save_pretrained(base, safe_serialization=True)
             with patch.dict(ENCODERS, {"scibert_ft": str(base)}), contextlib.redirect_stdout(io.StringIO()):
+                prepared_base = Path(tmp) / "prepared_base"
+                prepare_encoder_base("scibert_ft", prepared_base, seed=0)
+                self.assertTrue((prepared_base / "base_metadata.json").exists())
                 train_encoder("scibert_ft", fixture()["train"][:4], output,
-                              epochs=1, batch_size=2, device="cpu")
+                              epochs=1, batch_size=2, device="cpu", base_checkpoint=prepared_base)
             self.assertTrue((output / "model.safetensors").is_file())
             model = Encoder(output, batch_size=2, device="cpu")
             scores = model.scores(fixture()["val"][:2])

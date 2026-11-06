@@ -5,6 +5,8 @@ import gc
 import re
 import random
 import sys
+from pathlib import Path
+from contextlib import nullcontext
 from collections import defaultdict
 
 import numpy as np
@@ -192,7 +194,33 @@ def rule_scores(rows, proxy=False):
     return out
 
 
-def train_encoder(method, train, output, seed=0, epochs=3, batch_size=8, device="auto", revision=None):
+def prepare_encoder_base(method, output, seed=0, revision=None):
+    """Convert the pinned pretrained encoder + seeded binary head on CPU once.
+
+    A separate process exits after saving, so original .bin storage/mappings and
+    conversion threads are gone before GPU training allocates optimizer states.
+    """
+    import torch
+    from transformers import AutoModelForSequenceClassification, AutoTokenizer
+    from .data import digest, write_json
+    torch.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    cache_dir = Path(__file__).resolve().parents[4] / "data/task5b/hf_cache"
+    model_id = ENCODERS[method]
+    tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision, cache_dir=cache_dir)
+    model = AutoModelForSequenceClassification.from_pretrained(model_id, revision=revision,
+        num_labels=2, weights_only=True, cache_dir=cache_dir, attn_implementation="eager",
+        use_safetensors=None if Path(model_id).is_dir() else False)
+    resolved = getattr(model.config, "_commit_hash", None)
+    model.save_pretrained(output, safe_serialization=True)
+    tokenizer.save_pretrained(output)
+    write_json(Path(output) / "base_metadata.json", dict(model=model_id, requested_revision=revision,
+        resolved_model_revision=resolved, initialization_seed=seed,
+        artifact_sha256={p.name: digest(p) for p in Path(output).iterdir() if p.is_file()}))
+
+
+def train_encoder(method, train, output, seed=0, epochs=3, batch_size=8, device="auto", revision=None, base_checkpoint=None):
     """Generic in-domain binary fine-tune; not Lan's unreleased EDA/PBA recipe.
 
     Fixed epochs and optimizer, no test-based checkpoint selection. Validation
@@ -200,20 +228,40 @@ def train_encoder(method, train, output, seed=0, epochs=3, batch_size=8, device=
     """
     import torch
     from torch.utils.data import DataLoader
-    from transformers import AutoModelForSequenceClassification, AutoTokenizer
+    from transformers import AutoModelForSequenceClassification, AutoTokenizer, AutoConfig
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     model_id = ENCODERS[method]
-    tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_id, revision=revision, num_labels=2, weights_only=True,
-        attn_implementation="eager")
-    resolved_revision = getattr(model.config, "_commit_hash", None)
+    # Keep new encoder weights on the project drive rather than a potentially
+    # full Windows system-drive cache. Existing NLI cache/results are untouched.
+    cache_dir = Path(__file__).resolve().parents[4] / "data/task5b/hf_cache"
+    cache_dir.mkdir(parents=True, exist_ok=True)
     selected_device = "cuda" if device == "auto" and torch.cuda.is_available() else (
         "cpu" if device == "auto" else device)
+    if base_checkpoint:
+        import json
+        meta = json.loads((Path(base_checkpoint) / "base_metadata.json").read_text(encoding="utf-8"))
+        tokenizer = AutoTokenizer.from_pretrained(base_checkpoint, local_files_only=True)
+        if sys.platform == "win32":
+            from .safeweights import load_windows_model
+            config = AutoConfig.from_pretrained(base_checkpoint, local_files_only=True)
+            model = load_windows_model(Path(base_checkpoint) / "model.safetensors", config, selected_device, torch.float32)
+        else:
+            model = AutoModelForSequenceClassification.from_pretrained(base_checkpoint,
+                local_files_only=True, use_safetensors=True, attn_implementation="eager")
+        resolved_revision = meta["resolved_model_revision"]
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision, cache_dir=cache_dir)
+        model = AutoModelForSequenceClassification.from_pretrained(
+            model_id, revision=revision, num_labels=2, weights_only=True, cache_dir=cache_dir,
+            attn_implementation="eager")
+        resolved_revision = getattr(model.config, "_commit_hash", None)
     model.to(selected_device).train()
+    use_amp = selected_device.startswith("cuda")
+    if use_amp:
+        model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
     def collate(batch):
         tokens = tokenizer([r["sentence"] for r in batch], padding=True, truncation=True,
                            max_length=256, return_tensors="pt")
@@ -221,16 +269,25 @@ def train_encoder(method, train, output, seed=0, epochs=3, batch_size=8, device=
         return tokens
     loader = DataLoader(train, batch_size=batch_size, shuffle=True, collate_fn=collate,
                         generator=torch.Generator().manual_seed(seed))
-    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=.01)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=.01, foreach=False)
+    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
+    print(f"  {method}: {len(train)} training sentences, device={selected_device}, "
+          f"revision={resolved_revision}, {len(loader)} batches/epoch", flush=True)
     for epoch in range(epochs):
         loss_sum = 0.
-        for batch in loader:
+        for step, batch in enumerate(loader, 1):
             optimizer.zero_grad(set_to_none=True)
-            loss = model(**{k: v.to(selected_device) for k, v in batch.items()}).loss
-            loss.backward()
+            with (torch.autocast("cuda", dtype=torch.float16) if use_amp else nullcontext()):
+                loss = model(**{k: v.to(selected_device) for k, v in batch.items()}).loss
+            scaler.scale(loss).backward()
+            scaler.unscale_(optimizer)
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
-            optimizer.step()
+            scaler.step(optimizer)
+            scaler.update()
             loss_sum += float(loss.detach())
+            if step % 100 == 0:
+                print(f"  {method}: epoch {epoch + 1}/{epochs}, batch {step}/{len(loader)}, "
+                      f"mean loss {loss_sum / step:.5f}", flush=True)
         print(f"  {method}: epoch {epoch + 1}/{epochs}, mean batch loss {loss_sum / len(loader):.5f}", flush=True)
     model.save_pretrained(output, safe_serialization=True)
     tokenizer.save_pretrained(output)

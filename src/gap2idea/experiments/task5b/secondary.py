@@ -22,6 +22,8 @@ def score_external(args):
     for field in ("method", "training_data", "threshold_selection", "model_or_code_revision", "limitations"):
         if field not in protocol:
             raise ValueError(f"External protocol JSON missing {field}")
+        if not protocol[field] or (isinstance(protocol[field], str) and protocol[field].lstrip().startswith("REQUIRED")):
+            raise ValueError(f"External protocol {field} must contain actual provenance, not an unfilled template")
     if protocol["method"] != args.method:
         raise ValueError("External protocol method differs from --method")
     source = read_jsonl(args.predictions)

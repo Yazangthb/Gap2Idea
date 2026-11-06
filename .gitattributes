@@ -1,5 +1,6 @@
 # Keep the recorded experiment source hashes stable across operating systems.
 /scripts/bench/task5b.py text eol=lf
+/scripts/bench/run_task5b_remaining.py text eol=lf
 /src/gap2idea/experiments/**/*.py text eol=lf
 # Preserve the exact original result bytes used by SHA256 evidence checks.
 /runs/task5b/sal-full-01/** -text whitespace=cr-at-eol

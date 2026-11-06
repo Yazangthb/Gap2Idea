@@ -55,10 +55,12 @@ rerun on the test set.
 
 ## Pending work
 
-- **FWS:** no results yet. Restore the original `data/scibert_prep/train.jsonl`
-  before preparing its exact test split. Add the completed FWS run to this branch
-  later with its own immutable run directory and documentation.
-- **arXiv:** awaits the private finalized corpus and official split artifacts.
+- **FWS update:** five methods have completed under the user-approved current-gold
+  protocol, which replaces the old training-file dependency. See
+  [the current audit](task5b_status.md). The new FWS run still needs publication
+  to Git; it does not establish identity with the old breadth-funnel test pool.
+- **arXiv update:** gold labels/texts/splits are restored and prepared; baseline
+  runs are still pending.
 - **Paired funnel comparisons:** await complete aligned reference predictions.
 - **Lan EDA/PBA and other secondary methods:** see the
   [runbook](task5b_runbook.md) and [registered protocol](baseline_methods.md).

@@ -1,5 +1,10 @@
 # Task 5b: FWS with the current gold training corpus
 
+**Status update:** the full five-method run has completed and passed the
+[2026-11-06 evidence audit](task5b_status.md). Results are in
+[`runs/task5b/fws-current-gold-full-01/fws/report.md`](../../runs/task5b/fws-current-gold-full-01/fws/report.md).
+The instructions below document that run; do not rerun it in the same directory.
+
 Prepared 2026-11-06 on `Task_5b`. The teammate's upload commit `85523b4` was
 imported as `a030d0d`, containing exactly:
 
@@ -105,7 +110,8 @@ It does not substitute positive-only gold sentences for complete training text.
 ## Validation
 
 See the updated validation entry in [task5b_validation.md](task5b_validation.md).
-The implementation smoke uses only FWS train/validation papers. Full official
-FWS test scoring is left for the command above; there are no new full FWS results
-to add to the paper yet. Prepared data and smoke output remain under ignored
-directories. The imported source gold files are tracked by the upload commit.
+The implementation smoke used only FWS train/validation papers. The user then
+completed the full official FWS run, and all five results passed prediction/hash,
+validation-threshold and confidence-interval checks. Full output and prepared
+data remain under ignored directories until explicitly staged; source gold files
+are tracked by the upload commit. See the audit for the remaining Task 5b work.

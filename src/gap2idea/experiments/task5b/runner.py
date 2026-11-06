@@ -168,6 +168,9 @@ def model_spec(method, args, dataset):
     elif method in ENCODERS:
         spec.update(model=ENCODERS[method], epochs=args.epochs, batch_size=args.batch_size,
                     learning_rate=2e-5, weight_decay=.01, max_length=256, device=args.device,
+                    optimizer_foreach=False,
+                    training_precision="CUDA: fp16 autocast + GradScaler, fp32 parameters; CPU: fp32",
+                    gradient_checkpointing="enabled on CUDA, non-reentrant; disabled on CPU",
                     checkpoint_selection="fixed final epoch; validation selects threshold only",
                     revision=args.encoder_revision,
                     note="Generic in-domain binary fine-tune, not the Lan EDA/PBA recipe")
@@ -263,11 +266,26 @@ def fit(args):
                 scores, runtime = neural_scores(method, Path(args.data_dir) / dataset / "val.jsonl", method_dir, "validation", spec)
                 spec.update(runtime)
             elif method in ENCODERS:
+                cache_name = f"{args.encoder_revision or 'resolved-default'}-seed{args.seed}"
+                base = ROOT / "data/task5b/hf_cache/classifier-init" / method / cache_name
+                base_meta = base / "base_metadata.json"
+                if not base_meta.exists():
+                    if base.exists():
+                        raise ValueError(f"Partial encoder base cache: {base}; preserve it and repair the cache before retrying")
+                    neural_worker(dict(operation="prepare_encoder_base", method=method,
+                        checkpoint=str(base), seed=args.seed, revision=args.encoder_revision),
+                        method_dir / "base_worker_request.json")
+                base_info = json.loads(base_meta.read_text(encoding="utf-8"))
+                for name, sha in base_info["artifact_sha256"].items():
+                    if digest(base / name) != sha:
+                        raise ValueError(f"Encoder base cache changed: {base / name}")
+                spec["base_initialization_metadata"] = base_info
                 neural_worker(dict(operation="train_encoder", method=method,
                     rows=str((Path(args.data_dir) / dataset / "train.jsonl").resolve()),
                     checkpoint=str((method_dir / "checkpoint").resolve()), seed=args.seed,
                     epochs=args.epochs, batch_size=args.batch_size, device=args.device,
-                    revision=args.encoder_revision, output=str((method_dir / "training_metadata.json").resolve())),
+                    revision=args.encoder_revision, base_checkpoint=str(base),
+                    output=str((method_dir / "training_metadata.json").resolve())),
                     method_dir / "training_worker_request.json")
                 spec.update(json.loads((method_dir / "training_metadata.json").read_text(encoding="utf-8")))
                 scores, runtime = neural_scores(method, Path(args.data_dir) / dataset / "val.jsonl", method_dir, "validation", spec)

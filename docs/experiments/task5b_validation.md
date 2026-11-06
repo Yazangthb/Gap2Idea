@@ -1,5 +1,48 @@
 # Task 5b implementation validation - 2026-11-05
 
+## Remaining-run preparation update, 2026-11-06
+
+The remaining-run launcher is ready; see
+[task5b_remaining_runs.md](task5b_remaining_runs.md). It checks frozen data,
+registers a suite plan, executes independent jobs sequentially, verifies completed
+jobs before skipping them, and refuses to overwrite incomplete directories. It
+also imports the original cached SAL encoder vectors with explicit unverified-
+history qualifications, and exports label-free full test requests for the funnel.
+
+**21 tests passed** after adding the launcher and CPU checkpoint preparation.
+The actual pinned SciBERT and BiomedBERT models also completed a GPU smoke run at
+`runs/task5b/encoder-smoke-20261106-v4/`: training, safetensors save/load,
+validation threshold selection, prediction export, paper CIs and completion
+markers. Each used up to 8 long training sentences and disjoint subsets of arXiv
+validation papers for temporary validation/evaluation, with one training epoch.
+The official arXiv/FWS tests were not scored. Checks confirmed changes to BOTH
+classifier-head weights and encoder attention weights, rather than merely saving
+an unchanged pretrained model. Smoke scores are not research results.
+
+Resource failures discovered before success were preserved as incomplete smoke
+directories. The default C: model cache initially ran out of space; the partial
+SciBERT download created by this check was moved to the project's E: encoder
+cache without deleting other user files. Direct GPU training also failed with
+the original loading/resource setup. The validated preset prepares a seeded
+classification initialization on CPU in its own process, loads safetensors for
+GPU training, and uses batch 1, autocast/GradScaler, gradient checkpointing and
+non-foreach AdamW. New encoder base/initialization caches stay on the project
+drive. The current two base caches were validated successfully; original public
+`.bin` loading uses restricted weights-only loading on the newer torch build.
+
+These choices were set before any full new encoder test results. No full
+remaining job was started and nothing was pushed. The completed SAL/FWS runs
+were not changed. The label-free reference request folders contain exactly
+7968 SAL, 1506 FWS and 10388 arXiv sentences, without gold labels.
+
+**Latest audit, 2026-11-06:** the completed SAL and full FWS runs have now both
+passed all saved-evidence checks, and the 17 offline tests passed again. All nine
+method/dataset results reproduced from saved predictions, including validation
+threshold selection and 2000-resample confidence intervals. See
+[task5b_status.md](task5b_status.md) and
+[task5b_audit_20261106.json](task5b_audit_20261106.json). The dated implementation
+and preparation notes below describe earlier checkpoints, not current completion.
+
 Branch: `experiment/task-5b-comparison-methods`, based on `f0f242f`.
 These checks validate execution and protocol safeguards. They are **not full
 benchmark results** and provide no evidence that one research method wins.

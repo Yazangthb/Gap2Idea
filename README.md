@@ -12,6 +12,9 @@ paper(s) → Stage A (localize) → Stage B (classify) → Stage C (LLM filter) 
 Task 5b comparison experiments: see [the runbook](docs/experiments/task5b_runbook.md)
 and [registered methods](docs/experiments/baseline_methods.md). Entry point:
 `python scripts/bench/task5b.py --help` (offline baselines, no LLM API keys).
+Remaining data-ready runs: `python scripts/bench/run_task5b_remaining.py --check`,
+then `--run`. See [the remaining-run plan](docs/experiments/task5b_remaining_runs.md)
+for job selection and missing external artifacts. This launcher does not push Git.
 
 ```
 scripts/run_extraction_pipeline.py   # the full pipeline (list of papers → gaps.tsv/json)

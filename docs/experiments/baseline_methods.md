@@ -16,7 +16,7 @@ Change a method in a new run and document why; do not choose changes from test F
 | `kilicoglu_section_proxy` | Same lexical rules, but each contiguous section substitutes for a paragraph | Explicit approximation for SAL raw section_name or arXiv recovered LaTeX sections. Must retain this name/qualification in reporting. Not used for FWS |
 | `modernbert_nli` | `tasksource/ModernBERT-large-nli` at `ca476cb923a8637073d4ceb0f19f7fc236e260d4`; original broad hypothesis below; length 256; entailment/(entailment+contradiction) | NLI-only, no LLM, no section/junk gate. Validation selects threshold. Not assumed to reproduce an earlier mixed-gold headline |
 | `modernbert_nli_typed` | Same pinned NLI model and score; max over dataset-specific short hypotheses below | Separately registered optional variant; report all attempted variants, not just test winner |
-| `scibert_ft` | `allenai/scibert_scivocab_uncased`; binary head; fixed 3 epochs, AdamW lr=2e-5, weight_decay=.01, clip norm 1, length 256, batch 8, unweighted cross-entropy | In-domain train papers only; final epoch, then validation threshold. Saves safetensors and resolved base-model revision |
+| `scibert_ft` | `allenai/scibert_scivocab_uncased`; binary head; fixed 3 epochs, AdamW lr=2e-5, weight_decay=.01, clip norm 1, length 256, unweighted cross-entropy; local remaining-run batch 1 | In-domain train papers only; final epoch, then validation threshold. Saves safetensors and resolved base-model revision |
 | `biomedbert_ft` | `microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext`; same fine-tuning protocol | Generic fine-tune, **not Lan EDA/PBA**; supports SAL/arXiv and optional FWS control |
 | `zhang_nb` | Raw-text TF-IDF (1,4), min_df=3, sublinear_tf, max_features=200000; train-only chi2 top 14000 (all if fewer); BernoulliNB alpha=1e-5 | FWS held-out adaptation of the model family. No lemmatization/balancing in this row; not an exact reproduction of the published balanced sentence-CV protocol |
 
@@ -25,6 +25,18 @@ different configuration and must retain it in its report. Encoder revisions can
 be pinned explicitly with `--encoder-revision`; otherwise the resolved revision
 is recorded. GPU execution is seeded but not promised to be bitwise deterministic
 across devices/software. Use separate run directories for each training seed.
+
+Encoder resource registration, 2026-11-06, before any full encoder test run:
+the remaining-run launcher uses the pinned base-model commits in
+[task5b_remaining_runs.md](task5b_remaining_runs.md), encoder batch 1 on the local
+6 GB GPU, CUDA fp16 autocast/GradScaler with fp32 parameters, non-reentrant
+gradient checkpointing, and AdamW `foreach=False`. CPU uses fp32. Initialization
+is prepared on CPU in a separate process and saved as safetensors before GPU
+training. New base downloads/initialization caches use `data/task5b/hf_cache/`
+on the project drive. These changes address observed resource failures, not test
+performance; all choices and base metadata are frozen per run. Completed SAL/FWS
+baseline results are unchanged. SAL legacy encoder imports remain qualified as
+cached decisions with unverified original training/threshold-selection history.
 
 ### NLI hypotheses
 
@@ -133,3 +145,28 @@ results after their owners export exact, complete paper/index/text identities.
   `nli_variants.py`, `stage_c_nli_qwen.py`, `gold_label_full.py`,
   `export_stageb_data.py`, `build_arxiv_latex_blocks.py`, `bench_fws_balanced.py`.
   This branch was fetched for reference; unrelated history was not merged.
+
+## Verified completed results (audit 2026-11-06)
+
+These are the nine completed method/dataset evaluations, verified against saved
+predictions and manifests without rerunning models. All CIs resample papers
+(2000 replicates). FWS uses `fws_current_gold_v1`; its membership/casing must be
+matched before pairing with a funnel run. See [the completion audit](task5b_status.md)
+for missing methods, protocol qualifications and remaining tasks.
+
+| Dataset | Method | P | R | Positive F1 [95% CI] | Macro F1 [95% CI] | F1 difference from funnel |
+|---|---|---:|---:|---:|---:|---|
+| SAL | tfidf_lr | 0.473 | 0.380 | 0.422 [0.355, 0.488] | 0.704 [0.670, 0.738] | N/A: complete matching funnel predictions needed |
+| SAL | binary_nb | 0.000 | 0.000 | 0.000 [0.000, 0.000] | 0.493 [0.492, 0.494] | N/A: complete matching funnel predictions needed |
+| SAL | kilicoglu_section_proxy | 0.467 | 0.478 | 0.472 [0.363, 0.559] | 0.729 [0.675, 0.774] | N/A: complete matching funnel predictions needed |
+| SAL | modernbert_nli | 0.331 | 0.585 | 0.423 [0.377, 0.470] | 0.701 [0.677, 0.725] | N/A: complete matching funnel predictions needed |
+| FWS (current gold) | tfidf_lr | 0.802 | 0.700 | 0.748 [0.689, 0.800] | 0.854 [0.820, 0.883] | N/A: complete matching funnel predictions needed |
+| FWS (current gold) | binary_nb | 0.808 | 0.632 | 0.709 [0.651, 0.762] | 0.833 [0.801, 0.863] | N/A: complete matching funnel predictions needed |
+| FWS (current gold) | modernbert_nli | 0.387 | 0.495 | 0.434 [0.370, 0.492] | 0.661 [0.623, 0.695] | N/A: complete matching funnel predictions needed |
+| FWS (current gold) | modernbert_nli_typed | 0.711 | 0.705 | 0.708 [0.649, 0.761] | 0.829 [0.795, 0.860] | N/A: complete matching funnel predictions needed |
+| FWS (current gold) | zhang_nb | 0.769 | 0.682 | 0.723 [0.663, 0.778] | 0.839 [0.805, 0.870] | N/A: complete matching funnel predictions needed |
+
+The SAL rule row is a section-proxy approximation; the FWS Zhang row is a
+held-out raw-text adaptation. Neither is an exact published-method reproduction.
+The proposal's final completion condition is **not met** until missing method/
+dataset runs and paired funnel differences are resolved or explicitly scoped out.

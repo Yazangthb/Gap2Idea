@@ -9,6 +9,10 @@ imported. The default FWS preparation now uses `fws_current_gold_v1` and does no
 need `data/scibert_prep/train.jsonl`. Use the
 [current FWS instructions and one-command launcher](task5b_fws_current_gold.md).
 The old file is needed only for explicit `--fws-protocol legacy` reproduction.
+For the remaining arXiv/encoder jobs and the files still needed from the team,
+follow [task5b_remaining_runs.md](task5b_remaining_runs.md). The new launcher uses
+the tested local small-batch encoder preset and never reruns completed SAL/FWS
+baselines or pushes Git.
 
 ## Status and scope
 
@@ -28,7 +32,10 @@ experiments. Report every attempted/skipped method, including negative results.
 See [task5b_validation.md](task5b_validation.md) for the checks actually completed
 and the limits of that validation.
 The later completed full SAL run and versioned evidence are documented in
-[task5b_sal_results.md](task5b_sal_results.md); FWS and arXiv results remain pending.
+[task5b_sal_results.md](task5b_sal_results.md). FWS has also completed; see the
+[current completion audit](task5b_status.md) and consolidated table in
+[baseline_methods.md](baseline_methods.md). arXiv inputs are prepared, but its
+baseline results remain pending.
 
 ## 1. Setup (PowerShell)
 
@@ -155,8 +162,9 @@ python scripts/bench/task5b.py report --run-dir runs/task5b/primary-full-01/sal
 ## 5. Optional encoders and Zhang adaptation
 
 ```powershell
-python scripts/bench/task5b.py run --datasets arxiv --methods scibert_ft,biomedbert_ft --epochs 3 --batch-size 4 --run-dir runs/task5b/arxiv-encoders-01
-python scripts/bench/task5b.py run --datasets fws --methods scibert_ft,zhang_nb --epochs 3 --batch-size 4 --run-dir runs/task5b/fws-secondary-01
+python scripts/bench/run_task5b_remaining.py --run --stage arxiv-scibert
+python scripts/bench/run_task5b_remaining.py --run --stage arxiv-biomedbert
+python scripts/bench/run_task5b_remaining.py --run --stage fws-scibert
 ```
 
 SAL in-domain encoder reruns are also supported with `--datasets sal`. Existing
