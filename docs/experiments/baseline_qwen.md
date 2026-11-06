@@ -144,10 +144,14 @@ Items 2 and 3 affect only the comparison column, which is recomputed from saved 
    rubrics narrowed by `future_scope()`, so against that funnel the FWS baseline differs in prompt as well as in
    the funnel. The `future_scope` runs are not part of this frozen plan; adding them later would be reported
    under "Changes after test".
-2. **Per-mode funnel verdicts.** Matching each baseline prompt with the funnel run on the same prompt needs the
-   funnel's kept sentences, as (paper_id, idx), for: arXiv `neutral` and `strict`; SAL-40 NLI in all three modes;
-   FWS in all three modes. Only arXiv `keep_biased` and SAL `rct_loose` are in the repo.
-3. **bge-small + Qwen** has no per-sentence verdicts in the repo, so no paired CI against it.
+2. **Per-mode funnel verdicts (open, asked of Yazan).** Matching each baseline prompt with the funnel run on the
+   same prompt needs the funnel's kept sentences, as (paper_id, idx), for: arXiv `neutral` and `strict`; SAL-40
+   NLI in all three modes; FWS in all three modes. Only arXiv `keep_biased` and SAL `rct_loose` are in the repo.
+   The saved Stage C checkpoints store only `{"i", "keep"}`, where `i` indexes the Stage B candidate list, so the
+   NLI score files are needed to map them back. Files that would do it: `stage_c_rubric_test_{keep_biased,neutral,strict}.jsonl`
+   with `data/gold/nli_test_scores.npz` and `nli_variants.json`; `stage_c_sal40_modes_nli_{sal,fws}_test_{high_precision,balanced,high_recall}.jsonl`
+   with `data/gold/nli_{sal,fws}_test_scores.npz`. A plain list of kept (paper_id, idx) per run works too.
+3. **bge-small + Qwen (open).** Needs `docs/experiments/stage_c_full_qwen_verdicts.jsonl` for a paired CI.
 4. **Server setup.** Our own environment on `a100-learner`: a venv with `vllm==0.32.0` (the version the funnel's
    server reports at `/version`) and the same model revision downloaded from Hugging Face (about 28 GB; 450 GB
    free). The host reaches PyPI and Hugging Face, and the revision exists there.
@@ -198,6 +202,34 @@ arXiv gold, recall by gap type:
 | C | neutral | 55.9% | 93.2% | 83.4% |
 | C | strict | 43.4% | 89.0% | 69.2% |
 <!-- results:end -->
+
+## Reading the results
+
+Written after the test runs; nothing here changes a setting or a number above.
+
+- **Done:** sentence-level P, R, F1 with paper-level CIs (2,000 draws) for all 20 runs. Paired F1 differences
+  (2,000 draws) against the two funnel runs whose per-sentence verdicts are in the repo: SAL-40 PubMedBERT + Qwen
+  (`rct_loose`, F1 0.673) and arXiv NLI + Qwen (`keep_biased`, F1 0.641).
+- **Not yet paired:** the same-mode comparisons (notes 2 and 3). Until those files arrive, the published funnel
+  numbers below are a rough guide only, with no paired CI.
+
+| Dataset | Prompt | Best baseline F1 (setup) | Funnel, same mode (published, `STAGE_C_MODES_RESULTS.md`) |
+|---|---|---|---|
+| arXiv gold | keep_biased | 0.741 (A) | 0.642 high recall |
+| arXiv gold | neutral | 0.749 (A) | 0.706 balanced |
+| arXiv gold | strict | 0.720 (C) | 0.650 high precision |
+| SAL-40 | keep_biased | 0.663 (A) | 0.677 high recall |
+| SAL-40 | neutral | 0.673 (A) | 0.716 balanced |
+| SAL-40 | strict | 0.702 (A) | 0.744 high precision |
+| FWS | validate_fws | 0.715 (C) | 0.755 to 0.762 (`future_scope` prompts, so the prompt differs) |
+
+- **arXiv:** every baseline run beats the funnel's `keep_biased` result; the paired CI excludes 0 for 7 of 9 runs
+  (A `strict` and B `strict` include 0). Against the published same-mode numbers the baseline is also ahead.
+- **SAL-40:** the published NLI funnel is ahead in every mode; against `rct_loose` the paired CIs exclude 0 only for
+  B `keep_biased`, C `keep_biased` and C `neutral`, all in the funnel's favour.
+- **Cost:** setup A used 346k input tokens on SAL-40 and 553k on arXiv, against the funnel's ~103k and ~386k in
+  `STAGE_C_MODES_RESULTS.md`. Those funnel counts use tiktoken `cl100k_base` and ours are Qwen's own token counts,
+  so the ratios (about 3.4x and 1.4x) are approximate.
 
 ## Changes after test
 
