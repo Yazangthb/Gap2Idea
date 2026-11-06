@@ -65,7 +65,9 @@ Table~\ref{tab:modes} reports all three modes on every evaluation set, and Figur
 
 The ranking of the modes by $F_1$ depends on the dataset. On SAL-40 high precision has the highest $F_1$ and on FWS the three are within 0.007. On the gold corpus balanced is highest: its $F_1$ exceeds high recall by 0.055 (paired 95\% CI 0.025 to 0.080) and high precision by 0.045 (0.006 to 0.095), while high precision and high recall do not differ ($+0.011$, $-0.054$ to $+0.060$). The SAL dev papers, which no prompt was written on, show the same pattern as SAL-40 at slightly lower values: high precision gives 64.3\% precision, 80.0\% recall and $F_1$ 0.713.
 
-The modes behaved the same way on the gold validation split before the test runs: in high precision mode the filter kept 60.3\% of the gaps it received and removed 97.7\% of non-gaps, against 94.1\% and 82.9\% in high recall mode, giving precision of 90.4\% and 66.8\% respectively. On the test split, excluding the 196 candidates used during development changes high precision $F_1$ from 0.690 to 0.675, balanced from 0.735 to 0.723 and high recall from 0.679 to 0.664. Repeating the high-recall run on the 2522 gold test candidates changed 32 verdicts (1.3\%), five of them on gaps, and $F_1$ moved from 0.678 to 0.679.
+The modes behaved the same way on the gold validation split, where they were checked before the balanced and high-precision test runs: in high precision mode the filter kept 60.3\% of the gaps it received and removed 97.7\% of non-gaps, against 94.1\% and 82.9\% in high recall mode, giving precision of 90.4\% and 66.8\% respectively.
+
+\paragraph{Robustness.} On the gold test split, excluding the 196 candidates used during development changes high precision $F_1$ from 0.690 to 0.675, balanced from 0.735 to 0.723 and high recall from 0.679 to 0.664. Repeating the high-recall run on the 2522 gold test candidates changed 32 verdicts (1.3\%), five of them on gaps, and $F_1$ moved from 0.678 to 0.679.
 
 Figure~\ref{fig:types} and Table~\ref{tab:types} show the cost of precision by gap type on the gold corpus. Future-work recall is stable across modes (82.5--86.6\%), while research-gap recall falls from 89.3\% to 51.3\% and limitation recall from 79.5\% to 55.9\%. Research gaps make up half of the gold labels and are the easiest type for the earlier stages, so scores that pool all types depend on them. Scored without research gaps, high precision mode is the best of the three ($F_1$ 0.701 against 0.595 and 0.509).
 
@@ -111,10 +113,6 @@ On SAL-40, we ran the same three modes with the supervised PubMedBERT classifier
 
 On the gold corpus, the NLI classifier also compares well with other training-free and lightly trained options. On the validation split, the three short hypotheses reached about 79\% recall at 39.2\% precision, where a bge-small head trained on the gold training split reached 28.2\% precision at matched recall. On the test split, the NLI funnel in high precision mode exceeds the same ModernBERT model used alone with a single long hypothesis ($F_1$ 0.614) by 0.076 (CI 0.020 to 0.132), and does not differ significantly from a funnel with the bge-small head and the high-recall filter ($F_1$ 0.665; difference $+0.025$, CI $-0.037$ to $+0.087$).
 
-\subsection{Label source}
-
-The right side of Table~\ref{tab:salcmp} scores the same SAL-40 output against two label sets. Of the 263 sentences returned in high precision mode, SAL's annotators marked 174 as limitations, while the LLM ensemble marked 245 as limitations and 250 as some gap type. Seventy-seven sentences are gaps by the LLM labels but not by SAL; only 12 are negative under both. Precision is therefore 66.2\% against SAL and 93.2--95.1\% against the LLM labels. Which label set is right on these 77 sentences decides the true precision, and our human study (Section~\ref{sec:discussion}) is designed to settle it.
-
 \subsection{Cost}
 
 Table~\ref{tab:cost} and Figure~\ref{fig:cost} estimate LLM input tokens in high precision mode; the other modes differ by under 2\% because only the final instruction changes. Compared with judging every sentence, the funnel sends 3.7 to 13.1 times fewer tokens. Compared with a single whole-paper call, the saving is smaller: 3.1 times on SAL-40, 2.0 times on FWS and 1.25 times on the gold corpus. On arXiv papers, Stage~B passes about one sentence in five, and each candidate carries its context, so the funnel sends almost as much text as the whole paper. Whether this is worthwhile depends on whether whole-paper prompting finds the same gaps, which the comparison in progress will show.
@@ -126,7 +124,7 @@ Table~\ref{tab:cost} and Figure~\ref{fig:cost} estimate LLM input tokens in high
 \end{figure}
 
 \begin{table}[H]
-\caption{Estimated LLM input tokens (\texttt{cl100k\_base}), high precision mode, all test papers. Savings are funnel tokens divided into the alternative's tokens.\label{tab:cost}}
+\caption{Estimated LLM input tokens (\texttt{cl100k\_base}), high precision mode, all test papers. Savings are the alternative's tokens divided by the funnel's tokens.\label{tab:cost}}
 \begin{adjustwidth}{-\extralength}{0cm}
 \small
 \begin{tabularx}{\fulllength}{@{}>{\raggedright\arraybackslash}p{3.7cm}*{7}{>{\raggedleft\arraybackslash}X}@{}}
@@ -138,6 +136,11 @@ Table~\ref{tab:cost} and Figure~\ref{fig:cost} estimate LLM input tokens in high
 \end{tabularx}
 \end{adjustwidth}
 \end{table}
+
+\subsection{Label source}
+\label{sec:label-source}
+
+The right side of Table~\ref{tab:salcmp} scores the same SAL-40 output against two label sets. Of the 263 sentences returned in high precision mode, SAL's annotators marked 174 as limitations, while the LLM ensemble marked 245 as limitations and 250 as some gap type. Seventy-seven sentences are gaps by the LLM labels but not by SAL; only 12 are negative under both. Precision is therefore 66.2\% against SAL and 93.2--95.1\% against the LLM labels. Which label set is right on these 77 sentences decides the true precision, and our human study (Section~\ref{sec:discussion}) is designed to settle it.
 
 \subsection{Letter case reveals the label in FWS}
 \label{sec:fws-case}

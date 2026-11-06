@@ -1,0 +1,71 @@
+%  Preprint build for Zenodo: the same sections as main.tex (the MDPI MAKE submission), in a plain
+%  layout with no journal branding, DOI, line numbers or submission status.
+%  Build: pdflatex preprint && bibtex preprint && pdflatex preprint && pdflatex preprint
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newpxtext,newpxmath}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,graphicx,booktabs,tabularx,array,multirow,float,xcolor,subcaption,changepage}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+% Macros the shared section files use from the MDPI class.
+\newlength{\extralength}\setlength{\extralength}{0pt}
+\newlength{\fulllength}\AtBeginDocument{\setlength{\fulllength}{\textwidth}}
+\makeatletter\newcommand{\rowsfrom}[1]{\@@input #1 }\makeatother
+\graphicspath{{./}}
+
+\title{\textbf{Scalable Extraction of Author-Stated Research Gaps:\\Towards Automated Idea Generation}}
+\author{Yazan Alnakri\thanks{Correspondence: \href{mailto:y.alnakri@innopolis.university}{y.alnakri@innopolis.university}}, Osama Orabi and Hamza Aldaghstany\\[4pt]
+\normalsize Innopolis University, Innopolis, Russia\\
+\normalsize \texttt{\{y.alnakri, o.orabi, h.aldaghstany\}@innopolis.university}}
+\date{Preprint, version 1, November 2026. Not peer reviewed.}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent Authors state limitations, future work and open problems in their papers. Extracting these author-stated research gaps at scale could supply attributable inputs for automated idea generation. We present a three-stage funnel: rules discard text unlikely to contain gaps, a zero-shot natural-language-inference classifier flags candidate sentences without task-specific training, and a self-hosted large language model filters the candidates. The funnel returns source sentences, never generated text, and a single instruction sets the filter to high-precision, balanced or high-recall mode. On 40 randomized-trial reports with human limitation labels, high-precision mode raises precision from 29.1\% to 66.2\% at 84.9\% recall ($F_1$ 0.744); 40 development reports, used only to set the classifier threshold, give $F_1$ 0.713. On future-work sentences from 209 NLP papers it reaches $F_1$ 0.760. On 34 test papers from a 230-paper arXiv and biomedical corpus labelled by an ensemble of language models, it reaches 86.6\% precision at 57.4\% recall across three gap types. On every dataset the modes trade precision for recall as intended, and the training-free classifier comes within 0.021 $F_1$ of a supervised PubMedBERT, though it is 8.4 points less precise. The funnel sends 3.7--13 times fewer tokens than judging every sentence, but only 1.25--3.1 times fewer than one whole-paper call. We also find that letter case reveals the label in a public future-work dataset. Human validation and further baselines are in progress.
+
+\medskip\noindent\textbf{Keywords:} research gap extraction; limitations; future work; scientific text mining; large language models; natural language inference; zero-shot classification; LLM filtering
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_materials_methods}
+\input{sections/04_results}
+\input{sections/05_discussion}
+\input{sections/06_conclusions}
+
+\section*{Data Availability}
+Code, prompts, evaluation scripts, the gold-corpus labels and paper splits, and the exact SAL and FWS evaluation splits are openly available at \url{https://github.com/Yazangthb/Gap2Idea}~\cite{gap2idearepo}. The gold-corpus labels were produced by language models and have not yet been validated by people. The SAL data~\cite{salrepo} and the FWS corpus~\cite{fwsrepo} were created by their authors and remain subject to their original terms; copies are included in the repository so that the evaluation can be reproduced. The arXiv papers are available from arXiv; the repository includes the text we extracted from them.
+
+\section*{Use of Generative AI}
+During the preparation of this study and manuscript, the authors used Claude Opus~5.5 (Anthropic), through Claude Code, to write and run analysis code and to draft and edit text. The authors have reviewed and edited the output and take full responsibility for the content of this publication.
+
+\section*{Funding and Conflicts of Interest}
+This research received no external funding. The authors declare no conflicts of interest.
+
+\section*{Abbreviations}
+\begin{tabular}{@{}ll}
+CI & Confidence interval\\
+FWS & Future work sentence (corpus)\\
+LLM & Large language model\\
+NLI & Natural language inference\\
+NLP & Natural language processing\\
+RCT & Randomized controlled trial\\
+SAL & Self-acknowledged limitations (corpus)\\
+\end{tabular}
+
+\appendix
+\input{sections/07_appendix}
+
+\bibliographystyle{Definitions/mdpi}
+\bibliography{references}
+\end{document}
