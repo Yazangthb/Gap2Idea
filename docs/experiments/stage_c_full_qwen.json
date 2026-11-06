@@ -1,0 +1,111 @@
+{
+ "config": {
+  "model": "qwen3.8-27b",
+  "batch": 20,
+  "seed": 0,
+  "chat_template_kwargs": {
+   "enable_thinking": false
+  },
+  "calls": 72,
+  "seconds": 182.8
+ },
+ "overall": {
+  "candidates": 1438,
+  "gaps": 480,
+  "kept": 711,
+  "tp": 457,
+  "fp": 254,
+  "precision_before": 0.334,
+  "precision_after": 0.643,
+  "gaps_kept": 0.952
+ },
+ "end_to_end": {
+  "before": [
+   0.334,
+   0.723,
+   0.457
+  ],
+  "after": [
+   0.643,
+   0.688,
+   0.665
+  ],
+  "ci95": {
+   "precision": [
+    0.544,
+    0.741
+   ],
+   "recall": [
+    0.672,
+    0.705
+   ],
+   "f1": [
+    0.608,
+    0.715
+   ]
+  }
+ },
+ "by_gold_type": {
+  "limitation": {
+   "candidates": 147,
+   "gaps": 147,
+   "kept": 135,
+   "tp": 135,
+   "fp": 0,
+   "precision_before": 1.0,
+   "precision_after": 1.0,
+   "gaps_kept": 0.918
+  },
+  "future_work": {
+   "candidates": 64,
+   "gaps": 64,
+   "kept": 63,
+   "tp": 63,
+   "fp": 0,
+   "precision_before": 1.0,
+   "precision_after": 1.0,
+   "gaps_kept": 0.984
+  },
+  "research_gap": {
+   "candidates": 269,
+   "gaps": 269,
+   "kept": 259,
+   "tp": 259,
+   "fp": 0,
+   "precision_before": 1.0,
+   "precision_after": 1.0,
+   "gaps_kept": 0.963
+  }
+ },
+ "by_domain": {
+  "biomed": {
+   "candidates": 243,
+   "gaps": 99,
+   "kept": 109,
+   "tp": 95,
+   "fp": 14,
+   "precision_before": 0.407,
+   "precision_after": 0.872,
+   "gaps_kept": 0.96
+  },
+  "arxiv": {
+   "candidates": 1195,
+   "gaps": 381,
+   "kept": 602,
+   "tp": 362,
+   "fp": 240,
+   "precision_before": 0.319,
+   "precision_after": 0.601,
+   "gaps_kept": 0.95
+  }
+ },
+ "papers": 34,
+ "reading_order_vs_shuffled_80": {
+  "compared": 80,
+  "agree": 73,
+  "gaps_kept_reading_order": 18,
+  "gaps_kept_shuffled": 19,
+  "fp_reading_order": 18,
+  "fp_shuffled": 16
+ }
+}
