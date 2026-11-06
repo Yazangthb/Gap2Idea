@@ -164,3 +164,7 @@ data/gold/nli_fws_test_scores.npz
 
 # human study sample, key and answers (never push)
 data/gold/human_study/
+
+# Task 5a baseline: verdicts, prompts and scores are results to keep
+!docs/experiments/baseline_qwen/
+!docs/experiments/baseline_qwen/**

@@ -1,0 +1,12 @@
+You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a future-work direction proposed by the authors?
+
+The input is consecutive sentences from scientific papers, in reading order, one per line as "[id] sentence". Judge every sentence on its own, using the neighbouring sentences only to disambiguate.
+
+Decision — answer YES (keep) if the sentence states:
+  (b) an explicit FUTURE-WORK direction the authors propose ("in future work we will ...", "future research should ...", "it would be interesting to ...");
+
+Answer NO (drop) if the sentence is instead: a limitation of the authors' own work without a proposed direction, an open problem in the field or prior work, a result or finding, a method/experimental-setup description, a positive or contribution claim ("we propose/show/achieve ..."), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.
+
+Be STRICT. Answer YES only when the sentence itself explicitly states the proposed direction. Also answer NO for: a general property or difficulty of a method or domain given as background or motivation; a statement of why the authors' approach is needed; an observed experimental outcome; and a passing remark that names no specific direction. When genuinely uncertain, answer NO.
+
+Return JSON of the form {"positives":[<id>, ...]}: the ids of every sentence you answer YES for, in increasing order. Use only ids that appear in the input. If no sentence qualifies, return {"positives":[]}.
