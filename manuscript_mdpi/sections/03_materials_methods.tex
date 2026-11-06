@@ -1,6 +1,16 @@
 \section{Materials and Methods}
 \label{sec:methods}
 
+Figure~\ref{fig:pipeline-overview} summarises the extraction workflow and its evaluation. The following subsections define the targets, data, processing stages and evaluation protocol.
+
+\begin{figure}[htbp]
+\begin{adjustwidth}{-\extralength}{0cm}
+\centering
+\includegraphics[width=\fulllength]{figures/gap2idea_graphical_abstract_v2.png}
+\end{adjustwidth}
+\caption{Overview of Gap2Idea. Paper texts are prepared as sentence streams, then processed by structural localisation (A), zero-shot NLI candidate selection (B) and an LLM filter (C). The three filter modes are alternative settings. Outputs retain the original wording and source identifiers. Stage~A is dataset-specific and bypassed for FWS. Human-labelled SAL and FWS evaluate limitations and future work, respectively; evaluation of all three types uses provisional LLM labels. Stage contributions, precision--recall control and classifier choice are assessed alongside LLM input cost.\label{fig:pipeline-overview}}
+\end{figure}
+
 \subsection{Task}
 
 The input is the sentence stream of a full paper. The output is the set of sentences that state an author-stated research gap of one of three types:
@@ -15,7 +25,7 @@ Each output is an unmodified source sentence. Scoring is binary at the sentence 
 
 Table~\ref{tab:data} summarises the evaluation data. All splits are by paper.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \caption{Evaluation data. Positives are sentences labelled with a gap type the benchmark covers.\label{tab:data}}
 \begin{adjustwidth}{-\extralength}{0cm}
 \small
@@ -44,22 +54,72 @@ Gold corpus (validation) & LLM ensemble & All three & 34 & 11,201 & 699 & Design
 
 Figure~\ref{fig:funnel} shows the three stages and the gold-test counts at each.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
+\begin{adjustwidth}{-\extralength}{0cm}
 \centering
+\begingroup
+\definecolor{funnelInk}{HTML}{183249}
+\definecolor{funnelInput}{HTML}{527385}
+\definecolor{funnelA}{HTML}{147C87}
+\definecolor{funnelB}{HTML}{6553A0}
+\definecolor{funnelC}{HTML}{A66916}
 \begin{tikzpicture}[
-  box/.style={draw, rounded corners=2pt, align=center, minimum height=1.25cm, text width=2.55cm, font=\footnotesize},
-  arr/.style={-{Stealth[length=2.2mm]}, thick},
-  lab/.style={font=\scriptsize, align=center}]
-\node[box] (in) {Full paper\\11,741 sentences\\664 gaps};
-\node[box, right=0.55cm of in] (a) {\textbf{A. Localise}\\rules\\9604 kept, 644 gaps};
-\node[box, right=0.55cm of a] (b) {\textbf{B. Classify}\\zero-shot NLI\\2522 kept, 606 gaps};
-\node[box, right=0.55cm of b, text width=3.0cm] (c) {\textbf{C. Filter}\\LLM, three modes\\440 / 776 / 1011 kept\\381 / 529 / 569 gaps};
-\draw[arr] (in) -- (a); \draw[arr] (a) -- (b); \draw[arr] (b) -- (c);
-\node[lab, below=0.15cm of a] {no model};
-\node[lab, below=0.15cm of b] {no training labels};
-\node[lab, below=0.15cm of c] {high precision / balanced / high recall};
+  x=1cm, y=1cm,
+  font=\small, text=funnelInk,
+  card/.style={rounded corners=5pt, line width=0.7pt},
+  title/.style={font=\small\bfseries, anchor=north},
+  detail/.style={font=\footnotesize, align=center},
+  count/.style={font=\Large\bfseries},
+  arr/.style={-{Stealth[length=2.4mm,width=1.8mm]}, line width=1pt, draw=funnelInput}]
+% Native vector cards preserve legibility at print resolution.
+\draw[card,draw=funnelInput!65,fill=funnelInput!5] (0,0) rectangle (3.1,-4.1);
+\draw[card,draw=funnelA!65,fill=funnelA!6] (3.75,0) rectangle (6.85,-4.1);
+\draw[card,draw=funnelB!65,fill=funnelB!6] (7.5,0) rectangle (10.6,-4.1);
+\draw[card,draw=funnelC!65,fill=funnelC!6] (11.25,0) rectangle (17.6,-4.1);
+
+\node[title,text=funnelInput] at (1.55,-0.23) {INPUT};
+\node[title,text=funnelA] at (5.3,-0.23) {A. LOCALISE};
+\node[title,text=funnelB] at (9.05,-0.23) {B. CLASSIFY};
+\node[title,text=funnelC] at (14.425,-0.23) {C. FILTER};
+\node[detail] at (1.55,-0.91) {Full-paper sentences};
+\node[detail] at (5.3,-0.91) {Structural rules};
+\node[detail] at (9.05,-0.91) {Zero-shot NLI};
+\node[detail] at (14.425,-0.91) {LLM with neighbouring sentences};
+
+\node[count,text=funnelInput] at (1.55,-1.67) {11,741};
+\node[count,text=funnelA] at (5.3,-1.67) {9604};
+\node[count,text=funnelB] at (9.05,-1.67) {2522};
+\node[detail] at (1.55,-2.13) {input sentences};
+\node[detail] at (5.3,-2.13) {sentences kept};
+\node[detail] at (9.05,-2.13) {candidates kept};
+\node[count,text=funnelInput] at (1.55,-2.83) {664};
+\node[count,text=funnelA] at (5.3,-2.83) {644};
+\node[count,text=funnelB] at (9.05,-2.83) {606};
+\node[detail] at (1.55,-3.27) {labelled gaps};
+\node[detail] at (5.3,-3.27) {labelled gaps retained};
+\node[detail] at (9.05,-3.27) {labelled gaps retained};
+
+% Alternative settings, each applied to the same Stage B candidates.
+\node[anchor=west,font=\footnotesize\bfseries] at (11.53,-1.52) {Mode};
+\node[font=\footnotesize\bfseries] at (15.12,-1.52) {Kept};
+\node[font=\footnotesize\bfseries] at (16.78,-1.52) {Gaps};
+\fill[rounded corners=3pt,funnelA!13] (11.45,-1.86) rectangle (17.4,-2.43);
+\fill[rounded corners=3pt,funnelB!12] (11.45,-2.56) rectangle (17.4,-3.13);
+\fill[rounded corners=3pt,funnelC!15] (11.45,-3.26) rectangle (17.4,-3.83);
+\node[anchor=west,font=\footnotesize\bfseries,text=funnelA] at (11.6,-2.145) {High precision};
+\node[anchor=west,font=\footnotesize\bfseries,text=funnelB] at (11.6,-2.845) {Balanced};
+\node[anchor=west,font=\footnotesize\bfseries,text=funnelC] at (11.6,-3.545) {High recall};
+\foreach \y/\kept/\gaps in {-2.145/440/381,-2.845/776/529,-3.545/1011/569} {
+  \node[font=\small\bfseries] at (15.12,\y) {\kept};
+  \node[font=\small\bfseries] at (16.78,\y) {\gaps};
+}
+\draw[arr] (3.13,-2.05) -- (3.71,-2.05);
+\draw[arr] (6.88,-2.05) -- (7.46,-2.05);
+\draw[arr] (10.63,-2.05) -- (11.21,-2.05);
 \end{tikzpicture}
-\caption{The funnel, with counts on the gold test split (34 papers, LLM labels). Each stage selects existing sentences; none rewrites text.\label{fig:funnel}}
+\endgroup
+\end{adjustwidth}
+\caption{Sentence selection on the gold test split (34 papers, provisional LLM labels). The first three cards show the input and the sentences retained after Stages~A and~B. Stage~C applies each alternative filter mode to the same candidates; ``Kept'' counts all selected sentences and ``Gaps'' counts selected sentences labelled as gaps. Each stage preserves the original text.\label{fig:funnel}}
 \end{figure}
 
 \paragraph{Stage A: localisation.} For SAL, Stage~A keeps sentences in Discussion and Conclusion sections, which retains 203 of 205 test limitations while removing 76.3\% of sentences. For the gold corpus, Stage~A is a rule-based junk filter with no section gate: it drops titles, tables, figure captions, abbreviation lists, competing-interest, author-contribution, funding and supplementary sections where section types are known, bibliography-like strings, and implausible sentences (under 25 characters or six tokens, starting mid-word, dot leaders, or mostly non-letters). A section gate is not used for arXiv papers because their gaps are spread through the body (Section~\ref{sec:discussion}). FWS has no Stage~A: it already consists of conclusion sections, and our junk filter, which rejects sentences that start in lower case, would reject almost all FWS text once it is lowercased.
