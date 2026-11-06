@@ -1,5 +1,6 @@
 """Protocol safeguards: real alignment/leakage/math failures, no network needed."""
 import argparse
+import csv
 import contextlib
 import io
 import json
@@ -13,7 +14,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from gap2idea.experiments.task5b.data import (
-    apply_structure, attach_latex_sections, digest, load_prepared, parse_sal_label,
+    apply_structure, attach_latex_sections, digest, load_current_gold, load_fws, load_prepared, parse_sal_label,
     row, validate, write_json, write_jsonl)
 from gap2idea.experiments.task5b.metrics import bootstrap, point, select_threshold
 from gap2idea.experiments.task5b.models import (
@@ -56,6 +57,62 @@ class MetricTests(unittest.TestCase):
 
 
 class DataTests(unittest.TestCase):
+    def test_current_gold_reconstructs_negative_sentences_and_both_domains(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "data/gold").mkdir(parents=True)
+            (root / "stage_c_package/sal_criteria").mkdir(parents=True)
+            gold, fixture_rows, texts, parts = [], [], [], {}
+            for part in ("train", "val", "test"):
+                arxiv, sal = f"arxiv-{part}", f"PMC-{part}"
+                parts[part] = [arxiv, sal]
+                for pid, domain in ((arxiv, "arxiv_cs"), (sal, "biomed_sal")):
+                    sentences = [f"The study of {pid} has a small sample size.",
+                                 f"We measured {pid} with calibrated instruments."]
+                    gold.append(dict(paper_id=pid, domain=domain, idx=0,
+                                     sentence=sentences[0], label="limitation"))
+                    if domain == "arxiv_cs":
+                        texts.append(dict(id=pid, text=" ".join(sentences)))
+                    else:
+                        fixture_rows.extend(dict(pmcid=pid, sent=s, sec="DISCUSS", label=0) for s in sentences)
+            write_jsonl(root / "data/gold/gap_gold_final.jsonl", gold)
+            write_jsonl(root / "data/paper_texts.jsonl", texts)
+            write_json(root / "data/gold/splits.json", parts)
+            write_json(root / "stage_c_package/sal_criteria/sal_test_allmodels.json", fixture_rows)
+            split, _, stats = load_current_gold(root)
+            self.assertEqual(len(split["train"]), 4)
+            self.assertEqual(sum(r["label"] == "none" for r in split["train"]), 2)
+            self.assertEqual({r["domain"] for r in split["train"]}, {"arxiv_cs", "biomed_sal"})
+            self.assertEqual(stats["train"]["papers"], 2)
+            # Original SAL binary label=0 does not replace the current gold label.
+            self.assertEqual(next(r for r in split["train"] if r["paper_id"] == "PMC-train" and r["idx"] == 0)["y"], 1)
+
+    def test_fws_current_gold_uses_train_only_including_negatives_and_neutral_case(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "data/external").mkdir(parents=True)
+            records = [dict(id=str(i // 8), text=f"Sentence number {i} about future research.", label=i % 2)
+                       for i in range(1760)]
+            records[0]["text"] = "SHARED TRAIN NEGATIVE SENTENCE."
+            records[1]["text"] = "Validation-only sentence must remain."
+            corpus = root / "data/external/fws_corpus.csv"
+            with corpus.open("w", encoding="utf-8", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=("id", "text", "label"))
+                writer.writeheader()
+                writer.writerows(records)
+            current = {"train": [dict(sentence="Shared train negative sentence.", label="none")],
+                       "val": [dict(sentence=records[1]["text"], label="limitation")], "test": []}
+            with patch("gap2idea.experiments.task5b.data.load_current_gold", return_value=(current, [], {})):
+                split, _, notes = load_fws(root)
+            all_rows = [r for rows in split.values() for r in rows]
+            self.assertNotIn(0, {r["raw_idx"] for r in all_rows})
+            self.assertIn(1, {r["raw_idx"] for r in all_rows})
+            self.assertTrue(all(r["sentence"] == r["sentence"].lower() for r in all_rows))
+            self.assertEqual(notes["protocol_id"], "fws_current_gold_v1")
+            self.assertEqual(notes["excluded_source_rows"], [0])
+            for a, b in (("train", "val"), ("train", "test"), ("val", "test")):
+                self.assertFalse({r["paper_id"] for r in split[a]} & {r["paper_id"] for r in split[b]})
+
     def test_paper_leakage_and_expected_test_size(self):
         split = fixture()
         validate(split, "sal", strict=False)

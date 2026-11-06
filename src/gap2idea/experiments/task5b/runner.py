@@ -102,11 +102,14 @@ def preflight(args):
     paths = {
         "sal": ["data/external/sal_rct/train.csv", "data/external/sal_rct/dev.csv", "data/external/sal_rct/test.csv",
                 "stage_c_package/sal_criteria/sal_test_allmodels.json"],
-        "fws": ["data/external/fws_corpus.csv", "data/scibert_prep/train.jsonl"],
+        "fws": ["data/external/fws_corpus.csv", "data/gold/gap_gold_final.jsonl", "data/gold/splits.json",
+                "data/paper_texts.jsonl", "stage_c_package/sal_criteria/sal_test_allmodels.json"],
         "arxiv": ["data/gold/gap_gold_final.jsonl", "data/gold/splits.json", "data/paper_texts.jsonl"]}
     for dataset in names(args.datasets):
         if dataset not in paths:
             raise ValueError(f"Unknown dataset {dataset}")
+        if dataset == "fws" and args.fws_protocol == "legacy":
+            paths[dataset] = ["data/external/fws_corpus.csv", "data/scibert_prep/train.jsonl"]
         if dataset == "arxiv" and (ROOT / "data/gold/task5b_arxiv/train.jsonl").exists():
             paths[dataset] = [f"data/gold/task5b_arxiv/{p}.jsonl" for p in ("train", "val", "test")]
         missing = [p for p in paths[dataset] if not (ROOT / p).is_file()]
@@ -114,6 +117,8 @@ def preflight(args):
         for p in missing:
             print(f"  missing: {p}")
         print(f"  required test: {EXPECTED[dataset][0]} papers / {EXPECTED[dataset][1]} sentences")
+        if dataset == "fws":
+            print(f"  FWS protocol: {args.fws_protocol}; current-gold uses uploaded TRAIN papers, not positive-only rows")
     print("Rules additionally need aligned structure JSONL, or explicitly choose kilicoglu_section_proxy.")
     print("Lan EDA/PBA reproduction additionally needs the original training recipe / augmented train set.")
 
@@ -125,7 +130,8 @@ def prepare(args):
         target = Path(args.output_dir) / dataset
         if target.exists():
             raise FileExistsError(f"Refusing to replace locked prepared data: {target}")
-        split, inputs, notes = LOADERS[dataset](ROOT)
+        split, inputs, notes = (load_fws(ROOT, protocol=args.fws_protocol) if dataset == "fws"
+                                else LOADERS[dataset](ROOT))
         blocks, texts = ROOT / "data/gold/arxiv_latex_blocks.jsonl", ROOT / "data/paper_texts.jsonl"
         if dataset == "arxiv" and blocks.exists():
             notes["latex_sections"] = attach_latex_sections(split, blocks, texts)
@@ -244,6 +250,9 @@ def fit(args):
         print(f"Fitting / validating {dataset}/{method}", flush=True)
         train, val = target_rows(split["train"], method), target_rows(split["val"], method)
         spec = registrations[method].copy()
+        if isinstance(manifest.get("notes"), dict):
+            spec["input_protocol"] = manifest["notes"].get("protocol_id", "original dataset split")
+            spec["text_transform"] = manifest["notes"].get("text_transform", "unchanged canonical sentence")
         model = None
         try:
             if method in CLASSICAL:
@@ -369,7 +378,13 @@ def report(args):
     run = Path(args.run_dir)
     meta = json.loads((run / "run.json").read_text(encoding="utf-8"))
     statuses = json.loads((run / "fit_status.json").read_text(encoding="utf-8"))
+    manifest = json.loads((run / "input_manifest.json").read_text(encoding="utf-8"))
+    notes = manifest.get("notes", {})
+    protocol_line = (f"Protocol: **{notes['protocol_id']}**; {notes.get('text_transform', '')}. "
+                     "Historical funnel pairing requires exact sentence identity, not matching counts."
+                     if isinstance(notes, dict) and notes.get("protocol_id") else "")
     lines = [f"# Task 5b - {meta['dataset']} ({meta['mode']})", "",
+             protocol_line, "",
              "Positive metrics use pooled sentences. CI resamples whole papers (conditional on the fitted model).", "",
              "| Method | Target | P | R | F1 [95% CI] | Macro F1 [95% CI] |", "|---|---|---:|---:|---:|---:|"]
     for method in meta["requested_methods"]:
@@ -452,12 +467,26 @@ def run_all(args):
 
 
 def sanity(args):
-    """Real SAL train/dev smoke; official test data is never used."""
+    """Real train/dev smoke; no official test sentences are scored."""
     output = Path(args.output_dir)
     if output.exists():
         raise FileExistsError(f"Choose a new smoke output directory: {output}")
-    train = sal_rows(ROOT / "data/external/sal_rct/train.csv")
-    dev = sal_rows(ROOT / "data/external/sal_rct/dev.csv")
+    dataset = args.dataset
+    if dataset == "sal":
+        train = sal_rows(ROOT / "data/external/sal_rct/train.csv")
+        dev = sal_rows(ROOT / "data/external/sal_rct/dev.csv")
+        inputs = {str(ROOT / f"data/external/sal_rct/{p}.csv"): digest(ROOT / f"data/external/sal_rct/{p}.csv") for p in ("train", "dev")}
+        notes = dict(smoke="REAL SAL TRAIN/DEV ONLY; no official test scoring")
+    else:
+        source_dir = Path(args.data_dir) / dataset
+        original = json.loads((source_dir / "manifest.json").read_text(encoding="utf-8"))
+        # Deliberately do not open the official prepared test JSONL for smoke.
+        train, dev = [read_jsonl(source_dir / f"{part}.jsonl") for part in ("train", "val")]
+        for part in ("train", "val"):
+            if digest(source_dir / f"{part}.jsonl") != original["prepared_sha256"][part]:
+                raise ValueError(f"Prepared {part} changed before smoke")
+        inputs = original["input_sha256"]
+        notes = {**original.get("notes", {}), "smoke": "REAL FWS TRAIN/VAL ONLY; no official test scoring"}
     train_ids = sorted({r["paper_id"] for r in train})[:args.train_papers]
     dev_ids = sorted({r["paper_id"] for r in dev})[:args.dev_papers]
     if len(dev_ids) < 4:
@@ -466,16 +495,16 @@ def sanity(args):
     split = {"train": [r for r in train if r["paper_id"] in set(train_ids)],
              "val": [r for r in dev if r["paper_id"] in set(dev_ids[:midpoint])],
              "test": [r for r in dev if r["paper_id"] in set(dev_ids[midpoint:])]}
-    stats = validate(split, "sal", strict=False)
-    prepared = output / "prepared/sal"
+    stats = validate(split, dataset, strict=False)
+    prepared = output / "prepared" / dataset
     prepared.mkdir(parents=True)
     for part, rows in split.items():
         write_jsonl(prepared / f"{part}.jsonl", rows)
-    write_json(prepared / "manifest.json", dict(dataset="sal", mode="smoke", created_utc=now(), stats=stats,
-        notes="REAL SAL TRAIN/DEV ONLY; dev papers split for smoke. Official test not accessed. Not paper results.",
-        input_sha256={str(ROOT / f"data/external/sal_rct/{p}.csv"): digest(ROOT / f"data/external/sal_rct/{p}.csv") for p in ("train", "dev")},
+    write_json(prepared / "manifest.json", dict(dataset=dataset, mode="smoke", created_utc=now(), stats=stats,
+        notes=notes, input_sha256=inputs,
         prepared_sha256={p: digest(prepared / f"{p}.jsonl") for p in split}))
-    options = argparse.Namespace(dataset="sal", methods="tfidf_lr,binary_nb,kilicoglu_section_proxy" +
+    options = argparse.Namespace(dataset=dataset, methods="tfidf_lr,binary_nb," +
+        ("kilicoglu_section_proxy" if dataset == "sal" else "zhang_nb") +
         (",modernbert_nli" if args.with_nli else ""), seed=0, max_features=20000, batch_size=args.batch_size,
         device=args.device, epochs=1, encoder_revision=None, data_dir=str(output / "prepared"),
         run_dir=str(output / "run"), bootstrap=200, smoke=True)
@@ -500,10 +529,12 @@ def parser():
     q.set_defaults(func=fetch_public)
     q = sub.add_parser("preflight", help="List required inputs without model downloads")
     q.add_argument("--datasets", default="sal,fws,arxiv")
+    q.add_argument("--fws-protocol", choices=("current-gold", "legacy"), default="current-gold")
     q.set_defaults(func=preflight)
     q = sub.add_parser("prepare", help="Validate and lock full datasets; refuses count/identity drift")
     q.add_argument("--datasets", default="sal,fws,arxiv")
     q.add_argument("--output-dir", default=str(ROOT / "data/task5b/prepared"))
+    q.add_argument("--fws-protocol", choices=("current-gold", "legacy"), default="current-gold")
     q.set_defaults(func=prepare)
     def fitting(q):
         q.add_argument("--data-dir", default=str(ROOT / "data/task5b/prepared"))
@@ -557,7 +588,9 @@ def parser():
     q.add_argument("--folds", type=int, default=10)
     q.add_argument("--seed", type=int, default=0)
     q.set_defaults(func=audit_zhang)
-    q = sub.add_parser("sanity", help="Small real SAL train/dev smoke; no official test data")
+    q = sub.add_parser("sanity", help="Small real SAL/FWS train/dev smoke; no official test scoring")
+    q.add_argument("--dataset", choices=("sal", "fws"), default="sal")
+    q.add_argument("--data-dir", default=str(ROOT / "data/task5b/prepared"))
     q.add_argument("--output-dir", required=True)
     q.add_argument("--with-nli", action="store_true", help="Download/use actual pinned ModernBERT (~1.6 GB)")
     q.add_argument("--train-papers", type=int, default=8)

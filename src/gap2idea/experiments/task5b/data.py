@@ -125,23 +125,36 @@ def split_papers(rows, fraction=.1, seed=0):
             [r for r in rows if r["paper_id"] in val_ids])
 
 
-def load_fws(root, seed=0):
+def load_fws(root, seed=0, protocol="current-gold"):
     corpus = root / "data/external/fws_corpus.csv"
-    exclusions = root / "data/scibert_prep/train.jsonl"
-    paths = [corpus, exclusions]
-    training_texts = {r["sentence"].strip() for r in read_jsonl(exclusions)}
+    if protocol == "legacy":
+        exclusions = root / "data/scibert_prep/train.jsonl"
+        paths = [corpus, exclusions]
+        training_texts = {r["sentence"].strip() for r in read_jsonl(exclusions)}
+        transform = lambda text: text
+        gold_stats = None
+    elif protocol == "current-gold":
+        gold_split, gold_paths, gold_stats = load_current_gold(root)
+        paths = [corpus, *gold_paths]
+        # Include EVERY sentence in the current train papers, not only the
+        # positive rows listed by gap_gold_final. Never use val/test to filter.
+        training_texts = {r["sentence"].strip().lower() for r in gold_split["train"]}
+        transform = str.lower
+    else:
+        raise ValueError(f"Unknown FWS protocol {protocol}")
     indices, all_rows = Counter(), []
     for raw_idx, r in enumerate(csv_rows(corpus)):
         pid = r["id"]
         if r["label"] not in {"0", "1"}:
             raise ValueError(f"Unexpected FWS label {r['label']!r}")
-        all_rows.append(row("fws", pid, indices[pid], r["text"],
+        all_rows.append(row("fws", pid, indices[pid], transform(r["text"]),
                             "future_work" if r["label"] == "1" else "none",
-                            raw_idx=raw_idx, section=r.get("section", r.get("section_name", ""))))
+                            raw_idx=raw_idx, source_text_sha256=text_hash(r["text"]),
+                            section=r.get("section", r.get("section_name", ""))))
         indices[pid] += 1
     eligible = [r for r in all_rows if r["sentence"].strip() not in training_texts]
-    # Reproduce breadth_funnel.py exactly: stable input paper order, seed 0,
-    # include complete eligible paper groups until at least 1500 sentences.
+    # Reuse the sampling algorithm, but current-gold is explicitly a NEW
+    # exclusion source / casing protocol, not a certificate of historical identity.
     papers = list(dict.fromkeys(r["paper_id"] for r in eligible))
     random.Random(0).shuffle(papers)
     by_pid = defaultdict(list)
@@ -153,10 +166,21 @@ def load_fws(root, seed=0):
         if len(test) >= 1500:
             break
     test_ids = {r["paper_id"] for r in test}
-    train, val = split_papers([r for r in all_rows if r["paper_id"] not in test_ids], seed=seed)
+    training_pool = eligible if protocol == "current-gold" else all_rows
+    train, val = split_papers([r for r in training_pool if r["paper_id"] not in test_ids], seed=seed)
     return {"train": train, "val": val, "test": test}, paths, {
-        "test_protocol": "breadth_funnel: exact train-text exclusion, Random(0), >=1500 rows",
+        "protocol_id": "fws_current_gold_v1" if protocol == "current-gold" else "fws_legacy_breadth_v1",
+        "test_protocol": "stable eligible CSV paper order; Random(0); complete paper groups until >=1500 rows",
+        "exclusion_source": "current gold TRAIN papers, all sentences" if protocol == "current-gold" else "legacy scibert_prep/train.jsonl",
+        "exclusion_scope": "all FWS splits" if protocol == "current-gold" else "test selection only",
+        "text_transform": "lowercase every sentence before exclusion, training and inference" if protocol == "current-gold" else "original CSV case",
+        "historical_test_identity": "not established; do not pair with old funnel outputs without identity checks",
+        "gold_corpus_stats": gold_stats,
+        "unique_exclusion_texts": len(training_texts),
         "excluded_test_sentences": len(all_rows) - len(eligible),
+        "excluded_source_rows": [r["raw_idx"] for r in all_rows if r["sentence"].strip() in training_texts],
+        "test_membership_sha256": text_hash(json.dumps([
+            [r["paper_id"], r["idx"], r["source_text_sha256"]] for r in test], separators=(",", ":"))),
         "validation_protocol": "10% of remaining papers, sorted IDs then seeded shuffle",
         "validation_seed": seed}
 
@@ -170,7 +194,7 @@ def trim_refs(text):
     return text[:n]
 
 
-def load_arxiv(root):
+def load_arxiv(root, prefer_exports=True):
     """Use current branch's canonical splitter; verify every positive's exact text.
 
     The optional export path avoids dependence on future segmentation changes.
@@ -178,7 +202,7 @@ def load_arxiv(root):
     """
     base = root / "data/gold"
     export = base / "task5b_arxiv"
-    if (export / "train.jsonl").exists():
+    if prefer_exports and (export / "train.jsonl").exists():
         paths = [export / f"{p}.jsonl" for p in ("train", "val", "test")]
         split = {}
         for part, path in zip(("train", "val", "test"), paths):
@@ -227,6 +251,63 @@ def load_arxiv(root):
     if used != expected_gold:
         raise ValueError("Some arXiv gold indices lie outside reconstructed sentences")
     return out, paths, {"source": "final positive gold + exact full texts + official paper splits"}
+
+
+def load_current_gold(root):
+    """Reconstruct the current 230-paper corpus without API clients or old data.
+
+    The uploaded gold file lists positives only. Reconstruct ALL arXiv and SAL
+    sentences, verify each positive against its original paper/index/text, then
+    apply the explicit paper split. Public SAL fixture labels are not substituted
+    for the current four-class labels.
+    """
+    arxiv, paths, _ = load_arxiv(root, prefer_exports=False)
+    splits_path = root / "data/gold/splits.json"
+    splits = json.loads(splits_path.read_text(encoding="utf-8"))
+    gold = read_jsonl(root / "data/gold/gap_gold_final.jsonl")
+    labels = {(str(g["paper_id"]), int(g["idx"])): g for g in gold}
+    fixture_path = root / "stage_c_package/sal_criteria/sal_test_allmodels.json"
+    fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
+    paths = list(dict.fromkeys([*paths, fixture_path]))
+    sal, indices, verified = defaultdict(list), Counter(), set()
+    for f in fixture:
+        pid = str(f["pmcid"])
+        idx = indices[pid]
+        indices[pid] += 1
+        g = labels.get((pid, idx))
+        if g and (g["sentence"] != f["sent"] or g["domain"] != "biomed_sal"):
+            raise ValueError(f"Current SAL gold/fixture alignment drift: {pid}/{idx}")
+        if g:
+            verified.add((pid, idx))
+        sal[pid].append(row("current_gold", pid, idx, f["sent"], g["label"] if g else "none",
+                            domain="biomed_sal", section=f["sec"]))
+    expected_sal = {k for k, g in labels.items() if g["domain"] == "biomed_sal"}
+    if verified != expected_sal:
+        raise ValueError("Some current SAL gold indices lie outside the cached fixture")
+    corp = {}
+    for rows in arxiv.values():
+        for r in rows:
+            corp.setdefault(r["paper_id"], []).append({**r, "dataset": "current_gold", "domain": "arxiv_cs"})
+    if set(corp) & set(sal):
+        raise ValueError("Paper IDs overlap between gold domains")
+    corp.update(sal)
+    parts, seen = {}, set()
+    for part in ("train", "val", "test"):
+        ids = list(map(str, splits[part]))
+        if len(ids) != len(set(ids)) or seen & set(ids):
+            raise ValueError("Current gold paper splits overlap or contain duplicates")
+        if set(ids) - set(corp):
+            raise ValueError(f"Current gold lacks full texts for {set(ids) - set(corp)}")
+        seen.update(ids)
+        parts[part] = [r for pid in ids for r in corp[pid]]
+    if seen != set(corp):
+        raise ValueError("Some current corpus papers have no split assignment")
+    if len(labels) != len(gold) or set(k[0] for k in labels) - seen:
+        raise ValueError("Current gold labels contain duplicate/unknown paper indices")
+    stats = {p: dict(papers=len(splits[p]), sentences=len(rows),
+                     positives=sum(r["y"] for r in rows),
+                     domains=dict(Counter(r["domain"] for r in rows))) for p, rows in parts.items()}
+    return parts, paths, stats
 
 
 def apply_structure(split, path):

@@ -7,6 +7,42 @@ benchmark results** and provide no evidence that one research method wins.
 This document records the implementation-stage checks. A later full SAL run
 completed successfully and is documented in [task5b_sal_results.md](task5b_sal_results.md).
 
+## Update: current-gold FWS preparation, 2026-11-06
+
+The uploaded corpus files were imported from `85523b4` as `a030d0d` without
+merging unrelated manuscript/experiment changes. All 4462 positive labels aligned
+with the reconstructed arXiv/SAL sentence indices. The full corpus split is
+162/34/34 papers; train reconstructs 45777 sentences, including negatives.
+
+The new `fws_current_gold_v1` preparation passed: FWS train 7924 papers / 57198
+sentences / 7985 positives; validation 880 / 6190 / 804; test 209 / 1506 / 220.
+Only current gold TRAIN sentences provide exclusions. All FWS inputs are
+lowercased to eliminate the source casing artifact. Data and membership are
+locked under `data/task5b/prepared-current-gold-v1/fws/`.
+
+All **17 offline tests** passed, including new checks for reconstructing unlisted
+negatives and verifying that validation-only gold text is not used for FWS
+exclusions. A real FWS smoke run completed TF-IDF/LR, binary NB, train-only
+chi2/NB and pinned ModernBERT GPU inference, with frozen thresholds, saved
+predictions, 200-resample paper CIs and a paired comparison:
+
+```powershell
+python scripts/bench/task5b.py sanity --dataset fws --data-dir data/task5b/prepared-current-gold-v1 --output-dir runs/task5b/fws-current-gold-smoke-20261106 --with-nli --train-papers 24 --dev-papers 24 --batch-size 4
+```
+
+Smoke subsets: 24 train papers / 208 sentences / 40 positives; 12 validation
+papers / 119 sentences / 11 positives; 12 separate validation papers / 102
+temporary evaluation sentences / 19 positives. The official FWS test JSONL was
+not opened or scored by the smoke command. These are execution checks, not paper
+results. Full FWS scoring remains for the user to start with the
+[FWS launcher](task5b_fws_current_gold.md). No SAL result artifact was changed.
+
+The older missing-input statements below describe the original 2026-11-05 state;
+current-gold FWS no longer requires the old `scibert_prep/train.jsonl` file, and
+the arXiv text/label/split inputs have now been restored. Paragraph structure,
+complete funnel predictions and secondary augmentation/lemmatization artifacts
+remain separate requirements where applicable.
+
 ## Passed
 
 - **15 offline tests**, command:

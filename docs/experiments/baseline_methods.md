@@ -56,11 +56,19 @@ No fixed historical .75 / .669 / .354 threshold is borrowed across datasets.
   (7968 sentences, 205 positives). Align raw test by paper, reading order and text
   after stripping outer whitespace only; use the **unchanged cached sentence** as
   model input. Verify 8882 raw rows minus 914 omitted **negative** fragments.
-- FWS: reproduce `stage_c_package/breadth_funnel.py` selection exactly: exclude
+- Legacy FWS (`--fws-protocol legacy`): reproduce `stage_c_package/breadth_funnel.py` selection: exclude
   exact stripped texts in `data/scibert_prep/train.jsonl`, seeded paper shuffle
   (`Random(0)`), select eligible paper groups until at least 1500 rows. Require
   **209 papers / 1506 sentences**. Train on original CSV papers outside those test
   IDs; reserve 10% of remaining sorted/shuffled paper IDs for validation (seed 0).
+- Current FWS default, registered 2026-11-06 before full FWS scoring:
+  `fws_current_gold_v1` reconstructs ALL sentences of the 162 uploaded gold TRAIN
+  papers, lowercases both exclusion text and every FWS input, drops matching
+  strings from the complete FWS corpus, then applies the same seeded paper-group
+  sampling algorithm. It does not need the legacy training file. The locked test
+  also has 209 papers / 1506 sentences / 220 positives, but no claim of historical
+  membership identity is made. See [the detailed current protocol](task5b_fws_current_gold.md).
+  This FWS-only revision does not change the completed SAL run or its inputs.
 - arXiv: filter official mixed-gold train/val/test splits to `arxiv_cs` only;
   require **28 test papers / 10388 sentences**. Train paper count is whatever the
   arXiv subset contains; the proposal's 162 mixed-domain training papers is not

@@ -4,6 +4,12 @@ Implementation of `Task_5b_Comparison_methods.pdf`, based on the current
 minimal-derived checkout. Start with methods 1-3; optional fine-tunes and Zhang
 diagnostics use the same locked-data interfaces. The manuscript is unchanged.
 
+**FWS update, 2026-11-06:** the new gold labels, splits and arXiv texts have been
+imported. The default FWS preparation now uses `fws_current_gold_v1` and does not
+need `data/scibert_prep/train.jsonl`. Use the
+[current FWS instructions and one-command launcher](task5b_fws_current_gold.md).
+The old file is needed only for explicit `--fws-protocol legacy` reproduction.
+
 ## Status and scope
 
 | Proposal item | Code available | What is needed for a full run |
@@ -48,11 +54,12 @@ ignored `data/`, along with generated data, model weights and run outputs.
 
 Ask the experiment owner for these files **with their original revisions**:
 
-1. **FWS selection source:** `data/scibert_prep/train.jsonl` used by
+1. **Legacy FWS selection source (optional):** `data/scibert_prep/train.jsonl` used by
    `stage_c_package/breadth_funnel.py`. It determines the exact excluded training
    texts and therefore the 209-paper test membership. A newly trained/recreated
-   file may select a different test set even with the same seed.
-2. **arXiv finalized corpus:** `data/gold/gap_gold_final.jsonl`,
+   file may select a different test set even with the same seed. The new default
+   uses the current gold train split instead; see the FWS update above.
+2. **arXiv finalized corpus (now imported):** `data/gold/gap_gold_final.jsonl`,
    `data/gold/splits.json`, `data/paper_texts.jsonl`. Alternatively supply complete
    original `export_stageb_data.py` exports under
    `data/gold/task5b_arxiv/{train,val,test}.jsonl`; schema is
