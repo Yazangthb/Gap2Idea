@@ -106,7 +106,8 @@ def qwen_client():
             capture_output=True, text=True, timeout=60, check=True).stdout.strip()
     if not key:
         sys.exit("Could not read the model key")
-    return OpenAI(base_url=f"http://{QWEN_HOST}:8001/v1", api_key=key, timeout=900, max_retries=1)
+    port = os.environ.get("QWEN_PORT", "8001")  # 8002 = the second GPU's server
+    return OpenAI(base_url=f"http://{QWEN_HOST}:{port}/v1", api_key=key, timeout=900, max_retries=1)
 
 
 def run_control(pool, client, model, extra=None):
