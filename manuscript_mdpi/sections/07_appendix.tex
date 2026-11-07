@@ -1,7 +1,7 @@
 \section{Stage C prompt}
 \label{app:prompts}
 
-The system prompt used on the gold corpus is reproduced below. The modes differ only in the paragraph marked [MODE]. For SAL and FWS, the decision rule keeps only item (a) or (b) respectively, the other two items are added to the list of sentences to drop, and the words ``gap'' and ``research gap'' are replaced by ``limitation'' or ``future-work direction''. All prompts are in the code repository (\texttt{scripts/bench/stage\_c\_rubric\_val.py}, \texttt{stage\_c\_sal40\_modes.py}, \texttt{nli\_sal\_fws.py}).
+The system prompt used on the gold corpus is reproduced below. The three modes differ only in the paragraph marked [MODE], whose three versions are listed after the prompt. For SAL and FWS, the decision rule keeps only item (a) or item (b), respectively; the other two items are added to the list of sentences to drop, and the words ``gap'' and ``research gap'' are replaced by ``limitation'' or ``future-work direction''. All prompts are in the code repository (\texttt{scripts/bench/stage\_c\_rubric\_val.py}, \texttt{stage\_c\_sal40\_modes.py}, \texttt{nli\_sal\_fws.py}).
 
 \begin{quote}\small\raggedright
 You are a precision filter for a research-gap extraction pipeline. Judge each candidate sentence: does it genuinely state a research gap?
