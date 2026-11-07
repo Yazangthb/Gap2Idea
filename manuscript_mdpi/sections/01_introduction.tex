@@ -28,13 +28,14 @@ We evaluate the funnel on two benchmarks with human labels, self-acknowledged li
 \end{itemize}
 We also test cheaper formats for the Stage~C calls.
 
-Our main findings are:
+Our main findings follow the four research questions:
 \begin{enumerate}
-  \item \textbf{Precision can be set with one instruction.} On every dataset, moving from high recall to high precision raises precision and lowers recall. In high-precision mode the funnel reaches 66.2\% precision on SAL (from 29.1\% after Stage~B, at 84.9\% recall) and 76.5\% on FWS (Section~\ref{sec:rq2}).
-  \item \textbf{With a strong LLM, the funnel matches whole-paper prompting at a third of the input.} With Qwen3.8-27B, the funnel has higher $F_1$ on both human-labelled benchmarks, significantly only on FWS, and uses about a third of the input tokens. On arXiv papers, scored against labels that were themselves made from whole papers, whole-paper prompting is better (Section~\ref{sec:rq3}).
-  \item \textbf{The funnel keeps a small LLM usable on long papers.} With Qwen3.5-4B, whole-paper prompting breaks down on arXiv papers ($F_1$ 0.30 in high-precision mode, against LLM labels), whereas the funnel reaches 0.54 with the same model. The gain comes from the longer papers (Section~\ref{sec:rq3}).
-  \item \textbf{A training-free Stage~B is competitive.} On SAL, in high-precision mode, it comes within 0.021 $F_1$ of a supervised PubMedBERT. The supervised model is 8.4 points more precise. Fine-tuning the NLI model on our LLM labels helps against those labels but not against human labels (Section~\ref{sec:rq4}).
-  \item \textbf{Evaluation data needs checking.} Letter case alone reveals the label in the public FWS corpus, and the precision of the same output is 66.2\% against human labels and 93.2\% against LLM labels (Sections~\ref{sec:label-source} and~\ref{sec:fws-case}).
+  \item \textbf{The stages divide the task.} Stage~A is useful when sections are informative, Stage~B sets the recall ceiling, and Stage~C supplies most of the precision gain (Section~\ref{sec:rq1}).
+  \item \textbf{One instruction controls the observed trade-off.} On every dataset, moving from high recall to high precision raises precision and lowers recall. In high-precision mode, precision is 66.2\% on SAL and 76.5\% on FWS (Section~\ref{sec:rq2}).
+  \item \textbf{Input length changes the comparison with direct prompting.} With Qwen3.8-27B, the funnel has higher observed $F_1$ on SAL and FWS and uses about one-third of the input tokens. The SAL difference is not significant, and the FWS baseline uses a broader prompt. Whole-paper prompting has higher observed $F_1$ on arXiv papers against labels made from whole-paper inputs. With Qwen3.5-4B on arXiv, the funnel reaches $F_1$ 0.544, against 0.296 for whole-paper prompting; its advantage is concentrated in the longer papers (Section~\ref{sec:rq3}).
+  \item \textbf{A training-free Stage~B remains viable.} On SAL in high-precision mode, its $F_1$ is 0.021 below a supervised PubMedBERT, with a confidence interval that includes zero, but it is 8.4 points less precise. Fine-tuning on our LLM labels helps against those labels but not against human labels (Section~\ref{sec:rq4}).
 \end{enumerate}
+
+Two checks qualify these findings. Letter case reveals the public FWS label, and the precision of the same SAL output is 66.2\% against human labels and 93.2\% against LLM labels (Sections~\ref{sec:label-source} and~\ref{sec:fws-case}).
 
 The scope of this paper is extraction. Whether an extracted gap is still open, and whether it leads to a useful research idea, are separate questions. Section~\ref{sec:related} reviews related work. Section~\ref{sec:methods} describes the data, the funnel and the comparisons. Section~\ref{sec:results} reports the results, Section~\ref{sec:discussion} discusses them and the limitations of the study, and Section~\ref{sec:conclusions} concludes.

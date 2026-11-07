@@ -92,7 +92,9 @@ To make clear which data could have influenced each setting, we list where it wa
 
 \paragraph{Whole-paper prompting.} The main alternative to the funnel is to give the same LLM the whole paper. The baseline was implemented, and its plan, prompts and code frozen, before any test call. Each call contains one paper as numbered sentences in reading order (one per line, ``[id] sentence''), with no Stage~A or~B, and the model returns the ids of all sentences it judges to be gaps. The system prompt is the funnel's Stage~C prompt in the same mode, with only its opening line and the description of the input and output changed. Answers are limited to 4096 tokens; a call that exceeds the limit fails and its gaps count as missed. The arXiv sentence boundaries are those of the gold corpus, so both approaches are scored on exactly the same sentences.
 
-On FWS, the frozen plan used a single older prompt from our code base that accepts limitations as well as future work. The FWS baseline therefore has one result for all three modes, and its precision may be understated.
+On FWS, the frozen plan used a single older prompt from our code base that accepts limitations as well as future work. The FWS baseline therefore has one result for all three modes. This mismatch can understate its precision and prevents the FWS comparison from isolating the effect of the input strategy.
+
+The SAL comparison is also asymmetric. The funnel uses section labels in Stage~A, whereas the whole-paper baseline receives only numbered sentences. This favours the funnel on SAL.
 
 The same frozen plan also split each paper differently: into chunks of 100 consecutive sentences, and into batches of 20 consecutive sentences, which judges every sentence in the funnel's batch size but without Stages~A and~B. We report these as additional baselines for the 27B model.
 
@@ -118,4 +120,4 @@ The same frozen plan also split each paper differently: into chunks of 100 conse
 
 \subsection{Software and use of generative AI}
 
-Experiments used Python with PyTorch, Hugging Face Transformers, sentence-transformers, scikit-learn and vLLM. The client environment is pinned in the repository's lock file; the LLM servers ran in a separate environment with vLLM 0.32.0 and PyTorch 2.13. Generative AI is part of the method in two places: Claude Opus~5.5 and Claude Sonnet~5.5 produced the gold-corpus labels, and Qwen models are the Stage~C filter and the whole-paper baseline. The use of AI assistance in preparing the study and the manuscript is declared at the end of the paper.
+Experiments used Python with PyTorch, Hugging Face Transformers, sentence-transformers, scikit-learn and vLLM. The repository lock file pins the client environment. The LLM servers ran in a separate environment; the saved run records identify vLLM 0.32.0, but the client lock file does not reproduce the complete server environment. Generative AI is part of the method in two places: Claude Opus~5.5 and Claude Sonnet~5.5 produced the gold-corpus labels, and Qwen models are the Stage~C filter and the whole-paper baseline. The use of AI assistance in preparing the study and the manuscript is declared at the end of the paper.
