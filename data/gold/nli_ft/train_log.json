@@ -1,0 +1,38 @@
+{
+ "settings": {
+  "lr": 1e-05,
+  "batch": 32,
+  "epochs": 2,
+  "warmup": 0.06,
+  "weight_decay": 0.01,
+  "max_len": 256,
+  "seed": 0,
+  "model": "/home/yazan/models/modernbert-large-nli"
+ },
+ "epochs": [
+  {
+   "epoch": 0,
+   "tau": 0.2316,
+   "candidates": 2982,
+   "precision": 0.2113,
+   "recall": 0.9013
+  },
+  {
+   "epoch": 1,
+   "train_loss": 0.105,
+   "tau": 0.0021,
+   "candidates": 1746,
+   "precision": 0.3608,
+   "recall": 0.9013
+  },
+  {
+   "epoch": 2,
+   "train_loss": 0.01,
+   "tau": 0.0,
+   "candidates": 1900,
+   "precision": 0.3316,
+   "recall": 0.9013
+  }
+ ],
+ "kept_epoch": 1
+}
