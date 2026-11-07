@@ -1,0 +1,208 @@
+{
+ "split": "test",
+ "variant": "paper",
+ "candidates": 2522,
+ "calls_per_mode": 34,
+ "keep_biased": {
+  "after": {
+   "kept": 808,
+   "tp": 536,
+   "fp": 272,
+   "PRF": [
+    0.663,
+    0.807,
+    0.728
+   ],
+   "recall_by_type": {
+    "limitation": 0.727,
+    "future_work": 0.825,
+    "research_gap": 0.853
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.621,
+     0.81,
+     0.703
+    ],
+    "biomed_sal": [
+     0.908,
+     0.796,
+     0.848
+    ]
+   }
+  },
+  "input_tokens": 112090,
+  "output_tokens": 3462,
+  "invalid_ids": 0,
+  "max_call_input": 13117,
+  "funnel_20_per_call": {
+   "kept": 1011,
+   "tp": 569,
+   "fp": 442,
+   "PRF": [
+    0.563,
+    0.857,
+    0.679
+   ],
+   "recall_by_type": {
+    "limitation": 0.795,
+    "future_work": 0.866,
+    "research_gap": 0.893
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.517,
+     0.846,
+     0.642
+    ],
+    "biomed_sal": [
+     0.826,
+     0.898,
+     0.86
+    ]
+   }
+  },
+  "minus_funnel_20_per_call": {
+   "f1_diff": 0.049,
+   "ci95": [
+    -0.012,
+    0.114
+   ]
+  }
+ },
+ "neutral": {
+  "after": {
+   "kept": 749,
+   "tp": 517,
+   "fp": 232,
+   "PRF": [
+    0.69,
+    0.779,
+    0.732
+   ],
+   "recall_by_type": {
+    "limitation": 0.7,
+    "future_work": 0.784,
+    "research_gap": 0.827
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.65,
+     0.787,
+     0.712
+    ],
+    "biomed_sal": [
+     0.919,
+     0.745,
+     0.823
+    ]
+   }
+  },
+  "input_tokens": 111308,
+  "output_tokens": 3261,
+  "invalid_ids": 0,
+  "max_call_input": 13094,
+  "funnel_20_per_call": {
+   "kept": 776,
+   "tp": 529,
+   "fp": 247,
+   "PRF": [
+    0.682,
+    0.797,
+    0.735
+   ],
+   "recall_by_type": {
+    "limitation": 0.714,
+    "future_work": 0.845,
+    "research_gap": 0.836
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.642,
+     0.784,
+     0.706
+    ],
+    "biomed_sal": [
+     0.872,
+     0.847,
+     0.859
+    ]
+   }
+  },
+  "minus_funnel_20_per_call": {
+   "f1_diff": -0.003,
+   "ci95": [
+    -0.067,
+    0.056
+   ]
+  }
+ },
+ "strict": {
+  "after": {
+   "kept": 561,
+   "tp": 409,
+   "fp": 152,
+   "PRF": [
+    0.729,
+    0.616,
+    0.668
+   ],
+   "recall_by_type": {
+    "limitation": 0.627,
+    "future_work": 0.773,
+    "research_gap": 0.565
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.682,
+     0.598,
+     0.637
+    ],
+    "biomed_sal": [
+     0.949,
+     0.686,
+     0.797
+    ]
+   }
+  },
+  "input_tokens": 113484,
+  "output_tokens": 2442,
+  "invalid_ids": 0,
+  "max_call_input": 13158,
+  "funnel_20_per_call": {
+   "kept": 440,
+   "tp": 381,
+   "fp": 59,
+   "PRF": [
+    0.866,
+    0.574,
+    0.69
+   ],
+   "recall_by_type": {
+    "limitation": 0.559,
+    "future_work": 0.825,
+    "research_gap": 0.513
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.834,
+     0.533,
+     0.65
+    ],
+    "biomed_sal": [
+     0.971,
+     0.73,
+     0.833
+    ]
+   }
+  },
+  "minus_funnel_20_per_call": {
+   "f1_diff": -0.022,
+   "ci95": [
+    -0.088,
+    0.04
+   ]
+  }
+ },
+ "mean_f1": 0.7093
+}

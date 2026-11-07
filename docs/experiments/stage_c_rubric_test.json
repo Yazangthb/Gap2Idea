@@ -1,0 +1,268 @@
+{
+ "candidates": 2522,
+ "keep_biased": {
+  "keeps_gaps": 0.939,
+  "removes_negatives": 0.769,
+  "after": {
+   "kept": 1011,
+   "tp": 569,
+   "fp": 442,
+   "PRF": [
+    0.563,
+    0.857,
+    0.679
+   ],
+   "recall_by_type": {
+    "limitation": 0.795,
+    "future_work": 0.866,
+    "research_gap": 0.893
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.517,
+     0.846,
+     0.642
+    ],
+    "biomed_sal": [
+     0.826,
+     0.898,
+     0.86
+    ]
+   }
+  },
+  "excluding_196_selection_sentences": {
+   "kept": 930,
+   "tp": 508,
+   "fp": 422,
+   "PRF": [
+    0.546,
+    0.847,
+    0.664
+   ],
+   "recall_by_type": {
+    "limitation": 0.771,
+    "future_work": 0.856,
+    "research_gap": 0.89
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.516,
+     0.841,
+     0.64
+    ],
+    "biomed_sal": [
+     0.792,
+     0.879,
+     0.833
+    ]
+   }
+  }
+ },
+ "neutral": {
+  "keeps_gaps": 0.873,
+  "removes_negatives": 0.871,
+  "after": {
+   "kept": 776,
+   "tp": 529,
+   "fp": 247,
+   "PRF": [
+    0.682,
+    0.797,
+    0.735
+   ],
+   "recall_by_type": {
+    "limitation": 0.714,
+    "future_work": 0.845,
+    "research_gap": 0.836
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.642,
+     0.784,
+     0.706
+    ],
+    "biomed_sal": [
+     0.872,
+     0.847,
+     0.859
+    ]
+   }
+  },
+  "excluding_196_selection_sentences": {
+   "kept": 703,
+   "tp": 471,
+   "fp": 232,
+   "PRF": [
+    0.67,
+    0.785,
+    0.723
+   ],
+   "recall_by_type": {
+    "limitation": 0.688,
+    "future_work": 0.833,
+    "research_gap": 0.83
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.644,
+     0.778,
+     0.705
+    ],
+    "biomed_sal": [
+     0.852,
+     0.824,
+     0.838
+    ]
+   }
+  }
+ },
+ "strict": {
+  "keeps_gaps": 0.629,
+  "removes_negatives": 0.969,
+  "after": {
+   "kept": 440,
+   "tp": 381,
+   "fp": 59,
+   "PRF": [
+    0.866,
+    0.574,
+    0.69
+   ],
+   "recall_by_type": {
+    "limitation": 0.559,
+    "future_work": 0.825,
+    "research_gap": 0.513
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.834,
+     0.533,
+     0.65
+    ],
+    "biomed_sal": [
+     0.971,
+     0.73,
+     0.833
+    ]
+   }
+  },
+  "excluding_196_selection_sentences": {
+   "kept": 390,
+   "tp": 334,
+   "fp": 56,
+   "PRF": [
+    0.856,
+    0.557,
+    0.675
+   ],
+   "recall_by_type": {
+    "limitation": 0.526,
+    "future_work": 0.811,
+    "research_gap": 0.503
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.834,
+     0.532,
+     0.65
+    ],
+    "biomed_sal": [
+     0.969,
+     0.692,
+     0.808
+    ]
+   }
+  }
+ },
+ "keep_biased_rerun_vs_earlier": {
+  "verdicts": 2522,
+  "changed": 32,
+  "changed_on_gaps": 5
+ },
+ "neutral_minus_keep_biased": {
+  "f1_diff": 0.055,
+  "ci95": [
+   0.025,
+   0.08
+  ]
+ },
+ "strict_minus_keep_biased": {
+  "f1_diff": 0.011,
+  "ci95": [
+   -0.054,
+   0.06
+  ]
+ },
+ "strict_minus_neutral": {
+  "f1_diff": -0.045,
+  "ci95": [
+   -0.095,
+   -0.006
+  ]
+ },
+ "extra_comparisons": {
+  "keep_biased": {
+   "vs_bge": {
+    "f1_diff": 0.015,
+    "ci95": [
+     -0.027,
+     0.066
+    ]
+   },
+   "vs_mb": {
+    "f1_diff": 0.065,
+    "ci95": [
+     0.017,
+     0.126
+    ]
+   },
+   "no_rg": [
+    0.369,
+    0.817,
+    0.509
+   ]
+  },
+  "neutral": {
+   "vs_bge": {
+    "f1_diff": 0.07,
+    "ci95": [
+     0.033,
+     0.111
+    ]
+   },
+   "vs_mb": {
+    "f1_diff": 0.121,
+    "ci95": [
+     0.083,
+     0.162
+    ]
+   },
+   "no_rg": [
+    0.492,
+    0.754,
+    0.595
+   ]
+  },
+  "strict": {
+   "vs_bge": {
+    "f1_diff": 0.025,
+    "ci95": [
+     -0.037,
+     0.087
+    ]
+   },
+   "vs_mb": {
+    "f1_diff": 0.076,
+    "ci95": [
+     0.02,
+     0.132
+    ]
+   },
+   "no_rg": [
+    0.775,
+    0.64,
+    0.701
+   ]
+  }
+ }
+}

@@ -1,0 +1,235 @@
+{
+ "candidates": 2522,
+ "answer_format": "Return JSON of the form {\"positives\":[<i>, ...]}: the \"i\" of every item you answer YES for, in increasing order. Use only ids that appear in the input. If no item qualifies, return {\"positives\":[]}.",
+ "keep_biased": {
+  "batches": 127,
+  "verdicts": 2522,
+  "changed_vs_earlier": 234,
+  "changed_on_gaps": 27,
+  "kept_now": 1053,
+  "kept_earlier": 1011,
+  "input_tokens": 463441,
+  "output_tokens": 6547,
+  "invalid_ids": 0,
+  "seconds": 189.6,
+  "arxiv_only_batches": {
+   "batches": 107,
+   "output_tokens": 5555
+  },
+  "after": {
+   "kept": 1053,
+   "tp": 568,
+   "fp": 485,
+   "PRF": [
+    0.539,
+    0.855,
+    0.662
+   ],
+   "recall_by_type": {
+    "limitation": 0.805,
+    "future_work": 0.866,
+    "research_gap": 0.885
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.503,
+     0.839,
+     0.629
+    ],
+    "biomed_sal": [
+     0.72,
+     0.92,
+     0.808
+    ]
+   }
+  },
+  "earlier_after": {
+   "kept": 1011,
+   "tp": 569,
+   "fp": 442,
+   "PRF": [
+    0.563,
+    0.857,
+    0.679
+   ],
+   "recall_by_type": {
+    "limitation": 0.795,
+    "future_work": 0.866,
+    "research_gap": 0.893
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.517,
+     0.846,
+     0.642
+    ],
+    "biomed_sal": [
+     0.826,
+     0.898,
+     0.86
+    ]
+   }
+  },
+  "minus_earlier": {
+   "f1_diff": -0.018,
+   "ci95": [
+    -0.04,
+    0.006
+   ]
+  }
+ },
+ "neutral": {
+  "batches": 127,
+  "verdicts": 2522,
+  "changed_vs_earlier": 193,
+  "changed_on_gaps": 52,
+  "kept_now": 801,
+  "kept_earlier": 776,
+  "input_tokens": 460520,
+  "output_tokens": 5129,
+  "invalid_ids": 0,
+  "seconds": 141.2,
+  "arxiv_only_batches": {
+   "batches": 107,
+   "output_tokens": 4372
+  },
+  "after": {
+   "kept": 801,
+   "tp": 521,
+   "fp": 280,
+   "PRF": [
+    0.65,
+    0.785,
+    0.711
+   ],
+   "recall_by_type": {
+    "limitation": 0.718,
+    "future_work": 0.835,
+    "research_gap": 0.813
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.604,
+     0.769,
+     0.676
+    ],
+    "biomed_sal": [
+     0.892,
+     0.847,
+     0.869
+    ]
+   }
+  },
+  "earlier_after": {
+   "kept": 776,
+   "tp": 529,
+   "fp": 247,
+   "PRF": [
+    0.682,
+    0.797,
+    0.735
+   ],
+   "recall_by_type": {
+    "limitation": 0.714,
+    "future_work": 0.845,
+    "research_gap": 0.836
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.642,
+     0.784,
+     0.706
+    ],
+    "biomed_sal": [
+     0.872,
+     0.847,
+     0.859
+    ]
+   }
+  },
+  "minus_earlier": {
+   "f1_diff": -0.023,
+   "ci95": [
+    -0.051,
+    0.003
+   ]
+  }
+ },
+ "strict": {
+  "batches": 127,
+  "verdicts": 2522,
+  "changed_vs_earlier": 192,
+  "changed_on_gaps": 99,
+  "kept_now": 520,
+  "kept_earlier": 440,
+  "input_tokens": 468648,
+  "output_tokens": 3507,
+  "invalid_ids": 0,
+  "seconds": 181.8,
+  "arxiv_only_batches": {
+   "batches": 107,
+   "output_tokens": 2870
+  },
+  "after": {
+   "kept": 520,
+   "tp": 412,
+   "fp": 108,
+   "PRF": [
+    0.792,
+    0.62,
+    0.696
+   ],
+   "recall_by_type": {
+    "limitation": 0.6,
+    "future_work": 0.794,
+    "research_gap": 0.585
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.751,
+     0.588,
+     0.66
+    ],
+    "biomed_sal": [
+     0.953,
+     0.745,
+     0.836
+    ]
+   }
+  },
+  "earlier_after": {
+   "kept": 440,
+   "tp": 381,
+   "fp": 59,
+   "PRF": [
+    0.866,
+    0.574,
+    0.69
+   ],
+   "recall_by_type": {
+    "limitation": 0.559,
+    "future_work": 0.825,
+    "research_gap": 0.513
+   },
+   "by_domain": {
+    "arxiv_cs": [
+     0.834,
+     0.533,
+     0.65
+    ],
+    "biomed_sal": [
+     0.971,
+     0.73,
+     0.833
+    ]
+   }
+  },
+  "minus_earlier": {
+   "f1_diff": 0.006,
+   "ci95": [
+    -0.031,
+    0.042
+   ]
+  }
+ }
+}
