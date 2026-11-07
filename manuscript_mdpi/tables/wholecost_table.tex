@@ -1,0 +1,19 @@
+\begin{tabularx}{\fulllength}{@{}l>{\raggedright\arraybackslash}Xrrrrr@{}}
+\toprule
+ & & & \multicolumn{2}{c}{\textbf{Qwen3.8-27B}} & \multicolumn{2}{c}{\textbf{Qwen3.5-4B}} \\
+\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+\textbf{Set} & \textbf{Setup} & \textbf{Input} & Output & Seconds & Output & Seconds \\
+\midrule
+\multirow{3}{*}{arXiv} & Whole paper & 554k & 1.6k & 104 & 6.0k & 160 \\
+ & Funnel, 20 per call & 403k & n/a & n/a & 23k & 198 \\
+ & Funnel, one call per paper & 75k & 1.4k & 31 & 2.1k & 24 \\
+\midrule
+\multirow{3}{*}{SAL-40} & Whole paper & 348k & 1.5k & 65 & 1.5k & 30 \\
+ & Funnel, 20 per call & 106k & n/a & n/a & 6.4k & 54 \\
+ & Funnel, one call per paper & 42k & 1.1k & 27 & 0.9k & 20 \\
+\midrule
+\multirow{3}{*}{FWS} & Whole paper & 183k & 2.7k & 89 & 2.1k & 72 \\
+ & Funnel, 20 per call & 62k & n/a & n/a & 4.0k & 34 \\
+ & Funnel, one call per paper & 67k & 1.3k & 59 & 1.1k & 47 \\
+\bottomrule
+\end{tabularx}

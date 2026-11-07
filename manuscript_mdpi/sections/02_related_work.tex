@@ -1,7 +1,7 @@
 \section{Related Work}
 \label{sec:related}
 
-Gap2Idea builds on research into scientific discourse classification, the recognition of author-stated limitations and future work, and LLM-based analysis of scholarly documents. Across these areas, similar terminology can refer to different tasks: locating an existing statement, inferring a missing piece of knowledge, or generating a new criticism or research direction. We organise the discussion around these distinctions and explain how each line of work informs our extraction pipeline. Table~\ref{tab:related} compares the closest studies by target, method and input unit.
+Gap2Idea builds on research into scientific discourse classification, the recognition of author-stated limitations and future work, and LLM-based analysis of scholarly documents. Across these areas, similar terminology can refer to different tasks: locating an existing statement, inferring a missing piece of knowledge, or generating a new criticism or research direction. We organise the discussion around these distinctions and explain how each line of work informs our funnel. Table~\ref{tab:related} compares the closest studies by target, method and input unit.
 
 \subsection{Scientific discourse and sentence classification}
 
@@ -15,7 +15,7 @@ Context is another shared concern. Hierarchical sentence classifiers model surro
 
 \subsection{Recognition of limitations and future work}
 
-Work on self-acknowledged limitations directly addresses one of our three targets. Kilicoglu et al.~\cite{kilicoglu2018automatic} formulate limitation recognition in clinical research as sentence-level binary classification and investigate both rules and learned classifiers. Their use of section headings and limitation zones provides a direct precedent for structural localisation. Lan et al.~\cite{lan2024automatic} subsequently annotate limitations in 200 randomized controlled trial (RCT) publications and separate detecting a limitation from assigning its type. Their fine-tuned PubMedBERT detector achieves a reported $F_1$ of 0.821 under their evaluation protocol. SAL supplies our human-labelled limitation benchmark, and the PubMedBERT model family supplies a supervised comparison. We distinguish that published score from our full-paper evaluation because the evaluated sentence pool and class balance affect precision and $F_1$.
+Work on self-acknowledged limitations directly addresses one of our three targets. Kilicoglu et al.~\cite{kilicoglu2018automatic} formulate limitation recognition in clinical research as sentence-level binary classification and investigate both rules and learned classifiers. Their use of section headings and limitation zones provides a direct precedent for structural localisation. Lan et al.~\cite{lan2024automatic} subsequently annotate limitations in 200 RCT publications and separate detecting a limitation from assigning its type. Their fine-tuned PubMedBERT detector achieves a reported $F_1$ of 0.821 under their evaluation protocol. SAL supplies our human-labelled limitation benchmark, and the PubMedBERT model family supplies a supervised comparison. We distinguish that published score from our full-paper evaluation because the evaluated sentence pool and class balance affect precision and $F_1$.
 
 Future-work recognition has a parallel history. Zhu et al.~\cite{zhu2019recognizing} use BERT-based recognition to identify future-research sentences in JASIST articles and cluster the extracted statements. The ACL FWS-RC corpus provides annotations and a taxonomy for future-work sentences in NLP papers~\cite{hao2020acl}. Using this resource, Zhang et al.~\cite{zhang2023fws} compare lexical and neural approaches, reporting their strongest binary recognition result with Bernoulli naive Bayes (macro-$F_1$ of 0.9073). Their recognition and direction-classification tasks are distinct, as are macro-$F_1$ and the positive-class $F_1$ used in our main evaluation. These published scores therefore provide context rather than a ranking against our paper-disjoint experiments.
 
@@ -33,7 +33,7 @@ Limitation generation and scientific critique involve a further change in the so
 
 Our Stage~B builds on established methodology. Yin et al.~\cite{yin2019zeroshot} formulate zero-shot text classification as textual entailment, allowing a label to be expressed as a natural-language hypothesis. We apply this formulation to gap types using an existing NLI model. Here, zero-shot means that the classifier is not fitted on gap-detection training examples; the model has already been trained on NLI data, and our decision threshold is selected with labelled development data.
 
-Our contribution is the evaluation of a particular combination: structural localisation, NLI candidate selection and a context-aware LLM filter with three precision--recall instructions. We examine how these stages interact, how the filter settings behave across datasets, and how candidate selection changes LLM input cost. The evaluation covers both full papers and the section-level FWS resource, keeping their processing units and label sources explicit. Human-labelled limitation and future-work benchmarks support those two targets; findings for the joint three-type task remain provisional because that corpus is LLM-labelled. The resulting evidence concerns source-preserving extraction; assessing the quality of research ideas derived from these statements remains a separate task.
+Our contribution is the evaluation of a particular combination: structural localisation, NLI candidate selection and a context-aware LLM filter with three precision--recall instructions. We examine how these stages interact, how the filter settings behave across datasets, and how the funnel compares with giving the same LLM the whole paper, in accuracy and cost, for LLMs of different sizes. Long inputs are a known difficulty for LLMs~\cite{liu2024lost}, and this comparison measures how much a filter in front of the LLM helps on full scientific papers. The evaluation covers both full papers and the section-level FWS resource, keeping their processing units and label sources explicit. Human-labelled limitation and future-work benchmarks support those two targets; findings for the joint three-type task remain provisional because that corpus is LLM-labelled. The resulting evidence concerns source-preserving extraction; assessing the quality of research ideas derived from these statements remains a separate task.
 
 \begin{table}[htbp]
 \caption{Selected related work, ordered by year of the cited version. Target categories describe the relevant part of each study; other rhetorical labels are omitted where applicable. When multiple target categories apply, they are listed in the order Limitations, Future work and Research gaps. ``Input unit'' is the input each method processes.\label{tab:related}}
@@ -61,15 +61,15 @@ Lan et al. (SAL), 2024~\cite{lan2024automatic} & RCT reports & Limitations & Pub
 \addlinespace[3pt]
 Lan et al. (multi-label), 2024~\cite{lan2024multilabel} & Several sciences & Rhetorical roles & LLM prompting and fine-tuning & Abstract sequence & Context-aware LLM labelling\\
 \addlinespace[3pt]
-Zhang \& Zhang, 2024~\cite{zhang2024extracting} & NLP & Problems; Methods & Context-enhanced transformer & Sentence with context & Local context for sparse targets\\
+Zhang and Zhang, 2024~\cite{zhang2024extracting} & NLP & Problems; Methods & Context-enhanced transformer & Sentence with context & Local context for sparse targets\\
 \addlinespace[3pt]
 Brack et al., 2024~\cite{brack2024sequential} & Several sciences & Rhetorical roles & Cross-domain multi-task learning & Sentence sequence & Transfer across domains\\
 \addlinespace[3pt]
 Suray et al., 2024~\cite{suray2024future} & Usable security & Future work & Statement and citation analysis & Statement & Downstream use of extracted directions\\
 \addlinespace[3pt]
-BAGELS, 2025~\cite{alazher2025bagels} & NLP; ML; biology & Limitations & Extraction; RAG generation & Paper; reviews & Extraction and generation benchmark\\
+BAGELS, 2025~\cite{alazher2025bagels} & NLP; machine learning; biology & Limitations & Extraction; retrieval-augmented generation & Paper; reviews & Extraction and generation benchmark\\
 \addlinespace[3pt]
-FutureGen, 2025~\cite{alazher2025futuregen} & NLP; ML & Future work & LLM extraction; RAG generation & Paper & Extraction feeding generation\\
+FutureGen, 2025~\cite{alazher2025futuregen} & NLP; machine learning & Future work & LLM extraction; retrieval-augmented generation & Paper & Extraction feeding generation\\
 \addlinespace[3pt]
 GAPMAP, 2025~\cite{salem2025gapmap} & Biomedicine & Knowledge gaps & LLM detection and inference & Paragraph to paper & Explicit versus inferred gaps\\
 \addlinespace[3pt]
@@ -77,14 +77,14 @@ LimitGen, 2025~\cite{xu2025llms} & AI & Limitations & LLM critique; retrieval & 
 \addlinespace[3pt]
 Sci-Sentence, 2025~\cite{bolanos2025scisentence} & Several sciences & Limitations; Research gaps & Encoder and LLM classifiers & Sentence & Gap labels; different attribution\\
 \addlinespace[3pt]
-Tree-of-Concerns, 2026~\cite{mishra2026tree} & ML; NLP; vision & Limitations & Multi-agent critique & Paper & Unstated critique; different target\\
+Tree-of-Concerns, 2026~\cite{mishra2026tree} & machine learning; NLP; vision & Limitations & Multi-agent critique & Paper & Unstated critique; different target\\
 \addlinespace[3pt]
 Cheng et al., 2026~\cite{cheng2026future} & NLP & Future work & Section selection; LLM extraction & Selected sections & LLM extraction with structural selection\\
 \addlinespace[3pt]
 Thaepprasit et al., 2026~\cite{thaepprasit2026limits} & NLP & Limitations & Human--AI qualitative coding & Limitation sections & Downstream analysis of reported limitations\\
 \addlinespace[3pt]
 \midrule
-\textbf{This study} & RCT reports; NLP; arXiv & Limitations; Future work; Research gaps & Rules, zero-shot NLI, LLM filter with three modes & Sentence with context & Measures stage contribution, precision control and cost\\
+\textbf{This study} & RCT reports; NLP; arXiv & Limitations; Future work; Research gaps & Rules, zero-shot NLI, LLM filter with three modes & Sentence with context & Stage contribution, precision control, comparison with whole-paper prompting\\
 \bottomrule
 \end{tabularx}
 \end{adjustwidth}
