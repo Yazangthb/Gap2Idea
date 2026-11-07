@@ -32,12 +32,22 @@ The revised manuscript is suitable as a transparent preprint/submission draft pr
 - Added the SAL non-significance and section-gate qualification, the FWS prompt mismatch, the arXiv whole-input label provenance, the 9B and 4B long-input results, and the NLI precision-versus-F1 trade-off.
 - Clarified that the label-checking experiment tests label plausibility rather than establishing independent ground truth.
 
+### `manuscript_mdpi/sections/02_related_work.tex`
+
+- Integrated a supplementary LR-AI-assisted literature search from commit `336a23e2c999150309b8419b0c312d69eea3cf63`.
+- Disclosed the use of LR-AI for search, deduplication and title/abstract screening, while stating that retained citations were checked against primary records.
+- Added Hu and Wan's early rule-based future-work extraction and classification study.
+- Added Ma et al.'s small-model-filter/LLM-reranker architecture as the closest general information-extraction analogue.
+- Positioned the funnel relative to FrugalGPT's model-cascade framing, RULER's long-context benchmark, order-preserving retrieval versus full-context input, and Si et al.'s controlled study of LLM research ideation.
+- Added Hu and Wan and Ma et al. to the selected-related-work table; broader background papers remain in prose to avoid presenting unlike tasks as direct extraction benchmarks.
+
 ### `manuscript_mdpi/sections/03_materials_methods.tex`
 
 - Stated explicitly that the FWS whole-paper baseline uses a broader prompt, so that comparison cannot isolate input strategy alone.
 - Stated explicitly that the SAL funnel alone receives the section gate, which structurally favours that workflow.
 - Removed the unsupported server-package version. The repository's saved run records identify vLLM 0.32.0, but the client lock file does not reproduce the full server environment; the revised text now says so without inventing a PyTorch version.
 - Added the Qwen3.5-9B revision, precision, and serving setup from the saved run record, and stated that all whole-paper calls completed.
+- Added the LR-AI literature-review support disclosure to the software and generative-AI subsection.
 
 ### `manuscript_mdpi/sections/04_results.tex`
 
@@ -70,6 +80,8 @@ The revised manuscript is suitable as a transparent preprint/submission draft pr
 - Completed the ACM publication/location fields for the relevant conference records using their DOI records.
 - Completed the PubMedBERT journal volume, issue, pages, and publisher metadata using the publication record.
 - Normalized the ModernBERT model-card revision note, eliminating the bibliography line-breaking warning without changing the cited artifact.
+- Added primary-record metadata for Hu and Wan (2015), Ma et al. (2023), FrugalGPT, RULER, order-preserving RAG, and Si et al. (2025).
+- Added the requested LR-AI software citation: Alnakri, Orabi, Mohammed and Alnoukari (2026), Zenodo version 1, DOI `10.5281/zenodo.24018390`.
 
 ### `manuscript_mdpi/figures/whole.pdf`
 
@@ -109,6 +121,14 @@ The 9B source is experiment commit `657bd665258e8da25e7cf5d6c047589a0a281ef0`. T
 
 For the 9B high-precision runs, the saved cost record reports 553,834 arXiv whole-paper input tokens and 92 seconds, versus approximately 403,000 input tokens and 287 seconds for the 20-per-call published funnel. The fine-tuned one-call-per-paper funnel uses 74,997 input tokens and 32 seconds. The manuscript therefore distinguishes input reduction from latency: the published call format reduces input but produces more output and is slower, whereas the one-call format reduces both input and time.
 
+## LR-AI literature-search follow-up
+
+The latest related-work push, commit `336a23e2c999150309b8419b0c312d69eea3cf63`, records 208 unique OpenAlex/arXiv records, 204 passing automated filters, and 88 retained after title/abstract screening (32 core and 56 skim). The run notes describe it as a quick supplementary search, not a complete PRISMA-style systematic review. The manuscript therefore uses it to broaden coverage and does not make systematic-review completeness claims.
+
+Every newly cited technical claim was checked against a primary record: ACL Anthology for Ma et al.; arXiv records for Hu and Wan, FrugalGPT, RULER and order-preserving RAG; and the ICLR/OpenReview paper for Si et al. The LR-AI bibliographic entry follows the citation supplied by the authors. Candidate summaries alone were not treated as evidence.
+
+Six substantive references were selected because each fills a distinct gap in the original review. Other recommended items were not added when they duplicated an existing citation, addressed a more distant task, or lacked enough verified information to improve the manuscript proportionately.
+
 Three numerical expressions were corrected for mathematical clarity; the underlying values did not change:
 
 | Original expression | Revised interpretation | Source and check |
@@ -129,11 +149,11 @@ Data cardinalities were independently checked from the saved split files and agr
 - Regenerated the paper table rows from saved results. The prior 27B and 4B cells remained unchanged, and the generator inserted the new 9B cells.
 - Regenerated the whole-paper figure with 27B, 9B, and 4B bars.
 - Built `main.tex` and `preprint.tex` independently with a full `pdflatex`, `bibtex`, `pdflatex`, `pdflatex` sequence.
-- Final journal build after 9B integration: 27 A4 pages, 2,022,679 bytes.
-- Final preprint build after 9B integration: 28 A4 pages, 2,024,583 bytes.
+- Final journal build after the 9B and literature-review integrations: 28 A4 pages, 2,032,736 bytes.
+- Final preprint build after the 9B and literature-review integrations: 28 A4 pages, 2,033,647 bytes.
+- Visually inspected all 56 rendered pages across both final PDFs; the expanded related-work table is legible and contained, and the bibliography has no clipping or overlap.
 - Both final logs contain no LaTeX errors, undefined citations/references, overfull boxes, underfull boxes, or BibTeX warnings.
 - Extracted text from both PDFs contains no unresolved `??` markers.
-- Rendered and visually inspected all 55 pages of the final PDFs, including the three widened tables and updated figure. No clipping, overlap, missing figure, broken table, or unreadable reference layout was found.
 - Verified that the two wrapper abstracts are exactly identical.
 - Ran `git diff --check`; no whitespace errors were found.
 
