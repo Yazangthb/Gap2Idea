@@ -1,0 +1,2 @@
+{"id": "arxiv:2602.14200", "status": "exclude", "reason": "General time-series long-context QA benchmark, not scientific text extraction", "relevance": 0.1, "short_summary": ""}
+{"id": "arxiv:2512.04307", "status": "exclude", "reason": "General WebAgent long-context reasoning benchmark, not extraction or classification", "relevance": 0.1, "short_summary": ""}

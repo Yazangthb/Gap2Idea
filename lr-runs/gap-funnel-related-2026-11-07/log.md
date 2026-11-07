@@ -1,0 +1,34 @@
+# Review log: Extracting author-stated research gaps (limitations, future work, open problems) from scientific papers; cascaded/funnel classification vs whole-document LLM prompting
+
+- **2026-11-07 18:41:01 · seed** — 6 queries + 1 known papers → 25 records, 25 new (total 25)
+- **2026-11-07 18:41:39 · set** — doi:10.2196/19810: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:40 · set** — doi:10.1097/hs9.0000000000000724: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:40 · set** — doi:10.1038/s41467-024-45914-8: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:40 · set** — doi:10.29173/iq944: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:41 · set** — doi:10.1145/3805696.3846506: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:41 · set** — doi:10.1016/j.fertnstert.2019.08.099: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:41 · set** — doi:10.5281/zenodo.21112887: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:42 · set** — doi:10.1111/1745-5871.12627: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:42 · set** — doi:10.5281/zenodo.20917192: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:42 · set** — doi:10.5281/zenodo.23390086: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:43 · set** — doi:10.70593/978-81-984306-1-8_5: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:43 · set** — doi:10.1162/qss_e_00061: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:43 · set** — doi:10.1093/ajhp/zxaf107: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:44 · set** — doi:10.1108/978-1-80455-640-520231017: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:44 · set** — doi:10.5325/jhistrhetoric.26.2.0267: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:44 · set** — doi:10.56705/ijodas.v7i2.457: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:45 · set** — doi:10.1093/nsr/nwae340: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:45 · set** — doi:10.82444/warw.33910882: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:45 · set** — doi:10.5863/1551-6776-29.2.200: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:46 · set** — doi:10.1002/cl2.150: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:46 · set** — doi:10.1525/hsns.2021.51.4.542: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:47 · set** — doi:10.1002/cl2.173: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:47 · set** — doi:10.1111/j.1936-704x.2020.3341.x: status=exclude, status_reason=off-topic seed
+- **2026-11-07 18:41:58 · seed** — 6 queries + 8 known papers → 30 records, 5 new (total 30)
+- **2026-11-07 18:42:41 · search** — 4 queries × 3 sources → 200 records, 178 new (total 208)
+- **2026-11-07 18:42:54 · filter** — 204 of 208 papers pass the filters
+- **2026-11-07 18:42:55 · batches** — 182 papers → 7 screen batches
+- **2026-11-07 18:44:24 · apply screen** — screening applied: 32 core, 56 skim, 116 excluded
+- **2026-11-07 18:45:09 · batches** — 88 papers → 3 enrich batches
+- **2026-11-07 18:47:08 · apply enrich** — enrichment applied: 88 of 88 included papers summarized
+- **2026-11-07 18:47:24 · export** — 88 papers → papers.xlsx

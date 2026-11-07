@@ -1,0 +1,30 @@
+{"id": "doi:10.1007/978-3-032-42224-8_4", "status": "skim", "reason": "KG QA long-context benchmark; weak link to RQ3 extraction", "relevance": 0.2, "short_summary": "Generates scalable long-context benchmarks for knowledge graph question answering."}
+{"id": "arxiv:2503.10337", "status": "exclude", "reason": "KV cache compression method; not extraction or gap detection", "relevance": 0.05, "short_summary": ""}
+{"id": "doi:10.52202/079017-1139", "status": "exclude", "reason": "LLM training data curriculum; off-topic", "relevance": 0.03, "short_summary": ""}
+{"id": "arxiv:2604.05190", "status": "core", "reason": "Compares long-context, summarization and RAG for LLM screening of long clinical notes", "relevance": 0.7, "short_summary": "Compares long-context, NER-summary and RAG strategies for LLM screening of long clinical notes; MedGemma with RAG best."}
+{"id": "doi:10.1109/icpc66645.2025.00064", "status": "skim", "reason": "Cascaded retrieve-then-rank LLM pipeline, but for software bug localization", "relevance": 0.3, "short_summary": "LLM-BL uses zero-shot LLM listwise ranking with file filtering for project-level bug localization."}
+{"id": "openalex:W7113546473", "status": "skim", "reason": "Finnish-language long-context LLM needle-in-haystack extraction; language and domain mismatch", "relevance": 0.35, "short_summary": "Evaluates commercial LLMs on multiple-needle retrieval over Finnish Wikipedia at 100K to 1M tokens, with position effects."}
+{"id": "arxiv:2212.13860", "status": "core", "reason": "Recognizes and classifies future work sentences in NLP papers, sentence level", "relevance": 0.9, "short_summary": "Recognizes and classifies future work sentences in NLP papers; Bernoulli NB best for recognition, SciBERT for classes."}
+{"id": "doi:10.1145/3529372.3530938", "status": "exclude", "reason": "Cross-lingual summarization dataset; off-topic", "relevance": 0.03, "short_summary": ""}
+{"id": "arxiv:2307.05694", "status": "exclude", "reason": "Figure classification survey; off-topic", "relevance": 0.02, "short_summary": ""}
+{"id": "arxiv:2103.17128", "status": "exclude", "reason": "Spatiotemporal data mining survey; off-topic", "relevance": 0.03, "short_summary": ""}
+{"id": "arxiv:2105.10077", "status": "exclude", "reason": "Anomaly mining survey; off-topic", "relevance": 0.02, "short_summary": ""}
+{"id": "arxiv:2504.14627", "status": "exclude", "reason": "Business process change mining review; off-topic", "relevance": 0.03, "short_summary": ""}
+{"id": "arxiv:2007.02240", "status": "exclude", "reason": "Object detection for scientific plots; off-topic", "relevance": 0.02, "short_summary": ""}
+{"id": "doi:10.1109/icdarw.2019.10037", "status": "skim", "reason": "Filter-then-extract pipeline for procedural recipes from synthesis papers; not gaps", "relevance": 0.25, "short_summary": "Pipeline for PDF filtering, section extraction and recipe-step relation extraction from nanomaterial synthesis papers."}
+{"id": "arxiv:2501.15293", "status": "exclude", "reason": "Alzheimer's deep learning survey; off-topic", "relevance": 0.02, "short_summary": ""}
+{"id": "arxiv:2604.25982", "status": "exclude", "reason": "Open-problems agenda for AI risk management; not an extraction method", "relevance": 0.08, "short_summary": ""}
+{"id": "doi:10.25081/jsa.2025.v9.9412", "status": "exclude", "reason": "Bibliometric analysis of plant disease deep learning; off-topic", "relevance": 0.02, "short_summary": ""}
+{"id": "arxiv:2106.00829", "status": "exclude", "reason": "Conversation summarization benchmark; off-topic", "relevance": 0.03, "short_summary": ""}
+{"id": "arxiv:2602.03837", "status": "exclude", "reason": "Gemini case studies for math discovery; not gap extraction", "relevance": 0.05, "short_summary": ""}
+{"id": "doi:10.1162/tacl_a_00592", "status": "exclude", "reason": "Dataset mention detection corpus; not limitations or gaps", "relevance": 0.15, "short_summary": ""}
+{"id": "arxiv:2603.23849", "status": "skim", "reason": "Multi-step RAG for open-ended extraction from virology papers; compared with vanilla RAG", "relevance": 0.45, "short_summary": "VILLA multi-step RAG framework extracts influenza mutations from publications; new 629-mutation ground-truth dataset."}
+{"id": "doi:10.1109/mcom.2019.1800819", "status": "exclude", "reason": "Deep learning traffic classification overview; off-topic", "relevance": 0.02, "short_summary": ""}
+{"id": "arxiv:1909.06031", "status": "exclude", "reason": "Cooperative radio signal classification; off-topic", "relevance": 0.01, "short_summary": ""}
+{"id": "arxiv:2511.08400", "status": "exclude", "reason": "Historical number theory open problems; off-topic", "relevance": 0.02, "short_summary": ""}
+{"id": "arxiv:1509.00988", "status": "exclude", "reason": "Tensor categories of partitions; off-topic", "relevance": 0.01, "short_summary": ""}
+{"id": "arxiv:2107.02126", "status": "exclude", "reason": "General-domain event extraction survey; not gaps or limitations", "relevance": 0.1, "short_summary": ""}
+{"id": "doi:10.1109/crv.2014.20", "status": "exclude", "reason": "Sign language fingerspelling recognition; off-topic", "relevance": 0.01, "short_summary": ""}
+{"id": "arxiv:2601.05918", "status": "exclude", "reason": "LLM agent re-identification of interviewees; off-topic", "relevance": 0.03, "short_summary": ""}
+{"id": "arxiv:2407.11105", "status": "exclude", "reason": "Intrusion detection preprocessing study; off-topic", "relevance": 0.01, "short_summary": ""}
+{"id": "doi:10.1007/s11192-024-05048-6", "status": "core", "reason": "Sentence-level problem and method extraction from papers; LLM ICL unsuitable", "relevance": 0.65, "short_summary": "Context-enhanced transformer and formulaic-expression desensitization augmentation for extracting problem and method sentences; LLM in-context learning unsuitable."}
