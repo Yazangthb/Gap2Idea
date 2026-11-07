@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Funnel vs whole-paper prompting with two Stage C model sizes (Qwen3.8-27B, Qwen3.5-4B), from saved verdicts.
+"""Funnel vs whole-paper prompting with several Stage C models (Qwen3.8-27B, Qwen3.5-4B, Qwen3.5-9B), from saved verdicts.
 
 Setups compared with the same model's whole-paper baseline (task 5a setup A):
   published   zero-shot NLI Stage B, 20 candidates per call (the paper's funnel)
@@ -16,7 +16,7 @@ import funnel_nli_ft as f
 
 ROOT = f.ROOT
 OUT = ROOT / "docs/experiments/llm_size"
-SMALL = OUT / "qwen3.5-4b"
+SMALL = {"4b": OUT / "qwen3.5-4b", "9b": OUT / "qwen3.5-9b"}
 EVAL = {"gold": "arxiv", "sal": "all", "fws": "all"}  # gold: the whole-paper baseline covers arXiv only
 
 
@@ -31,7 +31,7 @@ def whole(model, name, mode):
         txt = subprocess.run(["git", "show", f"{f.BASELINE_REF}:docs/experiments/baseline_qwen/{file}.jsonl"], cwd=ROOT,
                              capture_output=True, text=True, encoding="utf-8", check=True).stdout
     else:
-        txt = (SMALL / "whole_paper" / f"{file}.jsonl").read_text(encoding="utf-8")
+        txt = (SMALL[model] / "whole_paper" / f"{file}.jsonl").read_text(encoding="utf-8")
     recs = jl_text(txt)
     return {tuple(k) for r in recs if r["status"] == "ok" for k in r["kept"]}, recs
 
@@ -69,7 +69,7 @@ def main():
         R = [r for r in rows if r["dom"] == "arxiv_cs"] if EVAL[name] == "arxiv" else rows
         keys = {(r["pid"], r["idx"]) for r in R}
         for mode in f.MODES:
-            for model in ("27b", "4b"):
+            for model in ["27b"] + [m for m in SMALL if (SMALL[m] / "whole_paper").exists()]:
                 base, brecs = whole(model, name, mode)
                 runs = {}
                 if model == "27b":
@@ -77,12 +77,12 @@ def main():
                     runs["ft_batch20"] = batch20(ROOT / "docs/experiments/funnel_nli_ft", "ft", name, mode)
                     runs["ft_paper"] = per_paper(ROOT / "docs/experiments/stage_c_per_paper_ft", name, mode)
                 else:
-                    for label, folder, sb in (("published", SMALL / "funnel_zs_batch20", "zero_shot"),
-                                              ("ft_batch20", SMALL / "funnel_ft_batch20", "ft")):
+                    for label, folder, sb in (("published", SMALL[model] / "funnel_zs_batch20", "zero_shot"),
+                                              ("ft_batch20", SMALL[model] / "funnel_ft_batch20", "ft")):
                         if (folder / f"{name}_{mode}.jsonl").exists():
                             runs[label] = batch20(folder, sb, name, mode)
-                    if (SMALL / "per_paper_ft" / f"{name}_paper_{mode}.jsonl").exists():
-                        runs["ft_paper"] = per_paper(SMALL / "per_paper_ft", name, mode)
+                    if (SMALL[model] / "per_paper_ft" / f"{name}_paper_{mode}.jsonl").exists():
+                        runs["ft_paper"] = per_paper(SMALL[model] / "per_paper_ft", name, mode)
                 block = {"whole_paper": {"PRF": f.prf(R, base), "cost": cost(brecs)}}
                 for label, (kept, recs) in runs.items():
                     block[label] = {"PRF": f.prf(R, kept), "minus_whole": f.paired(R, kept & keys, base & keys),

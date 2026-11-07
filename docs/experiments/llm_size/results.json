@@ -151,6 +151,81 @@
    }
   }
  },
+ "gold/high_recall/9b": {
+  "whole_paper": {
+   "PRF": [
+    0.3179,
+    0.5484,
+    0.4025
+   ],
+   "cost": {
+    "calls": 28,
+    "input": 552686,
+    "output": 3962,
+    "seconds": 77.6
+   }
+  },
+  "published": {
+   "PRF": [
+    0.4443,
+    0.7419,
+    0.5558
+   ],
+   "minus_whole": {
+    "f1_diff": 0.153,
+    "ci95": [
+     -0.059,
+     0.246
+    ]
+   },
+   "cost": {
+    "calls": 127,
+    "input": 462806,
+    "output": 28455,
+    "seconds": 344.3
+   }
+  },
+  "ft_batch20": {
+   "PRF": [
+    0.4642,
+    0.8121,
+    0.5908
+   ],
+   "minus_whole": {
+    "f1_diff": 0.188,
+    "ci95": [
+     -0.021,
+     0.282
+    ]
+   },
+   "cost": {
+    "calls": 100,
+    "input": 365887,
+    "output": 22232,
+    "seconds": 271.7
+   }
+  },
+  "ft_paper": {
+   "PRF": [
+    0.5189,
+    0.7306,
+    0.6068
+   ],
+   "minus_whole": {
+    "f1_diff": 0.204,
+    "ci95": [
+     -0.028,
+     0.353
+    ]
+   },
+   "cost": {
+    "calls": 28,
+    "input": 73849,
+    "output": 2424,
+    "seconds": 35.3
+   }
+  }
+ },
  "gold/balanced/27b": {
   "whole_paper": {
    "PRF": [
@@ -300,6 +375,81 @@
     "input": 73205,
     "output": 2475,
     "seconds": 26.8
+   }
+  }
+ },
+ "gold/balanced/9b": {
+  "whole_paper": {
+   "PRF": [
+    0.1502,
+    0.556,
+    0.2365
+   ],
+   "cost": {
+    "calls": 28,
+    "input": 552042,
+    "output": 7596,
+    "seconds": 116.9
+   }
+  },
+  "published": {
+   "PRF": [
+    0.4936,
+    0.6584,
+    0.5642
+   ],
+   "minus_whole": {
+    "f1_diff": 0.328,
+    "ci95": [
+     0.039,
+     0.413
+    ]
+   },
+   "cost": {
+    "calls": 127,
+    "input": 459885,
+    "output": 29643,
+    "seconds": 357.8
+   }
+  },
+  "ft_batch20": {
+   "PRF": [
+    0.5303,
+    0.6983,
+    0.6028
+   ],
+   "minus_whole": {
+    "f1_diff": 0.366,
+    "ci95": [
+     0.088,
+     0.46
+    ]
+   },
+   "cost": {
+    "calls": 100,
+    "input": 363587,
+    "output": 23204,
+    "seconds": 280.7
+   }
+  },
+  "ft_paper": {
+   "PRF": [
+    0.5532,
+    0.7306,
+    0.6296
+   ],
+   "minus_whole": {
+    "f1_diff": 0.393,
+    "ci95": [
+     0.126,
+     0.467
+    ]
+   },
+   "cost": {
+    "calls": 28,
+    "input": 73205,
+    "output": 2248,
+    "seconds": 33.1
    }
   }
  },
@@ -455,6 +605,81 @@
    }
   }
  },
+ "gold/high_precision/9b": {
+  "whole_paper": {
+   "PRF": [
+    0.2194,
+    0.5446,
+    0.3128
+   ],
+   "cost": {
+    "calls": 28,
+    "input": 553834,
+    "output": 5321,
+    "seconds": 92.4
+   }
+  },
+  "published": {
+   "PRF": [
+    0.5325,
+    0.6831,
+    0.5985
+   ],
+   "minus_whole": {
+    "f1_diff": 0.286,
+    "ci95": [
+     -0.034,
+     0.416
+    ]
+   },
+   "cost": {
+    "calls": 127,
+    "input": 468013,
+    "output": 27591,
+    "seconds": 337.9
+   }
+  },
+  "ft_batch20": {
+   "PRF": [
+    0.5569,
+    0.6869,
+    0.6151
+   ],
+   "minus_whole": {
+    "f1_diff": 0.302,
+    "ci95": [
+     -0.013,
+     0.436
+    ]
+   },
+   "cost": {
+    "calls": 100,
+    "input": 369987,
+    "output": 21800,
+    "seconds": 266.8
+   }
+  },
+  "ft_paper": {
+   "PRF": [
+    0.5373,
+    0.6565,
+    0.5909
+   ],
+   "minus_whole": {
+    "f1_diff": 0.278,
+    "ci95": [
+     -0.035,
+     0.417
+    ]
+   },
+   "cost": {
+    "calls": 28,
+    "input": 74997,
+    "output": 2149,
+    "seconds": 32.0
+   }
+  }
+ },
  "sal/high_recall/27b": {
   "whole_paper": {
    "PRF": [
@@ -602,6 +827,83 @@
     "input": 40519,
     "output": 938,
     "seconds": 20.4
+   }
+  }
+ },
+ "sal/high_recall/9b": {
+  "whole_paper": {
+   "PRF": [
+    0.5909,
+    0.761,
+    0.6652
+   ],
+   "cost": {
+    "calls": 40,
+    "input": 346445,
+    "output": 1243,
+    "seconds": 42.6
+   }
+  },
+  "published": {
+   "PRF": [
+    0.4704,
+    0.8537,
+    0.6066
+   ],
+   "minus_whole": {
+    "f1_diff": -0.059,
+    "ci95": [
+     -0.148,
+     0.026
+    ]
+   },
+   "cost": {
+    "calls": 32,
+    "input": 105374,
+    "output": 7095,
+    "seconds": 87.9
+   },
+   "fallback_batches": 1,
+   "dropped_missing": 0
+  },
+  "ft_batch20": {
+   "PRF": [
+    0.4652,
+    0.8488,
+    0.601
+   ],
+   "minus_whole": {
+    "f1_diff": -0.064,
+    "ci95": [
+     -0.142,
+     0.019
+    ]
+   },
+   "cost": {
+    "calls": 36,
+    "input": 116696,
+    "output": 7954,
+    "seconds": 97.0
+   }
+  },
+  "ft_paper": {
+   "PRF": [
+    0.5986,
+    0.8439,
+    0.7004
+   ],
+   "minus_whole": {
+    "f1_diff": 0.035,
+    "ci95": [
+     -0.045,
+     0.117
+    ]
+   },
+   "cost": {
+    "calls": 40,
+    "input": 40519,
+    "output": 980,
+    "seconds": 22.4
    }
   }
  },
@@ -755,6 +1057,81 @@
    }
   }
  },
+ "sal/balanced/9b": {
+  "whole_paper": {
+   "PRF": [
+    0.621,
+    0.7512,
+    0.6799
+   ],
+   "cost": {
+    "calls": 40,
+    "input": 345525,
+    "output": 1175,
+    "seconds": 38.0
+   }
+  },
+  "published": {
+   "PRF": [
+    0.5874,
+    0.8195,
+    0.6843
+   ],
+   "minus_whole": {
+    "f1_diff": 0.004,
+    "ci95": [
+     -0.075,
+     0.087
+    ]
+   },
+   "cost": {
+    "calls": 32,
+    "input": 104152,
+    "output": 7304,
+    "seconds": 87.9
+   }
+  },
+  "ft_batch20": {
+   "PRF": [
+    0.5253,
+    0.8098,
+    0.6372
+   ],
+   "minus_whole": {
+    "f1_diff": -0.043,
+    "ci95": [
+     -0.125,
+     0.048
+    ]
+   },
+   "cost": {
+    "calls": 36,
+    "input": 115868,
+    "output": 8283,
+    "seconds": 100.3
+   }
+  },
+  "ft_paper": {
+   "PRF": [
+    0.6274,
+    0.8049,
+    0.7051
+   ],
+   "minus_whole": {
+    "f1_diff": 0.025,
+    "ci95": [
+     -0.046,
+     0.104
+    ]
+   },
+   "cost": {
+    "calls": 40,
+    "input": 39599,
+    "output": 896,
+    "seconds": 21.0
+   }
+  }
+ },
  "sal/high_precision/27b": {
   "whole_paper": {
    "PRF": [
@@ -902,6 +1279,81 @@
     "input": 41759,
     "output": 912,
     "seconds": 19.8
+   }
+  }
+ },
+ "sal/high_precision/9b": {
+  "whole_paper": {
+   "PRF": [
+    0.6491,
+    0.722,
+    0.6836
+   ],
+   "cost": {
+    "calls": 40,
+    "input": 347685,
+    "output": 1094,
+    "seconds": 37.4
+   }
+  },
+  "published": {
+   "PRF": [
+    0.6014,
+    0.8098,
+    0.6902
+   ],
+   "minus_whole": {
+    "f1_diff": 0.007,
+    "ci95": [
+     -0.075,
+     0.092
+    ]
+   },
+   "cost": {
+    "calls": 32,
+    "input": 105880,
+    "output": 7412,
+    "seconds": 89.3
+   }
+  },
+  "ft_batch20": {
+   "PRF": [
+    0.5947,
+    0.7659,
+    0.6695
+   ],
+   "minus_whole": {
+    "f1_diff": -0.014,
+    "ci95": [
+     -0.106,
+     0.085
+    ]
+   },
+   "cost": {
+    "calls": 36,
+    "input": 117812,
+    "output": 8062,
+    "seconds": 98.2
+   }
+  },
+  "ft_paper": {
+   "PRF": [
+    0.6406,
+    0.8,
+    0.7115
+   ],
+   "minus_whole": {
+    "f1_diff": 0.028,
+    "ci95": [
+     -0.058,
+     0.125
+    ]
+   },
+   "cost": {
+    "calls": 40,
+    "input": 41759,
+    "output": 885,
+    "seconds": 20.9
    }
   }
  },
@@ -1055,6 +1507,81 @@
    }
   }
  },
+ "fws/high_recall/9b": {
+  "whole_paper": {
+   "PRF": [
+    0.5172,
+    0.8909,
+    0.6544
+   ],
+   "cost": {
+    "calls": 209,
+    "input": 183250,
+    "output": 1941,
+    "seconds": 79.5
+   }
+  },
+  "published": {
+   "PRF": [
+    0.6617,
+    0.8091,
+    0.728
+   ],
+   "minus_whole": {
+    "f1_diff": 0.074,
+    "ci95": [
+     0.036,
+     0.111
+    ]
+   },
+   "cost": {
+    "calls": 20,
+    "input": 61679,
+    "output": 4206,
+    "seconds": 50.9
+   }
+  },
+  "ft_batch20": {
+   "PRF": [
+    0.6544,
+    0.8091,
+    0.7236
+   ],
+   "minus_whole": {
+    "f1_diff": 0.069,
+    "ci95": [
+     0.031,
+     0.107
+    ]
+   },
+   "cost": {
+    "calls": 21,
+    "input": 64168,
+    "output": 4213,
+    "seconds": 51.8
+   }
+  },
+  "ft_paper": {
+   "PRF": [
+    0.6902,
+    0.8,
+    0.7411
+   ],
+   "minus_whole": {
+    "f1_diff": 0.087,
+    "ci95": [
+     0.046,
+     0.127
+    ]
+   },
+   "cost": {
+    "calls": 142,
+    "input": 63465,
+    "output": 1312,
+    "seconds": 49.3
+   }
+  }
+ },
  "fws/balanced/27b": {
   "whole_paper": {
    "PRF": [
@@ -1205,6 +1732,81 @@
    }
   }
  },
+ "fws/balanced/9b": {
+  "whole_paper": {
+   "PRF": [
+    0.5172,
+    0.8909,
+    0.6544
+   ],
+   "cost": {
+    "calls": 209,
+    "input": 183250,
+    "output": 1941,
+    "seconds": 79.5
+   }
+  },
+  "published": {
+   "PRF": [
+    0.687,
+    0.7682,
+    0.7253
+   ],
+   "minus_whole": {
+    "f1_diff": 0.071,
+    "ci95": [
+     0.027,
+     0.114
+    ]
+   },
+   "cost": {
+    "calls": 20,
+    "input": 61139,
+    "output": 4098,
+    "seconds": 50.3
+   }
+  },
+  "ft_batch20": {
+   "PRF": [
+    0.6987,
+    0.7591,
+    0.7277
+   ],
+   "minus_whole": {
+    "f1_diff": 0.073,
+    "ci95": [
+     0.025,
+     0.121
+    ]
+   },
+   "cost": {
+    "calls": 21,
+    "input": 63601,
+    "output": 4429,
+    "seconds": 54.3
+   }
+  },
+  "ft_paper": {
+   "PRF": [
+    0.702,
+    0.7818,
+    0.7398
+   ],
+   "minus_whole": {
+    "f1_diff": 0.085,
+    "ci95": [
+     0.042,
+     0.128
+    ]
+   },
+   "cost": {
+    "calls": 142,
+    "input": 59631,
+    "output": 1288,
+    "seconds": 48.6
+   }
+  }
+ },
  "fws/high_precision/27b": {
   "whole_paper": {
    "PRF": [
@@ -1352,6 +1954,81 @@
     "input": 67441,
     "output": 1138,
     "seconds": 47.4
+   }
+  }
+ },
+ "fws/high_precision/9b": {
+  "whole_paper": {
+   "PRF": [
+    0.5172,
+    0.8909,
+    0.6544
+   ],
+   "cost": {
+    "calls": 209,
+    "input": 183250,
+    "output": 1941,
+    "seconds": 79.5
+   }
+  },
+  "published": {
+   "PRF": [
+    0.7212,
+    0.7409,
+    0.7309
+   ],
+   "minus_whole": {
+    "f1_diff": 0.077,
+    "ci95": [
+     0.03,
+     0.125
+    ]
+   },
+   "cost": {
+    "calls": 20,
+    "input": 62239,
+    "output": 3990,
+    "seconds": 48.9
+   }
+  },
+  "ft_batch20": {
+   "PRF": [
+    0.7078,
+    0.7045,
+    0.7062
+   ],
+   "minus_whole": {
+    "f1_diff": 0.052,
+    "ci95": [
+     -0.007,
+     0.103
+    ]
+   },
+   "cost": {
+    "calls": 21,
+    "input": 64756,
+    "output": 4105,
+    "seconds": 51.0
+   }
+  },
+  "ft_paper": {
+   "PRF": [
+    0.7366,
+    0.75,
+    0.7432
+   ],
+   "minus_whole": {
+    "f1_diff": 0.089,
+    "ci95": [
+     0.038,
+     0.138
+    ]
+   },
+   "cost": {
+    "calls": 142,
+    "input": 67441,
+    "output": 1229,
+    "seconds": 50.6
    }
   }
  }
