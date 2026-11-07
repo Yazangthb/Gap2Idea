@@ -1,7 +1,7 @@
 \section{Conclusions}
 \label{sec:conclusions}
 
-We presented a three-stage funnel that extracts author-stated research gaps as unmodified source sentences. Rules remove unlikely text, a zero-shot NLI classifier selects candidates without gap-labelled training data, and an LLM filter removes false positives in one of three modes set by a single instruction.
+We presented a three-stage funnel that extracts author-stated research gaps as unmodified source sentences. Rules remove text unlikely to contain gaps, a zero-shot NLI classifier selects candidates without gap-labelled training data, and an LLM filter removes false positives in one of three modes set by a single instruction.
 
 The stages have distinct roles. Stage~A helps when sections are informative, Stage~B sets the recall ceiling, and Stage~C supplies most of the precision gain. The modes shift precision and recall in the intended direction on every dataset. In high-precision mode, precision is 66.2\% at 84.9\% recall on SAL-40 and 76.5\% at 75.5\% recall on FWS. On our gold corpus, whose labels come from LLMs and are not yet checked by people, 86.6\% of kept sentences match those labels at 57.4\% recall. Some gold test candidates influenced funnel design, so these results are provisional.
 
