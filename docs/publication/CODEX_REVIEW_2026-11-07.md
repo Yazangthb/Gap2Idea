@@ -12,7 +12,7 @@
 
 The draft reports a useful and unusually well-instrumented comparison of funnel and whole-paper workflows, but several statements originally read as broader causal conclusions than the saved evidence supports. The main review intervention was therefore to separate observed results from general claims and to make the known comparison asymmetries visible at the point where each result is interpreted. No saved numerical result was found to be incorrectly transcribed.
 
-The revised manuscript is suitable as a transparent preprint/submission draft provided that readers understand the remaining evidence limitations: most configurations are single runs; multiple confidence intervals are descriptive and uncorrected; the SAL comparison favours the funnel through a section gate; the FWS baseline uses a broader prompt; the arXiv whole-paper labels are the comparison reference rather than independently adjudicated gold labels; and the 4B/27B comparison changes model generation as well as size.
+The revised manuscript is suitable as a transparent preprint/submission draft provided that readers understand the remaining evidence limitations: most configurations are single runs; multiple confidence intervals are descriptive and uncorrected; the SAL comparison favours the funnel through a section gate; the FWS baseline uses a broader prompt; the arXiv whole-paper labels are the comparison reference rather than independently adjudicated gold labels; and the 27B checkpoint differs from the 9B and 4B checkpoints in model generation as well as size.
 
 ## Changes made
 
@@ -22,13 +22,14 @@ The revised manuscript is suitable as a transparent preprint/submission draft pr
 - Preserved all reported headline values while adding the central uncertainty and design qualifications.
 - Replaced causal or general wording with dataset-, prompt-, and model-scoped wording.
 - Added a PDF-string-safe form of F1 in the MDPI wrapper so the final build no longer reports the related bookmark-string warning.
-- Final abstract length: approximately 197 words.
+- Integrated the completed Qwen3.5-9B comparison while retaining the SAL, FWS, label-provenance, and uncertainty qualifications.
+- Final abstract length: approximately 196 words.
 
 ### `manuscript_mdpi/sections/01_introduction.tex`
 
 - Reorganized the stated findings under RQ1–RQ4 so each contribution is traceable to a research question.
 - Scoped the claims to the evaluated datasets and prompts.
-- Added the SAL non-significance and section-gate qualification, the FWS prompt mismatch, the arXiv whole-input label provenance, the concentration of the observed 4B advantage in longer papers, and the NLI precision-versus-F1 trade-off.
+- Added the SAL non-significance and section-gate qualification, the FWS prompt mismatch, the arXiv whole-input label provenance, the 9B and 4B long-input results, and the NLI precision-versus-F1 trade-off.
 - Clarified that the label-checking experiment tests label plausibility rather than establishing independent ground truth.
 
 ### `manuscript_mdpi/sections/03_materials_methods.tex`
@@ -36,6 +37,7 @@ The revised manuscript is suitable as a transparent preprint/submission draft pr
 - Stated explicitly that the FWS whole-paper baseline uses a broader prompt, so that comparison cannot isolate input strategy alone.
 - Stated explicitly that the SAL funnel alone receives the section gate, which structurally favours that workflow.
 - Removed the unsupported server-package version. The repository's saved run records identify vLLM 0.32.0, but the client lock file does not reproduce the full server environment; the revised text now says so without inventing a PyTorch version.
+- Added the Qwen3.5-9B revision, precision, and serving setup from the saved run record, and stated that all whole-paper calls completed.
 
 ### `manuscript_mdpi/sections/04_results.tex`
 
@@ -43,7 +45,8 @@ The revised manuscript is suitable as a transparent preprint/submission draft pr
 - Put the SAL gate, FWS prompt mismatch, and arXiv label provenance next to the affected results and captions.
 - Marked the reported confidence intervals as uncorrected for multiple comparisons.
 - Replaced statements of superiority with observed-difference language where uncertainty includes zero.
-- Limited the small-model finding to the tested 4B and 27B checkpoints and made the model-generation confound explicit.
+- Added all 9B whole-paper, published-funnel, fine-tuned-Stage-B, and one-call-per-paper results.
+- Limited the small-model finding to the tested 9B and 4B checkpoints and retained the generation confound when comparing them with the 27B checkpoint.
 - Clarified that the length interaction is concentrated in the longer-paper region rather than universal.
 - Reworded ambiguous “times fewer/less” expressions as direct ratios or fractions of the comparator.
 - Clarified the sign of the plotted differences.
@@ -51,7 +54,7 @@ The revised manuscript is suitable as a transparent preprint/submission draft pr
 ### `manuscript_mdpi/sections/05_discussion.tex`
 
 - Scoped RQ2 to the evaluated datasets and prompt designs.
-- Added the SAL, FWS, and model-generation qualifications to the RQ3 interpretation.
+- Added the SAL, FWS, and model-generation qualifications to the RQ3 interpretation, and used the same-generation 9B/4B comparison to show that the long-input pattern is not unique to 4B.
 - Described the NLI classifier as viable but less precise, and disclosed that the reported classifier was selected using test-set results.
 - Replaced an unsupported effect-size heuristic with the evidence-backed limitation that, except for one stability repeat, configurations are single runs and the intervals are uncorrected.
 
@@ -59,7 +62,7 @@ The revised manuscript is suitable as a transparent preprint/submission draft pr
 
 - Recast the conclusion as explicit answers to all four research questions.
 - Kept numerical findings unchanged while distinguishing observation from generalization.
-- Carried forward the test-set influence, SAL gate/non-significance, FWS prompt mismatch, arXiv label provenance, 4B/27B generation confound, and NLI precision/F1 limitations.
+- Carried forward the test-set influence, SAL gate/non-significance, FWS prompt mismatch, arXiv label provenance, three-model generation confound, and NLI precision/F1 limitations.
 
 ### `manuscript_mdpi/references.bib`
 
@@ -70,7 +73,12 @@ The revised manuscript is suitable as a transparent preprint/submission draft pr
 
 ### `manuscript_mdpi/figures/whole.pdf`
 
-- Regenerated the figure from the repository's saved result files. Its dimensions and content remain consistent with the manuscript source data.
+- Regenerated the figure from the repository's saved result files and added the 9B bars and paired differences.
+
+### `manuscript_mdpi/tables/whole_table.tex`, `wholecost_table.tex`, and `variants_table.tex`
+
+- Regenerated all three tables with the existing table generator and the committed 9B verdicts.
+- Added the 9B accuracy, paired confidence intervals, token counts, output counts, timings, and funnel-format variants without hand transcription.
 
 ### `manuscript_mdpi/main.pdf` and `manuscript_mdpi/preprint.pdf`
 
@@ -83,7 +91,23 @@ The revised manuscript is suitable as a transparent preprint/submission draft pr
 
 ## Numerical audit and corrections
 
-No metric, confidence interval, count, timing, token total, cost, p-value, or sample size in the manuscript required a value correction. Regenerating the manuscript tables from the saved results produced no textual table-row differences.
+No previously reported metric, confidence interval, count, timing, token total, cost, p-value, or sample size required a value correction. The follow-up revision adds new 9B results rather than correcting the earlier 27B or 4B results.
+
+The 9B source is experiment commit `657bd665258e8da25e7cf5d6c047589a0a281ef0`. The generator read the verdict files and `docs/experiments/llm_size/results.json` at that commit. The principal added $F_1$ values are:
+
+| Set | Mode | Whole paper | Published funnel | Difference |
+|---|---|---:|---:|---:|
+| arXiv | High precision | 0.313 | 0.599 | +0.286, 95% CI [-0.03, +0.42] |
+| arXiv | Balanced | 0.236 | 0.564 | +0.328, 95% CI [+0.04, +0.41] |
+| arXiv | High recall | 0.403 | 0.556 | +0.153, 95% CI [-0.06, +0.25] |
+| SAL-40 | High precision | 0.684 | 0.690 | +0.007, 95% CI [-0.07, +0.09] |
+| SAL-40 | Balanced | 0.680 | 0.684 | +0.004, 95% CI [-0.07, +0.09] |
+| SAL-40 | High recall | 0.665 | 0.607 | -0.059, 95% CI [-0.15, +0.03] |
+| FWS | High precision | 0.654 | 0.731 | +0.077, 95% CI [+0.03, +0.12] |
+| FWS | Balanced | 0.654 | 0.725 | +0.071, 95% CI [+0.03, +0.11] |
+| FWS | High recall | 0.654 | 0.728 | +0.074, 95% CI [+0.04, +0.11] |
+
+For the 9B high-precision runs, the saved cost record reports 553,834 arXiv whole-paper input tokens and 92 seconds, versus approximately 403,000 input tokens and 287 seconds for the 20-per-call published funnel. The fine-tuned one-call-per-paper funnel uses 74,997 input tokens and 32 seconds. The manuscript therefore distinguishes input reduction from latency: the published call format reduces input but produces more output and is slower, whereas the one-call format reduces both input and time.
 
 Three numerical expressions were corrected for mathematical clarity; the underlying values did not change:
 
@@ -102,14 +126,14 @@ Data cardinalities were independently checked from the saved split files and agr
 
 ## Verification performed
 
-- Regenerated the paper table rows from saved results; all tracked textual table outputs were byte-identical to the committed versions.
-- Regenerated the whole-paper figure from saved results.
+- Regenerated the paper table rows from saved results. The prior 27B and 4B cells remained unchanged, and the generator inserted the new 9B cells.
+- Regenerated the whole-paper figure with 27B, 9B, and 4B bars.
 - Built `main.tex` and `preprint.tex` independently with a full `pdflatex`, `bibtex`, `pdflatex`, `pdflatex` sequence.
-- Final journal build: 28 A4 pages, 2,021,409 bytes.
-- Final preprint build: 27 A4 pages, 2,020,873 bytes.
+- Final journal build after 9B integration: 27 A4 pages, 2,022,679 bytes.
+- Final preprint build after 9B integration: 28 A4 pages, 2,024,583 bytes.
 - Both final logs contain no LaTeX errors, undefined citations/references, overfull boxes, underfull boxes, or BibTeX warnings.
 - Extracted text from both PDFs contains no unresolved `??` markers.
-- Rendered and visually inspected every page of both final PDFs. No clipping, overlap, missing figure, broken table, or unreadable reference layout was found.
+- Rendered and visually inspected all 55 pages of the final PDFs, including the three widened tables and updated figure. No clipping, overlap, missing figure, broken table, or unreadable reference layout was found.
 - Verified that the two wrapper abstracts are exactly identical.
 - Ran `git diff --check`; no whitespace errors were found.
 
@@ -120,7 +144,7 @@ Data cardinalities were independently checked from the saved split files and agr
 - Confidence intervals are descriptive and uncorrected for multiplicity.
 - The SAL and FWS comparisons retain their documented design asymmetries because no new experiments were authorized.
 - The arXiv whole-paper labels remain the comparison reference and are not independently adjudicated gold labels.
-- The small-versus-large model comparison still changes model generation as well as parameter count.
+- The 9B and 4B checkpoints share the Qwen3.5 generation, but the 27B checkpoint is Qwen3.8; the three-model comparison still cannot isolate parameter count from all model-design differences.
 - The reported NLI classifier remains influenced by test-set selection.
 - The full inference-server environment cannot be reconstructed from the client lock file; only the saved vLLM version is supported by the run records.
 - The FWS source files match the documented shape, but a direct checksum against the historical acquisition artifact is unavailable; the manuscript does not claim such a comparison.
