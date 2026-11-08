@@ -26,6 +26,31 @@ labels); SAL-40 and FWS have human labels.
 Bold differences have a 95% CI excluding zero. The 4B FT 20/call results are in `docs/experiments/llm_size/results.json`
 (arXiv +0.24 to +0.29, SAL-40 -0.03 to 0.00, FWS -0.03 to -0.01).
 
+## Qwen3.5-9B (added the same day)
+
+Same runs with Qwen3.5-9B (bf16, rev c2022362). F1, and funnel minus the 9B's whole-paper run:
+
+| Set | Mode | 9B whole | 9B published (diff) | 9B FT 20/call (diff) | 9B FT per paper (diff) |
+|---|---|---|---|---|---|
+| arXiv | high recall | 0.403 | 0.556 (+0.153) | 0.591 (+0.188) | 0.607 (+0.204) |
+| arXiv | balanced | 0.236 | 0.564 (**+0.328**) | 0.603 (**+0.366**) | 0.630 (**+0.393**) |
+| arXiv | high precision | 0.313 | 0.599 (+0.286) | 0.615 (+0.302) | 0.591 (+0.278) |
+| SAL-40 | high recall | 0.665 | 0.607 (-0.059) | 0.601 (-0.064) | 0.700 (+0.035) |
+| SAL-40 | balanced | 0.680 | 0.684 (+0.004) | 0.637 (-0.043) | 0.705 (+0.025) |
+| SAL-40 | high precision | 0.684 | 0.690 (+0.007) | 0.669 (-0.014) | 0.712 (+0.028) |
+| FWS | high recall | 0.654 | 0.728 (**+0.074**) | 0.724 (**+0.069**) | 0.741 (**+0.087**) |
+| FWS | balanced | 0.654 | 0.725 (**+0.071**) | 0.728 (**+0.073**) | 0.740 (**+0.085**) |
+| FWS | high precision | 0.654 | 0.731 (**+0.077**) | 0.706 (+0.052) | 0.743 (**+0.089**) |
+
+On arXiv whole papers the 9B had no failed calls but the same breakdown as the 4B on a few long papers (it kept
+806 of 824 sentences, 762 of 824, 499 of 692): precision 15-32%, recall 54-56%. Because the breakdown sits in a few
+papers, the paper-resampled CIs are wide and include zero in two modes. Input on arXiv: 553k tokens whole paper vs
+73-75k per paper; summed call time 78-117 s vs 32-35 s.
+
+Across sizes, whole-paper F1 on arXiv is 0.24-0.40 for the 4B and 9B against 0.68-0.75 for the 27B, while the funnel
+falls less (FT per paper 0.46-0.63 vs 0.64-0.69). On SAL-40 and FWS the whole-paper drop with size is small, and the
+per-paper funnel stays at 0.70-0.74 for all three models.
+
 ## What happens to the 4B on whole papers
 
 - **arXiv (median 239 sentences, up to 72k tokens):** precision 18-23%, recall 51-54%. On long papers the 4B keeps
