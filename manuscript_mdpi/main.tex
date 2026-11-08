@@ -43,13 +43,15 @@
 % Title
 \Title{Scalable Extraction of Author-Stated Research Gaps: Towards Automated Idea Generation}
 
-% ORCIDs — fill in, then add \orcidA{} etc. after each name in \Author
-\newcommand{\orcidauthorA}{0000-0000-0000-000X} % Yazan Alnakri
-\newcommand{\orcidauthorB}{0000-0000-0000-000X} % Osama Orabi
-\newcommand{\orcidauthorC}{0000-0000-0000-000X} % Hamza Shafee Aldaghstany
+% ORCIDs. The template's Definitions/logo-orcid.pdf is not in the repository, so draw the iD badge.
+\definecolor{orcidgreen}{HTML}{A6CE39}
+\renewcommand{\orcidicon}{\raisebox{-0.12em}{\tikz{\fill[orcidgreen] (0,0) circle (0.16cm);\node[white,font=\sffamily\bfseries\fontsize{4.5}{5}\selectfont,inner sep=0pt] at (0,0) {iD};}}}
+\newcommand{\orcidauthorA}{0009-0004-3990-5090} % Yazan Alnakri
+\newcommand{\orcidauthorB}{0009-0000-0028-315X} % Osama Orabi
+\newcommand{\orcidauthorC}{0009-0008-4938-2472} % Hamza Shafee Aldaghstany
 
 % Authors (supervisor Rustam ... to be added later as last author)
-\Author{Yazan Alnakri $^{1,}$*, Osama Orabi $^{1,2}$ and Hamza Shafee Aldaghstany $^{1}$}
+\Author{Yazan Alnakri $^{1,}$*\orcidA{}, Osama Orabi $^{1,2}$\orcidB{} and Hamza Shafee Aldaghstany $^{1}$\orcidC{}}
 
 \AuthorNames{Yazan Alnakri, Osama Orabi and Hamza Shafee Aldaghstany}
 
