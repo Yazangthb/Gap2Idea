@@ -43,6 +43,31 @@ Each stage contributes differently; Stage~C supplies most of the precision gain 
 \end{tabularx}
 \end{table}
 
+\subsection{Choice of Stage B (RQ1)}
+\label{sec:rq4}
+
+\paragraph{Supervised classifier.} We ran the funnel in all three modes with PubMedBERT, trained on SAL's own labels, as Stage~B. Before Stage~C, PubMedBERT selects 391 candidates with 46.0\% precision and 87.8\% recall ($F_1$ 0.604); it was the best of the eight SAL-trained classifiers (SciBERT 0.553, DistilBERT 0.523, frozen encoders 0.371--0.457). After Stage~C in high-precision mode it reaches 74.5\% precision (95\% CI 68.4--80.7), 78.5\% recall and $F_1$ 0.765.
+
+With PubMedBERT, the funnel is 6.9 to 9.0 points more precise in every mode (Table~\ref{tab:salcmp}). In high-precision mode the $F_1$ difference is small and not significant ($-0.021$, CI $-0.053$ to $+0.014$); in the other two modes PubMedBERT's advantage is larger (0.035 and 0.059). The training-free classifier is therefore competitive in $F_1$ in high-precision mode but not in precision. The NLI model's weights were not fitted on any SAL label; only its threshold was set on SAL dev.
+
+\begin{table}[htbp]
+\caption{SAL-40, NLI versus PubMedBERT as Stage~B. Left: the funnel with NLI minus the funnel with PubMedBERT in the same mode, paired over resampled papers; precision differences in points, 95\% CI in brackets. Right: precision of the NLI funnel's output against the LLM labels instead of SAL's human labels (Section~\ref{sec:label-source}), in \%.\label{tab:salcmp}}
+\small
+\begin{tabularx}{\textwidth}{@{}l*{4}{>{\centering\arraybackslash}X}@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{NLI minus PubMedBERT}} & \multicolumn{2}{c}{\textbf{Precision against LLM labels}}\\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+\textbf{Mode} & \textbf{Precision} & \textbf{$F_1$} & \textbf{Limitation} & \textbf{Any gap type}\\
+\midrule
+\rowsfrom{tables/salcmp_rows.tex}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Fine-tuning on LLM labels.} Fine-tuning the NLI model on the gold training labels makes Stage~B more precise against those labels but not against human labels. At the same 90\%-recall rule, it cuts the gold test candidates from 2522 to 1998 and raises their precision from 24.0\% to 30.4\% at 91.4\% recall. On SAL-40 and FWS it is slightly worse than the zero-shot model: 702 instead of 639 candidates at 26.6\% instead of 29.1\% precision on SAL-40, and 45.7\% instead of 48.2\% precision on FWS. After Stage~C (Table~\ref{tab:variants}), the fine-tuned funnel improves $F_1$ on the gold test split by 0.025 to 0.027 (significant in the high-recall and balanced modes) but not on SAL-40 or FWS ($-0.019$ to $+0.002$, none significant). One explanation is that the model learned how the LLM labellers mark gaps; differences in domain and input form between the training papers and the benchmarks may also contribute.
+
+\paragraph{Other options on the gold corpus.} On the half of the gold validation papers not used to choose the hypotheses, the three short hypotheses reached 39.2\% precision at about 79\% recall, whereas the bge-small classifier trained on the gold training split reached 28.2\% at the same recall. On the test split, the funnel in high-precision mode has higher $F_1$ than the NLI model used alone with one long hypothesis (0.690 against 0.614; difference 0.076, CI 0.020 to 0.132), and does not differ significantly from a funnel with the bge-small classifier as Stage~B and the high-recall filter ($F_1$ 0.665; difference $+0.025$, CI $-0.037$ to $+0.087$).
+
 \subsection{Precision control with three filter modes (RQ2)}
 \label{sec:rq2}
 
@@ -126,32 +151,7 @@ The natural alternative to the funnel is to give the LLM the whole paper. Table~
 \end{adjustwidth}
 \end{table}
 
-\subsection{Choice of Stage B (RQ4)}
-\label{sec:rq4}
-
-\paragraph{Supervised classifier.} We ran the funnel in all three modes with PubMedBERT, trained on SAL's own labels, as Stage~B. Before Stage~C, PubMedBERT selects 391 candidates with 46.0\% precision and 87.8\% recall ($F_1$ 0.604); it was the best of the eight SAL-trained classifiers (SciBERT 0.553, DistilBERT 0.523, frozen encoders 0.371--0.457). After Stage~C in high-precision mode it reaches 74.5\% precision (95\% CI 68.4--80.7), 78.5\% recall and $F_1$ 0.765.
-
-With PubMedBERT, the funnel is 6.9 to 9.0 points more precise in every mode (Table~\ref{tab:salcmp}). In high-precision mode the $F_1$ difference is small and not significant ($-0.021$, CI $-0.053$ to $+0.014$); in the other two modes PubMedBERT's advantage is larger (0.035 and 0.059). The training-free classifier is therefore competitive in $F_1$ in high-precision mode but not in precision. The NLI model's weights were not fitted on any SAL label; only its threshold was set on SAL dev.
-
-\begin{table}[htbp]
-\caption{SAL-40, NLI versus PubMedBERT as Stage~B. Left: the funnel with NLI minus the funnel with PubMedBERT in the same mode, paired over resampled papers; precision differences in points, 95\% CI in brackets. Right: precision of the NLI funnel's output against the LLM labels instead of SAL's human labels (Section~\ref{sec:label-source}), in \%.\label{tab:salcmp}}
-\small
-\begin{tabularx}{\textwidth}{@{}l*{4}{>{\centering\arraybackslash}X}@{}}
-\toprule
- & \multicolumn{2}{c}{\textbf{NLI minus PubMedBERT}} & \multicolumn{2}{c}{\textbf{Precision against LLM labels}}\\
-\cmidrule(lr){2-3}\cmidrule(l){4-5}
-\textbf{Mode} & \textbf{Precision} & \textbf{$F_1$} & \textbf{Limitation} & \textbf{Any gap type}\\
-\midrule
-\rowsfrom{tables/salcmp_rows.tex}
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\paragraph{Fine-tuning on LLM labels.} Fine-tuning the NLI model on the gold training labels makes Stage~B more precise against those labels but not against human labels. At the same 90\%-recall rule, it cuts the gold test candidates from 2522 to 1998 and raises their precision from 24.0\% to 30.4\% at 91.4\% recall. On SAL-40 and FWS it is slightly worse than the zero-shot model: 702 instead of 639 candidates at 26.6\% instead of 29.1\% precision on SAL-40, and 45.7\% instead of 48.2\% precision on FWS. After Stage~C (Table~\ref{tab:variants}), the fine-tuned funnel improves $F_1$ on the gold test split by 0.025 to 0.027 (significant in the high-recall and balanced modes) but not on SAL-40 or FWS ($-0.019$ to $+0.002$, none significant). One explanation is that the model learned how the LLM labellers mark gaps; differences in domain and input form between the training papers and the benchmarks may also contribute.
-
-\paragraph{Other options on the gold corpus.} On the half of the gold validation papers not used to choose the hypotheses, the three short hypotheses reached 39.2\% precision at about 79\% recall, whereas the bge-small classifier trained on the gold training split reached 28.2\% at the same recall. On the test split, the funnel in high-precision mode has higher $F_1$ than the NLI model used alone with one long hypothesis (0.690 against 0.614; difference 0.076, CI 0.020 to 0.132), and does not differ significantly from a funnel with the bge-small classifier as Stage~B and the high-recall filter ($F_1$ 0.665; difference $+0.025$, CI $-0.037$ to $+0.087$).
-
-\subsection{Stage C call and answer format}
+\subsection{Stage C call and answer format (RQ3)}
 \label{sec:format}
 
 \begin{table}[htbp]
