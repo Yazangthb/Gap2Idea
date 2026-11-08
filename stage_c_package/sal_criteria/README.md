@@ -8,6 +8,8 @@ Full write-up and tables: [`docs/experiments/sal_stage_c_summary.md`](../../docs
 - `sal_test_allmodels.json` — SAL test set, 7,968 sentences in per-paper reading order; each row:
   `pmcid`, `sent`, `sec` (ABSTRACT/INTRO/METHOD/RESULT/DISCUSS/CONCL/…), `label` (1=gold limitation),
   `preds` (per-sentence 0/1 from all 8 Stage-B models). This is the evaluation pool for every script here.
+  Not in the repository (the SAL data has no licence): rebuild it with `python scripts/dataset/fetch_external.py`
+  and `python scripts/dataset/build_eval_files.py`.
 
 ## Scripts (run from repo root; need `.env` with YANDEX_API_KEY + YANDEX_FOLDER_ID — kept local)
 | script | what it does | API calls |

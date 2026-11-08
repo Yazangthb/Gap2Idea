@@ -1,0 +1,7 @@
+{
+ "stage_c_package/sal_criteria/sal_test_allmodels.json": "f4cf4d33aa52bd5d4417d4ed2295f24b2f58db70f1059fe1b04bad4f30c83e6d",
+ "data/splits/sal_test.jsonl": "54dca2b1542490800da9c95262e58bf2ab58737ee6f1e8c7af082130faeaacd9",
+ "data/splits/sal_dev.jsonl": "21f39ca5c1261531295a1be1ad3a83323eade21ae603d503cd89ce3de798f5c0",
+ "data/splits/fws_test.jsonl": "f34ed39a835e113767d2ae6aa4171a09d557b1ebc0d9c702d20656ea9d7b35e3",
+ "data/splits/fws_dev.jsonl": "80522e5130198a9631a841d0d580ac9410347b73659b7780873a268a1d1fd324"
+}

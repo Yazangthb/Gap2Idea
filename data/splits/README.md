@@ -1,7 +1,12 @@
 # SAL and FWS evaluation splits
 
-The exact sentences every SAL and FWS number in the paper is scored on. Use these files instead of
-rebuilding the selection. They are written by `scripts/dataset/export_sal_fws_splits.py`.
+The exact sentences every SAL and FWS number in the paper is scored on. The SAL and FWS data have no
+licence, so these files are not in the repository. Rebuild them, byte-identical to the versions we used, with
+
+    python scripts/dataset/fetch_external.py
+    python scripts/dataset/build_eval_files.py
+
+See `data/eval_meta/README.md` for the pinned upstream commits.
 
 One sentence per line, in reading order: `{"paper_id", "idx", "sentence", "label"}`; SAL rows also have
 `section` (from the PubMed BioC sections; Stage A keeps `DISCUSS` and `CONCL`). `label` is 1 for a
@@ -9,7 +14,7 @@ limitation (SAL) or a future-work sentence (FWS).
 
 | File | Papers | Sentences | Positives | Role |
 |---|---:|---:|---:|---|
-| `sal_test.jsonl` | 40 | 7968 | 205 | SAL-40 test. Same rows as `stage_c_package/sal_criteria/sal_test_allmodels.json` |
+| `sal_test.jsonl` | 40 | 7968 | 205 | SAL-40 test. Same rows as `stage_c_package/sal_criteria/sal_test_allmodels.json` (also rebuilt) |
 | `sal_dev.jsonl` | 40 | 7729 | 180 | SAL dev: thresholds and checks only |
 | `fws_test.jsonl` | 209 | 1506 | 220 | FWS test |
 | `fws_dev.jsonl` | 418 | 3005 | 418 | FWS dev: thresholds only |

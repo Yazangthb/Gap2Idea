@@ -164,3 +164,11 @@ data/gold/nli_fws_test_scores.npz
 
 # human study sample, key and answers (never push)
 data/gold/human_study/
+
+# Third-party benchmark data (no licence): fetched and rebuilt locally, not redistributed.
+# python scripts/dataset/fetch_external.py && python scripts/dataset/build_eval_files.py
+data/external/sal_rct/
+data/external/fws_corpus.csv
+data/splits/*.jsonl
+stage_c_package/sal_criteria/sal_test_allmodels.json
+!data/eval_meta/*.json
