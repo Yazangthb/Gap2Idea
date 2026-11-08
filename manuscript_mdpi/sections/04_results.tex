@@ -68,7 +68,7 @@ With PubMedBERT, the funnel is 6.9 to 9.0 points more precise in every mode (Tab
 
 \paragraph{Other options on the gold corpus.} On the half of the gold validation papers not used to choose the hypotheses, the three short hypotheses reached 39.2\% precision at about 79\% recall, whereas the bge-small classifier trained on the gold training split reached 28.2\% at the same recall. On the test split, the funnel in high-precision mode has higher $F_1$ than the NLI model used alone with one long hypothesis (0.690 against 0.614; difference 0.076, CI 0.020 to 0.132), and does not differ significantly from a funnel with the bge-small classifier as Stage~B and the high-recall filter ($F_1$ 0.665; difference $+0.025$, CI $-0.037$ to $+0.087$).
 
-\subsection{Precision control with three filter modes (RQ2)}
+\subsection{Precision control with three filter modes (RQ1)}
 \label{sec:rq2}
 
 Changing one paragraph of the instruction moves the filter along the precision--recall trade-off in the intended direction on every evaluation set (Table~\ref{tab:modes} and Figure~\ref{fig:modes}): from high recall to balanced to high precision, precision rises and recall falls. In high-precision mode, precision is 66.2\% on SAL-40, 76.5\% on FWS and 86.6\% on the gold test split (83.4\% on its 28 arXiv papers and 97.1\% on its six biomedical papers).
@@ -113,7 +113,7 @@ Which mode has the highest $F_1$ depends on the dataset. On SAL-40, high precisi
 
 \paragraph{Checks.} The ordering of the modes also holds outside the test sets. On SAL dev, whose papers influenced no prompt, high-precision mode reaches 64.3\% precision, 80.0\% recall and $F_1$ 0.713, close to SAL-40. On the gold validation split, where the modes were checked before the test runs, high-precision mode kept 60.3\% of the labelled gaps among the Stage~B candidates and rejected 97.7\% of the other candidates, against 94.1\% and 82.9\% in high-recall mode. Removing the 196 gold test candidates used during development lowers $F_1$ slightly in every mode, from 0.690 to 0.675 in high-precision mode, 0.735 to 0.723 in balanced mode and 0.679 to 0.664 in high-recall mode. Removing the 27 papers they came from would leave only 7 test papers, too few to evaluate. Repeating the high-recall run with the same inputs and seed changed 32 of the 2522 verdicts (1.3\%); $F_1$ was 0.678 in one run and 0.679 in the other.
 
-\subsection{Funnel versus whole-paper prompting (RQ3)}
+\subsection{Funnel versus whole-paper prompting (RQ2)}
 \label{sec:rq3}
 
 The natural alternative to the funnel is to give the LLM the whole paper. Table~\ref{tab:whole} and Figure~\ref{fig:whole} compare the two with the same model and mode. These comparisons were designed after the main results were known. They are also asymmetric: the SAL funnel uses a section gate that the baseline does not receive, the FWS baseline uses a broader prompt than the funnel, and the arXiv labels were produced from whole-paper inputs. We therefore treat the differences as descriptive of these particular setups rather than as isolated effects of the input strategy.
@@ -151,7 +151,7 @@ The natural alternative to the funnel is to give the LLM the whole paper. Table~
 \end{adjustwidth}
 \end{table}
 
-\subsection{Stage C call and answer format (RQ3)}
+\subsection{Stage C call and answer format (RQ2)}
 \label{sec:format}
 
 \begin{table}[htbp]
@@ -166,9 +166,10 @@ The natural alternative to the funnel is to give the LLM the whole paper. Table~
 
 \paragraph{Answer format.} Asking for the list of candidates to keep instead of a verdict on each, with everything else unchanged, cuts output tokens four- to sevenfold but changes 7.6--9.3\% of the verdicts, whereas repeating identical calls changes 0.4\%. The model keeps more candidates in this format: precision in high-precision mode falls from 86.6\% to 79.2\% on the gold test split, at a similar $F_1$ (differences of $-0.023$ to $+0.006$, none significant).
 
-\subsection{Two checks on the evaluation data}
+\subsection{LLM labels versus human labels (RQ3)}
+\label{sec:labels}
 
-Two properties of the data change how the results should be read.
+We answer RQ3 on the datasets that have human labels. On the 40 SAL test papers, the LLM labels include all but nine of SAL's 205 human-labelled limitations (Section~\ref{sec:methods}), so they rarely miss what the annotators marked. They also mark many sentences that SAL leaves unlabelled, and this difference dominates the measured precision, as the first check below shows. A classifier fine-tuned on the LLM labels follows the same pattern: it becomes more precise against those labels but slightly less precise against the human labels of SAL and FWS (Section~\ref{sec:rq4}). The second check concerns the human labels themselves.
 
 \subsubsection{Precision depends on the label source}
 \label{sec:label-source}
