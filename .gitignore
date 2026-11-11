@@ -172,3 +172,6 @@ data/external/fws_corpus.csv
 data/splits/*.jsonl
 stage_c_package/sal_criteria/sal_test_allmodels.json
 !data/eval_meta/*.json
+
+# Submission files built by scripts/publication/make_submission_package.py
+manuscript_mdpi/submission_package/
