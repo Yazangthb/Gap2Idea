@@ -1,0 +1,24 @@
+\begin{tabularx}{\fulllength}{@{}>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}Xrrrrr@{}}
+\toprule
+\textbf{Test set} & \textbf{Method} & \textbf{Kept} & \textbf{Precision} & \textbf{Recall} & \textbf{$F_1$} & \textbf{Funnel $-$ method, $F_1$} \\
+\midrule
+\multirow{5}{*}{\parbox{2.4cm}{\raggedright SAL-40 (human labels)}} & Section and cue rules, after Kilicoglu et al.~\cite{kilicoglu2018automatic} & 210 & 46.7 & 47.8 & 0.472 & \textbf{$+$0.271} ($+$0.171, $+$0.387) \\
+ & TF-IDF with logistic regression & 165 & 47.3 & 38.0 & 0.422 & \textbf{$+$0.322} ($+$0.252, $+$0.392) \\
+ & Bernoulli naive Bayes on binary $n$-grams & 2 & 0.0 & 0.0 & 0.000 & \textbf{$+$0.744} ($+$0.695, $+$0.789) \\
+ & NLI model alone, one broad hypothesis & 363 & 33.1 & 58.5 & 0.422 & \textbf{$+$0.321} ($+$0.274, $+$0.373) \\
+ & \textbf{Funnel, high precision} & 263 & 66.2 & 84.9 & \textbf{0.744} & -- \\
+\midrule
+\multirow{6}{*}{\parbox{2.4cm}{\raggedright FWS (human labels)}} & Naive Bayes with selected $n$-grams, after Zhang et al.~\cite{zhang2023fws} & 195 & 76.9 & 68.2 & 0.723 & $+$0.037 ($-$0.003, $+$0.079) \\
+ & TF-IDF with logistic regression & 192 & 80.2 & 70.0 & 0.748 & $+$0.012 ($-$0.031, $+$0.054) \\
+ & Bernoulli naive Bayes on binary $n$-grams & 172 & 80.8 & 63.2 & 0.709 & \textbf{$+$0.051} ($+$0.011, $+$0.092) \\
+ & NLI model alone, one broad hypothesis & 282 & 38.6 & 49.5 & 0.434 & \textbf{$+$0.325} ($+$0.264, $+$0.383) \\
+ & NLI model alone, short type hypotheses & 218 & 71.1 & 70.5 & 0.708 & \textbf{$+$0.052} ($+$0.012, $+$0.094) \\
+ & \textbf{Funnel, high precision} & 217 & 76.5 & 75.5 & \textbf{0.760} & -- \\
+\midrule
+\multirow{5}{*}{\parbox{2.4cm}{\raggedright arXiv (28 papers, LLM labels)}} & TF-IDF with logistic regression & 667 & 44.2 & 56.0 & 0.494 & \textbf{$+$0.156} ($+$0.080, $+$0.224) \\
+ & Bernoulli naive Bayes on binary $n$-grams & 33 & 48.5 & 3.0 & 0.057 & \textbf{$+$0.593} ($+$0.509, $+$0.661) \\
+ & NLI model alone, one broad hypothesis & 750 & 49.9 & 71.0 & 0.586 & $+$0.065 ($-$0.013, $+$0.140) \\
+ & NLI model alone, short type hypotheses & 943 & 41.2 & 73.8 & 0.529 & \textbf{$+$0.121} ($+$0.037, $+$0.196) \\
+ & \textbf{Funnel, high precision} & 337 & 83.4 & 53.3 & \textbf{0.650} & -- \\
+\bottomrule
+\end{tabularx}
