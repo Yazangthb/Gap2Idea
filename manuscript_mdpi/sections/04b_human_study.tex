@@ -1,0 +1,38 @@
+% Human-study results: ready-to-fill subsubsection for Section 4.7 (LLM labels versus human labels).
+% NOT yet \input by main.tex. To use it:
+%   1. Run the study and the analysis (docs/experiments/human_study_freeze.md, "Running the study").
+%   2. Copy the numbers from docs/experiments/human_study_results.md into the macros below.
+%   3. Add \input{sections/04b_human_study} at the marked place in sections/04_results.tex.
+%   4. Follow docs/publication/HUMAN_STUDY_INSERT.md for the other places that must change.
+% Every macro is a placeholder. Do not submit the paper while any of them still says TODO.
+\newcommand{\hsDecoyYes}{TODO}        % decoys labelled a gap, e.g. 1
+\newcommand{\hsDisputed}{TODO}        % items sent to the tie-breaker
+\newcommand{\hsArxivPrec}{TODO}       % arXiv true precision, e.g. 83.1\%
+\newcommand{\hsArxivLower}{TODO}      % its one-sided 95% lower bound
+\newcommand{\hsSTwoYes}{TODO}         % S2 items judged real limitations, out of 40
+\newcommand{\hsSTwoShare}{TODO}       % the same as a percentage
+\newcommand{\hsSTwoP}{TODO}           % exact binomial p-value
+\newcommand{\hsSalLim}{TODO}          % SAL-40 true precision, limitation only
+\newcommand{\hsSalAny}{TODO}          % SAL-40 true precision, any gap type
+\newcommand{\hsAgreeGap}{TODO}        % rater agreement on gap / not gap, in %
+\newcommand{\hsAlphaGap}{TODO}        % Krippendorff's alpha, gap / not gap
+\newcommand{\hsBTwoShare}{TODO}       % share of B2 (kept, LLM label = gap) that people call a gap
+\newcommand{\hsBOneShare}{TODO}       % share of B1 (kept, LLM label = none) that people call a gap
+
+\subsubsection{Human judgement of the extracted sentences}
+\label{sec:human-study}
+
+To measure precision against people, two raters and a tie-breaker judged 135 sentences without seeing any label or the source of the sentence (Section~\ref{sec:methods}). The check on the raters passed: only \hsDecoyYes{} of the 12 decoy sentences were called a gap, within the limit of two that we had set in advance. The raters agreed on whether a sentence is a gap in \hsAgreeGap\% of the cases (Krippendorff's $\alpha = \hsAlphaGap$), and \hsDisputed{} items went to the tie-breaker.
+
+% Keep the sentence that matches the outcome of primary test 1 and delete the other.
+On the arXiv papers, the estimated precision of the high-precision output against human judgement is \hsArxivPrec, with a one-sided 95\% lower bound of \hsArxivLower. This is above the bar of 70\% that we had set before the study, so most extracted gaps on arXiv are confirmed by people.
+% On the arXiv papers, the estimated precision of the high-precision output against human judgement is \hsArxivPrec, with a one-sided 95\% lower bound of \hsArxivLower. This is not above the bar of 70\% that we had set before the study, so we cannot claim that most extracted gaps on arXiv are confirmed by people.
+People called \hsBTwoShare{} of the sampled sentences that the LLM labels mark as gaps a gap, and \hsBOneShare{} of the sampled sentences that the LLM labels do not mark.
+
+On SAL-40, the study addresses the 77 sentences that the LLM labels mark as gaps but SAL does not (Section~\ref{sec:label-source}). Of the 40 sampled sentences, the raters judged \hsSTwoYes{} (\hsSTwoShare) to be real limitations (exact binomial test against 50\%, $p = \hsSTwoP$).
+% Keep the sentence that matches the outcome of primary test 2 and delete the other.
+SAL therefore leaves a substantial share of limitation statements unlabelled, and the precision of 66.2\% against SAL understates the precision of the funnel.
+% The study therefore gives no evidence that SAL under-labels, and the precision of 93.2\% against the LLM labels overstates the precision of the funnel.
+Weighted over all returned sentences, the precision against human judgement on SAL-40 is \hsSalLim{} when only limitations count as correct and \hsSalAny{} when any gap type counts.
+
+The study has limits. It measures precision, not recall. Each sentence was judged from the sentence and its two neighbours, not from the whole paper, and the sample ignores the clustering of sentences within papers.

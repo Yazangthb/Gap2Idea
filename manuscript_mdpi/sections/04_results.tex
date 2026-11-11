@@ -1,16 +1,16 @@
 \section{Results}
 \label{sec:results}
 
-We report the results in the order of the research questions, followed by a study of the Stage~C call format and two findings about the evaluation data. Unless stated otherwise, Stage~C uses Qwen3.8-27B in high-precision mode, and results on the gold corpus use its provisional LLM labels.
+We report the results in the order of the research questions. For RQ1, we look at what each stage contributes, at the choice of Stage~B and at the three filter modes, and we then compare the funnel with published methods. For RQ2, we compare the funnel with whole-paper prompting and test cheaper call formats. For RQ3, we compare LLM labels with human labels. Unless stated otherwise, Stage~C uses Qwen3.8-27B in high-precision mode, and results on the gold corpus use its provisional LLM labels.
 
 \subsection{Contribution of each stage (RQ1)}
 \label{sec:rq1}
 
-Each stage contributes differently; Stage~C supplies most of the precision gain (Table~\ref{tab:stages} and Figure~\ref{fig:stages}).
+Each stage contributes in a different way, and Stage~C supplies most of the precision gain (Table~\ref{tab:stages} and Figure~\ref{fig:stages}).
 \begin{itemize}
   \item \textbf{Stage A} removes many sentences only where sections are informative. On SAL-40, keeping only Discussion and Conclusion sections removes 76\% of the sentences and loses 2 of the 205 limitations. On the gold corpus, the junk filter removes 18\% of the sentences and 3\% of the gaps.
-  \item \textbf{Stage B} raises precision by a factor of 2.7 to 3.6 and keeps 88--91\% of all positives, close to the 90\% recall its threshold targets on development data.
-  \item \textbf{Stage C} raises precision by a further 37 percentage points on SAL-40, 28 on FWS and 63 on the gold corpus, and lowers recall by 6, 12 and 34 points. On the gold corpus, most of the lost recall falls on research gaps and limitations (Section~\ref{sec:rq2}).
+  \item \textbf{Stage B} raises precision by a factor of 2.7 to 3.6 and keeps 88--91\% of all positives, close to the 90\% recall that its threshold targets on development data.
+  \item \textbf{Stage C} raises precision by a further 37 percentage points on SAL-40, 28 on FWS and 63 on the gold corpus, and lowers recall by 6, 12 and 34 percentage points. On the gold corpus, most of the lost recall falls on research gaps and limitations (Section~\ref{sec:rq2}).
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -46,14 +46,17 @@ Each stage contributes differently; Stage~C supplies most of the precision gain 
 \subsection{Choice of Stage B (RQ1)}
 \label{sec:rq4}
 
-\paragraph{Supervised classifier.} We ran the funnel in all three modes with PubMedBERT, trained on SAL's own labels, as Stage~B. Before Stage~C, PubMedBERT selects 391 candidates with 46.0\% precision and 87.8\% recall ($F_1$ 0.604); it was the best of the eight SAL-trained classifiers (SciBERT 0.553, DistilBERT 0.523, frozen encoders 0.371--0.457). After Stage~C in high-precision mode it reaches 74.5\% precision (95\% CI 68.4--80.7), 78.5\% recall and $F_1$ 0.765.
+Stage~B can be filled by different classifiers. We compare the zero-shot NLI model with a classifier trained on human labels, with the same NLI model fine-tuned on our LLM labels, and with two further options on the gold corpus.
 
-With PubMedBERT, the funnel is 6.9 to 9.0 points more precise in every mode (Table~\ref{tab:salcmp}). In high-precision mode the $F_1$ difference is small and not significant ($-0.021$, CI $-0.053$ to $+0.014$); in the other two modes PubMedBERT's advantage is larger (0.035 and 0.059). The training-free classifier is therefore competitive in $F_1$ in high-precision mode but not in precision. The NLI model's weights were not fitted on any SAL label; only its threshold was set on SAL dev.
+\paragraph{Supervised classifier.} We ran the funnel in all three modes with PubMedBERT, trained on SAL's own labels, as Stage~B. Before Stage~C, PubMedBERT selects 391 candidates with 46.0\% precision and 87.8\% recall ($F_1$ 0.604). It was the best of the eight SAL-trained classifiers (SciBERT 0.553, DistilBERT 0.523, frozen encoders 0.371--0.457). After Stage~C in high-precision mode, it reaches 74.5\% precision (95\% CI 68.4--80.7), 78.5\% recall and $F_1$ 0.765.
+
+Compared with this supervised funnel, the zero-shot funnel is less precise but close in $F_1$ (Table~\ref{tab:salcmp}). With PubMedBERT, the funnel is 6.9 to 9.0 percentage points more precise in every mode. In high-precision mode, however, the $F_1$ difference is small and not significant ($-0.021$, CI $-0.053$ to $+0.014$); in the other two modes PubMedBERT's advantage is larger (0.035 and 0.059). The training-free classifier is therefore competitive in $F_1$ in high-precision mode, but not in precision. Note that the NLI model's weights were not fitted on any SAL label; only its threshold was set on SAL dev.
 
 \begin{table}[htbp]
-\caption{SAL-40, NLI versus PubMedBERT as Stage~B. Left: the funnel with NLI minus the funnel with PubMedBERT in the same mode, paired over resampled papers; precision differences in points, 95\% CI in brackets. Right: precision of the NLI funnel's output against the LLM labels instead of SAL's human labels (Section~\ref{sec:label-source}), in \%.\label{tab:salcmp}}
+\caption{SAL-40, NLI versus PubMedBERT as Stage~B. Left: the funnel with NLI minus the funnel with PubMedBERT in the same mode, paired over resampled papers; precision differences in percentage points, 95\% CI in brackets. Right: precision of the NLI funnel's output against the LLM labels instead of SAL's human labels (Section~\ref{sec:label-source}), in \%.\label{tab:salcmp}}
+\begin{adjustwidth}{-\extralength}{0cm}
 \small
-\begin{tabularx}{\textwidth}{@{}l*{4}{>{\centering\arraybackslash}X}@{}}
+\begin{tabularx}{\fulllength}{@{}l*{4}{>{\centering\arraybackslash}X}@{}}
 \toprule
  & \multicolumn{2}{c}{\textbf{NLI minus PubMedBERT}} & \multicolumn{2}{c}{\textbf{Precision against LLM labels}}\\
 \cmidrule(lr){2-3}\cmidrule(l){4-5}
@@ -62,16 +65,17 @@ With PubMedBERT, the funnel is 6.9 to 9.0 points more precise in every mode (Tab
 \rowsfrom{tables/salcmp_rows.tex}
 \bottomrule
 \end{tabularx}
+\end{adjustwidth}
 \end{table}
 
-\paragraph{Fine-tuning on LLM labels.} Fine-tuning the NLI model on the gold training labels makes Stage~B more precise against those labels but not against human labels. At the same 90\%-recall rule, it cuts the gold test candidates from 2522 to 1998 and raises their precision from 24.0\% to 30.4\% at 91.4\% recall. On SAL-40 and FWS it is slightly worse than the zero-shot model: 702 instead of 639 candidates at 26.6\% instead of 29.1\% precision on SAL-40, and 45.7\% instead of 48.2\% precision on FWS. After Stage~C, the fine-tuned funnel improves $F_1$ on the 34 gold test papers by 0.025 to 0.027 (significant in the high-recall and balanced modes), and on the 28 arXiv papers alone by 0.028 to 0.036 (significant only in high-recall mode, Table~\ref{tab:variants}), but not on SAL-40 or FWS ($-0.019$ to $+0.002$, none significant). One explanation is that the model learned how the LLM labellers mark gaps; differences in domain and input form between the training papers and the benchmarks may also contribute.
+\paragraph{Fine-tuning on LLM labels.} Fine-tuning the NLI model on the gold training labels makes Stage~B more precise against those labels, but not against human labels. On the gold test split, under the same 90\%-recall rule, it cuts the candidates from 2522 to 1998 and raises their precision from 24.0\% to 30.4\% at 91.4\% recall. On SAL-40 and FWS, in contrast, it is slightly worse than the zero-shot model: 702 instead of 639 candidates at 26.6\% instead of 29.1\% precision on SAL-40, and 45.7\% instead of 48.2\% precision on FWS. The same pattern holds after Stage~C (Table~\ref{tab:variants}). The fine-tuned funnel improves $F_1$ on the 34 gold test papers by 0.025 to 0.027 (significant in the high-recall and balanced modes) and on the 28 arXiv papers alone by 0.028 to 0.036 (significant only in high-recall mode), but not on SAL-40 or FWS ($-0.019$ to $+0.002$, none significant). One explanation is that the model learned how the LLM labellers mark gaps; differences in domain and input form between the training papers and the benchmarks may also contribute.
 
-\paragraph{Other options on the gold corpus.} On the half of the gold validation papers not used to choose the hypotheses, the three short hypotheses reached 39.2\% precision at about 79\% recall, whereas the bge-small classifier trained on the gold training split reached 28.2\% at the same recall. On the test split, the funnel in high-precision mode has higher $F_1$ than the NLI model used alone with one long hypothesis (0.690 against 0.614; difference 0.076, CI 0.020 to 0.132), and does not differ significantly from a funnel with the bge-small classifier as Stage~B and the high-recall filter ($F_1$ 0.665; difference $+0.025$, CI $-0.037$ to $+0.087$).
+\paragraph{Other options on the gold corpus.} On the half of the gold validation papers that was not used to choose the hypotheses, the three short hypotheses reached 39.2\% precision at about 79\% recall, whereas the bge-small classifier trained on the gold training split reached 28.2\% at the same recall. On the test split, the funnel in high-precision mode has higher $F_1$ than the NLI model used alone with one long hypothesis (0.690 against 0.614; difference 0.076, CI 0.020 to 0.132). It does not differ significantly from a funnel that uses the bge-small classifier as Stage~B with the high-recall filter ($F_1$ 0.665; difference $+0.025$, CI $-0.037$ to $+0.087$).
 
 \subsection{Precision control with three filter modes (RQ1)}
 \label{sec:rq2}
 
-Changing one paragraph of the instruction moves the filter along the precision--recall trade-off in the intended direction on every evaluation set (Table~\ref{tab:modes} and Figure~\ref{fig:modes}): from high recall to balanced to high precision, precision rises and recall falls. In high-precision mode, precision is 66.2\% on SAL-40, 76.5\% on FWS and 86.6\% on the gold test split (83.4\% on its 28 arXiv papers and 97.1\% on its six biomedical papers).
+Changing the mode paragraph of the prompt moves the filter along the precision--recall trade-off in the intended direction on every evaluation set (Table~\ref{tab:modes} and Figure~\ref{fig:modes}). From high recall to balanced to high precision, precision rises and recall falls. In high-precision mode, precision is 66.2\% on SAL-40, 76.5\% on FWS and 86.6\% on the gold test split (83.4\% on its 28 arXiv papers and 97.1\% on its six biomedical papers).
 
 \begin{figure}[htbp]
 \centering
@@ -81,24 +85,25 @@ Changing one paragraph of the instruction moves the filter along the precision--
 
 \begin{table}[htbp]
 \caption{Results of the three filter modes. Precision and recall in \%, with 95\% confidence intervals from resampling papers. Gold results use LLM labels. Kept: number of sentences returned.\label{tab:modes}}
+\begin{adjustwidth}{-\extralength}{0cm}
 \small
-\renewcommand{\arraystretch}{1.5}
-\setlength{\tabcolsep}{3pt}
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{2.2cm}r*{3}{>{\centering\arraybackslash}X}@{}}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\fulllength}{@{}>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}p{2.6cm}r*{3}{>{\centering\arraybackslash}X}@{}}
 \toprule
 \textbf{Evaluation set} & \textbf{Mode} & \textbf{Kept} & \textbf{Precision} & \textbf{Recall} & \textbf{$F_1$}\\
 \midrule
 \rowsfrom{tables/modes_rows.tex}
 \bottomrule
 \end{tabularx}
+\end{adjustwidth}
 \end{table}
 
-Which mode has the highest $F_1$ depends on the dataset. On SAL-40, high precision has the highest $F_1$ (0.744, against 0.716 for balanced and 0.677 for high recall). On FWS, precision rises from 69.1\% to 76.5\% while recall falls from 83.2\% to 75.5\%, so $F_1$ stays within 0.007. On the gold test split, balanced has the highest $F_1$: 0.055 above high recall (paired 95\% CI 0.025 to 0.080) and 0.045 above high precision (0.006 to 0.095).
+Which mode has the highest $F_1$ depends on the dataset. On SAL-40, high precision has the highest $F_1$ (0.744, against 0.716 for balanced and 0.677 for high recall). On FWS, precision rises from 69.1\% to 76.5\% while recall falls from 83.2\% to 75.5\%, so $F_1$ stays within 0.007. On the gold test split, balanced has the highest $F_1$: it is 0.055 above high recall (paired 95\% CI 0.025 to 0.080) and 0.045 above high precision (0.006 to 0.095).
 
-\paragraph{By gap type.} High precision loses recall mainly on research gaps and limitations (Table~\ref{tab:types}). Future-work recall barely changes across modes (82.5--86.6\%), whereas research-gap recall falls from 89.3\% in high-recall mode to 51.3\% in high-precision mode, and limitation recall from 79.5\% to 55.9\%. Research gaps are about half of the gold labels, so they weigh heavily on the overall scores: when sentences labelled as research gaps are excluded from scoring, high precision has the highest $F_1$ of the three modes (0.701, against 0.595 for balanced and 0.509 for high recall).
+\paragraph{By gap type.} High precision loses recall mainly on research gaps and limitations (Table~\ref{tab:types}). Future-work recall barely changes across modes (82.5--86.6\%), whereas research-gap recall falls from 89.3\% in high-recall mode to 51.3\% in high-precision mode, and limitation recall from 79.5\% to 55.9\%. Research gaps are about half of the gold labels, so they weigh heavily on the overall scores. To see the effect, we removed the sentences labelled as research gaps before scoring, so that they count neither as correct nor as errors. High precision then has the highest $F_1$ of the three modes (0.701, against 0.595 for balanced and 0.509 for high recall).
 
 \begin{table}[htbp]
-\caption{Gold test split by gap type (LLM labels). Recall for each type, and scores when research-gap sentences are excluded from scoring; in \% except $F_1$.\label{tab:types}}
+\caption{Gold test split by gap type (LLM labels). Recall for each type, and scores after the sentences labelled as research gaps are removed before scoring; in \% except $F_1$.\label{tab:types}}
 \small
 \begin{tabularx}{\textwidth}{@{}l*{6}{>{\centering\arraybackslash}X}@{}}
 \toprule
@@ -111,15 +116,38 @@ Which mode has the highest $F_1$ depends on the dataset. On SAL-40, high precisi
 \end{tabularx}
 \end{table}
 
-\paragraph{Checks.} The ordering of the modes also holds outside the test sets. On SAL dev, whose papers influenced no prompt, high-precision mode reaches 64.3\% precision, 80.0\% recall and $F_1$ 0.713, close to SAL-40. On the gold validation split, where the modes were checked before the test runs, high-precision mode kept 60.3\% of the labelled gaps among the Stage~B candidates and rejected 97.7\% of the other candidates, against 94.1\% and 82.9\% in high-recall mode. Removing the 196 gold test candidates used during development lowers $F_1$ slightly in every mode, from 0.690 to 0.675 in high-precision mode, 0.735 to 0.723 in balanced mode and 0.679 to 0.664 in high-recall mode. Removing the 27 papers they came from leaves 7 test papers with 111 gaps. On these, $F_1$ is 0.575 in high-precision mode (93.9\% precision at 41.4\% recall), 0.781 in balanced mode and 0.786 in high-recall mode, although seven papers are too few for firm conclusions. Repeating the high-recall run with the same inputs and seed changed 32 of the 2522 verdicts (1.3\%); $F_1$ was 0.678 in one run and 0.679 in the other.
+\paragraph{Held-out checks.} The ordering of the modes also holds on data that played no part in writing the prompts. On SAL dev, whose papers influenced no prompt, high-precision mode reaches 64.3\% precision, 80.0\% recall and $F_1$ 0.713, close to SAL-40. On the gold validation split, where the modes were checked before the test runs, high-precision mode kept 60.3\% of the labelled gaps among the Stage~B candidates and rejected 97.7\% of the other candidates, against 94.1\% and 82.9\% in high-recall mode. High precision was thus the stricter mode there as well.
+
+\paragraph{Robustness on the gold test split.} Part of the gold test split was used during development (Section~\ref{sec:choices}), so we check how much the results depend on it. Removing the 196 candidates used during development lowers $F_1$ slightly in every mode: from 0.690 to 0.675 in high-precision mode, from 0.735 to 0.723 in balanced mode and from 0.679 to 0.664 in high-recall mode. A stricter check removes all 27 papers these candidates came from, which leaves 7 test papers with 111 gaps. On these papers, $F_1$ is 0.575 in high-precision mode (93.9\% precision at 41.4\% recall), 0.781 in balanced mode and 0.786 in high-recall mode. On untouched papers, high-precision mode thus keeps its precision but loses more recall than on the full test split, although seven papers are too few for firm conclusions. Finally, LLM verdicts vary little between identical runs. Repeating the high-recall run with the same inputs and seed changed 32 of the 2522 verdicts (1.3\%), and $F_1$ was 0.678 in one run and 0.679 in the other.
+
+\subsection{Comparison with published methods (RQ1)}
+\label{sec:baselines}
+
+The funnel combines three components. A natural question is whether simpler methods from earlier work would do as well on the same sentences. Table~\ref{tab:baselines} compares the funnel with the published sentence-level methods of Section~\ref{sec:comparison}, all scored on exactly the same test sentences.
+
+\begin{table}[htbp]
+\caption{Published sentence-level methods against the funnel on identical test sentences. Precision and recall in \%. Last column: $F_1$ of the funnel minus $F_1$ of the method, paired over resampled papers, with its 95\% CI; bold: the CI excludes zero. The rules and the method after Zhang et al. are adaptations (Section~\ref{sec:comparison}). Kept: number of sentences returned. arXiv results use LLM labels.\label{tab:baselines}}
+\begin{adjustwidth}{-\extralength}{0cm}
+\small
+\input{tables/baselines_table.tex}
+\end{adjustwidth}
+\end{table}
+
+The answer differs by dataset.
+\begin{itemize}
+  \item \textbf{SAL-40.} The funnel is far ahead of every baseline. The best one, the section and cue rules, reaches $F_1$ 0.472 against 0.744 for the funnel, and all differences are significant. The naive Bayes classifier marks only two sentences, both wrongly.
+  \item \textbf{arXiv.} The funnel is ahead of all four baselines. The difference is significant for three of them, but not for the NLI model alone with the broad hypothesis ($F_1$ 0.586; difference $+0.065$, CI $-0.013$ to $+0.140$). Three of the four baselines keep two to three times as many sentences as the funnel, at about half its precision.
+  \item \textbf{FWS.} Here trained classifiers do well. TF-IDF with logistic regression reaches $F_1$ 0.748 and the naive Bayes adaptation after Zhang et al. reaches 0.723. The funnel's advantage over both is small and not significant ($+0.012$ and $+0.037$). FWS provides 7924 training papers from the same venues as the test sample, which favours trained classifiers, whereas the funnel uses FWS labels only to set its threshold.
+\end{itemize}
+In short, the funnel is ahead of these methods on full papers, where gap sentences are rare, and clearly so on SAL-40. On FWS, where every text is a conclusion section and training data are plentiful, it is about as good as a trained classifier.
 
 \subsection{Funnel versus whole-paper prompting (RQ2)}
 \label{sec:rq3}
 
-The natural alternative to the funnel is to give the LLM the whole paper. Table~\ref{tab:whole} and Figure~\ref{fig:whole} compare the two with the same model and mode. These comparisons were designed after the main results were known. They are also asymmetric: the SAL funnel uses a section gate that the baseline does not receive, the FWS baseline uses a broader prompt than the funnel, and the arXiv labels were produced from whole-paper inputs. We therefore treat the differences as descriptive of these particular setups rather than as isolated effects of the input strategy.
+The natural alternative to the funnel is to give the LLM the whole paper. Table~\ref{tab:whole} and Figure~\ref{fig:whole} compare the two approaches with the same model and mode. Two points should be kept in mind when reading them. First, these comparisons were designed after the main results were known, although the baseline was frozen before any of its test calls. Second, the three caveats of Section~\ref{sec:comparison} apply: the section labels on SAL favour the funnel, the broader FWS baseline prompt favours the funnel, and the arXiv labels may favour the baseline. We therefore read the differences as descriptions of these particular setups, not as isolated effects of the input strategy.
 
 \begin{table}[htbp]
-\caption{Funnel versus whole-paper prompting. $F_1$ of each with the same LLM and mode, and their paired difference (funnel minus whole paper) with its 95\% CI; bold: the CI excludes zero. The intervals are not corrected for multiple comparisons. On FWS the whole-paper baseline has one broader prompt for all modes (Section~\ref{sec:comparison}). arXiv results use LLM labels.\label{tab:whole}}
+\caption{Funnel versus whole-paper prompting. $F_1$ of each with the same LLM and mode, and their paired difference (funnel minus whole paper) with its 95\% CI below it; bold: the CI excludes zero. The intervals are not corrected for multiple comparisons. On FWS the whole-paper baseline has one broader prompt for all modes (Section~\ref{sec:comparison}). arXiv results use LLM labels.\label{tab:whole}}
 \begin{adjustwidth}{-\extralength}{0cm}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -133,18 +161,20 @@ The natural alternative to the funnel is to give the LLM the whole paper. Table~
 \caption{$F_1$ in high-precision mode for whole-paper prompting (grey) and the funnel (blue) with each LLM. Numbers give the difference (funnel minus whole paper); an asterisk marks a paired 95\% CI that excludes zero. arXiv results use LLM labels.\label{fig:whole}}
 \end{figure}
 
-\paragraph{With the 27B LLM.} With Qwen3.8-27B, the funnel has higher observed $F_1$ than whole-paper prompting on both human-labelled benchmarks. On SAL-40 the difference is 0.014 to 0.043 across modes, and every confidence interval includes zero. In high-precision mode the funnel reaches 66.2\% precision and 84.9\% recall; whole-paper prompting reaches 64.1\% and 77.6\%. On FWS the difference is 0.060 to 0.068 and its confidence interval excludes zero in every mode. The broader FWS baseline prompt, however, means these intervals do not isolate the effect of the funnel. On the arXiv papers the order reverses: whole-paper prompting is better in every mode, significantly in high-recall mode ($-0.099$). The other ways of splitting the paper show the same ranking. Chunks of 100 sentences reach $F_1$ 0.70--0.73 on arXiv and 0.60--0.68 on SAL-40, and batches of 20 consecutive sentences reach 0.70--0.72 and 0.55--0.64. Both are ahead of the funnel on arXiv and behind it on SAL-40, while using more input tokens than the whole paper.
+\paragraph{With the 27B LLM.} With Qwen3.8-27B, the funnel scores higher than whole-paper prompting on both human-labelled benchmarks and lower on arXiv. On SAL-40, the funnel's $F_1$ is higher by 0.014 to 0.043 across modes, but no difference is significant. In high-precision mode the funnel reaches 66.2\% precision and 84.9\% recall, and whole-paper prompting reaches 64.1\% and 77.6\%. On FWS, the difference is 0.060 to 0.068 and significant in every mode, subject to the caveat about the broader baseline prompt. On the arXiv papers the order reverses: whole-paper prompting is better in every mode, significantly so in high-recall mode ($-0.099$).
 
-\paragraph{With the 9B LLM.} Qwen3.5-9B completes every whole-paper call but over-selects on several long arXiv papers, keeping 806 of 824 sentences in one mode and 499 of 692 in another. Across modes, its whole-paper $F_1$ is 0.236--0.403, against 0.556--0.599 for the main funnel. The funnel difference is 0.153--0.328; its confidence interval excludes zero only in balanced mode because the failures are concentrated in a few papers. On SAL-40 the observed difference ranges from $-0.059$ to 0.007 and no interval excludes zero. On FWS it is 0.071--0.077 and every interval excludes zero, subject to the broader baseline-prompt caveat.
+The two additional baselines follow the same pattern as whole-paper prompting. The chunked baseline reaches $F_1$ 0.70--0.73 on arXiv and 0.60--0.68 on SAL-40, and the every-sentence baseline reaches 0.70--0.72 and 0.55--0.64. Both are ahead of the funnel on arXiv and behind it on SAL-40, and both use more input tokens than the whole paper.
 
-\paragraph{With the 4B LLM.} The tested 4B model benefits from the funnel on long papers. With Qwen3.5-4B, whole-paper prompting performs poorly on arXiv papers: in high-precision mode it reaches 20.7\% precision and 52.2\% recall ($F_1$ 0.296). On long papers the model returns most of the paper, for example 490 of 692 sentences. On the longest paper (1526 sentences, 83 gaps) its answer exceeded the output limit in every mode, but this is not the main cause: without that paper, $F_1$ is still 0.29--0.33. The funnel, which never sends the model more than 20 candidates at a time, reaches $F_1$ 0.544 with the same model, an advantage of 0.21 to 0.25 whose confidence interval excludes zero in every mode. On SAL-40 and FWS, whose inputs are shorter, the two approaches do not differ significantly.
+\paragraph{With the 9B LLM.} With Qwen3.5-9B, whole-paper prompting breaks down on long arXiv papers. The model completes every call but selects far too much on several long papers, keeping 806 of 824 sentences in one mode and 499 of 692 in another. Across modes, its whole-paper $F_1$ on arXiv is 0.236--0.403, against 0.556--0.599 for the funnel. The difference is large (0.153--0.328), but it is significant only in balanced mode, because the failures are concentrated in a few papers. On SAL-40, the difference ranges from $-0.059$ to $+0.007$ and is never significant. On FWS, it is 0.071--0.077 and significant in every mode, again subject to the caveat about the baseline prompt.
 
-\paragraph{Paper length.} Splitting the arXiv papers at their median length (239 sentences) shows the same pattern within one dataset. On the 14 shorter papers, whole-paper prompting is ahead in high-precision mode with both models ($F_1$ 0.707 against 0.624 for the 27B model, 0.658 against 0.595 for the 4B model). On the 14 longer papers, the observed scores are similar with the 27B model (0.668 for the funnel and 0.659 for the whole paper) and differ substantially with the 4B model (0.516 and 0.203). Within these models and papers, the funnel's benefit increases with input length and is larger for the 4B model.
+\paragraph{With the 4B LLM.} With Qwen3.5-4B, the funnel helps clearly on long papers. Whole-paper prompting performs poorly on arXiv: in high-precision mode it reaches 20.7\% precision and 52.2\% recall ($F_1$ 0.296). On long papers the model returns most of the paper, for example 490 of 692 sentences. On the longest paper (1526 sentences, 83 gaps), its answer exceeded the output limit in every mode. This failure is not the main cause, however: without that paper, $F_1$ is still 0.29--0.33. The funnel, which never sends the model more than 20 candidates at a time, reaches $F_1$ 0.544 with the same model. Its advantage is 0.21 to 0.25 and significant in every mode. On SAL-40 and FWS, whose inputs are shorter, the two approaches do not differ significantly.
 
-\paragraph{Cost.} The funnel uses about a third of the input tokens of whole-paper prompting on SAL-40 and FWS. On arXiv, whole-paper prompting uses only 1.4 times the funnel input, because each of the 2137 candidates carries its own context (Table~\ref{tab:wholecost}). The funnel's output is larger because it returns a verdict for every candidate rather than a list of kept sentences; with the 9B and 4B models this makes the 20-per-call funnel slower than whole-paper prompting on arXiv (287 against 92 seconds and 198 against 160 seconds). The chunked and every-sentence baselines are more expensive than the whole paper: with the 27B model they used 0.58--0.76 million input tokens on arXiv and 0.36--0.48 million on SAL-40. Section~\ref{sec:format} shows a call format that removes most of the funnel's cost.
+\paragraph{Paper length.} The same pattern appears within one dataset when the arXiv papers are split at their median length (239 sentences). We ran this analysis for the 27B and 4B models in high-precision mode. On the 14 shorter papers, whole-paper prompting is ahead with both models: $F_1$ is 0.707 for whole-paper prompting against 0.624 for the funnel with the 27B model, and 0.658 against 0.595 with the 4B model. On the 14 longer papers, the two approaches are level with the 27B model (0.659 against 0.668) and far apart with the 4B model (0.203 against 0.516). Within these models and papers, the funnel's benefit therefore grows with input length and is larger for the 4B model.
+
+\paragraph{Cost.} The funnel reads less input than whole-paper prompting, but how much less depends on the dataset (Table~\ref{tab:wholecost}). On SAL-40 and FWS, it uses about a third of the input tokens. On arXiv the saving is small: whole-paper prompting uses only 1.4 times the funnel's input, because each of the 2137 candidates is sent with its own context. The funnel's output is larger, because it returns a verdict for every candidate instead of a list of kept sentences. With the 9B and 4B models, this makes the 20-per-call funnel slower than whole-paper prompting on arXiv (287 against 92 seconds and 198 against 160 seconds). The chunked and every-sentence baselines are more expensive than the whole paper: with the 27B model they used 0.58--0.76 million input tokens on arXiv and 0.36--0.48 million on SAL-40. The last row for each dataset in Table~\ref{tab:wholecost} shows a cheaper call format, which Section~\ref{sec:format} introduces.
 
 \begin{table}[htbp]
-\caption{Measured LLM cost in high-precision mode: input tokens (the same prompts for every model), output tokens and summed call time in seconds, one call at a time on one H100 GPU. arXiv: the 28 arXiv test papers; for the 20-per-call funnel, whose batches mix arXiv and SAL papers, each batch is counted by its share of arXiv candidates. The one-call-per-paper funnel uses the fine-tuned Stage~B (Section~\ref{sec:format}). The early 27B runs of the 20-per-call funnel did not log output or time (n/a). The 4B model's logged whole-paper input on arXiv is lower (482k), because its failed call on the longest paper was not logged.\label{tab:wholecost}}
+\caption{Measured LLM cost in high-precision mode: input tokens (the same prompts for every model), output tokens and summed call time in seconds, one call at a time on one H100 GPU. arXiv: the 28 arXiv test papers; for the 20-per-call funnel, whose batches mix arXiv and SAL papers, each batch is counted by its share of arXiv candidates. The one-call-per-paper funnel uses the fine-tuned Stage~B (Section~\ref{sec:format}). The early 27B runs of the 20-per-call funnel logged neither output tokens nor time (n/a). The 4B model's logged whole-paper input on arXiv is lower (482k), because its failed call on the longest paper was not logged.\label{tab:wholecost}}
 \begin{adjustwidth}{-\extralength}{0cm}
 \small
 \input{tables/wholecost_table.tex}
@@ -154,6 +184,8 @@ The natural alternative to the funnel is to give the LLM the whole paper. Table~
 \subsection{Stage C call and answer format (RQ2)}
 \label{sec:format}
 
+The cost figures above show that the main funnel spends many tokens on context windows and on one verdict per candidate. We therefore tested the cheaper formats of Section~\ref{sec:comparison}. Table~\ref{tab:variants} gives their $F_1$ next to whole-paper prompting.
+
 \begin{table}[htbp]
 \caption{Funnel variants. $F_1$ of whole-paper prompting and of three funnels, by LLM; each cell gives high precision / balanced / high recall. On FWS the whole-paper baseline has one prompt for all modes. arXiv results use LLM labels.\label{tab:variants}}
 \begin{adjustwidth}{-\extralength}{0cm}
@@ -162,9 +194,15 @@ The natural alternative to the funnel is to give the LLM the whole paper. Table~
 \end{adjustwidth}
 \end{table}
 
-\paragraph{One call per paper.} Sending all of a paper's candidates in one call, numbered like the whole-paper baseline, reduces the input to one-seventh of whole-paper prompting on arXiv and about one-eighth on SAL-40, with no more output. Whole-paper prompting also takes 1.5 to 7 times as much LLM time (Table~\ref{tab:wholecost}). Accuracy depends on the model (Table~\ref{tab:variants}). With the 27B model the one-call format differs from the 20-per-call format by $-0.001$ to $-0.008$ on SAL-40, and is 0.01 to 0.05 lower on FWS and in two of the three arXiv modes. With the 9B model it reaches $F_1$ 0.591--0.630 on arXiv, 0.700--0.712 on SAL-40 and 0.740--0.743 on FWS; relative to whole-paper prompting, the interval excludes zero in arXiv balanced mode and every FWS mode. With the 4B model it is the best or tied-best setup on the human-labelled benchmarks: on SAL-40 it is ahead of whole-paper prompting by 0.050 to 0.098 (significant in the balanced and high-recall modes), with higher precision (67.1\% against 56.8\% in high-precision mode). Placing the paper's abstract before the candidates did not help. With the 27B model it changed $F_1$ by between $-0.024$ and $0.000$.
+\paragraph{One call per paper.} Sending all of a paper's candidates in one call makes the funnel much cheaper. Its input falls to one-seventh of whole-paper prompting on arXiv and to about one-eighth on SAL-40, with no more output, and whole-paper prompting takes 1.5 to 7 times as much LLM time (Table~\ref{tab:wholecost}). How much accuracy this format costs depends on the model (Table~\ref{tab:variants}).
+\begin{itemize}
+  \item \textbf{27B.} The one-call format is slightly less accurate than the fine-tuned funnel with 20 candidates per call. The difference is $-0.001$ to $-0.008$ on SAL-40, and 0.01 to 0.05 on FWS and in two of the three arXiv modes.
+  \item \textbf{9B.} The one-call format reaches $F_1$ 0.591--0.630 on arXiv, 0.700--0.712 on SAL-40 and 0.740--0.743 on FWS. Compared with whole-paper prompting, the difference is significant in arXiv balanced mode and in every FWS mode.
+  \item \textbf{4B.} The one-call format is the best or tied-best setup on the human-labelled benchmarks. On SAL-40 it is ahead of whole-paper prompting by 0.050 to 0.098 (significant in the balanced and high-recall modes), with higher precision (67.1\% against 56.8\% in high-precision mode).
+\end{itemize}
+Placing the paper's abstract before the candidates did not help. With the 27B model, it changed $F_1$ by between $-0.024$ and $0.000$.
 
-\paragraph{Answer format.} Asking for the list of candidates to keep instead of a verdict on each, with everything else unchanged, cuts output tokens four- to eightfold but changes 7.6--9.3\% of the verdicts, whereas 70 identical batches that were run twice differed in only 0.4\% of their verdicts. The model keeps more candidates in this format: precision in high-precision mode falls from 86.6\% to 79.2\% on the gold test split, at a similar $F_1$ (differences of $-0.023$ to $+0.006$, none significant).
+\paragraph{Answer format.} Asking for the list of candidates to keep, instead of a verdict on each, cuts output tokens four- to eightfold when everything else is unchanged. It also changes the result, however: 7.6--9.3\% of the verdicts differ, far more than the 0.4\% by which 70 identical batches differed when they were run twice. The model keeps more candidates in this format. Precision in high-precision mode falls from 86.6\% to 79.2\% on the gold test split, at a similar $F_1$ (differences of $-0.023$ to $+0.006$, none significant).
 
 \subsection{LLM labels versus human labels (RQ3)}
 \label{sec:labels}
@@ -174,9 +212,12 @@ We answer RQ3 on the datasets that have human labels. On the 40 SAL test papers,
 \subsubsection{Precision depends on the label source}
 \label{sec:label-source}
 
-The precision of the same output changes greatly with the reference labels. Of the 263 sentences returned in high-precision mode on SAL-40, SAL's annotators marked 174 as limitations, whereas the LLM ensemble marked 245 as limitations and 250 as a gap of some type. The two label sets disagree mainly on 77 sentences that are gaps according to the LLM labels but not according to SAL; only 12 returned sentences are negative under both. Precision is therefore 66.2\% against SAL and 93.2--95.1\% against the LLM labels (right side of Table~\ref{tab:salcmp}). Which value is closer to the truth depends on who is right about these 77 sentences, which the planned human study is designed to settle.
+The precision of the same output changes greatly with the reference labels. Of the 263 sentences returned in high-precision mode on SAL-40, SAL's annotators marked 174 as limitations, whereas the LLM ensemble marked 245 as limitations and 250 as a gap of some type. The two label sets disagree mainly on 77 sentences that are gaps according to the LLM labels but not according to SAL; only 12 returned sentences are negative under both. Precision is therefore 66.2\% against SAL and 93.2--95.1\% against the LLM labels (right side of Table~\ref{tab:salcmp}). Which value is closer to the truth depends on who is right about these 77 sentences. The planned human study is designed to settle this question.
+
+% HUMAN STUDY: when the results are in, add the subsubsection from docs/publication/HUMAN_STUDY_INSERT.md here
+% (\input{sections/04b_human_study}) and replace the last sentence above.
 
 \subsubsection{Letter case reveals the label in FWS}
 \label{sec:fws-case}
 
-In the FWS recognition corpus as we obtained it (64,896 sentences from 9013 papers), all 9009 positive sentences are entirely lowercase, and almost no negative sentence is. The rule ``a sentence is positive if it is all lowercase'' therefore reaches 99.8\% precision and 100\% recall. Our copy is identical to the published file~\cite{fwsrepo} (the same git blob hash), so the artefact is present in the released corpus. Any case-sensitive model, and any LLM that sees the raw text, can exploit this signal. All FWS results in this paper therefore use lowercased text, and we do not use an earlier FWS result of ours that was obtained on raw text.
+In the FWS recognition corpus as we obtained it (64,896 sentences from 9013 papers), all 9009 positive sentences are entirely lowercase, and almost no negative sentence is. The rule ``a sentence is positive if it is all lowercase'' therefore reaches 99.8\% precision and 100\% recall. Our copy is identical to the published file~\cite{fwsrepo} (the same git blob hash), so the artefact is present in the released corpus. Any case-sensitive model, and any LLM that sees the raw text, can exploit this signal. For this reason, all FWS results in this paper use lowercased text.

@@ -1,0 +1,87 @@
+% Overview of the funnel (Figure 1), drawn in TikZ so that it is a vector figure with editable text.
+% Input from sections/01_introduction.tex. Total width 17.6 cm.
+\begingroup
+\definecolor{ovInk}{HTML}{183249}
+\definecolor{ovIn}{HTML}{2F8F83}
+\definecolor{ovA}{HTML}{2A78D6}
+\definecolor{ovB}{HTML}{6553A0}
+\definecolor{ovC}{HTML}{B8730F}
+\definecolor{ovOk}{HTML}{2E9E5B}
+\begin{tikzpicture}[
+  x=1cm, y=1cm, font=\footnotesize, text=ovInk,
+  card/.style={rounded corners=4pt, line width=0.6pt},
+  head/.style={font=\small\bfseries},
+  pill/.style={rounded corners=3pt, minimum height=0.46cm, inner sep=2pt, text width=2.5cm, align=center},
+  body/.style={align=flush left, text width=2.8cm, inner sep=0pt, anchor=north west},
+  note/.style={font=\footnotesize\itshape, align=center, text width=2.85cm, inner sep=0pt},
+  list/.style={align=flush left, text width=5.2cm, inner sep=0pt, anchor=north west},
+  arr/.style={-{Stealth[length=2.2mm,width=1.7mm]}, line width=0.9pt, draw=ovInk}]
+
+% ---- five cards: input, three stages, output
+\foreach \x/\c/\t in {0/ovIn/Paper texts, 3.6/ovA/A. Localise, 7.2/ovB/B. Classify, 10.8/ovC/C. Filter, 14.4/ovIn/Extracted gaps} {
+  \draw[card, draw=\c!70, fill=\c!5] (\x,0) rectangle (\x+3.2,-5.5);
+  \fill[\c!22, rounded corners=4pt] (\x+0.02,-0.02) rectangle (\x+3.18,-0.72);
+  \node[head, text=\c!70!black] at (\x+1.6,-0.37) {\t};
+}
+\foreach \x in {3.2, 6.8, 10.4, 14.0} { \draw[arr] (\x+0.02,-2.75) -- (\x+0.38,-2.75); }
+
+% Paper texts
+\node[pill, fill=ovIn!16] at (1.6,-1.35) {\textbf{SAL:} RCT reports};
+\node[pill, fill=ovIn!16] at (1.6,-1.95) {\textbf{FWS:} conclusions};
+\node[pill, fill=ovIn!16] at (1.6,-2.55) {\textbf{arXiv} papers};
+\draw[arr] (1.6,-2.95) -- (1.6,-3.55);
+\node[pill, fill=ovA!14, minimum height=0.85cm, font=\footnotesize\bfseries] at (1.6,-4.15) {Split each paper into sentences};
+
+% Stage A
+\node[body] at (3.82,-1.0) {\textbullet\ Structural rules\\[3pt]\textbullet\ Remove text that is unlikely to contain gaps};
+\node[note] at (5.2,-4.75) {Rules depend on the dataset; FWS skips this stage};
+
+% Stage B
+\node[body] at (7.42,-1.0) {\textbullet\ Zero-shot NLI\\[3pt]\textbullet\ One hypothesis per gap type};
+\foreach \y/\on in {-2.55/0, -2.95/1, -3.35/0, -3.75/1} {
+  \ifnum\on=1
+    \fill[rounded corners=2pt, ovOk!20] (7.65,\y) rectangle (9.95,\y-0.28);
+    \draw[ovOk!80!black, line width=0.9pt] (9.66,\y-0.15) -- (9.72,\y-0.21) -- (9.84,\y-0.07);
+  \else
+    \fill[rounded corners=2pt, black!7] (7.65,\y) rectangle (9.95,\y-0.28);
+    \draw[black!35, line width=0.5pt] (9.66,\y-0.07) rectangle (9.82,\y-0.21);
+  \fi
+  \draw[black!35, line width=0.8pt] (7.78,\y-0.14) -- (9.45,\y-0.14);
+}
+\node[note] at (8.8,-4.8) {Threshold set on development data};
+
+% Stage C
+\node[body] at (11.02,-1.0) {\textbullet\ The LLM sees each candidate with its neighbouring sentences};
+\draw[rounded corners=3pt, draw=ovC!70, line width=0.5pt, fill=white] (11.0,-2.4) rectangle (13.8,-4.3);
+\node[font=\footnotesize\bfseries] at (12.4,-2.63) {One mode per run};
+\node[pill, fill=ovOk!20] at (12.4,-3.08) {High precision};
+\node[pill, fill=ovA!16] at (12.4,-3.56) {Balanced};
+\node[pill, fill=ovB!16] at (12.4,-4.04) {High recall};
+\draw[arr] (12.4,-4.3) -- (12.4,-4.66);
+\node[pill, fill=ovC!22, font=\footnotesize\bfseries] at (12.4,-4.97) {Keep or drop};
+
+% Extracted gaps
+\node[pill, fill=ovOk!16, minimum height=0.6cm, font=\footnotesize\bfseries] at (16.0,-1.5) {Limitations};
+\node[pill, fill=ovA!14, minimum height=0.6cm, font=\footnotesize\bfseries] at (16.0,-2.3) {Future work};
+\node[pill, fill=ovB!14, minimum height=0.6cm, font=\footnotesize\bfseries] at (16.0,-3.1) {Research gaps};
+\node[note] at (16.0,-4.75) {Original sentences with their source};
+
+% ---- what every stage preserves
+\draw[card, draw=ovA!45, fill=ovA!5] (0,-5.8) rectangle (14.9,-6.4);
+\node[font=\small\bfseries] at (7.45,-6.1) {Every stage selects existing sentences and keeps their wording and source};
+\draw[arr] (16.0,-5.5) -- (16.0,-6.7);
+
+% ---- evaluation
+\draw[card, draw=ovA!70, fill=ovA!4, line width=0.8pt] (0,-6.7) rectangle (17.6,-9.45);
+\node[head, anchor=west] at (0.25,-7.02) {Evaluation};
+\foreach \x/\c in {0.25/ovIn, 6.05/ovB, 11.85/ovC} {
+  \draw[rounded corners=3pt, draw=\c!60, fill=\c!6, line width=0.5pt] (\x,-7.35) rectangle (\x+5.5,-9.25);
+}
+\node[font=\footnotesize\bfseries, anchor=north west] at (0.33,-7.43) {Reference labels};
+\node[list] at (0.42,-7.92) {\textbullet\ Human labels: SAL and FWS\\[2pt]\textbullet\ LLM labels: three-type corpus\\[2pt]\phantom{\textbullet}\ (not yet checked by people)};
+\node[font=\footnotesize\bfseries, anchor=north west] at (6.13,-7.43) {Research questions};
+\node[list] at (6.22,-7.92) {\textbf{RQ1}\ \ Role of each component\\[2pt]\textbf{RQ2}\ \ Funnel vs whole paper\\[2pt]\textbf{RQ3}\ \ LLM labels vs human labels};
+\node[font=\footnotesize\bfseries, anchor=north west] at (11.93,-7.43) {Measures};
+\node[list] at (12.02,-7.92) {\textbullet\ Precision, recall and $F_1$\\[2pt]\textbullet\ Confidence intervals by paper\\[2pt]\textbullet\ LLM tokens and call time};
+\end{tikzpicture}
+\endgroup

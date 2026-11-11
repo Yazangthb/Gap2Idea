@@ -42,7 +42,8 @@ def diff(d, bold_sig=True):
     s = f"{d['f1_diff']:+.3f}".replace("-", "$-$").replace("+", "$+$")
     ci = f"{d['ci95'][0]:+.2f}, {d['ci95'][1]:+.2f}".replace("-", "$-$").replace("+", "$+$")
     sig = d["ci95"][0] > 0 or d["ci95"][1] < 0
-    return (f"\\textbf{{{s}}}" if sig and bold_sig else s) + f" {{\\scriptsize[{ci}]}}"
+    # The interval goes on its own line at 8 pt, the smallest size MDPI allows in tables.
+    return (f"\\textbf{{{s}}}" if sig and bold_sig else s) + f"\\newline{{\\footnotesize[{ci}]}}"
 
 
 def whole_rows():
