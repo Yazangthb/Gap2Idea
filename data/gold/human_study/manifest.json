@@ -1,0 +1,48 @@
+{
+ "seed": 20261105,
+ "sample_hash": "f8f55f1b22b3ffcebff0a402b2cb4533fdee8489a00f6ed807807d2d0093e286",
+ "items": 135,
+ "strata": {
+  "S3": {
+   "population": 12,
+   "eligible": 11,
+   "sampled": 11
+  },
+  "B1": {
+   "population": 56,
+   "eligible": 54,
+   "sampled": 30
+  },
+  "S2": {
+   "population": 77,
+   "eligible": 69,
+   "sampled": 40
+  },
+  "S1": {
+   "population": 174,
+   "eligible": 161,
+   "sampled": 12
+  },
+  "B2": {
+   "population": 281,
+   "eligible": 267,
+   "sampled": 30
+  },
+  "D_arxiv": {
+   "eligible": 7255,
+   "sampled": 6
+  },
+  "D_sal": {
+   "eligible": 1262,
+   "sampled": 6
+  }
+ },
+ "populations": {
+  "B1": 56,
+  "B2": 281,
+  "S1": 174,
+  "S2": 77,
+  "S3": 12
+ },
+ "funnel": "NLI + Qwen3.8-27B, high precision mode, test splits"
+}
