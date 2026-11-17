@@ -1,0 +1,4 @@
+# Preserve experiment evidence byte-for-byte on Windows and Linux.
+/docs/experiments/baseline_revision_v100_2026-11-18/** -text
+/docs/experiments/baseline_revision_v100_*_plan.json -text
+/docs/experiments/baseline_revision_v100_*_weights.json -text
