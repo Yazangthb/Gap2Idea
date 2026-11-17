@@ -208,12 +208,17 @@ def ask(client, system, unit, max_tokens, model=None, evidence=None):
                         completion_tokens=getattr(usage, "completion_tokens", None),
                         response_model=getattr(resp, "model", None),
                         response_id=getattr(resp, "id", None),
+                        thinking=getattr(resp, "thinking", None),
                         server_timings=getattr(resp, "server_timings", None))
     choice = resp.choices[0]
     if evidence is not None:
         evidence.update(finish_reason=choice.finish_reason, raw_response=choice.message.content)
     if choice.finish_reason == "length":
         raise ValueError("output hit max_tokens")
+    if choice.finish_reason != "stop":
+        raise ValueError(f"unexpected finish reason: {choice.finish_reason}")
+    if getattr(resp, "thinking", None):
+        raise ValueError("server returned reasoning despite thinking=false")
     body = json.loads(choice.message.content)
     if not isinstance(body, dict) or set(body) != {"positives"}:
         raise ValueError("response must contain only positives")

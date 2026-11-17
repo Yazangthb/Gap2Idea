@@ -183,4 +183,5 @@ class OllamaClient:
         return NS(choices=[NS(finish_reason=r.get("done_reason"), message=NS(content=r["message"]["content"]))],
                   usage=NS(prompt_tokens=r.get("prompt_eval_count"), completion_tokens=r.get("eval_count")),
                   model=r.get("model"), id=r.get("created_at"),
+                  thinking=r["message"].get("thinking"),
                   server_timings={k: v for k, v in r.items() if k.endswith("duration") or "cached" in k})

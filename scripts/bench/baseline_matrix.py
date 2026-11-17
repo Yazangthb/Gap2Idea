@@ -34,18 +34,22 @@ def prepare(args):
                          check=True, capture_output=True, text=True).stdout.strip()
     if "V100" not in gpu:
         raise SystemExit("This experiment was requested on V100 hardware")
-    runs, outputs = [], {}
+    runs, outputs, data_cache, prompt_cache = [], {}, {}, {}
     for model in args.models:
         for split, limit in (("dev", 2), ("test", 0)):
             for dataset, setup, prompt in grid(model):
                 opts = NS(model=model, backend="ollama", num_ctx=args.num_ctx, dataset=dataset,
                           setup=setup, prompt=prompt, split=split, limit_papers=limit)
-                rows = b.load_rows(dataset, split)
+                if (dataset, split) not in data_cache:
+                    data_cache[dataset, split] = b.load_rows(dataset, split)
+                rows = data_cache[dataset, split]
                 if limit:
                     keep = set(list(b.papers_of(rows))[:limit])
                     rows = [r for r in rows if r["pid"] in keep]
                 units = list(b.units(rows, setup))
-                runs.append(fingerprint(opts, rows, units, b.build_prompt(dataset, prompt)))
+                if (dataset, prompt) not in prompt_cache:
+                    prompt_cache[dataset, prompt] = b.build_prompt(dataset, prompt)
+                runs.append(fingerprint(opts, rows, units, prompt_cache[dataset, prompt]))
                 outputs[digest(runs[-1])] = dict(calls=len(units), sentences=len(rows),
                                                  requested_sentences=sum(len(u["keys"]) for u in units))
     plan = dict(created_utc=datetime.now(timezone.utc).isoformat(), code_commit=git("rev-parse", "HEAD"),
