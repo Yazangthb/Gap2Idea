@@ -32,7 +32,10 @@ If BF16 cannot run on V100, any FP16 conversion is documented and frozen before 
 No quantized model is silently substituted.
 
 All calls: temperature 0, seed 0, thinking false, JSON schema positives array, repeat_penalty 1,
-131,072-token context, one call at a time. Output limits stay A/AS 4,096, B 2,048 and C 1,024.
+131,072-token context, one call at a time per dedicated GPU. The 4B and 9B jobs may run on
+separate V100s; the 27B job uses both only after the small-model jobs finish. No experiments share
+a GPU. This topology and prefix-cache counters are recorded for interpreting timing comparisons.
+Output limits stay A/AS 4,096, B 2,048 and C 1,024.
 The frozen plan records the full launch command, server version, model manifest digests, template hashes,
 data file byte hashes, canonical data/input/prompt hashes, and code hashes (UTF-8 with LF normalization).
 
@@ -80,6 +83,8 @@ Retry exactly twice after the first attempt. Failed calls are retained and not a
 Resume validates unit keys and rejects duplicate or foreign records and changed configurations.
 
 Coverage distinguishes requested, answered, failed, unattempted and Stage A excluded sentences.
+The SAL test AS input contains 1,885 sentences and 203 limitations; the other 6,083 sentences,
+including two limitations, remain in the scoring denominator as not kept.
 Every SAL score includes all 7,968 sentences and 205 positives, including AS exclusions as not kept.
 P/R/F1 and 95% intervals use 2,000 paper bootstrap draws, seed 0. Paired differences are always
 **funnel minus baseline**. A CI containing zero is described as "difference not resolved".

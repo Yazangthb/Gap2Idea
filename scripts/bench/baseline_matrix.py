@@ -6,6 +6,7 @@ Commit the plan after development smoke tests and before run --split test.
 import argparse
 import json
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace as NS
@@ -55,11 +56,13 @@ def prepare(args):
     plan = dict(created_utc=datetime.now(timezone.utc).isoformat(), code_commit=git("rev-parse", "HEAD"),
                 code_hashes=code_hashes(), models=models, runs=runs, expected=outputs,
                 hardware=gpu, server_command=args.server_command,
+                weight_provenance=json.loads(args.weight_provenance.read_text(encoding="utf-8")) if args.weight_provenance else None,
+                prepare_command=[sys.executable, *sys.argv],
                 output_root=args.output_root.as_posix(),
                 protocol="X1 matched FWS A/SAL A+AS; full-paper gold; X2 gold/SAL C for 9B and 4B. "
                          "All sentences scored, including AS exclusions. No test tuning. "
                          "P/R/F1, 2000 paper bootstrap draws seed 0; funnel minus baseline, paired by model/mode/input. "
-                         "Sequential calls, two retries; failed sentences not kept, unknown costs null. "
+                         "Sequential calls per dedicated GPU, two retries; failed sentences not kept, unknown costs null. "
                          "New V100/Ollama backend is reported separately from historical A100/vLLM results.")
     args.plan.parent.mkdir(parents=True, exist_ok=True)
     with args.plan.open("x", encoding="utf-8") as fh:
@@ -71,16 +74,21 @@ def prepare(args):
 def run(args):
     plan = json.loads(args.plan.read_text(encoding="utf-8"))
     root = Path(plan["output_root"])
-    smoke_path = root / "smoke_report.json"
+    selected = args.models or list(plan["models"])
+    if not set(selected) <= set(plan["models"]):
+        raise SystemExit("Selected model is outside the frozen plan")
     if args.split == "test":
-        if not smoke_path.exists():
-            raise SystemExit("Run the complete development smoke matrix first")
-        smoke = json.loads(smoke_path.read_text(encoding="utf-8"))
-        if smoke["plan_sha256"] != digest(plan) or not smoke["passed"]:
-            raise SystemExit("Development smoke matrix failed or used a different plan")
+        for model in selected:
+            smoke_path = root / model.replace(":", "-").replace("/", "-") / "smoke_report.json"
+            if not smoke_path.exists():
+                raise SystemExit(f"Run the development smoke matrix first: {model}")
+            smoke = json.loads(smoke_path.read_text(encoding="utf-8"))
+            if (smoke["plan_sha256"] != digest(plan) or not smoke["passed"] or
+                    smoke["configurations"] != len(grid(model))):
+                raise SystemExit("Development smoke matrix failed, is incomplete, or used a different plan")
     summaries = []
     for spec in plan["runs"]:
-        if spec["split"] != args.split:
+        if spec["split"] != args.split or spec["model"] not in selected:
             continue
         model_dir = spec["model"].replace(":", "-").replace("/", "-")
         opts = {k: spec[k] for k in ("dataset", "setup", "prompt", "split", "limit_papers", "model", "backend", "num_ctx")}
@@ -93,12 +101,15 @@ def run(args):
         summaries.append(summary)
         if summary["coverage"]["failed_calls"] == summary["coverage"]["expected_calls"]:
             raise SystemExit("Every call in this configuration failed; inspect evidence before continuing")
-    report = dict(plan_sha256=digest(plan), configurations=len(summaries),
-                  passed=all(s["coverage"]["every_requested_sentence_answered"] and not s["invalid_ids"] for s in summaries),
-                  summaries=summaries)
-    report_path = smoke_path if args.split == "dev" else root / "test_report.json"
-    report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
-    print(f"Saved {report_path}; complete coverage: {report['passed']}")
+    for model in selected:
+        subset = [s for s in summaries if s["manifest"]["model"] == model]
+        report = dict(plan_sha256=digest(plan), configurations=len(subset),
+                      passed=bool(subset) and all(s["coverage"]["every_requested_sentence_answered"] and not s["invalid_ids"] for s in subset),
+                      summaries=subset)
+        report_path = root / model.replace(":", "-").replace("/", "-") / (
+            "smoke_report.json" if args.split == "dev" else "test_report.json")
+        report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+        print(f"Saved {report_path}; complete coverage: {report['passed']}")
 
 
 def main():
@@ -111,10 +122,12 @@ def main():
     p.add_argument("--num-ctx", type=int, default=131072)
     p.add_argument("--base-url")
     p.add_argument("--server-command", required=True, help="exact launch command, with secrets removed")
+    p.add_argument("--weight-provenance", type=Path, help="conversion revisions, file checksums and runtime build evidence")
     r = sub.add_parser("run")
     r.add_argument("--plan", type=Path, required=True)
     r.add_argument("--split", choices=("dev", "test"), required=True)
     r.add_argument("--base-url")
+    r.add_argument("--models", nargs="+", help="run a subset of the frozen model matrix, e.g. on a dedicated GPU")
     args = parser.parse_args()
     {"prepare": prepare, "run": run}[args.command](args)
 

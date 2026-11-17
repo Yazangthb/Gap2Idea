@@ -226,3 +226,33 @@ def test_bootstrap_against_empty_funnel_is_paired():
     rows = [dict(pid="p", idx=0, label="limitation")]
     result = b.boot(rows, {("p", 0)}, set(), n=100)
     assert result == {"f1_diff": 1.0, "ci95": [1.0, 1.0]}
+
+
+def test_stage_a_score_includes_excluded_positive_and_all_attempt_costs(tmp_path):
+    rows = [dict(pid="p", idx=i, sentence="text", section=sec, label=lab) for i, sec, lab in
+            [(3, "DISCUSS", "limitation"), (4, "METHODS", "limitation"), (7, "CONCL", "none")]]
+    path = tmp_path / "sal_test_AS_strict.jsonl"
+    record = dict(unit="p:3", keys=[["p", 3], ["p", 7]], kept=[["p", 3]], positives=[0],
+                  invalid_ids=[], status="ok", seconds=3, prompt_tokens=10, completion_tokens=2,
+                  attempt_log=[dict(status="failed", prompt_tokens=10, completion_tokens=5),
+                               dict(status="ok", prompt_tokens=10, completion_tokens=2)])
+    path.write_text(json.dumps(record) + "\n", encoding="utf-8")
+    _, result = b.score_run(rows, path)
+    assert result["PRF"] == [1.0, 0.5, 0.667]
+    assert result["input_tokens"] == 20 and result["output_tokens"] == 7
+    assert result["coverage"]["excluded_by_stage_a"] == 1 and result["complete"]
+
+
+def test_test_guard_rejects_prompt_changed_after_freeze(tmp_path, monkeypatch):
+    import baseline_evidence as e
+    args = types.SimpleNamespace(dataset="fws", setup="A", prompt="strict", split="test", limit_papers=0, model="m")
+    rows = [dict(pid="p", idx=0, sentence="future work", label="future_work")]
+    todo = list(b.units(rows, "A"))
+    plan = dict(code_hashes=e.code_hashes(), models={"m": {"revision": "fixed"}},
+                runs=[e.fingerprint(args, rows, todo, "original")])
+    args.freeze_plan = tmp_path / "plan.json"
+    args.freeze_plan.write_text(json.dumps(plan), encoding="utf-8")
+    monkeypatch.setattr(e, "committed", lambda p: True)
+    with pytest.raises(SystemExit, match="differ from the frozen plan"):
+        e.prepare_run(args, rows, todo, "changed", tmp_path / "verdicts.jsonl")
+    assert not (tmp_path / "verdicts.jsonl").exists()
