@@ -46,7 +46,11 @@ If BF16 cannot run on V100, any FP16 conversion is documented and frozen before 
 No quantized model is silently substituted.
 
 All calls: temperature 0, seed 0, thinking false, JSON schema positives array, repeat_penalty 1,
-131,072-token context, one call at a time per dedicated GPU. The 4B and 9B jobs may run on
+131,072-token context for 4B/9B and 81,920 for 27B, one call at a time per dedicated GPU.
+The tokenizer check on all gold development and test whole-paper inputs found a maximum of
+72,285 input tokens (76,381 including the unchanged 4,096 output budget) for both generations;
+the 27B cap therefore retains every input while leaving room for both GPUs' model weights.
+This allocation choice was fixed before any 27B test inference. The 4B and 9B jobs may run on
 separate V100s; the 27B job uses both only after the small-model jobs finish. No experiments share
 a GPU. This topology and prefix-cache counters are recorded for interpreting timing comparisons.
 Output limits stay A/AS 4,096, B 2,048 and C 1,024.
