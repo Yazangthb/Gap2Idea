@@ -60,7 +60,8 @@ data file byte hashes, canonical data/input/prompt hashes, and code hashes (UTF-
 ## Freeze and execute
 
 Use a fresh output directory for any changed configuration or corrected implementation.
-The commands below run from the repository root on the V100. `RUN_ROOT` is a new absolute path.
+The commands below run from the repository root on the V100. The actual `prepare` invocation is
+saved verbatim in each plan's `prepare_command`; provenance JSONs are committed beside those plans.
 
 ```bash
 python scripts/dataset/fetch_external.py
@@ -69,19 +70,36 @@ python scripts/bench/baseline_qwen.py check
 python -m pytest tests/test_baseline_qwen.py -q
 
 python scripts/bench/baseline_matrix.py prepare \
-  --models qwen3.5-4b-bf16:latest qwen3.5-9b-bf16:latest qwen3.5-27b-bf16:latest \
-  --plan docs/experiments/baseline_revision_v100_plan.json \
-  --output-root "$RUN_ROOT" --server-command "$EXACT_SERVER_COMMAND"
+  --models qwen3.5-4b-bf16:latest qwen3.5-9b-bf16:latest --num-ctx 131072 \
+  --plan docs/experiments/baseline_revision_v100_small_plan.json \
+  --output-root /home/hamza/gap2idea-baselines/runs/revision-v100-small-20261118-01 \
+  --weight-provenance docs/experiments/baseline_revision_v100_small_weights.json \
+  --server-command "$EXACT_SERVER_COMMANDS"
 python scripts/bench/baseline_matrix.py run \
-  --plan docs/experiments/baseline_revision_v100_plan.json --split dev
+  --plan docs/experiments/baseline_revision_v100_small_plan.json --split dev \
+  --models qwen3.5-4b-bf16:latest --base-url http://127.0.0.1:11445
+python scripts/bench/baseline_matrix.py run \
+  --plan docs/experiments/baseline_revision_v100_small_plan.json --split dev \
+  --models qwen3.5-9b-bf16:latest --base-url http://127.0.0.1:11446
 
 # Review the development evidence; if a fix is needed, create a new plan/output root.
-git add -f docs/experiments/baseline_revision_v100_plan.json
+git add -f docs/experiments/baseline_revision_v100_small_{plan,weights}.json
 git commit -m 'experiments: freeze V100 baseline matrix before test inference'
 python scripts/bench/baseline_matrix.py run \
-  --plan docs/experiments/baseline_revision_v100_plan.json --split test
-python scripts/bench/baseline_report.py "$RUN_ROOT"
+  --plan docs/experiments/baseline_revision_v100_small_plan.json --split test \
+  --models qwen3.5-4b-bf16:latest --base-url http://127.0.0.1:11445
+python scripts/bench/baseline_matrix.py run \
+  --plan docs/experiments/baseline_revision_v100_small_plan.json --split test \
+  --models qwen3.5-9b-bf16:latest --base-url http://127.0.0.1:11446
+python scripts/bench/baseline_report.py /home/hamza/gap2idea-baselines/runs/revision-v100-small-20261118-01
 ```
+
+The two models' launches above are separate processes on dedicated GPUs. For each 27B cohort, prepare
+a separate plan with `--num-ctx 81920`, one model, its own weight-provenance JSON and a fresh output root.
+Commit that plan, then run `baseline_matrix.py run --plan ... --split dev`, verify full GPU residency,
+and run `--split test`. The Qwen3.5 plan is `baseline_revision_v100_27b_plan.json`; the historical-generation
+plan is `baseline_revision_v100_legacy38_plan.json`. Both use port 11445 after the small models unload,
+in that order. Their full preparation commands and model identities are in the frozen JSON plans.
 
 An individual smoke configuration can also be run through the repaired wrapper:
 
