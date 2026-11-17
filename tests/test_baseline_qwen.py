@@ -66,7 +66,7 @@ def test_call_counts(rows):
         assert len(list(b.units(rows[d], s))) == n
 
 
-@pytest.mark.parametrize("setup", list(b.SETUPS))
+@pytest.mark.parametrize("setup", ("A", "B", "C"))
 def test_units_cover_every_sentence_once(setup, rows):
     r = rows["sal"]
     keys = [tuple(k) for u in b.units(r, setup) for k in u["keys"]]
@@ -78,8 +78,18 @@ def test_units_cover_every_sentence_once(setup, rows):
             assert len({k[0] for k in u["keys"]}) == 1
 
 
-def test_run_plan_has_20_runs():
-    assert len(b.RUN_PLAN) == 20 and len(set(b.RUN_PLAN)) == 20
+def test_run_plan_includes_matched_revision_controls():
+    assert len(b.RUN_PLAN) == 26 and len(set(b.RUN_PLAN)) == 26
+    assert all(("fws", "A", p) in b.RUN_PLAN and ("sal", "AS", p) in b.RUN_PLAN for p in b.RUBRIC_NAMES)
+
+
+def test_stage_a_only_preserves_original_ids_and_full_scoring_denominator(rows):
+    units = list(b.units(rows["sal"], "AS"))
+    expected = [r for r in rows["sal"] if r["section"] in {"DISCUSS", "CONCL"}]
+    assert [tuple(k) for u in units for k in u["keys"]] == [(r["pid"], r["idx"]) for r in expected]
+    assert units[0]["ids"][0] == 67
+    assert units[0]["user"].startswith("[67] ")
+    assert sum(v[2] for v in b.per_paper(rows["sal"], set()).values()) == 205
 
 
 class FakeQwen:
@@ -147,3 +157,72 @@ def test_results_table_renders():
     assert "| arXiv gold | C | keep_biased | 50.0% (40.0–60.0) |" in table
     assert "-0.050 (-0.100 to +0.000) vs `f`" in table and "1 (20 sentences)" in table
     assert "| C | keep_biased | 50.0% | 100.0% | 25.0% |" in table
+
+
+def response_client(content, finish="stop", tin=100, tout=5):
+    response = types.SimpleNamespace(choices=[types.SimpleNamespace(finish_reason=finish,
+                                    message=types.SimpleNamespace(content=content))],
+                                    usage=types.SimpleNamespace(prompt_tokens=tin, completion_tokens=tout))
+    return types.SimpleNamespace(chat=types.SimpleNamespace(completions=types.SimpleNamespace(create=lambda **kw: response)))
+
+
+def test_stage_a_answer_ids_map_to_original_sentence_keys():
+    unit = {"keys": [["p", 67], ["p", 70]], "ids": [67, 70], "user": "[67] a\n[70] b"}
+    pos, bad, _, _ = b.ask(response_client('{"positives":[70,68]}'), "system", unit, 4096)
+    assert pos == [1] and bad == [68]
+
+
+@pytest.mark.parametrize("content,finish", [('{"positives": [', "length"), ('broken', "stop"),
+                                            ('{"positives":[true]}', "stop")])
+def test_rejected_responses_retain_usage(content, finish):
+    evidence = {}
+    with pytest.raises(ValueError):
+        b.ask(response_client(content, finish), "system", {"keys": [["p", 0]], "user": "a"}, 10, evidence=evidence)
+    assert evidence["prompt_tokens"] == 100 and evidence["completion_tokens"] == 5
+    assert evidence["raw_response"] == content
+
+
+def test_costs_include_rejected_attempts_and_keep_unknown_costs_missing():
+    from baseline_evidence import costs
+    rec = dict(seconds=3, attempt_log=[dict(status="failed", prompt_tokens=100, completion_tokens=10),
+                                     dict(status="failed", prompt_tokens=None, completion_tokens=None),
+                                     dict(status="ok", prompt_tokens=100, completion_tokens=5)])
+    c = costs([rec])
+    assert c["prompt_tokens_known"] == 200 and c["completion_tokens_known"] == 15
+    assert c["prompt_tokens"] is None and c["prompt_tokens_missing_attempts"] == 1
+    assert c["failed_attempts"] == 2
+
+
+def test_resume_refuses_different_model_and_keeps_previous_evidence(tmp_path, monkeypatch):
+    monkeypatch.setattr(b, "OUTDIR", tmp_path)
+    monkeypatch.setattr(b, "qwen_client", lambda: response_client('{"positives":[]}'))
+    args = types.SimpleNamespace(dataset="fws", setup="A", prompt="strict", split="dev", limit_papers=1, model="first")
+    b.run(args)
+    path = tmp_path / "fws_dev_A_strict.jsonl"
+    before = path.read_bytes()
+    args.model = "second"
+    with pytest.raises(SystemExit, match="mix configurations"):
+        b.run(args)
+    assert path.read_bytes() == before
+
+
+def test_smoke_limit_does_not_leak_into_next_paper_in_batch20(tmp_path, monkeypatch):
+    monkeypatch.setattr(b, "OUTDIR", tmp_path)
+    monkeypatch.setattr(b, "qwen_client", lambda: response_client('{"positives":[]}'))
+    args = types.SimpleNamespace(dataset="fws", setup="C", prompt="strict", split="dev", limit_papers=1)
+    b.run(args)
+    records = b._jsonl(tmp_path / "fws_dev_C_strict.jsonl")
+    assert len({k[0] for r in records for k in r["keys"]}) == 1
+
+
+def test_duplicate_units_cannot_count_as_complete():
+    from baseline_evidence import validate_records
+    unit = dict(unit="p:0", keys=[["p", 0]], status="ok", kept=[])
+    with pytest.raises(ValueError, match="Duplicate"):
+        validate_records([unit, unit], [unit])
+
+
+def test_bootstrap_against_empty_funnel_is_paired():
+    rows = [dict(pid="p", idx=0, label="limitation")]
+    result = b.boot(rows, {("p", 0)}, set(), n=100)
+    assert result == {"f1_diff": 1.0, "ci95": [1.0, 1.0]}

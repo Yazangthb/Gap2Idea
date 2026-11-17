@@ -27,6 +27,7 @@ import random
 import subprocess
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -43,18 +44,21 @@ DRAWS = 2000
 
 # Frozen in baseline_qwen.md. chunk=None means the whole paper in one call.
 SETUPS = {"A": {"chunk": None, "max_tokens": 4096},
+          "AS": {"chunk": None, "max_tokens": 4096},
           "B": {"chunk": 100, "max_tokens": 2048},
           "C": {"chunk": 20, "max_tokens": 1024}}
 RUBRIC_NAMES = ("keep_biased", "neutral", "strict")
-DATASETS = {"sal": {"setups": "ABC", "prompts": RUBRIC_NAMES},
+DATASETS = {"sal": {"setups": ("A", "AS", "B", "C"), "prompts": RUBRIC_NAMES},
             "gold": {"setups": "ABC", "prompts": RUBRIC_NAMES},
             "fws": {"setups": "AC", "prompts": ("validate_fws",) + RUBRIC_NAMES}}
 GAP_TYPES = ("limitation", "future_work", "research_gap")
 
-# The frozen run list, in run order. FWS future_scope runs would be added here (open question 1).
+# Historical configurations plus the X1 matched FWS rubrics and SAL Stage A control.
 RUN_PLAN = ([("sal", s, p) for s in "ABC" for p in RUBRIC_NAMES]
             + [("gold", s, p) for s in "ABC" for p in RUBRIC_NAMES]
-            + [("fws", s, "validate_fws") for s in "AC"])
+            + [("fws", s, "validate_fws") for s in "AC"]
+            + [("fws", "A", p) for p in RUBRIC_NAMES]
+            + [("sal", "AS", p) for p in RUBRIC_NAMES])
 
 POS_SCHEMA = {"type": "object", "additionalProperties": False, "required": ["positives"],
               "properties": {"positives": {"type": "array", "items": {"type": "integer"}}}}
@@ -141,6 +145,9 @@ def load_rows(dataset, split):
         pos = "limitation" if dataset == "sal" else "future_work"
         out = [dict(pid=r["paper_id"], idx=r["idx"], sentence=r["sentence"], label=pos if r["label"] == 1 else "none")
                for r in rows]
+        if dataset == "sal":
+            for r, raw in zip(out, rows):
+                r["section"] = raw["section"]
         if dataset == "fws" and any(r["sentence"] != r["sentence"].lower() for r in out):
             sys.exit("FWS split is not lowercased")
         return out
@@ -161,14 +168,17 @@ def units(rows, setup):
     """Calls for one run, in reading order. A and B stay inside one paper; C takes the next 20
     sentences of the whole set, across paper boundaries, as the funnel's Stage C batches do.
     Ids are numbered 0..n-1 within each call and mapped back to (paper, idx)."""
+    if setup == "AS":
+        rows = [r for r in rows if r.get("section") in {"DISCUSS", "CONCL"}]
     chunk = SETUPS[setup]["chunk"]
     groups = [rows] if setup == "C" else list(papers_of(rows).values())
     for sents in groups:
         size = chunk or len(sents)
         for s in range(0, len(sents), size):
             part = sents[s:s + size]
+            ids = [r["idx"] for r in part] if setup == "AS" else list(range(len(part)))
             yield {"unit": f"{part[0]['pid']}:{part[0]['idx']}", "keys": [[r["pid"], r["idx"]] for r in part],
-                   "user": "\n".join(f"[{i}] {r['sentence']}" for i, r in enumerate(part))}
+                   "ids": ids, "user": "\n".join(f"[{i}] {r['sentence']}" for i, r in zip(ids, part))}
 
 
 # ---------------------------------------------------------------- calls
@@ -185,21 +195,36 @@ def qwen_client():
     return OpenAI(base_url=url, api_key=key, timeout=900, max_retries=0)
 
 
-def ask(client, system, unit, max_tokens):
+def ask(client, system, unit, max_tokens, model=None, evidence=None):
     resp = client.chat.completions.create(
-        model=MODEL, temperature=0.0, max_tokens=max_tokens,
+        model=model or MODEL, temperature=0.0, max_tokens=max_tokens,
         messages=[{"role": "system", "content": system}, {"role": "user", "content": unit["user"]}],
         response_format={"type": "json_schema", "json_schema": {"name": "positives", "schema": POS_SCHEMA, "strict": True}},
         extra_body=EXTRA)
+    # Capture usage BEFORE parsing or checking finish_reason: rejected responses cost tokens too.
+    if evidence is not None:
+        usage = getattr(resp, "usage", None)
+        evidence.update(prompt_tokens=getattr(usage, "prompt_tokens", None),
+                        completion_tokens=getattr(usage, "completion_tokens", None),
+                        response_model=getattr(resp, "model", None),
+                        response_id=getattr(resp, "id", None),
+                        server_timings=getattr(resp, "server_timings", None))
     choice = resp.choices[0]
+    if evidence is not None:
+        evidence.update(finish_reason=choice.finish_reason, raw_response=choice.message.content)
     if choice.finish_reason == "length":
         raise ValueError("output hit max_tokens")
-    got = json.loads(choice.message.content)["positives"]
-    if not isinstance(got, list) or not all(isinstance(i, int) for i in got):
+    body = json.loads(choice.message.content)
+    if not isinstance(body, dict) or set(body) != {"positives"}:
+        raise ValueError("response must contain only positives")
+    got = body["positives"]
+    if not isinstance(got, list) or not all(type(i) is int for i in got):
         raise ValueError(f"bad positives: {str(got)[:100]}")
-    n = len(unit["keys"])
-    return (sorted({i for i in got if 0 <= i < n}), sorted({i for i in got if not 0 <= i < n}),
-            resp.usage.prompt_tokens, resp.usage.completion_tokens)
+    ids = unit.get("ids", list(range(len(unit["keys"]))))
+    positions = {i: k for k, i in enumerate(ids)}
+    usage = getattr(resp, "usage", None)
+    return (sorted({positions[i] for i in got if i in positions}), sorted({i for i in got if i not in positions}),
+            getattr(usage, "prompt_tokens", None), getattr(usage, "completion_tokens", None))
 
 
 def run_path(dataset, split, setup, prompt):
@@ -208,9 +233,9 @@ def run_path(dataset, split, setup, prompt):
 
 def plan_is_committed():
     rel = PLAN.relative_to(ROOT).as_posix()
-    dirty = subprocess.run(["git", "status", "--porcelain", "--", rel], cwd=ROOT, capture_output=True, text=True).stdout
-    logged = subprocess.run(["git", "log", "-1", "--format=%h", "--", rel], cwd=ROOT, capture_output=True, text=True).stdout
-    return not dirty.strip() and bool(logged.strip())
+    dirty = subprocess.run(["git", "status", "--porcelain", "--", rel], cwd=ROOT, capture_output=True, text=True)
+    logged = subprocess.run(["git", "log", "-1", "--format=%h", "--", rel], cwd=ROOT, capture_output=True, text=True)
+    return not dirty.returncode and not logged.returncode and not dirty.stdout.strip() and bool(logged.stdout.strip())
 
 
 def run(args):
@@ -219,35 +244,62 @@ def run(args):
     if args.split == "test" and not plan_is_committed():
         sys.exit(f"Commit {PLAN.name} before any test call")
     rows = load_rows(args.dataset, args.split)
-    todo = list(units(rows, args.setup))
     if args.limit_papers:
         keep = set(list(papers_of(rows))[:args.limit_papers])
-        todo = [u for u in todo if any(k[0] in keep for k in u["keys"])]
+        rows = [r for r in rows if r["pid"] in keep]
+    todo = list(units(rows, args.setup))
     system = build_prompt(args.dataset, args.prompt)
-    path = run_path(args.dataset, args.split, args.setup, args.prompt)
+    path = Path(getattr(args, "output_dir", None) or OUTDIR) / f"{args.dataset}_{args.split}_{args.setup}_{args.prompt}.jsonl"
+    from baseline_evidence import prepare_run, validate_records, coverage, costs
+    metadata = prepare_run(args, rows, todo, system, path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    done = {r["unit"] for r in _jsonl(path)} if path.exists() else set()
-    client, max_tokens = qwen_client(), SETUPS[args.setup]["max_tokens"]
+    records = _jsonl(path) if path.exists() else []
+    validate_records(records, todo)
+    done = {r["unit"] for r in records}
+    if getattr(args, "backend", "openai") == "ollama":
+        from baseline_evidence import OllamaClient
+        client = OllamaClient(getattr(args, "base_url", None), getattr(args, "num_ctx", 131072))
+    else:
+        client = qwen_client()
+    max_tokens = SETUPS[args.setup]["max_tokens"]
     print(f"{path.name}: {len(todo)} calls, {len(done)} already saved", flush=True)
     with path.open("a", encoding="utf-8") as fh:
         for n, u in enumerate(todo, 1):
             if u["unit"] in done:
                 continue
-            rec, t0 = {"unit": u["unit"], "keys": u["keys"]}, time.time()
+            rec, t0 = {"unit": u["unit"], "keys": u["keys"], "ids": u["ids"], "attempt_log": [],
+                       "started_utc": datetime.now(timezone.utc).isoformat()}, time.monotonic()
             for attempt in range(1 + RETRIES):
+                evidence = {"attempt": attempt + 1, "prompt_tokens": None, "completion_tokens": None}
+                attempt_t0 = time.monotonic()
                 try:
-                    pos, bad, tin, tout = ask(client, system, u, max_tokens)
+                    pos, bad, tin, tout = ask(client, system, u, max_tokens, getattr(args, "model", MODEL), evidence)
                     rec.update(status="ok", positives=pos, kept=[u["keys"][i] for i in pos], invalid_ids=bad,
                                prompt_tokens=tin, completion_tokens=tout)
+                    evidence["status"] = "ok"
                     break
                 except Exception as e:  # recorded; never scored as an empty answer
                     rec.update(status="failed", error=f"{type(e).__name__}: {str(e)[:300]}")
-            rec.update(attempts=attempt + 1, seconds=round(time.time() - t0, 2))
+                    evidence.update(status="failed", error=rec["error"])
+                    # Some error responses include usage; absence remains null, never zero.
+                    body = getattr(e, "body", None)
+                    if isinstance(body, dict) and isinstance(body.get("usage"), dict):
+                        evidence.update({k: body["usage"].get(k) for k in ("prompt_tokens", "completion_tokens")})
+                finally:
+                    evidence["seconds"] = round(time.monotonic() - attempt_t0, 4)
+                    rec["attempt_log"].append(evidence)
+            if rec["status"] == "ok":
+                rec.pop("error", None)
+            rec.update(attempts=attempt + 1, seconds=round(time.monotonic() - t0, 4))
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
             fh.flush()
+            os.fsync(fh.fileno())
+            records.append(rec)
             detail = (f"kept {len(rec['kept'])}/{len(u['keys'])}, {rec['prompt_tokens']} tok" if rec["status"] == "ok"
                       else f"FAILED after {rec['attempts']} tries: {rec['error']}")
             print(f"  [{time.strftime('%H:%M:%S')}] {n}/{len(todo)} {u['unit']} {rec['seconds']:.1f}s {detail}", flush=True)
+    summary = {"manifest": metadata, "coverage": coverage(rows, todo, records), "costs": costs(records)}
+    path.with_suffix(".summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(f"done {path.name}", flush=True)
 
 
@@ -257,8 +309,8 @@ def run_all(args):
     for k, (dataset, setup, prompt) in enumerate(RUN_PLAN, 1):
         print(f"\n=== run {k}/{len(RUN_PLAN)}: {dataset} {setup} {prompt} "
               f"(elapsed {(time.time() - t0) / 60:.1f} min) ===", flush=True)
-        run(argparse.Namespace(dataset=dataset, setup=setup, prompt=prompt, split=args.split,
-                               limit_papers=args.limit_papers))
+        opts = vars(args) | dict(dataset=dataset, setup=setup, prompt=prompt)
+        run(argparse.Namespace(**opts))
 
 
 # ---------------------------------------------------------------- scoring
@@ -289,17 +341,21 @@ def boot(rows, kept, other=None, n=DRAWS):
     for _ in range(n):
         pick = rng.choices(papers, k=len(papers))
         x = total(a, pick)
-        draws.append(x[2] - total(b, pick)[2] if b else x)
+        draws.append(x[2] - total(b, pick)[2] if b is not None else x)
     def ci(vals):
         vals = sorted(vals)
         return [round(vals[int(0.025 * n)], 3), round(vals[int(0.975 * n)], 3)]
-    if b:
+    if b is not None:
         return {"f1_diff": round(total(a, papers)[2] - total(b, papers)[2], 3), "ci95": ci(draws)}
     return {k: ci([d[j] for d in draws]) for j, k in enumerate(("precision", "recall", "f1"))}
 
 
 def score_run(rows, path):
+    from baseline_evidence import costs, coverage, validate_records
     recs = _jsonl(path)
+    todo = list(units(rows, path.stem.split("_")[2]))
+    validate_records(recs, todo)
+    cov, cost = coverage(rows, todo, recs), costs(recs)
     kept = {(k[0], k[1]) for r in recs if r["status"] == "ok" for k in r["kept"]}
     p, r, f = prf(*[sum(v[j] for v in per_paper(rows, kept).values()) for j in range(3)])
     ok = [x for x in recs if x["status"] == "ok"]
@@ -308,9 +364,10 @@ def score_run(rows, path):
            "failed_sentences": sum(len(x["keys"]) for x in recs if x["status"] != "ok"),
            "empty_answers": sum(not x["positives"] for x in ok),
            "invalid_ids": sum(len(x["invalid_ids"]) for x in ok),
-           "input_tokens": sum(x["prompt_tokens"] for x in ok), "output_tokens": sum(x["completion_tokens"] for x in ok),
+           "input_tokens": cost["prompt_tokens"], "output_tokens": cost["completion_tokens"],
+           "costs": cost, "coverage": cov,
            "seconds": round(sum(x["seconds"] for x in recs), 1),
-           "complete": len(recs) == len(list(units(rows, path.stem.split("_")[2])))}
+           "complete": cov["every_requested_sentence_answered"]}
     if path.stem.startswith("gold_"):
         res["recall_by_type"] = {t: round(sum((x["pid"], x["idx"]) in kept for x in rows if x["label"] == t)
                                           / max(1, sum(x["label"] == t for x in rows)), 3) for t in GAP_TYPES}
@@ -380,7 +437,7 @@ def results_table(report):
             failed = f"{res['failed_calls']} ({res['failed_sentences']} sentences)" if res["failed_calls"] else "0"
             mark = "" if res["complete"] else " (incomplete)"
             lines.append(f"| {NAMES[dataset]} | {setup}{mark} | {prompt} | {pct(p, ci['precision'])} | {pct(r, ci['recall'])} | "
-                         f"{f1(f, ci['f1'])} | {diff} | {res['input_tokens']:,} | {res['seconds'] / 60:.1f} min | "
+                         f"{f1(f, ci['f1'])} | {diff} | {format(res['input_tokens'], ',') if res['input_tokens'] is not None else 'missing'} | {res['seconds'] / 60:.1f} min | "
                          f"{failed} | {res['empty_answers']} |")
             if "recall_by_type" in res:
                 t = res["recall_by_type"]
@@ -427,23 +484,36 @@ def check(args):
     print(json.dumps(summary, indent=1))
 
 
-def main():
+def add_run_options(parser):
+    parser.add_argument("--model", default=MODEL)
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--backend", choices=("openai", "ollama"), default="openai")
+    parser.add_argument("--base-url", help="Ollama URL (OpenAI uses QWEN_BASE_URL/QWEN_API_KEY)")
+    parser.add_argument("--num-ctx", type=int, default=131072)
+    parser.add_argument("--freeze-plan", type=Path, help="committed JSON plan with configuration and identity hashes")
+
+
+def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("check")
     ra = sub.add_parser("run-all")
     ra.add_argument("--split", required=True, choices=("dev", "test"))
     ra.add_argument("--limit-papers", type=int, default=0)
+    add_run_options(ra)
     r = sub.add_parser("run")
     r.add_argument("--dataset", required=True, choices=list(DATASETS))
     r.add_argument("--setup", required=True, choices=list(SETUPS))
     r.add_argument("--prompt", required=True, choices=RUBRIC_NAMES + ("validate_fws",))
     r.add_argument("--split", required=True, choices=("dev", "test"))
     r.add_argument("--limit-papers", type=int, default=0)
+    add_run_options(r)
     s = sub.add_parser("score")
     s.add_argument("--split", required=True, choices=("dev", "test"))
     s.add_argument("--write-plan", action="store_true", help="also put the table in baseline_qwen.md")
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
+    if hasattr(args, "limit_papers") and args.limit_papers < 0:
+        ap.error("--limit-papers must be nonnegative")
     {"check": check, "run": run, "run-all": run_all, "score": score}[args.cmd](args)
 
 

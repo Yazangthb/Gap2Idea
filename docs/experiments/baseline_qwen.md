@@ -233,6 +233,14 @@ Written after the test runs; nothing here changes a setting or a number above.
 
 ## Changes after test
 
+- **2026-11-18, MAKE revision P1/X1/X2:** new experiments are additive and use a fresh output root.
+  `RUN_PLAN` now includes FWS setup A with `future_scope` strict/neutral/keep_biased and SAL setup AS.
+  AS sends only DISCUSS/CONCL sentences, retaining their original ids; scoring still includes all
+  7,968 SAL test sentences and 205 limitations. All old raw evidence is preserved.
+  `whole_paper_other_llm.py` now calls the local runner and retains its plan guard.
+  Model, setup, dataset, prompt, backend and output directory are explicit CLI options.
+  See `baseline_revision_v100_2026-11-18.md` for the new protocol, commands and freeze procedure.
+
 - **Scoring display only:** the recall-by-gap-type table also listed the two FWS runs (all zeros except future
   work). It now lists arXiv runs only. No setting, call or number changed.
 
