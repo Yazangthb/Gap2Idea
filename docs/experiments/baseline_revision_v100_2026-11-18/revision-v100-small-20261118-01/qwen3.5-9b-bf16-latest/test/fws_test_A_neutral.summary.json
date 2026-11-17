@@ -1,0 +1,123 @@
+{
+  "manifest": {
+    "dataset": "fws",
+    "split": "test",
+    "setup": "A",
+    "prompt": "neutral",
+    "model": "qwen3.5-9b-bf16:latest",
+    "backend": "ollama",
+    "num_ctx": 131072,
+    "limit_papers": 0,
+    "temperature": 0,
+    "extra": {
+      "seed": 0,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    },
+    "max_tokens": 4096,
+    "data_sha256": "1256ce3340c56567fd7af8e41abdaad71bcd47701f2e035219d4e0446badb611",
+    "input_sha256": "9a519f77a14c81605ed87f640bc223122416ca46a4106962ee8a4eafc3f3bc01",
+    "prompt_sha256": "68f43e76debc6c327c7674dd0810d2ae0d18cc962e829387e238b828e43d9118",
+    "data_file_sha256": {
+      "data/splits/fws_test.jsonl": "f34ed39a835e113767d2ae6aa4171a09d557b1ebc0d9c702d20656ea9d7b35e3"
+    },
+    "code_sha256": "f70e33ca01193dbce0f1d1c5723312210ad88656bc9e36ec1921b7dd4d96dc23",
+    "model_identity": {
+      "digest": "a7f6869f354ba6c1ca6da702c51f1bee8cfbd938e1696153ee3efd0bfacb9bb6",
+      "details": {
+        "parent_model": "Qwen3.5-9B-BF16.gguf",
+        "format": "gguf",
+        "family": "qwen35",
+        "families": [
+          "qwen35"
+        ],
+        "parameter_size": "9.0B",
+        "quantization_level": "BF16",
+        "runner": "llamacpp"
+      },
+      "model_info": {
+        "general.architecture": "qwen35",
+        "general.base_model.0.name": "Qwen3.5 9B",
+        "general.base_model.0.organization": "Qwen",
+        "general.base_model.0.repo_url": "https://huggingface.co/Qwen/Qwen3.5-9B",
+        "general.base_model.count": 1,
+        "general.basename": "Qwen3.5-9B",
+        "general.file_type": 32,
+        "general.license": "apache-2.0",
+        "general.license.link": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/main/LICENSE",
+        "general.parameter_count": 8953803264,
+        "general.quantization_version": 2,
+        "general.quantized_by": "Unsloth",
+        "general.repo_url": "https://huggingface.co/unsloth",
+        "general.size_label": "9B",
+        "general.tags": [
+          "unsloth",
+          "image-text-to-text"
+        ],
+        "general.type": "model",
+        "qwen35.attention.head_count": 16,
+        "qwen35.attention.head_count_kv": 4,
+        "qwen35.attention.key_length": 256,
+        "qwen35.attention.layer_norm_rms_epsilon": 1e-06,
+        "qwen35.attention.value_length": 256,
+        "qwen35.block_count": 32,
+        "qwen35.context_length": 262144,
+        "qwen35.embedding_length": 4096,
+        "qwen35.feed_forward_length": 12288,
+        "qwen35.full_attention_interval": 4,
+        "qwen35.rope.dimension_count": 64,
+        "qwen35.rope.dimension_sections": [
+          11,
+          11,
+          10,
+          0
+        ],
+        "qwen35.rope.freq_base": 10000000,
+        "qwen35.ssm.conv_kernel": 4,
+        "qwen35.ssm.group_count": 16,
+        "qwen35.ssm.inner_size": 4096,
+        "qwen35.ssm.state_size": 128,
+        "qwen35.ssm.time_step_rank": 32,
+        "tokenizer.ggml.eos_token_id": 248046,
+        "tokenizer.ggml.merges": [],
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.padding_token_id": 248055,
+        "tokenizer.ggml.pre": "qwen35",
+        "tokenizer.ggml.token_type": [],
+        "tokenizer.ggml.tokens": []
+      },
+      "template_sha256": "c17a933c26907f0982a96e5cb3b6a5ef393f1722f13558ebda7be039649cb4cd",
+      "parameters": "num_ctx                        131072\nrepeat_penalty                 1\ntemperature                    0",
+      "system": null,
+      "server_version": "0.40.16"
+    },
+    "plan_sha256": "1e9fcac2627de7ba6f458b7ee96e47d64ecf6c09b646fd2d3f32716d8d64a0b5",
+    "code_commit": "ee71c865b16f772072ffeb6667babb9f6cb0b9b7"
+  },
+  "coverage": {
+    "total_sentences": 1506,
+    "requested_sentences": 1506,
+    "excluded_by_stage_a": 0,
+    "answered_sentences": 1506,
+    "failed_sentences": 0,
+    "unattempted_sentences": 0,
+    "duplicate_answers": 0,
+    "expected_calls": 209,
+    "saved_calls": 209,
+    "failed_calls": 0,
+    "all_calls_recorded": true,
+    "every_requested_sentence_answered": true
+  },
+  "costs": {
+    "attempts": 209,
+    "failed_attempts": 0,
+    "seconds": 148.4746,
+    "prompt_tokens_known": 115534,
+    "prompt_tokens_missing_attempts": 0,
+    "prompt_tokens": 115534,
+    "completion_tokens_known": 1733,
+    "completion_tokens_missing_attempts": 0,
+    "completion_tokens": 1733
+  }
+}

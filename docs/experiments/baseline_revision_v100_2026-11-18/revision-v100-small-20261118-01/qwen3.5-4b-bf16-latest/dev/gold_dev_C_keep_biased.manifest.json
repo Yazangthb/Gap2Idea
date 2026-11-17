@@ -1,0 +1,99 @@
+{
+  "dataset": "gold",
+  "split": "dev",
+  "setup": "C",
+  "prompt": "keep_biased",
+  "model": "qwen3.5-4b-bf16:latest",
+  "backend": "ollama",
+  "num_ctx": 131072,
+  "limit_papers": 2,
+  "temperature": 0,
+  "extra": {
+    "seed": 0,
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    }
+  },
+  "max_tokens": 1024,
+  "data_sha256": "e19c94f8c92865e9e3ba6ccadb9b6051029756ee29a68959a24d2a659b5ddff5",
+  "input_sha256": "e6288de142b55aa99c02508545309428765e3196d08842e768fd92cd6bb5eb6c",
+  "prompt_sha256": "869987090369eb6e743c23ced22241ef400835db3d5dd94542780c838e266987",
+  "data_file_sha256": {
+    "data/gold/splits.json": "e955fe742330a0eb0443b57a447073b18c8b5dd12523674317c08b7fba53c79c",
+    "data/gold/gap_gold_final.jsonl": "3325430fa8c507c6f7681c864c7e59b6f2f9840a4a41213951abf55baebac445",
+    "data/paper_texts.jsonl": "74de2bb4858b7c5640041083a37b54c31236d5cba97c83d9e34cdd8a8eb16838",
+    "stage_c_package/sal_criteria/sal_test_allmodels.json": "f4cf4d33aa52bd5d4417d4ed2295f24b2f58db70f1059fe1b04bad4f30c83e6d"
+  },
+  "code_sha256": "f70e33ca01193dbce0f1d1c5723312210ad88656bc9e36ec1921b7dd4d96dc23",
+  "model_identity": {
+    "digest": "23f8c64d937d3062759377d28559235f278fe675fa782da87699e583ddfb40e0",
+    "details": {
+      "parent_model": "Qwen3.5-4B-BF16.gguf",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+        "qwen35"
+      ],
+      "parameter_size": "4.2B",
+      "quantization_level": "BF16",
+      "runner": "llamacpp"
+    },
+    "model_info": {
+      "general.architecture": "qwen35",
+      "general.base_model.0.name": "Qwen3.5 4B",
+      "general.base_model.0.organization": "Qwen",
+      "general.base_model.0.repo_url": "https://huggingface.co/Qwen/Qwen3.5-4B",
+      "general.base_model.count": 1,
+      "general.basename": "Qwen3.5-4B",
+      "general.file_type": 32,
+      "general.license": "apache-2.0",
+      "general.license.link": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/main/LICENSE",
+      "general.parameter_count": 4205751296,
+      "general.quantization_version": 2,
+      "general.quantized_by": "Unsloth",
+      "general.repo_url": "https://huggingface.co/unsloth",
+      "general.size_label": "4B",
+      "general.tags": [
+        "unsloth",
+        "image-text-to-text"
+      ],
+      "general.type": "model",
+      "qwen35.attention.head_count": 16,
+      "qwen35.attention.head_count_kv": 4,
+      "qwen35.attention.key_length": 256,
+      "qwen35.attention.layer_norm_rms_epsilon": 1e-06,
+      "qwen35.attention.value_length": 256,
+      "qwen35.block_count": 32,
+      "qwen35.context_length": 262144,
+      "qwen35.embedding_length": 2560,
+      "qwen35.feed_forward_length": 9216,
+      "qwen35.full_attention_interval": 4,
+      "qwen35.rope.dimension_count": 64,
+      "qwen35.rope.dimension_sections": [
+        11,
+        11,
+        10,
+        0
+      ],
+      "qwen35.rope.freq_base": 10000000,
+      "qwen35.ssm.conv_kernel": 4,
+      "qwen35.ssm.group_count": 16,
+      "qwen35.ssm.inner_size": 4096,
+      "qwen35.ssm.state_size": 128,
+      "qwen35.ssm.time_step_rank": 32,
+      "tokenizer.ggml.eos_token_id": 248046,
+      "tokenizer.ggml.merges": [],
+      "tokenizer.ggml.model": "gpt2",
+      "tokenizer.ggml.padding_token_id": 248055,
+      "tokenizer.ggml.pre": "qwen35",
+      "tokenizer.ggml.token_type": [],
+      "tokenizer.ggml.tokens": []
+    },
+    "template_sha256": "c17a933c26907f0982a96e5cb3b6a5ef393f1722f13558ebda7be039649cb4cd",
+    "parameters": "temperature                    0\nnum_ctx                        131072\nrepeat_penalty                 1",
+    "system": null,
+    "server_version": "0.40.16"
+  },
+  "plan_sha256": "1e9fcac2627de7ba6f458b7ee96e47d64ecf6c09b646fd2d3f32716d8d64a0b5",
+  "code_commit": "84ad950301915e37d2602f49ca69838389156090"
+}
