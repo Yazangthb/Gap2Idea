@@ -1,0 +1,76 @@
+{
+  "weights": {
+    "4B": {
+      "repo": "unsloth/Qwen3.5-4B-GGUF",
+      "revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
+      "files": [
+        [
+          "Qwen3.5-4B-BF16.gguf",
+          "9e6e2841a75f503ccb330831832fd7861266e187e0dbf149a954219ccb8c197a"
+        ]
+      ]
+    },
+    "9B": {
+      "repo": "unsloth/Qwen3.5-9B-GGUF",
+      "revision": "3885219b6810b007914f3a7950a8d1b469d598a5",
+      "files": [
+        [
+          "Qwen3.5-9B-BF16.gguf",
+          "daebe40eeea7057c1cdf35ac56d13f507d8bf12171bbb7a6b6b0d3f05439159a"
+        ]
+      ]
+    }
+  },
+  "ollama_binary_sha256": "a0c1e355537b0c037f2190edd339197fe3eb00387a46d6e26be695250262a790",
+  "runtime_allocation": {
+    "11445": {
+      "models": [
+        {
+          "name": "qwen3.5-4b-bf16:latest",
+          "model": "qwen3.5-4b-bf16:latest",
+          "size": 17374841404,
+          "digest": "23f8c64d937d3062759377d28559235f278fe675fa782da87699e583ddfb40e0",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "4.2B",
+            "quantization_level": "BF16"
+          },
+          "expires_at": "2026-11-18T03:29:51.740938876+03:00",
+          "size_vram": 17374841404,
+          "context_length": 131072,
+          "runner": "llamacpp"
+        }
+      ]
+    },
+    "11446": {
+      "models": [
+        {
+          "name": "qwen3.5-9b-bf16:latest",
+          "model": "qwen3.5-9b-bf16:latest",
+          "size": 24841100983,
+          "digest": "a7f6869f354ba6c1ca6da702c51f1bee8cfbd938e1696153ee3efd0bfacb9bb6",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "9.0B",
+            "quantization_level": "BF16"
+          },
+          "expires_at": "2026-11-18T03:30:41.139603406+03:00",
+          "size_vram": 24841100983,
+          "context_length": 131072,
+          "runner": "llamacpp"
+        }
+      ]
+    }
+  },
+  "note": "BF16 GGUF weights, no quantization; CUDA runner selected on V100. One active inference at a time per dedicated GPU. 27B begins only after both small jobs complete."
+}
