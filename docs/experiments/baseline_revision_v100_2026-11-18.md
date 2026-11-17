@@ -19,6 +19,20 @@ Total: **48 configurations, 8,367 test calls**. Setup B is optional in the revis
 The development smoke matrix uses the first two development papers per dataset and the same configurations.
 The paper restriction is applied before batching, so a C smoke batch cannot include a third paper.
 
+### Historical-generation controls (prespecified before their test calls)
+
+Also prepare Qwen3.8-27B from the exact original FP8 revision named above, with the same whole-paper
+grid (FWS A, SAL A/AS and gold A, three rubrics: 12 configurations, 951 calls). These controls keep
+the old generation visible alongside the additional same-generation Qwen3.5-27B run.
+
+The original FP8 checkpoint is downloaded with per-file checksum verification. To run on V100, the
+official llama.cpp converter dequantizes it to F16; its converter commit and output checksum are recorded.
+This changes backend/arithmetic relative to the published vLLM FP8 run, and is **not a bitwise reproduction**.
+No different Qwen3.8 checkpoint or pre-existing Q4 model is substituted. Its plan and development smoke
+evidence are committed before its test calls. It runs after the Qwen3.5 campaign releases both GPUs.
+The original FP8 verdicts remain untouched. The complete additive campaign is therefore 60 configurations
+and 9,318 planned test calls, reported by generation and representation.
+
 ## Hardware and serving
 
 The user designated the V100 server. It has two Tesla V100-SXM2-32GB GPUs. Upstream current vLLM
