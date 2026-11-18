@@ -2,3 +2,5 @@
 /docs/experiments/baseline_revision_v100_2026-11-18/** -text
 /docs/experiments/baseline_revision_v100_*_plan.json -text
 /docs/experiments/baseline_revision_v100_*_weights.json -text
+/docs/experiments/baseline_revision_h100_2026-11-18/** -text
+/docs/experiments/baseline_revision_h100_plan.json -text
