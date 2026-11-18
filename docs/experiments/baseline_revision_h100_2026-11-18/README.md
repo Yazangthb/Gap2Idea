@@ -1,0 +1,13 @@
+# Native H100 baseline evidence
+
+See [campaign status](../baseline_revision_v100_STATUS.md), the [prospective protocol](../baseline_revision_h100_2026-11-18.md), and [pause/resume commands](../BASELINE_PAUSE_RESUME.md).
+
+`matched-h100-20261118-01/` contains Qwen3.5 4B/9B/27B BF16 and original Qwen3.8 27B FP8 evidence under native vLLM 0.32.0. The [frozen plan](../baseline_revision_h100_plan.json) was committed before inference and registers 60 test configurations, 9,318 calls, exact checkpoint revisions, file checksums, image identity and serving arguments. This cohort is separate from the V100/Ollama outputs.
+
+Only completed configurations are published. Each model has `dev/` and `test/` directories. Every configuration includes per-call `.jsonl` predictions with all attempts and failures, exact `.prompt.txt`, immutable `.manifest.json` and coverage/cost `.summary.json`. Runtime allocation proofs identify GPUs, driver, API model and Docker image. Smoke and test reports record the model's full matrix status.
+
+Tokens include retries and failed attempts. Unreported costs are missing, never zero. Native vLLM does not return the Ollama-specific server timing counters; client elapsed times and API token usage remain available. Failed calls are scored as not kept, and SAL AS is evaluated on the full sentence population. After all models finish, `handover/` contains sentence precision/recall/F1 and 2,000-draw paper-bootstrap intervals. The unchanged report generator labels its Markdown output "V100 baseline evidence"; the manifest identities and this directory identify these results as H100/vLLM. A paired funnel export must match the full model identity before differences are calculated.
+
+`_snapshots/` contains per-file SHA-256 transfer manifests. Git attributes preserve byte identity across Windows/Linux checkouts. `_runtime/h100_orchestration_20261118_01.tar.gz` archives the frozen main orchestration and original pause helper. `_runtime/campaign_control_v2_20261118.tar.gz` archives the deployed operational helper amendment and its isolated recovery check; its checksum is adjacent. The prospective plan is retained unchanged, and every real pause records the deployed helper hash.
+
+The earlier V100 27B plans were retired with zero inference calls after the user allocated these H100s. The native original Qwen3.8 FP8 run replaces that unexecuted F16-converted runtime proposal. Existing unrelated GPU services remain untouched.
