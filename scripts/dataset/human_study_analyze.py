@@ -13,6 +13,7 @@ import math
 import random
 import sys
 from collections import Counter
+from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -96,6 +97,56 @@ def weighted(shares, populations):
     return est, math.sqrt(variance)
 
 
+@lru_cache(maxsize=None)
+def finite_population_interval(k, n, population, tail_probability):
+    """Invert equal-tailed hypergeometric tests for a finite population total.
+
+    Sampling is without replacement.  Unlike a Wald interval this remains
+    informative when every sampled item has the same outcome.
+    """
+    if not (0 <= k <= n <= population and n > 0 and 0 < tail_probability < 0.5):
+        raise ValueError("Invalid count, population, or tail probability")
+    denominator = math.comb(population, n)
+    accepted = []
+    for successes in range(population + 1):
+        lo = max(0, n - (population - successes))
+        hi = min(n, successes)
+        probabilities = [math.comb(successes, x) * math.comb(population - successes, n - x) / denominator
+                         for x in range(lo, hi + 1)]
+        lower_tail = sum(probabilities[:max(0, min(k - lo + 1, len(probabilities)))])
+        upper_tail = sum(probabilities[max(0, min(k - lo, len(probabilities))):])
+        if lower_tail >= tail_probability and upper_tail >= tail_probability:
+            accepted.append(successes)
+    if not accepted:
+        raise ValueError("No finite-population totals satisfy the interval")
+    return min(accepted), max(accepted)
+
+
+def exclusion_sensitivity(shares, populations, strata, confidence=0.95):
+    """Supplementary point and simultaneous bounds without assuming excluded outcomes.
+
+    Eligible-unit intervals are exact hypergeometric intervals, with Bonferroni
+    adjustment across groups. Excluded units are all-negative/all-positive in
+    the outer bounds. This does not account for paper clustering or nonresponse.
+    """
+    total = sum(populations[s] for s in shares)
+    tail = (1 - confidence) / (2 * len(shares))
+    point_min = point_max = bound_min = bound_max = 0.0
+    for s, (k, n) in shares.items():
+        population = populations[s]
+        eligible = strata[s]["eligible"]
+        if not (0 < n <= eligible <= population):
+            raise ValueError(f"Invalid eligibility counts for {s}")
+        excluded = population - eligible
+        low, high = finite_population_interval(k, n, eligible, tail)
+        point_min += eligible * (k / n)
+        point_max += eligible * (k / n) + excluded
+        bound_min += low
+        bound_max += high + excluded
+    return {"point_range": (point_min / total, point_max / total),
+            "interval": (bound_min / total, bound_max / total)}
+
+
 def binomial_p(k, n, p0=0.5):
     return sum(math.comb(n, i) * p0 ** i * (1 - p0) ** (n - i) for i in range(k, n + 1))
 
@@ -137,6 +188,8 @@ def analyze(argv):
     sal_any, sal_any_se = weighted({s: any_gap[s] for s in TRACKS["sal"]}, pop)
     s2_k, s2_n = lim["S2"]
     s2_p = binomial_p(s2_k, s2_n)
+    sens_arxiv = exclusion_sensitivity({s: any_gap[s] for s in TRACKS["arxiv"]}, pop, manifest["strata"])
+    sens_sal = exclusion_sensitivity({s: lim[s] for s in TRACKS["sal"]}, pop, manifest["strata"])
     b1_papers = Counter(x["paper"] for x in by["B1"])
 
     claim1 = gate and arxiv_lb > PRECISION_BAR
@@ -161,7 +214,18 @@ def analyze(argv):
     ]
     for s in pop:
         lines.append(f"| {desc[s]} | {pop[s]} | {any_gap[s][1]} | {any_gap[s][0]} | {lim[s][0]} |")
-    lines += ["", "## Rater agreement", "",
+    lines += ["", "## Supplementary sensitivity to excluded items", "",
+              "The original weighted estimates assume excluded items behave like eligible items. "
+              "The ranges below instead set all excluded items to negative or positive, respectively. "
+              "Point ranges extrapolate the sample share to eligible items; the 95% bounds additionally "
+              "use exact finite-population intervals with a Bonferroni adjustment across strata. "
+              "They do not account for paper clustering or nonresponse.", "",
+              "| Track | Point sensitivity range | Conservative simultaneous 95% bounds |",
+              "|---|---|---|",
+              f"| arXiv, any gap | {sens_arxiv['point_range'][0]:.1%}–{sens_arxiv['point_range'][1]:.1%} | {sens_arxiv['interval'][0]:.1%}–{sens_arxiv['interval'][1]:.1%} |",
+              f"| SAL-40, limitation | {sens_sal['point_range'][0]:.1%}–{sens_sal['point_range'][1]:.1%} | {sens_sal['interval'][0]:.1%}–{sens_sal['interval'][1]:.1%} |", "",
+              "These supplementary bounds do not replace or alter the prespecified primary tests.",
+              "", "## Rater agreement", "",
               f"Gap or not: {sum(a == b for a, b in pairs_gap) / len(key):.1%} agreement, Krippendorff's alpha {alpha(pairs_gap)}.",
               f"Including type: {sum(a == b for a, b in pairs_type) / len(key):.1%} agreement, Krippendorff's alpha {alpha(pairs_type)}.", "",
               "## Limits", "",
