@@ -1,0 +1,126 @@
+{
+  "manifest": {
+    "dataset": "gold",
+    "split": "test",
+    "setup": "A",
+    "prompt": "strict",
+    "model": "qwen3.5-4b-bf16:latest",
+    "backend": "ollama",
+    "num_ctx": 131072,
+    "limit_papers": 0,
+    "temperature": 0,
+    "extra": {
+      "seed": 0,
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      }
+    },
+    "max_tokens": 4096,
+    "data_sha256": "db057ea49ee473aa9de9f8fbabe3d69bd2b8925f156faf69bfe1083fcc6f36f8",
+    "input_sha256": "87e047dd1b34585f7b801eeef70cd6fb2f3be456a891e3c9c5c8d919c7359d7c",
+    "prompt_sha256": "95b9d0db4bd7df86cfb342d1af6f339c5573db876fa060a7891ac1490d0d6fce",
+    "data_file_sha256": {
+      "data/gold/splits.json": "e955fe742330a0eb0443b57a447073b18c8b5dd12523674317c08b7fba53c79c",
+      "data/gold/gap_gold_final.jsonl": "3325430fa8c507c6f7681c864c7e59b6f2f9840a4a41213951abf55baebac445",
+      "data/paper_texts.jsonl": "74de2bb4858b7c5640041083a37b54c31236d5cba97c83d9e34cdd8a8eb16838",
+      "stage_c_package/sal_criteria/sal_test_allmodels.json": "f4cf4d33aa52bd5d4417d4ed2295f24b2f58db70f1059fe1b04bad4f30c83e6d"
+    },
+    "code_sha256": "f70e33ca01193dbce0f1d1c5723312210ad88656bc9e36ec1921b7dd4d96dc23",
+    "model_identity": {
+      "digest": "23f8c64d937d3062759377d28559235f278fe675fa782da87699e583ddfb40e0",
+      "details": {
+        "parent_model": "Qwen3.5-4B-BF16.gguf",
+        "format": "gguf",
+        "family": "qwen35",
+        "families": [
+          "qwen35"
+        ],
+        "parameter_size": "4.2B",
+        "quantization_level": "BF16",
+        "runner": "llamacpp"
+      },
+      "model_info": {
+        "general.architecture": "qwen35",
+        "general.base_model.0.name": "Qwen3.5 4B",
+        "general.base_model.0.organization": "Qwen",
+        "general.base_model.0.repo_url": "https://huggingface.co/Qwen/Qwen3.5-4B",
+        "general.base_model.count": 1,
+        "general.basename": "Qwen3.5-4B",
+        "general.file_type": 32,
+        "general.license": "apache-2.0",
+        "general.license.link": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/main/LICENSE",
+        "general.parameter_count": 4205751296,
+        "general.quantization_version": 2,
+        "general.quantized_by": "Unsloth",
+        "general.repo_url": "https://huggingface.co/unsloth",
+        "general.size_label": "4B",
+        "general.tags": [
+          "unsloth",
+          "image-text-to-text"
+        ],
+        "general.type": "model",
+        "qwen35.attention.head_count": 16,
+        "qwen35.attention.head_count_kv": 4,
+        "qwen35.attention.key_length": 256,
+        "qwen35.attention.layer_norm_rms_epsilon": 1e-06,
+        "qwen35.attention.value_length": 256,
+        "qwen35.block_count": 32,
+        "qwen35.context_length": 262144,
+        "qwen35.embedding_length": 2560,
+        "qwen35.feed_forward_length": 9216,
+        "qwen35.full_attention_interval": 4,
+        "qwen35.rope.dimension_count": 64,
+        "qwen35.rope.dimension_sections": [
+          11,
+          11,
+          10,
+          0
+        ],
+        "qwen35.rope.freq_base": 10000000,
+        "qwen35.ssm.conv_kernel": 4,
+        "qwen35.ssm.group_count": 16,
+        "qwen35.ssm.inner_size": 4096,
+        "qwen35.ssm.state_size": 128,
+        "qwen35.ssm.time_step_rank": 32,
+        "tokenizer.ggml.eos_token_id": 248046,
+        "tokenizer.ggml.merges": [],
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.padding_token_id": 248055,
+        "tokenizer.ggml.pre": "qwen35",
+        "tokenizer.ggml.token_type": [],
+        "tokenizer.ggml.tokens": []
+      },
+      "template_sha256": "c17a933c26907f0982a96e5cb3b6a5ef393f1722f13558ebda7be039649cb4cd",
+      "parameters": "temperature                    0\nnum_ctx                        131072\nrepeat_penalty                 1",
+      "system": null,
+      "server_version": "0.40.16"
+    },
+    "plan_sha256": "1e9fcac2627de7ba6f458b7ee96e47d64ecf6c09b646fd2d3f32716d8d64a0b5",
+    "code_commit": "16011edc70dc1e9b4bb865c2faaa28efe22dd193"
+  },
+  "coverage": {
+    "total_sentences": 10388,
+    "requested_sentences": 10388,
+    "excluded_by_stage_a": 0,
+    "answered_sentences": 8862,
+    "failed_sentences": 1526,
+    "unattempted_sentences": 0,
+    "duplicate_answers": 0,
+    "expected_calls": 28,
+    "saved_calls": 28,
+    "failed_calls": 1,
+    "all_calls_recorded": true,
+    "every_requested_sentence_answered": false
+  },
+  "costs": {
+    "attempts": 30,
+    "failed_attempts": 3,
+    "seconds": 918.4312,
+    "prompt_tokens_known": 698558,
+    "prompt_tokens_missing_attempts": 0,
+    "prompt_tokens": 698558,
+    "completion_tokens_known": 18290,
+    "completion_tokens_missing_attempts": 0,
+    "completion_tokens": 18290
+  }
+}

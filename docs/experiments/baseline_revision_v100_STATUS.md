@@ -1,34 +1,44 @@
-# V100 baseline run status
+# November baseline campaign status
 
-18 November 2026, 03:12 Europe/Moscow. Inference is still in progress.
+18 November 2026, 04:42 Europe/Moscow. Inference is still in progress.
 
-- Runner source: `84ad950`; 29 runner tests pass locally and on the V100 server.
-- Small-model freeze: `ee71c86` (36 configurations, 7,416 calls).
-- Qwen3.5 27B freeze: `5bf4d60` (12 configurations, 951 calls).
-- Historical Qwen3.8 control freeze: `16011ed` (12 configurations, 951 calls).
-- All plans, identities, conversion/checkpoint revisions, hashes, settings and commands are pushed
-  to `submission-make` before their test inference. The main same-generation matrix has 48 configurations;
-  the additional historical-generation controls bring the campaign to 60 configurations and 9,318 calls.
+The campaign now runs on the V100 and H100 hosts. User-authorized H100 allocation moved the two
+pending 27B cohorts to native vLLM and retained additional H100 4B/9B controls. The V100 27B plans
+remain as unexecuted provenance: no calls were made under those two plans, and their old queue was
+retired. V100 and H100 predictions are separate cohorts.
 
-Qwen3.5 4B and 9B each passed all 18 development configurations. Their full test matrices are running
-on dedicated V100s. Both completed SAL and FWS whole-paper runs in all three prompt modes.
-They are now evaluating arXiv whole papers. At the latest checkpoint, 4B had one output-limit failure
-(after the two prescribed retries), with all attempt costs retained; 9B had no failed calls.
-No settings were changed in response to that failure.
+| Cohort | Model | Recorded test calls | Planned calls | Failed calls | State |
+|---|---|---:|---:|---:|---|
+| V100 / Ollama | Qwen3.5 4B BF16 | 3,708 | 3,708 | 2 | All 18 configurations recorded |
+| V100 / Ollama | Qwen3.5 9B BF16 | 2,272 | 3,708 | 0 | Running; 04:41 snapshot |
+| H100 / vLLM | Qwen3.5 27B BF16 | 796 | 951 | 0 | Running |
+| H100 / vLLM | Qwen3.8 27B FP8 | 951 | 951 | 0 | All 12 configurations recorded |
+| H100 / vLLM | Qwen3.5 4B BF16 | 0 | 3,708 | 0 | Follows Qwen3.5 27B on GPU 0 |
+| H100 / vLLM | Qwen3.5 9B BF16 | 0 | 3,708 | 0 | Server starting on GPU 1 |
 
-Both 27B checkpoints are imported. Their development and test phases are queued, in order, after
-both small-model jobs release the GPUs. The queue checks full GPU residency after development smoke
-and before test inference. A tokenizer check found a maximum 72,285-token gold input, or 76,381 tokens
-with the fixed output budget; the 27B context cap is 81,920. Small models use 131,072.
+The V100 4B failures hit the fixed output limit after the prescribed two retries. All attempts and
+token costs are retained; settings were not adjusted in response. Both V100 small models passed all
+18 development configurations, and both H100 27B models passed their 12 development configurations
+before test inference. H100 small controls must pass the same development gate.
 
-Completed evidence is being committed under
-[`baseline_revision_v100_2026-11-18/`](baseline_revision_v100_2026-11-18/README.md).
-Each configuration includes predictions, exact prompts, immutable manifests, coverage, failed/retried
-attempts, known/missing token counts and timings. Raw evidence is never overwritten; snapshot hashes
-are verified against the Git objects. Fresh server evidence is under `~/gap2idea-baselines/runs/`.
+The active matrix contains 96 test configurations and 16,734 calls across the two distinct backends.
+Runner Python remains frozen at `84ad950`. All 29 runner tests pass locally, on V100, and on H100.
+The V100 small plan was committed at `ee71c86`, and the H100 plan at `a3b7c85`, before inference.
+All 120 H100 development/test prompt, input and data hashes match corresponding V100 configurations.
 
-The new V100/Ollama configuration is separated from historical A100/vLLM results. The original
-Qwen3.8 FP8 checkpoint is dequantized to F16 for V100, explicitly not a bitwise FP8 runtime reproduction.
-The three Qwen3.5 sizes are the same-generation comparison. Final accuracy is reported after the
-prespecified runs finish. P2 funnel integration uses identity-matched exports and funnel-minus-baseline
-paired differences; no older PubMedBERT SAL funnel or different Qwen generation is substituted.
+Completed configuration evidence is being pushed under
+[`baseline_revision_v100_2026-11-18/`](baseline_revision_v100_2026-11-18/README.md) and
+[`baseline_revision_h100_2026-11-18/`](baseline_revision_h100_2026-11-18/).
+Each includes predictions, exact prompts, immutable manifests, coverage, failed/retried attempts,
+known/missing tokens and timings. Raw evidence is not overwritten; snapshot hashes are checked
+before import. Fresh server evidence remains in each campaign's `runs/` directory.
+
+The H100 extension uses the original native Qwen3.8 FP8 checkpoint and BF16 Qwen3.5 sizes under
+vLLM 0.32.0. The unexecuted V100 Qwen3.8 F16 conversion is not reported as a runtime reproduction.
+Final scoring uses all evaluation sentences and 2,000 paper bootstrap draws. Paired P2 funnel
+differences require identity-matched exports; older PubMedBERT SAL or other-generation predictions
+are not substituted.
+
+See [pause/resume commands](BASELINE_PAUSE_RESUME.md) for Yazan. They preserve saved calls, record a
+versioned checkpoint and free only campaign model memory. The helper's operational version 2
+amendment is archived separately; no scientific source or settings changed.
