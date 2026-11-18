@@ -1,0 +1,48 @@
+{
+  "weights": {
+    "repo": "unsloth/Qwen3.5-27B-GGUF",
+    "revision": "3221f178a6b842d04f1fb42f1c413534adcc0a6a",
+    "files": [
+      [
+        "BF16/Qwen3.5-27B-BF16-00001-of-00002.gguf",
+        "c834354ad4ddc2054ac400842ea20d8801bd6718f6cda95baeed6796b5e17e4f"
+      ],
+      [
+        "BF16/Qwen3.5-27B-BF16-00002-of-00002.gguf",
+        "cd31f613eff781cde1bfe2b897a1eb37104bf0072a7bc5d1b4e9d363bd75a9bc"
+      ]
+    ],
+    "merged_sha256": "3c6e686cd67f918d157dbe009322c752b8acf3269c85ace31e0ca0ed25af4f5c",
+    "merge_tool_commit": "52975342ff6b85127ff31930d39e36725fd08809"
+  },
+  "context_check": {
+    "3.5": {
+      "tokenizer_source": "Qwen/Qwen3.5-27B",
+      "tokenizer_revision": "fc05daec18b0a78c049392ed2e771dde82bdf654",
+      "longest": {
+        "tokens": 72285,
+        "unit": "2402.10999:0",
+        "split": "test",
+        "prompt": "strict"
+      },
+      "output_budget": 4096,
+      "minimum_context": 76381,
+      "safe_at_81920": true
+    },
+    "3.8": {
+      "tokenizer_source": "/home/hamza/gap2idea-baselines/weights/legacy38-fp8",
+      "tokenizer_revision": null,
+      "longest": {
+        "tokens": 72285,
+        "unit": "2402.10999:0",
+        "split": "test",
+        "prompt": "strict"
+      },
+      "output_budget": 4096,
+      "minimum_context": 76381,
+      "safe_at_81920": true
+    }
+  },
+  "ollama_binary_sha256": "a0c1e355537b0c037f2190edd339197fe3eb00387a46d6e26be695250262a790",
+  "allocation": "Both V100s, only after small-model completion. num_ctx=81920 exceeds the measured 76381-token input+output maximum. Full GPU residency is checked after development smoke and before test."
+}
