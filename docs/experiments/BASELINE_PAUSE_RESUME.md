@@ -32,3 +32,11 @@ Resume uses the original frozen plans and skips recorded units, including record
 Use `status` instead of `pause` to inspect saved progress, or `pause --dry-run` to preview the exact process/container scope without stopping anything. Dry-run scope was checked against the live campaign on both hosts. Tail recovery was checked with an isolated valid-prefix/partial-record fixture. Live inference was not interrupted just to exercise the controls.
 
 The deployed helper is archived in [`baseline_revision_h100_2026-11-18/_runtime/`](baseline_revision_h100_2026-11-18/_runtime/). Version 2 corrects host detection and validates `--dry-run` use. This operational amendment changes no scientific settings, model identity, prompt, data, frozen runner source, or main H100 orchestration. The original H100 plan retains the prospective version 1 helper hash; each actual pause records the deployed helper's hash for audit.
+
+## Turning off the local PC
+
+Both inference campaigns run detached on their servers, with no local API tunnel or SSH dependency. Closing Codex, disconnecting SSH or shutting down the local PC does not stop them. The H100 main driver already scores its completed cohort and stops its own model containers. A detached `finalize_campaign.py` now waits on each server: on V100 it generates the final CPU report and unloads finished campaign models; on both servers it creates a complete evidence ZIP after reporting. It never starts or resumes inference, so a paused incomplete campaign stays paused.
+
+Final reports are in each campaign's `runs/<cohort>/handover/`. Server completion is recorded in `COMPLETE.json`; `LAST_COMPLETED_SNAPSHOT.json` points to the final ZIP with per-file checksums. Finalizer output is in `finalizer.log`. These files remain on the server while the local PC is off. Local monitoring and downloading/pushing the final evidence to GitHub require reconnecting; already pushed evidence stays available in the repository.
+
+Finalization/snapshot helper source and SHA-256 hashes are archived alongside the control helper. This is an operational reporting amendment; the frozen inference runner, main H100 driver and scientific plans remain unchanged.
