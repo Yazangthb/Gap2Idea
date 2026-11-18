@@ -38,6 +38,8 @@ and 9,318 planned test calls, reported by generation and representation.
 The user designated the V100 server. It has two Tesla V100-SXM2-32GB GPUs. Upstream current vLLM
 requires compute capability >=7.5; V100 is 7.0. We use a private, loopback-only Ollama 0.40.16
 service (llama.cpp backend) under Hamza's account, without altering the other user's server.
+See the [upstream GPU requirements](https://docs.vllm.ai/en/latest/getting_started/installation/gpu/)
+and [architecture matrix](https://docs.vllm.ai/en/latest/features/quantization/index.html).
 
 This is a **new backend/precision configuration**, separate from historical A100/vLLM/FP8 or bf16 runs.
 Use unquantized BF16 GGUF conversions for all three sizes, with conversion repository revisions and

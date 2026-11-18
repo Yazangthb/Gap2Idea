@@ -37,3 +37,8 @@ can be supplied to `baseline_report.py --comparisons`; differences are funnel mi
 `_snapshots/` lists SHA-256 hashes of every completed file at each transfer. Git attributes disable
 line-ending conversion for this evidence tree so those byte hashes survive Windows/Linux checkouts.
 Old verdict files outside this directory are preserved.
+
+The [provisioning source archive](_runtime/provisioning_source_20261118_01.tar.gz) contains the pinned
+model download/verification scripts, merge/conversion commands, queue controller, tokenizer capacity
+check, exact runtime/converter dependency lists and source manifests. Its SHA-256 is stored beside it.
+It contains no model weights, external benchmark text, credentials or private study files.
