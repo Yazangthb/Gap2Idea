@@ -6,6 +6,8 @@
   simulate DIR                             write fake answers for a dry run; real files are untouched
 
 Rejects files from another sample, incomplete files and repeated raters. Claims need the decoy gate to pass.
+The primary tests are as frozen on 2026-11-05. A supplementary section (exact per-group intervals, a conservative
+lower bound, the effect of excluded items) was added on 2026-11-17, before any rating.
 """
 import hashlib
 import json
@@ -24,6 +26,9 @@ PRECISION_BAR = 0.70
 MAX_DECOY_YES = 2
 Z_ONE_SIDED = 1.645
 TRACKS = {"arxiv": ("B1", "B2"), "sal": ("S1", "S2", "S3")}
+# Two decoys that can fairly be read as caveats, named on 2026-11-17 before any rating. The gate itself is
+# unchanged; the report only adds the decoy count without them.
+BORDERLINE_DECOYS = ("q023", "q084")
 
 
 def load_key():
@@ -100,6 +105,41 @@ def binomial_p(k, n, p0=0.5):
     return sum(math.comb(n, i) * p0 ** i * (1 - p0) ** (n - i) for i in range(k, n + 1))
 
 
+# Supplementary analysis, fixed on 2026-11-17 before any rating (see human_study_freeze.md, deviations).
+# It adds to the primary tests and never replaces them.
+
+def exact_bounds(k, n, alpha):
+    """Clopper-Pearson one-sided bounds at level alpha each: (lower, upper). Defined even for 0/n and n/n."""
+    def solve(f):
+        lo, hi = 0.0, 1.0
+        for _ in range(80):
+            mid = (lo + hi) / 2
+            lo, hi = (mid, hi) if f(mid) else (lo, mid)
+        return (lo + hi) / 2
+    lower = 0.0 if k == 0 else solve(lambda p: binomial_p(k, n, p) < alpha)
+    upper = 1.0 if k == n else solve(lambda p: 1 - binomial_p(k + 1, n, p) > alpha)
+    return lower, upper
+
+
+def conservative_lower(shares, populations, alpha=0.05):
+    """Weighted sum of per-group exact lower bounds, each at alpha / groups (Bonferroni), so the combined bound
+    holds at level alpha. Unlike the primary bound it does not shrink to zero width when a group is unanimous."""
+    total = sum(populations[s] for s in shares)
+    return sum(populations[s] / total * exact_bounds(c, n, alpha / len(shares))[0] for s, (c, n) in shares.items())
+
+
+def excluded_range(shares, populations, eligible):
+    """The weighted share if the items excluded before sampling were all not gaps, or all gaps."""
+    total = sum(populations[s] for s in shares)
+    low = sum(eligible[s] * c / n for s, (c, n) in shares.items()) / total
+    high = sum(eligible[s] * c / n + populations[s] - eligible[s] for s, (c, n) in shares.items()) / total
+    return low, high
+
+
+def smallest_significant(n, alpha=0.05):
+    return next(k for k in range(n + 1) if binomial_p(k, n) < alpha)
+
+
 def analyze(argv):
     if "--out" not in argv:
         sys.exit("Give --out FILE.md")
@@ -161,6 +201,36 @@ def analyze(argv):
     ]
     for s in pop:
         lines.append(f"| {desc[s]} | {pop[s]} | {any_gap[s][1]} | {any_gap[s][0]} | {lim[s][0]} |")
+    eligible = {s: manifest["strata"][s]["eligible"] for s in pop}
+    arxiv_shares = {s: any_gap[s] for s in TRACKS["arxiv"]}
+    sal_shares = {s: lim[s] for s in TRACKS["sal"]}
+    a_lo, a_hi = excluded_range(arxiv_shares, pop, eligible)
+    s_lo, s_hi = excluded_range(sal_shares, pop, eligible)
+    decoys_called = sorted(x["id"] for x in by["D"] if labels[x["id"]]["is_gap"])
+    other_decoys = [x for x in by["D"] if x["id"] not in BORDERLINE_DECOYS]
+    tied_type = sorted(i for i, v in labels.items() if v["type"] == "unresolved")
+
+    def ci(c, n):
+        lo, hi = exact_bounds(c, n, 0.025)
+        return f"{c / n:.1%} ({lo:.1%} to {hi:.1%})"
+    lines += ["", "## Supplementary analysis (fixed 2026-11-17, before any rating)", "",
+              "These do not change the primary tests above.", "",
+              "| Group | Rated | Any gap, exact 95% interval | Limitation, exact 95% interval |", "|---|---|---|---|"]
+    for s in pop:
+        lines.append(f"| {desc[s]} | {any_gap[s][1]} | {ci(*any_gap[s])} | {ci(*lim[s])} |")
+    lines += ["",
+              f"- arXiv, any gap type: conservative one-sided 95% lower bound {conservative_lower(arxiv_shares, pop):.1%} "
+              "(exact bound per group, Bonferroni over groups; valid when a group is unanimous).",
+              f"- SAL-40, limitation only: conservative one-sided 95% lower bound {conservative_lower(sal_shares, pop):.1%}.",
+              f"- Items excluded before sampling ({', '.join(f'{s} {pop[s] - eligible[s]}' for s in pop if pop[s] > eligible[s])}): "
+              f"if all were not gaps / all were gaps, the arXiv estimate would be {a_lo:.1%} / {a_hi:.1%} and the SAL-40 "
+              f"limitation estimate {s_lo:.1%} / {s_hi:.1%}. The primary estimates assume they behave like the sampled items.",
+              f"- With {s2_n} items, the SAL test needs at least {smallest_significant(s2_n)} limitations for p < 0.05.",
+              f"- Decoys labelled a gap: {', '.join(decoys_called) if decoys_called else 'none'}. Without the two "
+              f"borderline decoys named before rating ({', '.join(BORDERLINE_DECOYS)}): "
+              f"{sum(labels[x['id']]['is_gap'] for x in other_decoys)} of {len(other_decoys)}.",
+              f"- Items called a gap whose type stayed tied after the tie-breaker (counted as a gap, not as a "
+              f"limitation): {len(tied_type)}{' (' + ', '.join(tied_type) + ')' if tied_type else ''}."]
     lines += ["", "## Rater agreement", "",
               f"Gap or not: {sum(a == b for a, b in pairs_gap) / len(key):.1%} agreement, Krippendorff's alpha {alpha(pairs_gap)}.",
               f"Including type: {sum(a == b for a, b in pairs_type) / len(key):.1%} agreement, Krippendorff's alpha {alpha(pairs_type)}.", "",

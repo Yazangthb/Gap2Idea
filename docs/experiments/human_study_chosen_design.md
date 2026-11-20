@@ -61,7 +61,7 @@ Counts were checked on 2026-11-05 against the saved verdicts. Exact sampling dra
 ## Workload
 
 At about 30 s per item:
-- Each rater: 136 items, **65–75 minutes**.
+- Each rater: 135 items (136 planned, 135 after exclusions), **65–75 minutes**.
 - Tie-breaker: about 30 items, **15 minutes**.
 - Total: **about 2.5 person-hours** across 3 people.
 
