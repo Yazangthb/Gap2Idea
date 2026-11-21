@@ -40,8 +40,8 @@
     "data/paper_texts.jsonl": "74de2bb4858b7c5640041083a37b54c31236d5cba97c83d9e34cdd8a8eb16838",
     "data/gold/nli_val_scores.npz": "f2e99e7997f9b1e30baa13a186807c35756639d62a9310f2cad12348ae261a77",
     "docs/experiments/nli_variants.json": "1bd046387e36252225f02c29791769f063ecbc1187edcf003248bbd3eff42e3a",
-    "docs\\experiments\\five_paper_pilot_2026-11-21\\reference_27b_val_strict.jsonl": "d473cd12d6139e23387fb49675ca689aa875ecf3606f32ac3b0b38cfdcc133f3",
-    "scripts/bench/five_paper_pilot.py": "673999825a14008e09f2cbb1d11a67545ca47a4c7b92a1d41f968a87eb20d3b0"
+    "docs/experiments/five_paper_pilot_2026-11-21/reference_27b_val_strict.jsonl": "d473cd12d6139e23387fb49675ca689aa875ecf3606f32ac3b0b38cfdcc133f3",
+    "scripts/bench/five_paper_pilot.py": "b81a6bd2d8ee1bff3beea55332defd0da9996b740916aa3ef6028f02308bee7d"
   },
   "hash_note": "Text file SHA-256 values normalize CRLF to LF; NPZ bytes are not normalized."
 }

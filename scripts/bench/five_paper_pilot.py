@@ -76,7 +76,7 @@ def make_plan():
         raise ValueError('Saved 27B validation verdicts are incomplete or duplicated')
     files = ['data/gold/gap_gold_final.jsonl', 'data/gold/splits.json', 'data/paper_texts.jsonl',
              'data/gold/nli_val_scores.npz', 'docs/experiments/nli_variants.json',
-             str(REFERENCE.relative_to(ROOT)), 'scripts/bench/five_paper_pilot.py']
+             REFERENCE.relative_to(ROOT).as_posix(), 'scripts/bench/five_paper_pilot.py']
     plan = {'purpose': '5 full papers per call vs 20-candidate funnel; development pilot only',
             'sample_rule': 'random.Random(20261121).sample(sorted(arxiv validation paper ids), 5)',
             'paper_ids': IDS, 'rows_sha256': digest(rows), 'keys_sha256': digest(keys),
@@ -98,7 +98,7 @@ def require_frozen():
     plan = json.loads(PLAN.read_text(encoding='utf8'))
     if plan != make_plan():
         raise SystemExit('Plan, data, prompts, candidate selection or code changed; do not run')
-    paths = [str(PLAN.relative_to(ROOT)), str(Path(__file__).resolve().relative_to(ROOT)), str(REFERENCE.relative_to(ROOT))]
+    paths = [PLAN.relative_to(ROOT).as_posix(), Path(__file__).resolve().relative_to(ROOT).as_posix(), REFERENCE.relative_to(ROOT).as_posix()]
     for path in paths:
         if subprocess.run(['git','status','--porcelain','--',path],cwd=ROOT,capture_output=True,text=True).stdout.strip():
             raise SystemExit('Commit the exact plan, runner and reference before inference')
