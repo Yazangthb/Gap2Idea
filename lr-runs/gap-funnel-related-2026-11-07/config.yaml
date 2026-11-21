@@ -1,0 +1,123 @@
+topic: Extracting author-stated research gaps (limitations, future work, open problems)
+  from scientific papers; cascaded/funnel classification vs whole-document LLM prompting
+created: '2026-11-07'
+research_questions:
+- id: RQ1
+  text: Which methods detect author-stated limitations, future work or open research
+    problems at the sentence level in scientific papers?
+- id: RQ2
+  text: How do cascaded or retrieve-then-verify pipelines (rules, small classifiers,
+    NLI, then an LLM) compare with whole-document LLM prompting in accuracy and cost?
+- id: RQ3
+  text: How do LLMs, especially small ones, degrade on long scientific documents for
+    extraction tasks?
+inclusion_criteria:
+- Proposes, evaluates or benchmarks a method for identifying limitations, future work,
+  research gaps or open problems in scientific text
+- Or studies cascaded / filter-then-LLM pipelines, zero-shot NLI classification, or
+  long-context degradation of LLMs on document-level extraction
+- Or uses mined research gaps / limitations for idea or hypothesis generation
+exclusion_criteria:
+- Only about writing limitations sections or reporting guidelines, with no automatic
+  method
+- General long-context benchmarks unrelated to extraction or classification
+- Not in English
+seed:
+  queries:
+  - automatic identification of limitation sentences in scientific articles
+  - future work sentence extraction from research papers
+  - mining research gaps and open problems from scientific literature with large language
+    models
+  - zero-shot natural language inference for sentence classification in scientific
+    text
+  - LLM cascade cheap classifier filter before large language model cost reduction
+  - long context degradation small language models document-level information extraction
+  per_query: 10
+  papers:
+  - '2307.03172'
+  - '2305.05176'
+  - '2404.06654'
+  - '2305.14259'
+  - '2404.07738'
+  - '2409.04109'
+  - 10.1093/jamia/ocy038
+  - '1909.00161'
+search:
+  sources:
+  - openalex
+  - arxiv
+  - semantic_scholar
+  queries:
+  - ("limitation sentence*" OR "self-acknowledged limitation*" OR "future work sentence*"
+    OR "future work statement*" OR "research gap*" OR "open problem*") AND (extract*
+    OR identif* OR detect* OR classif* OR mining) AND (scientific OR scholarly OR
+    "research paper*" OR article*)
+  - ("large language model*" OR LLM*) AND ("research gap*" OR "future work" OR limitation*)
+    AND ("scientific paper*" OR "scholarly" OR "research article*") AND (extract*
+    OR identif* OR generat*)
+  - ("LLM cascade*" OR "model cascade*" OR "cascaded" OR "filter*") AND ("large language
+    model*" OR LLM*) AND (cost OR efficien*) AND (classif* OR extract*)
+  - ("long context" OR "long document*" OR "long-context") AND ("language model*"
+    OR LLM*) AND (degrad* OR "lost in the middle" OR "context length") AND (extract*
+    OR retriev* OR classif*)
+  per_query: 25
+snowball:
+  rounds: 1
+  direction: both
+  backend: auto
+  from: included
+  max_references: 30
+  max_citations: 15
+filters:
+  year_min: 2015
+  year_max: null
+  languages:
+  - en
+  min_citations: 0
+  citation_grace_years: 2
+  require_abstract: false
+  exclude_types:
+  - erratum
+  - editorial
+  - retraction
+  - paratext
+  - letter
+  - peer-review
+  - supplementary-materials
+  require_any: []
+  exclude_any: []
+  venue_exclude: []
+  min_hits: 0
+screening:
+  batch_size: 30
+taxonomy:
+- name: Gap, Limitation and Future-Work Mining (RQ1)
+  rq: RQ1
+  children:
+  - Limitation detection
+  - Future-work sentence extraction
+  - LLM research-gap tools and datasets
+  - Literature-level gap mapping
+- name: Cascades and Filter-then-LLM Pipelines (RQ2)
+  rq: RQ2
+  children:
+  - LLM cascades and routing
+  - Small-model filter before an LLM
+  - Prefiltering for document extraction
+- name: Long-Context Limits and Retrieval (RQ3)
+  rq: RQ3
+  children:
+  - Long-context degradation and benchmarks
+  - Retrieval vs long-context prompting
+  - Long-context mitigation methods
+- name: Scholarly Extraction and Idea Generation (background)
+  rq: null
+  children:
+  - Scientific information extraction
+  - Research idea generation
+  - Other
+export:
+  title: null
+  columns: null
+notes: Quick small-parameter run for Gap2Idea related work; screening/summarizing
+  subagents use Haiku (user request).

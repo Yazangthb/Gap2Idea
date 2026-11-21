@@ -1,5 +1,7 @@
 # Native H100 baseline evidence
 
+**Final snapshot:** The full 60-configuration H100 campaign completed on 18 November 2026 at 02:11 UTC. The final [handover report](matched-h100-20261118-01/handover/RESULTS.md), machine-readable [scores](matched-h100-20261118-01/handover/scores.json), and [495-file checksums](_snapshots/h100-completed-20261118T021113Z.json) are included. The report's historical "V100" heading is an unchanged generator label; these files are H100/vLLM. Four calls failed after retries (three Qwen3.5-4B, one Qwen3.5-9B), with no unattempted sentences; consult the original records and coverage before interpreting results. The V100 campaign's final status was not verified when this snapshot was integrated.
+
 See [campaign status](../baseline_revision_v100_STATUS.md), the [prospective protocol](../baseline_revision_h100_2026-11-18.md), and [pause/resume commands](../BASELINE_PAUSE_RESUME.md).
 
 `matched-h100-20261118-01/` contains Qwen3.5 4B/9B/27B BF16 and original Qwen3.8 27B FP8 evidence under native vLLM 0.32.0. The [frozen plan](../baseline_revision_h100_plan.json) was committed before inference and registers 60 test configurations, 9,318 calls, exact checkpoint revisions, file checksums, image identity and serving arguments. This cohort is separate from the V100/Ollama outputs.

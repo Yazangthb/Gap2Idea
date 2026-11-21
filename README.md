@@ -1,5 +1,7 @@
 # Gap2Idea
 
+**Publication work:** Start with [the integrated publication guide](docs/publication/INTEGRATED_WORK_GUIDE.md) for the manuscript, experiments, human-study materials, and remaining work.
+
 End-to-end pipeline that mines **research gaps** (limitations, future work) from academic
 papers, structures them into a graph, and synthesises **novel, evidence-grounded research
 ideas** — each novelty-checked against Semantic Scholar and scored by an LLM judge panel.

@@ -1,0 +1,84 @@
+{
+  "container": "7b25f33b68d72f4f538fe4004fb0e9c6a904ad9c9de0bced3faa95d22484c038",
+  "image_id": "sha256:befccf0e7e4089aa23926bb6f887a85c0d46c2a99e6de5c5ffdf5cb7957c5b34",
+  "command": [
+    "docker",
+    "run",
+    "--detach",
+    "--name",
+    "g2i-h100-20261118-qwen3.5-4b",
+    "--gpus",
+    "device=0",
+    "--ipc=host",
+    "--publish",
+    "127.0.0.1:8040:8000",
+    "--env-file",
+    "/home/hamza/gap2idea-h100-baselines/server.env",
+    "--env",
+    "HF_HUB_OFFLINE=1",
+    "--env",
+    "VLLM_USE_FLASHINFER_SAMPLER=0",
+    "--env",
+    "VLLM_USE_DEEP_GEMM=0",
+    "--volume",
+    "/home/hamza/gap2idea-h100-baselines/models:/models:ro",
+    "--volume",
+    "/home/hamza/qwen5a/hf:/root/.cache/huggingface:ro",
+    "--volume",
+    "/home/hamza/gap2idea-h100-baselines/runtime-cache/qwen3.5-4b:/root/.cache/vllm",
+    "vllm/vllm-openai:v0.32.0",
+    "/models/Qwen3.5-4B/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+    "--served-model-name",
+    "qwen3.5-4b",
+    "--host",
+    "0.0.0.0",
+    "--port",
+    "8000",
+    "--max-model-len",
+    "81920",
+    "--max-num-seqs",
+    "64",
+    "--seed",
+    "0",
+    "--dtype",
+    "bfloat16",
+    "--gpu-memory-utilization",
+    "0.90",
+    "--reasoning-parser",
+    "qwen3"
+  ],
+  "api_models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "qwen3.5-4b",
+        "object": "model",
+        "created": 1794966740,
+        "owned_by": "vllm",
+        "root": "/models/Qwen3.5-4B/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+        "parent": null,
+        "max_model_len": 81920,
+        "permission": [
+          {
+            "id": "modelperm-922ecab0520aa07e",
+            "object": "model_permission",
+            "created": 1794966740,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "nvidia_smi": "Wed Nov 18 04:52:21 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 580.178.04             Driver Version: 580.178.04     CUDA Version: 13.0     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA H100 PCIe               Off |   00006E3A:00:00.0 Off |                    0 |\n| N/A   45C    P0             84W /  350W |   71809MiB /  81559MiB |      0%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------+\n|   1  NVIDIA H100 PCIe               Off |   0000992F:00:00.0 Off |                    0 |\n| N/A   82C    P0            282W /  350W |   74289MiB /  81559MiB |    100%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|    0   N/A  N/A         3921425      C   VLLM::EngineCore                      71800MiB |\n|    1   N/A  N/A         3453898      C   python                                  982MiB |\n|    1   N/A  N/A         3913960      C   VLLM::EngineCore                      73292MiB |\n+-----------------------------------------------------------------------------------------+\n",
+  "version": {
+    "version": "0.32.0"
+  }
+}

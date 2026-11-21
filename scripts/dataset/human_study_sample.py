@@ -7,7 +7,8 @@ Writes to data/gold/human_study/ (gitignored):
   rater_R1.html, rater_R2.html   blind pages, one per rater. They hold no labels, sources or strata.
 Prints counts only, so running this does not show anyone the labels.
 
-    python scripts/dataset/human_study_sample.py
+    python scripts/dataset/human_study_sample.py          draw the sample (refuses once a key exists)
+    python scripts/dataset/human_study_sample.py pages    rewrite the two rater pages from the frozen key
 """
 import hashlib
 import html
@@ -147,11 +148,20 @@ def draw():
     return chosen, report
 
 
+# Same definitions as the LLM labelling guide (scripts/dataset/gold_label_full.py, GUIDE), written for people.
+# Revised 2026-11-17, before any rater saw a page: see the deviations in docs/experiments/human_study_freeze.md.
 GUIDE = [
-    ("Limitation", "A weakness, caveat, bias or constraint the authors acknowledge about their own work. Examples: small sample, no blinding, single setting, short follow-up, limited generalizability, an unvalidated measure."),
+    ("Limitation", "A weakness, caveat, bias or constraint the authors acknowledge about their own work (their study, method, model or data). Examples: small sample, no blinding, single setting, short follow-up, confounding, selection bias, limited generalizability, an unvalidated measure, a strong assumption, a failure mode. A sentence that states the cause of a limitation counts. A sentence that only states a consequence (for example, “This may have biased the results”) counts only if the cause is clear from it or from the sentence just before or after it."),
     ("Future work", "An explicit direction the authors propose for future research."),
-    ("Research gap", "An unsolved problem, missing capability or open challenge the authors point to in the field or in prior work."),
-    ("Not a gap", "Everything else: background, methods, results, descriptions of related work, positive claims, recommendations, headers and fragments."),
+    ("Research gap", "An unsolved problem, missing capability or open challenge the authors point to in the field or in prior work, not necessarily in their own study."),
+    ("Not a gap", "Everything else: background, methods, results, descriptions of related work, positive claims, recommendations for practice or policy, headers and fragments."),
+]
+# Part of the browser storage key, so answers left by an older version of a page never pre-fill this one.
+PAGE_VERSION = "2026-11-17"
+RULES = [
+    "The highlighted text is one unit as our software split the paper. Sometimes it holds two sentences or a heading. Judge the whole highlighted text: answer Yes if any part of it states a gap.",
+    "Earlier work: a sentence that points out a shortcoming, missing capability or unsolved problem in existing methods or earlier studies is a Research gap, even if this paper then addresses it. A sentence that only reports what earlier work did or found, or a problem that earlier work has already solved, is Not a gap.",
+    "If it fits more than one type, choose Limitation first, then Research gap, then Future work.",
 ]
 
 PAGE = """<!doctype html>
@@ -167,7 +177,7 @@ header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12p
 header strong{font-size:17px}.sp{flex:1}
 .bar{flex-basis:100%;height:6px;background:var(--line);border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--acc)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:12px}
-details summary{cursor:pointer;font-weight:600}dl{margin:10px 0 0}dt{font-weight:600}dd{margin:0 0 8px;color:var(--mut)}
+details summary{cursor:pointer;font-weight:600}dl{margin:10px 0 0}ul{margin:4px 0 0;padding-left:20px}li{margin-bottom:6px}dt{font-weight:600}dd{margin:0 0 8px;color:var(--mut)}
 .ctx{color:var(--mut);font-size:15px;min-height:1em;margin:6px 0}
 .target{background:var(--mark);color:var(--ink);padding:10px 12px;border-radius:6px;font-size:17px;margin:8px 0}
 .q{font-weight:600;margin-top:16px}.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
@@ -179,19 +189,19 @@ textarea{width:100%;margin-top:12px;font:inherit;background:var(--card);color:va
 </style></head><body><div class="wrap">
 <header><strong>Sentence rating</strong><span id="who"></span><span class="sp"></span><span id="count"></span><div class="bar"><i id="prog"></i></div></header>
 <div class="card"><details id="guide" open><summary>How to rate (please read first)</summary>
-<p>Decide whether the highlighted sentence is a gap stated by the authors. Use the sentences around it only to understand it. Work alone and don't discuss items with anyone. Don't search for the paper. If you are unsure, choose your best judgement.</p>
-<dl>__GUIDE__</dl></details></div>
+<p>There are __N__ items. Decide whether the highlighted sentence is a gap stated by the authors. Use the sentences around it only to understand it. Work alone and don't discuss items with anyone. Don't search for the paper. If you are unsure, choose your best judgement. You can take a break at any time: your answers are kept in this browser.</p>
+<dl>__GUIDE__</dl><ul>__RULES__</ul></details></div>
 <div class="card"><div class="ctx" id="before"></div><div class="target" id="target"></div><div class="ctx" id="after"></div>
 <div class="q">Is the highlighted sentence a gap stated by the authors?</div>
 <div class="row" id="gap"><button data-v="yes">Yes (Y)</button><button data-v="no">No (N)</button></div>
 <div id="typeBox" hidden><div class="q">Which type?</div><div class="row" id="type"><button data-v="limitation">Limitation (1)</button><button data-v="future_work">Future work (2)</button><button data-v="research_gap">Research gap (3)</button></div></div>
 <textarea id="notes" aria-label="Notes" placeholder="Notes (optional)"></textarea>
 <div class="row"><button id="prev">Previous</button><button id="next">Next</button><button id="blank">Next unanswered</button><span class="sp"></span><button id="save" disabled>Save my answers</button></div>
-<div class="hint">Answers save automatically in this browser. When every item is done, select "Save my answers" and send the downloaded file to the study organiser. <span class="warn" id="msg"></span></div>
+<div class="hint">Answers save automatically in this browser. When every item is done, select "Save my answers" and tell the study organiser. <span class="warn" id="msg"></span></div>
 </div></div>
 <script>
 const ITEMS=__ITEMS__,RATER=__RATER__,HASH=__HASH__;
-const KEY="humanstudy_"+HASH.slice(0,12)+"_"+RATER;let at=0,ans={};
+const KEY="humanstudy_"+HASH.slice(0,12)+"_"+RATER+"_"+__VERSION__;let at=0,ans={};
 const $=s=>document.querySelector(s);
 try{ans=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){$("#msg").textContent="This browser can't autosave. Please finish in one sitting."}
 function store(){try{localStorage.setItem(KEY,JSON.stringify(ans))}catch(e){}}
@@ -212,10 +222,11 @@ document.querySelectorAll("#gap button").forEach(b=>b.onclick=()=>setGap(b.datas
 document.querySelectorAll("#type button").forEach(b=>b.onclick=()=>setType(b.dataset.v));
 $("#notes").oninput=e=>{rec().notes=e.target.value;store()};$("#prev").onclick=()=>go(-1);$("#next").onclick=()=>go(1);
 $("#blank").onclick=()=>{const k=ITEMS.findIndex(x=>!complete(ans[x.id]));if(k>=0){at=k;draw()}};
-$("#save").onclick=()=>{const out={sample_hash:HASH,rater:RATER,finished_at:new Date().toISOString(),answers:ans};
+$("#save").onclick=()=>{const out={sample_hash:HASH,rater:RATER,finished_at:new Date().toISOString(),answers:Object.fromEntries(ITEMS.map(x=>[x.id,ans[x.id]]))};
 const u=URL.createObjectURL(new Blob([JSON.stringify(out,null,1)],{type:"application/json"}));const l=document.createElement("a");l.href=u;l.download="answers_"+RATER+".json";document.body.appendChild(l);l.click();l.remove();$("#msg").textContent="Saved answers_"+RATER+".json to your downloads."};
 document.onkeydown=e=>{if(e.target.tagName==="TEXTAREA"||e.ctrlKey||e.metaKey||e.altKey)return;const k=e.key.toLowerCase();
-if(k==="y")setGap(true);else if(k==="n")setGap(false);else if(k==="1")setType("limitation");else if(k==="2")setType("future_work");else if(k==="3")setType("research_gap");
+const yes=(ans[ITEMS[at].id]||{}).is_gap===true;
+if(k==="y")setGap(true);else if(k==="n")setGap(false);else if(yes&&k==="1")setType("limitation");else if(yes&&k==="2")setType("future_work");else if(yes&&k==="3")setType("research_gap");
 else if(e.key==="ArrowRight")go(1);else if(e.key==="ArrowLeft")go(-1)};
 draw();
 </script></body></html>
@@ -230,13 +241,35 @@ def write_page(path, items, rater, sample_hash, seed):
     order = [blind(x) for x in items]
     random.Random(f"{seed}-{rater}").shuffle(order)
     guide = "".join(f"<dt>{html.escape(a)}</dt><dd>{html.escape(b)}</dd>" for a, b in GUIDE)
+    rules = "".join(f"<li>{html.escape(r)}</li>" for r in RULES)
     payload = json.dumps(order, ensure_ascii=False).replace("</", "<\\/")
-    page = PAGE.replace("__GUIDE__", guide).replace("__ITEMS__", payload)
+    page = PAGE.replace("__GUIDE__", guide).replace("__RULES__", rules).replace("__N__", str(len(order)))
+    page = page.replace("__ITEMS__", payload)
     page = page.replace("__RATER__", json.dumps(rater)).replace("__HASH__", json.dumps(sample_hash))
+    page = page.replace("__VERSION__", json.dumps(PAGE_VERSION))
     path.write_text(page, encoding="utf-8")
 
 
+def rebuild_pages():
+    """Rewrite rater_R1.html and rater_R2.html from the frozen key, e.g. after a change to the instructions.
+
+    The key is only read, never written, so the sample and its hash stay the same. Item order per rater is
+    seeded, so it is the same as in the first pages."""
+    raw = (OUT / "key_PRIVATE.json").read_bytes()
+    sample_hash = hashlib.sha256(raw).hexdigest()
+    manifest = json.loads((OUT / "manifest.json").read_text(encoding="utf-8"))
+    if manifest["sample_hash"] != sample_hash:
+        sys.exit("The key does not match the manifest, so it changed after the sample was frozen")
+    items = json.loads(raw)
+    for rater in ("R1", "R2"):
+        write_page(OUT / f"rater_{rater}.html", items, rater, sample_hash, SEED)
+    print(f"Rewrote rater_R1.html and rater_R2.html for sample {sample_hash} ({len(items)} items)")
+
+
 def main():
+    if sys.argv[1:] == ["pages"]:
+        rebuild_pages()
+        return
     key_path = OUT / "key_PRIVATE.json"
     if key_path.exists():
         sys.exit(f"{key_path} already exists. The sample is frozen; delete it only before any rater has started.")
