@@ -1,0 +1,47 @@
+{
+  "purpose": "5 full papers per call vs 20-candidate funnel; development pilot only",
+  "sample_rule": "random.Random(20261121).sample(sorted(arxiv validation paper ids), 5)",
+  "paper_ids": [
+    "2401.17544",
+    "2201.02967",
+    "2207.09511",
+    "2301.03441",
+    "2507.19233"
+  ],
+  "rows_sha256": "8f1f32ab0d7383a99f904f4f9c61fd00bf849a800f2384657dd16302f37d42cd",
+  "keys_sha256": "53c6c1e69755ded939dc0e481ec323e8ba3783922021ad378497a0b302ede0e9",
+  "full_paper_system_sha256": "f6cf2c38e4f3e6f39fe30a899a474bbd3ddd7af4b406dd25615c0a9e7bfa2c7f",
+  "full_paper_user_sha256": "bd6fcd4bcc704fc782c23327525140930b20985eb1b9780219eb57f19d2932d8",
+  "funnel_system_sha256": "bf1b72c806a6e7849c5afc574f08d0e9bc7b96c0e20a1b069dbf1e929341941f",
+  "selected_candidate_keys_sha256": "e7f7e77dcf45152ff2ecd0d1651162b5c5fecbbed3320f9967b81583b3277ba2",
+  "mode": "high_precision",
+  "stage_b_tau": 0.35411001352163435,
+  "full_papers_per_call": 5,
+  "funnel_candidates_per_call": 20,
+  "seed": 0,
+  "temperature": 0,
+  "thinking": false,
+  "full_paper_max_output_tokens": 8192,
+  "models": {
+    "27b": {
+      "repo": "Qwen/Qwen3.8-27B-FP8",
+      "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a"
+    },
+    "4b": {
+      "repo": "Qwen/Qwen3.5-4B",
+      "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+    }
+  },
+  "comparison": "27B uses original full-validation batch-20 strict funnel verdicts; 4B funnel will run on the selected candidates in batches of 20. All five-paper outputs are scored on all sentences. No input labels are sent.",
+  "metrics": "Sentence-level TP, FP, FN, precision, recall, F1, exact failures and token usage; five papers are too few for inferential claims.",
+  "files_sha256": {
+    "data/gold/gap_gold_final.jsonl": "3325430fa8c507c6f7681c864c7e59b6f2f9840a4a41213951abf55baebac445",
+    "data/gold/splits.json": "e955fe742330a0eb0443b57a447073b18c8b5dd12523674317c08b7fba53c79c",
+    "data/paper_texts.jsonl": "74de2bb4858b7c5640041083a37b54c31236d5cba97c83d9e34cdd8a8eb16838",
+    "data/gold/nli_val_scores.npz": "f2e99e7997f9b1e30baa13a186807c35756639d62a9310f2cad12348ae261a77",
+    "docs/experiments/nli_variants.json": "1bd046387e36252225f02c29791769f063ecbc1187edcf003248bbd3eff42e3a",
+    "docs\\experiments\\five_paper_pilot_2026-11-21\\reference_27b_val_strict.jsonl": "d473cd12d6139e23387fb49675ca689aa875ecf3606f32ac3b0b38cfdcc133f3",
+    "scripts/bench/five_paper_pilot.py": "673999825a14008e09f2cbb1d11a67545ca47a4c7b92a1d41f968a87eb20d3b0"
+  },
+  "hash_note": "Text file SHA-256 values normalize CRLF to LF; NPZ bytes are not normalized."
+}

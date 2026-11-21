@@ -5,3 +5,4 @@
 /docs/experiments/baseline_revision_h100_2026-11-18/** -text
 /docs/experiments/baseline_revision_h100_plan.json -text
 data/gold/human_study/* -text
+/docs/experiments/five_paper_pilot_2026-11-21/** -text
