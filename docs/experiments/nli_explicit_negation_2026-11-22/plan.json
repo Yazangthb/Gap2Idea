@@ -1,0 +1,86 @@
+{
+  "purpose": "Test explicit negation on development data only, comparing zero-shot and fine-tuned NLI",
+  "models": {
+    "zero-shot": {
+      "revision": "ca476cb923a8637073d4ceb0f19f7fc236e260d4",
+      "weights_sha256": "f56738ff6d17e2c4b28eac0969290cc5325be886a7be069ddc2c6d69128f1e2a"
+    },
+    "fine-tuned": {
+      "base_revision": "ca476cb923a8637073d4ceb0f19f7fc236e260d4",
+      "checkpoint_sha256": "15e6b7146df31ef09ffb5d7ed84381a53d9aad247e99a9173759b9de2f9412b9"
+    }
+  },
+  "hypotheses": {
+    "pos_lim": "This is a limitation.",
+    "neg_lim": "This is not a limitation.",
+    "pos_fw": "This is future work.",
+    "neg_fw": "This is not future work.",
+    "pos_gap": "This is a research gap.",
+    "neg_gap": "This is not a research gap."
+  },
+  "sentence_count": 11201,
+  "input_sentence_sha256": "b1a2d7f474909b61d575343971eafa1d3433979e4a4cf85b12012c46c9a888d7",
+  "split": "Existing 17-paper stratified validation half A chooses thresholds; 17-paper half B compares frozen thresholds; both halves were examined in prior work",
+  "half_A_papers": [
+    "2004.12164",
+    "2006.04492",
+    "2007.00128",
+    "2104.06303",
+    "2201.02967",
+    "2202.00740",
+    "2207.09511",
+    "2210.01489",
+    "2301.03441",
+    "2302.04972",
+    "2405.02631",
+    "2411.17182",
+    "2507.17931",
+    "2510.05092",
+    "PMC2924475",
+    "PMC3551748",
+    "PMC5381088"
+  ],
+  "half_B_papers": [
+    "2102.03018",
+    "2207.01725",
+    "2211.03489",
+    "2302.07477",
+    "2305.14926",
+    "2310.15325",
+    "2401.17544",
+    "2402.07717",
+    "2408.08459",
+    "2409.07415",
+    "2412.01837",
+    "2502.11517",
+    "2507.19233",
+    "2511.18843",
+    "PMC4797126",
+    "PMC5704386",
+    "PMC5721882"
+  ],
+  "methods": {
+    "positive": "max over types of E_positive / (E_positive + C_positive)",
+    "negative": "max over types of C_negative / (E_negative + C_negative)",
+    "mean": "max over types of the mean of the positive and negative scores",
+    "either": "max over types of the larger of positive and negative scores",
+    "both": "max over types of the smaller of positive and negative scores"
+  },
+  "threshold_rule": "For each score on half A, highest observed threshold retaining at least 80%, 90%, or 95% of all A positives including cleanup losses; thresholds fixed before B metrics",
+  "scoring": "Stage A junk filter then sentence alone; pair tokenization max 256, only sentence truncated; softmax E/N/C; epsilon 1e-9",
+  "targets": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "batch_size": 128,
+  "dtype": "float16 autocast",
+  "seed": 0,
+  "source_sha256": {
+    "scripts/bench/nli_explicit_negation.py": "cecc4efcb45bea1e326a2ba27133db5e0e097ee4a99eae6d8b272ce9de38fa05",
+    "scripts/bench/nli_variants.py": "521a8e2e5712102fdfd341ae2df0f328b60e65ab04b1d7327fe4eba32c257320",
+    "data/gold/gap_gold_final.jsonl": "3325430fa8c507c6f7681c864c7e59b6f2f9840a4a41213951abf55baebac445",
+    "data/gold/splits.json": "e955fe742330a0eb0443b57a447073b18c8b5dd12523674317c08b7fba53c79c",
+    "data/paper_texts.jsonl": "74de2bb4858b7c5640041083a37b54c31236d5cba97c83d9e34cdd8a8eb16838"
+  }
+}
