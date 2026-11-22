@@ -1,0 +1,28 @@
+{
+  "purpose": "Test one candidate-fallibility instruction on the two exact previously repeated inputs",
+  "baseline_system_sha256": "df9ff9616c95041dcd626b64120c9bf1645d7fe28892ed79332800961020543f",
+  "addition": "Some listed candidates may be genuine research gaps, while others may not be; assess each candidate independently and do not assume it is correct merely because it was selected.",
+  "system_sha256": "6e67391f923e9f9f0c059dd840655136cc2a68b0260be97871befdd1cb30c34d",
+  "model": "qwen38-v100:27b-q4",
+  "model_digest": "15d962ff762f7d02c565fd78afb81eb514692119fce228b6c429cbbdd28a373e",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 8192,
+  "context_length": 131072,
+  "requests": "one per input, no model retries except invalid output",
+  "inputs": {
+    "zero": {
+      "input_sha256": "861a3b0144084a842a089f98035506b804313a6ed8ce751e505814a57e09b9d2",
+      "candidates": 258,
+      "baseline_result_sha256": "fbb330db9f2ac4f9aa82e9aecb36e53219af1643ca4ef444bb9b8cc0c758e203"
+    },
+    "fine": {
+      "input_sha256": "32412064b63ea23cef5d58f885ecad8f75af4da4e80e76ccbd6f3ace2f54c3dd",
+      "candidates": 200,
+      "baseline_result_sha256": "487813604438c0cb1cd184017277d4e88e656c5ee82cabf38891641ae7431e38"
+    }
+  },
+  "runner_sha256": "4feaf79cbadf12fb0679ff1d56c0df8e26f8fd4a7974c4728dc27bca40552b9e",
+  "caveat": "Same five development papers, already examined; LLM-generated labels, exploratory prompt change."
+}
