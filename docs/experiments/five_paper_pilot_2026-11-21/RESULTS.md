@@ -64,3 +64,14 @@ Two new exploratory first-pass prompts (`screen`, `permissive`) tell 4B that a s
 | 27B neutral alone, saved validation run | 304 | — | 79 | 11 | 0.8778 | 0.7524 | 0.8103 |
 
 The NLI stage reached 92 of 105 labeled positives; the screen prompt kept 89 of those 92, and 27B retained 77. The new screen setup sent 208 of 304 candidates to 27B, 31.6% fewer candidate items, but also added a 4B call stage. It consumed 52,753 input and 3,830 output tokens in 16 4B calls, then 36,131 input and 2,845 output tokens in 11 27B calls; earlier Stage A/B costs are excluded. The saved 27B-only run did not record token usage, so overall cost savings have not been established. Its batching across the full validation set differs from the new cascade's five-paper-only batching, so the small F1 difference cannot establish equivalence. The prompts were developed iteratively on this sample, which has LLM-generated labels; independent held-out and human evaluation are needed.
+
+## One-sentence 27B prompt, matched batching
+
+Both prompts were run fresh on the same 304 candidates in the same order and 16 batches of up to 20; input formatting, JSON schema, temperature and 27B serving model were identical. The short system prompt was: "For each item, set keep to true if the sentence states a research limitation, a future-work direction, or an open problem in the field or prior work, and return exactly one JSON result with its id and keep value." The structured-output schema and the candidate JSON were still provided separately. Both conditions completed all batches on their first attempt.
+
+| Prompt | TP | FP | Precision | Recall | F1 | Input tokens | Output tokens |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| One sentence | 84 | 33 | 0.7179 | 0.8000 | 0.7568 | 50,161 | 5,829 |
+| Neutral rubric | 75 | 10 | 0.8824 | 0.7143 | 0.7895 | 55,617 | 3,852 |
+
+The shorter prompt found nine additional labeled gaps but added 23 false positives; it used 9.8% fewer input tokens but produced more output tokens. This is an exploratory comparison on the same five development papers and LLM-generated labels, and should be confirmed on an independent sample. The matched neutral result differs from the historical neutral run above because batch composition differs.
