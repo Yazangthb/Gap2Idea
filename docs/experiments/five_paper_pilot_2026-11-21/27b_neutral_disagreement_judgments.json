@@ -1,0 +1,246 @@
+{
+  "criteria": "Sentence-level: explicit author-work constraint or assumption, proposed future work, or specific unsolved problem in this work or prior work; use neighbouring text for references, but do not label ordinary experimental results or vague motivation alone.",
+  "reviewer": "Codex, one model review; not human raters",
+  "judgments": [
+    {
+      "paper_id": "2401.17544",
+      "idx": 22,
+      "positive": false,
+      "reason": "Separate training and inference models are described, but no limitation is stated in this sentence."
+    },
+    {
+      "paper_id": "2401.17544",
+      "idx": 121,
+      "positive": true,
+      "reason": "Substantial use of a scarce DSP resource is an explicit existing-method constraint."
+    },
+    {
+      "paper_id": "2401.17544",
+      "idx": 122,
+      "positive": false,
+      "reason": "Reports a measured DSP utilization result; the limitation is articulated in adjacent sentences."
+    },
+    {
+      "paper_id": "2401.17544",
+      "idx": 123,
+      "positive": true,
+      "reason": "In context explicitly describes the preceding resource use as suboptimal for edge devices."
+    },
+    {
+      "paper_id": "2401.17544",
+      "idx": 149,
+      "positive": true,
+      "reason": "Limited fine-tuning due to long training time is a constraint on the authors’ experiment."
+    },
+    {
+      "paper_id": "2401.17544",
+      "idx": 150,
+      "positive": true,
+      "reason": "Explicitly states limited GPU memory constrained their experimental setup."
+    },
+    {
+      "paper_id": "2401.17544",
+      "idx": 152,
+      "positive": false,
+      "reason": "Speculates about an accuracy–cost tradeoff rather than explicitly proposing future research or stating an unsolved limitation."
+    },
+    {
+      "paper_id": "2201.02967",
+      "idx": 9,
+      "positive": true,
+      "reason": "States a specific weakness of prior methods when their distributional assumption fails."
+    },
+    {
+      "paper_id": "2201.02967",
+      "idx": 23,
+      "positive": false,
+      "reason": "Vague transition; it does not itself specify a constraint."
+    },
+    {
+      "paper_id": "2201.02967",
+      "idx": 24,
+      "positive": true,
+      "reason": "Explicit assumption imposed on clusters in the authors’ work."
+    },
+    {
+      "paper_id": "2201.02967",
+      "idx": 25,
+      "positive": false,
+      "reason": "States a mathematical implication under an assumption, rather than articulating the assumption or a limitation."
+    },
+    {
+      "paper_id": "2201.02967",
+      "idx": 86,
+      "positive": true,
+      "reason": "Explains that the datasets have unusually well-separated clusters and mild contamination, constraints on the evidence."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 14,
+      "positive": false,
+      "reason": "A broad survey question; it does not establish a specific unsolved problem on its own."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 15,
+      "positive": false,
+      "reason": "Asks about alternatives but does not establish that they are lacking or propose a specific future investigation."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 24,
+      "positive": false,
+      "reason": "States the survey’s aim; the limitations or exclusions occur in the adjacent sentence."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 221,
+      "positive": true,
+      "reason": "Explicitly excludes further architectural considerations from the review’s scope."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 250,
+      "positive": true,
+      "reason": "Explicitly states a simplifying assumption of abundant high-quality data."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 256,
+      "positive": true,
+      "reason": "Identifies computational constraints and challenges not typically addressed in approximation theory."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 400,
+      "positive": true,
+      "reason": "Explicitly limits this review section to one-dimensional input domains."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 448,
+      "positive": true,
+      "reason": "Explicitly says the one-dimensional result does not address the effect of composition on dimension; extraction is corrupted."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 646,
+      "positive": true,
+      "reason": "Explicitly restricts the analysis to noiseless data and networks without a regularization parameter."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 704,
+      "positive": true,
+      "reason": "States a specific approximation challenge for deep networks, despite an attached figure caption."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 716,
+      "positive": true,
+      "reason": "Explicitly assumes bounded frequencies in the analysis."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 812,
+      "positive": false,
+      "reason": "Generic statement that much remains to explore, without a specific gap."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 817,
+      "positive": false,
+      "reason": "A general comparison recommendation followed by references to existing comparisons; not clearly a proposed new research direction."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 830,
+      "positive": true,
+      "reason": "Explicitly proposes exploring connections between named network families."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 831,
+      "positive": false,
+      "reason": "Describes the potential benefit of the preceding proposal rather than itself proposing a direction."
+    },
+    {
+      "paper_id": "2207.09511",
+      "idx": 833,
+      "positive": true,
+      "reason": "In context explicitly calls for further exploration of the listed directions’ relevance and impact."
+    },
+    {
+      "paper_id": "2301.03441",
+      "idx": 119,
+      "positive": true,
+      "reason": "Explicitly identifies inefficient handling of long sequences in an existing approach."
+    },
+    {
+      "paper_id": "2301.03441",
+      "idx": 186,
+      "positive": true,
+      "reason": "States prior systems struggle with particular recordings; the extracted sentence is corrupted by a table heading."
+    },
+    {
+      "paper_id": "2301.03441",
+      "idx": 216,
+      "positive": true,
+      "reason": "States the authors’ work is limited in scope to single-EEG input and an RNN backbone."
+    },
+    {
+      "paper_id": "2301.03441",
+      "idx": 220,
+      "positive": true,
+      "reason": "The surviving fragment proposes investigating multimodal and multi-view settings or faster architectures; extraction is corrupted."
+    },
+    {
+      "paper_id": "2507.19233",
+      "idx": 38,
+      "positive": true,
+      "reason": "In context identifies an expertise requirement that constrains use of the CFD method."
+    },
+    {
+      "paper_id": "2507.19233",
+      "idx": 105,
+      "positive": false,
+      "reason": "Describes a data-selection procedure without explicitly identifying a limitation."
+    },
+    {
+      "paper_id": "2507.19233",
+      "idx": 187,
+      "positive": false,
+      "reason": "Reports observed minor deviations as an experimental result rather than an explicit general limitation."
+    },
+    {
+      "paper_id": "2507.19233",
+      "idx": 189,
+      "positive": false,
+      "reason": "Reports deviations in particular experimental cases rather than explicitly identifying a general limitation."
+    },
+    {
+      "paper_id": "2507.19233",
+      "idx": 210,
+      "positive": false,
+      "reason": "Describes observed locations of model error, an experimental result."
+    },
+    {
+      "paper_id": "2507.19233",
+      "idx": 226,
+      "positive": true,
+      "reason": "Explicitly states that the model struggles to capture sharp momentum differences."
+    },
+    {
+      "paper_id": "2507.19233",
+      "idx": 227,
+      "positive": false,
+      "reason": "Reports quantitative test error and visualization results rather than explicitly asserting a limitation."
+    },
+    {
+      "paper_id": "2507.19233",
+      "idx": 234,
+      "positive": false,
+      "reason": "Reports the observed R-squared and scatter for one case rather than explicitly stating a limitation."
+    }
+  ]
+}
