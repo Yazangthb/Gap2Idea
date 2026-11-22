@@ -1,0 +1,24 @@
+{
+  "purpose": "Same-model V100 Q4 matched comparison: no extra context vs 4B notes vs original neighboring text",
+  "reason": "User requested 27B on the second V100; the installed 27B is Q4, unlike the earlier H100 FP8 service",
+  "model": "qwen38-v100:27b-q4",
+  "ollama_digest": "15d962ff762f7d02c565fd78afb81eb514692119fce228b6c429cbbdd28a373e",
+  "quantization": "Q4_K_M",
+  "underlying_hf_revision": "not independently verified",
+  "data_plan_sha256": "b6930997157aea0e3a78723c030227a746a6352d9326087aa1d1fc0237749742",
+  "notes_sha256": "150bd90c5c11b13776903e1404d785be0bf4ca61e4114a51406fa8c2918a0c15",
+  "recovery_sha256": "6c4ff778690c409d7855f26048d4efc92de03396ee1a03920e2c941736282b6e",
+  "runner_sha256": "b980a625e6a166080e3f5bca1eba28f1570b244c30b40a7a1b66cc5bf6778953",
+  "prompt_sha256": "df9ff9616c95041dcd626b64120c9bf1645d7fe28892ed79332800961020543f",
+  "conditions": [
+    "none",
+    "notes",
+    "neighbors"
+  ],
+  "requests": "one per condition, same 258 candidates, same IDs/order/system/schema/decoding",
+  "notes": "same 4B notes as prior stage; context additions are after each candidate and are not separate target sentences",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 8192
+}
