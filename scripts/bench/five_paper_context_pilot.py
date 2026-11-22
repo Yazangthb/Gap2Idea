@@ -12,7 +12,7 @@ import five_paper_pilot as p
 import five_paper_dev_tuning as d
 from baseline_evidence import digest
 
-DEST=p.ROOT/'docs/experiments/five_paper_context_pilot_2026-11-22'
+DEST=p.ROOT/'docs/experiments/five_paper_context_pilot_2026-11-22_rev1'
 PLAN=DEST/'plan.json'; NOTES=DEST/'4b_context_notes.json'; RAW=DEST/'4b_context_batches.jsonl'
 NOTE_PROMPT=('Explain what each target sentence refers to using its neighboring sentences. '
              'Write one factual, concise context note of at most 20 words per item; '
@@ -42,6 +42,7 @@ def plan_for(data,items):
       'qwen_prompt_sha256':digest(d.system('neutral')),'candidates':len(items),
       'neighbor_rule':'previous original sentence last 800 characters and next original sentence first 800 characters, within paper; no ground truth sent',
       'note_batch_size':20,'temperature':0,'seed':0,'thinking':False,
+      'revision_note':'Rev1 follows an initial batch that returned 19 of 20 notes; retain valid partial answers and retry missing IDs, preserving the original failure.',
       'qwen_methods':'baseline no local context vs 4B-generated note vs verbatim previous/next; one 27B request per condition',
       'input_sha256':digest(items),'baseline_result_sha256':p.sha(baseline),'dev_plan_sha256':p.sha(d.PLAN),
       'selection_sha256':p.sha(selection),'runner_sha256':p.sha(p.ROOT/'scripts/bench/five_paper_context_pilot.py')}
@@ -73,24 +74,27 @@ def notes():
     notes_by_id={}
     with RAW.open('x',encoding='utf8') as fh:
         for start in range(0,len(items),20):
-            batch=items[start:start+20];want={x['id'] for x in batch};attempts=[];verdict=None
-            for _ in range(2):
+            batch=items[start:start+20];want={x['id'] for x in batch};attempts=[];verdict=None; collected={}
+            for _ in range(4):
+                remaining=[x for x in batch if x['id'] not in collected];pending={x['id'] for x in remaining}
                 t=time.time();item=None
                 try:
                     resp=c.chat.completions.create(model=model,temperature=0,max_tokens=4096,
-                        messages=[{'role':'system','content':NOTE_PROMPT},{'role':'user','content':json.dumps(batch,ensure_ascii=False)}],
+                        messages=[{'role':'system','content':NOTE_PROMPT},{'role':'user','content':json.dumps(remaining,ensure_ascii=False)}],
                         response_format={'type':'json_schema','json_schema':{'name':'contexts','schema':schema,'strict':True}},
                         extra_body={'seed':0,'chat_template_kwargs':{'enable_thinking':False}})
                     item={'seconds':round(time.time()-t,3),'finish_reason':resp.choices[0].finish_reason,
                           'usage':resp.usage.model_dump() if resp.usage else None,'response':resp.choices[0].message.content};attempts.append(item)
                     if item['finish_reason']!='stop':continue
                     obj=json.loads(item['response']);result=obj.get('results',[])
-                    if (set(obj)!={'results'} or len(result)!=len(want) or
+                    if (set(obj)!={'results'} or not isinstance(result,list) or
                         any(set(r)!={'id','context'} or type(r['id']) is not int or not isinstance(r['context'],str)
                             or not r['context'].strip() or len(r['context'])>300 or '\n' in r['context'] for r in result) or
-                        {r['id'] for r in result}!=want):
-                        item['validation_error']='incomplete, duplicate or invalid context notes';continue
-                    verdict=result;break
+                        len({r['id'] for r in result})!=len(result) or not {r['id'] for r in result}<=pending):
+                        item['validation_error']='duplicate, unexpected or invalid context notes';continue
+                    collected.update({r['id']:r for r in result})
+                    item['accepted_count']=len(result);item['missing_count']=len(want-set(collected))
+                    if len(collected)==len(want):verdict=[collected[i] for i in sorted(want)];break
                 except Exception as e:
                     err={'error_type':type(e).__name__,'status_code':getattr(e,'status_code',None)}
                     if item is None:attempts.append({'seconds':round(time.time()-t,3),**err})
