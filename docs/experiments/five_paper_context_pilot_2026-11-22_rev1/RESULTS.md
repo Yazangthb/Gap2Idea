@@ -15,3 +15,14 @@ The generated descriptions increased 27B input tokens by 41.9% over no additiona
 Notes were intended to explain local context without judging gaps. They were not independently validated and can be misleading: for paper 2302.04972 sentence 381, a note referred to missing PyTorch support although the target and supplied neighboring text do not mention PyTorch. This is an example, not an estimated hallucination rate. The JSON outputs include the notes and underlying calls for inspection. Original extractions can contain mathematical or table text; the source script fixes the 800-character cap and paper boundaries.
 
 An initial 4B batch returned 19/20 notes. The revised run retained valid partial answers and retried missing IDs, but a later batch repeatedly returned one ID with different descriptions. The recovery script retained only unambiguous IDs and requested the ambiguous one separately, preserving all attempts. The five-paper check was used in previous experiments and has LLM-generated labels. This is an exploratory result, not proof of a causal effect or a publication-grade precision estimate; candidate filtering also makes the maximum achievable recall less than 100%.
+
+## Full-paper comparison on the same V100 model
+
+After the context pilot, the same five complete papers were sent together in one request to the same Qwen3.8-27B Q4_K_M V100 server using the identical neutral system prompt, schema, model, seed, temperature and output cap. The following is a same-sample, same-model comparison; the full-paper input contains all 1,543 sentences, whereas the funnel request contains 258 selected sentences with up to one original neighbor on each side.
+
+| Method | TP | FP | Precision | Recall | F1 | Qwen input tokens | Qwen output tokens |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Five full papers, one request | 15 | 0 | 100.0% | 19.5% | 0.326 | 80,406 | 91 |
+| Funnel candidates + neighbors, one request | 36 | 1 | 97.3% | 46.8% | 0.632 | 32,772 | 209 |
+
+The funnel found 21 more labeled gaps with one additional labeled false positive, and used 59.2% fewer Qwen input tokens. There are 77 labeled positives in the full sample. Model request durations were 191.095 seconds for the full input and 59.214 seconds for the earlier neighbors request; these are not a controlled latency or end-to-end cost measurement, and the funnel's preprocessing time is excluded. This is a single development sample with LLM-generated, non-human-validated labels. The control was added after inspecting the pilot; its raw output and the locked runner are provided.
