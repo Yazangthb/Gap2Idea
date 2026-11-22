@@ -16,7 +16,7 @@ from baseline_evidence import digest
 from nli_variants import load_val
 from stage_c_nli_qwen import TAUS,TYPES,candidates,evc
 
-DEST=p.ROOT/'docs/experiments/five_paper_dev_tuning_2026-11-22'
+DEST=p.ROOT/'docs/experiments/five_paper_dev_tuning_2026-11-22_rev1'
 PLAN=DEST/'plan.json'; SELECTION=DEST/'selection.json'
 NAMES=('neutral','strict','keep_biased','short')
 BOUNDARY='\n\nThere are five separate papers below. Lines starting "PAPER " are boundaries, not sentences. Judge each numbered sentence only in its own paper.'
@@ -71,6 +71,8 @@ def plan_for(data):
       'methods':'same prompt, model and format; one Qwen request for five full papers vs one for their Stage A+B candidates',
       'model':'qwen3.8-27b','temperature':0,'seed':0,'thinking':False,'max_output_tokens':8192,
       'run_order':'all four tuning prompts x both methods; select and commit; selected prompt x both methods on separate check papers',
+      'revision_note':'Rev1 restarts all runs after an earlier neutral funnel call repeated one valid ID; deduplicate valid IDs for all conditions, record duplicate counts, and preserve the earlier failed attempt in the original directory.',
+      'output_rule':'A list of valid integer input IDs is interpreted as a set; duplicate IDs are counted and deduplicated. Out-of-range or non-input IDs fail the response.',
       'splits':{k:{'paper_ids':d['paper_ids'],'rows_sha256':digest(d['rows']),
                    'keys_sha256':digest(d['keys']),'candidate_keys_sha256':digest(sorted(d['candidate_keys'])),
                    'sentences':len(d['rows']),'candidates':len(d['candidate_keys']),
@@ -119,9 +121,10 @@ def run(split,name,method):
                   'usage':resp.usage.model_dump() if resp.usage else None,'response':resp.choices[0].message.content};attempts.append(item)
             if item['finish_reason']!='stop': continue
             parsed=json.loads(item['response']); ids=parsed.get('positives')
-            if (set(parsed)!={'positives'} or not isinstance(ids,list) or len(set(ids))!=len(ids) or
+            if (set(parsed)!={'positives'} or not isinstance(ids,list) or
                 any(type(i) is not int or i<0 or i>=len(d['keys']) or d['keys'][i] not in valid for i in ids)):
-                item['validation_error']='invalid, duplicate or non-input ids'; continue
+                item['validation_error']='invalid or non-input ids'; continue
+            item['duplicate_id_count']=len(ids)-len(set(ids))
             kept={d['keys'][i] for i in ids}
             result={'status':'ok','split':split,'prompt':name,'method':method,'plan_sha256':p.sha(PLAN),
                     'input_sentence_count':len(valid),'prompt_sha256':digest(prompt),'input_sha256':digest(user),
