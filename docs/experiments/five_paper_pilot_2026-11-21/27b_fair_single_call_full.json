@@ -1,0 +1,291 @@
+{
+  "status": "ok",
+  "method": "full",
+  "model": "qwen3.8-27b",
+  "plan_sha256": "49fc0eda8d8cb62f1561fe94b6ddc6a915d5794625f015500351feae8ca55828",
+  "system_prompt": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"positives\":[<id>, ...]}: the ids of every sentence you answer YES for, in increasing order. Use only ids that appear in the input. If no sentence qualifies, return {\"positives\":[]}.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+  "system_sha256": "df9ff9616c95041dcd626b64120c9bf1645d7fe28892ed79332800961020543f",
+  "user_sha256": "bd6fcd4bcc704fc782c23327525140930b20985eb1b9780219eb57f19d2932d8",
+  "input_sentence_count": 1713,
+  "attempts": [
+    {
+      "seconds": 17.117,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 493,
+        "prompt_tokens": 96215,
+        "total_tokens": 96708,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"positives\": [\n    1,\n    2,\n    23,\n    26,\n    27,\n    52,\n    123,\n    201,\n    202,\n    203,\n    204,\n    229,\n    230,\n    538,\n    565,\n    566,\n    1011,\n    1098,\n    1132,\n    1138,\n    1147,\n    1156,\n    1157,\n    1184,\n    1190,\n    1203,\n    1204,\n    1342,\n    1382,\n    1401,\n    1402,\n    1410,\n    1411,\n    1414,\n    1415,\n    1416,\n    1418,\n    1419,\n    1421,\n    1423,\n    1425,\n    1430,\n    1435,\n    1436,\n    1438,\n    1439,\n    1440,\n    1442,\n    1487,\n    1493,\n    1570,\n    1571,\n    1606,\n    1615,\n    1617,\n    1627,\n    1628,\n    1634,\n    1662,\n    1663,\n    1670,\n    1671,\n    1672\n  ]\n}"
+    }
+  ],
+  "kept": [
+    [
+      "2201.02967",
+      19
+    ],
+    [
+      "2201.02967",
+      20
+    ],
+    [
+      "2207.09511",
+      220
+    ],
+    [
+      "2207.09511",
+      247
+    ],
+    [
+      "2207.09511",
+      248
+    ],
+    [
+      "2207.09511",
+      693
+    ],
+    [
+      "2207.09511",
+      780
+    ],
+    [
+      "2207.09511",
+      814
+    ],
+    [
+      "2207.09511",
+      820
+    ],
+    [
+      "2207.09511",
+      829
+    ],
+    [
+      "2301.03441",
+      4
+    ],
+    [
+      "2301.03441",
+      5
+    ],
+    [
+      "2301.03441",
+      32
+    ],
+    [
+      "2301.03441",
+      38
+    ],
+    [
+      "2301.03441",
+      51
+    ],
+    [
+      "2301.03441",
+      52
+    ],
+    [
+      "2301.03441",
+      190
+    ],
+    [
+      "2401.17544",
+      1
+    ],
+    [
+      "2401.17544",
+      2
+    ],
+    [
+      "2401.17544",
+      23
+    ],
+    [
+      "2401.17544",
+      26
+    ],
+    [
+      "2401.17544",
+      27
+    ],
+    [
+      "2401.17544",
+      52
+    ],
+    [
+      "2401.17544",
+      123
+    ],
+    [
+      "2401.17544",
+      201
+    ],
+    [
+      "2401.17544",
+      202
+    ],
+    [
+      "2401.17544",
+      203
+    ],
+    [
+      "2401.17544",
+      204
+    ],
+    [
+      "2507.19233",
+      2
+    ],
+    [
+      "2507.19233",
+      21
+    ],
+    [
+      "2507.19233",
+      22
+    ],
+    [
+      "2507.19233",
+      30
+    ],
+    [
+      "2507.19233",
+      31
+    ],
+    [
+      "2507.19233",
+      34
+    ],
+    [
+      "2507.19233",
+      35
+    ],
+    [
+      "2507.19233",
+      36
+    ],
+    [
+      "2507.19233",
+      38
+    ],
+    [
+      "2507.19233",
+      39
+    ],
+    [
+      "2507.19233",
+      41
+    ],
+    [
+      "2507.19233",
+      43
+    ],
+    [
+      "2507.19233",
+      45
+    ],
+    [
+      "2507.19233",
+      50
+    ],
+    [
+      "2507.19233",
+      55
+    ],
+    [
+      "2507.19233",
+      56
+    ],
+    [
+      "2507.19233",
+      58
+    ],
+    [
+      "2507.19233",
+      59
+    ],
+    [
+      "2507.19233",
+      60
+    ],
+    [
+      "2507.19233",
+      62
+    ],
+    [
+      "2507.19233",
+      107
+    ],
+    [
+      "2507.19233",
+      113
+    ],
+    [
+      "2507.19233",
+      190
+    ],
+    [
+      "2507.19233",
+      191
+    ],
+    [
+      "2507.19233",
+      226
+    ],
+    [
+      "2507.19233",
+      235
+    ],
+    [
+      "2507.19233",
+      237
+    ],
+    [
+      "2507.19233",
+      247
+    ],
+    [
+      "2507.19233",
+      248
+    ],
+    [
+      "2507.19233",
+      254
+    ],
+    [
+      "2507.19233",
+      282
+    ],
+    [
+      "2507.19233",
+      283
+    ],
+    [
+      "2507.19233",
+      290
+    ],
+    [
+      "2507.19233",
+      291
+    ],
+    [
+      "2507.19233",
+      292
+    ]
+  ],
+  "metrics": {
+    "tp": 59,
+    "fp": 4,
+    "positives": 105,
+    "precision": 0.9365,
+    "recall": 0.5619,
+    "f1": 0.7024
+  }
+}

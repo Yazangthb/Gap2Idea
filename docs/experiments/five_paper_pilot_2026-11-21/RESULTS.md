@@ -75,3 +75,14 @@ Both prompts were run fresh on the same 304 candidates in the same order and 16 
 | Neutral rubric | 75 | 10 | 0.8824 | 0.7143 | 0.7895 | 55,617 | 3,852 |
 
 The shorter prompt found nine additional labeled gaps but added 23 false positives; it used 9.8% fewer input tokens but produced more output tokens. This is an exploratory comparison on the same five development papers and LLM-generated labels, and should be confirmed on an independent sample. The matched neutral result differs from the historical neutral run above because batch composition differs.
+
+## Matched single-request comparison: five full papers vs funnel shortlist
+
+Both methods used one fresh Qwen3.8-27B-FP8 request, the same five papers, neutral system prompt, temperature 0, seed 0, thinking disabled, 8,192-token output limit, JSON schema, paper boundaries, reading order, and original global sentence IDs. The only intended input difference is the included sentences: all 1,713 sentences from the five papers versus the 304 sentences surviving Stage A and the frozen NLI Stage B. The funnel request did not include surrounding non-candidate sentences. One request per method returned valid outputs without retry. The denominator is all 105 original LLM-labeled positives across the five papers, including positives filtered before Qwen.
+
+| Method | Qwen requests | Sentences sent | TP | FP | Precision | Recall | F1 | Input tokens | Output tokens | Qwen call seconds |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Five full papers | 1 | 1,713 | 59 | 4 | 0.9365 | 0.5619 | 0.7024 | 96,215 | 493 | 17.117 |
+| Funnel candidates in one request | 1 | 304 | 81 | 34 | 0.7043 | 0.7714 | 0.7364 | 12,513 | 644 | 6.199 |
+
+The funnel call used 87.0% fewer Qwen input tokens (7.69× fewer), found 22 more labeled positives overall, and had 30 more false positives. Of the labeled positives, 57 were found by both methods, two by full papers only, and 24 by the funnel only; one full-only positive was removed before the funnel request. Qwen call time excludes Stage A/B preprocessing, data loading, and total end-to-end system cost. Candidate filtering also reduces context, and the difference in the model's response with shorter input may matter; no causal mechanism has been established. This is one fixed five-paper development sample with LLM-generated labels; the earlier disagreement-only adjudication applied to a different batched 27B run and must not be used to rescore these new predictions without review. Prompts and raw outputs are in the committed runner and result files.
