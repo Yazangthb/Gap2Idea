@@ -51,3 +51,16 @@ The 27B model reviewed only the sentences kept by the existing 4B strict or keep
 | 27B keep-biased without 4B shortlist, saved validation run | 304 | 87 | 18 | 0.8286 | 0.8286 | 0.8286 |
 
 The strict-to-neutral cascade removed 23 of the 4B shortlist's 32 false positives while losing three of its 73 true positives. It used 18,281 input and 1,164 output tokens in six 27B calls, in addition to the earlier 4B processing and Stage A/B. The earlier 4B strict calls used 56,641 input and 3,010 output tokens. We cannot measure total savings against the old 27B-only run because its saved verdicts do not record token usage. The old 27B-only runs were batched across all validation papers; the new cascade batches only selected candidates from the five-paper pilot, so batch context and runtime differ. These small-sample, LLM-label results are exploratory.
+
+## Higher-recall 4B first-pass prompts
+
+Two new exploratory first-pass prompts (`screen`, `permissive`) tell 4B that a second model will review potential gaps and that uncertain cases should be kept. The prompts were committed before the calls; the same 304 candidates, batching, 4B model, and five-paper evaluation were used. After committing the 4B results, 27B applied the existing neutral prompt to each shortlist. The same 105 labeled positives are the denominator in all rows.
+
+| Configuration | 4B shortlist size | TP after 4B | Final TP | Final FP | Final precision | Final recall | Final F1 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Previous 4B strict → 27B neutral | 105 | 73 | 70 | 9 | 0.8861 | 0.6667 | 0.7609 |
+| **New 4B screen → 27B neutral** | **208** | **89** | **77** | **11** | **0.8750** | **0.7333** | **0.7979** |
+| New 4B permissive → 27B neutral | 240 | 87 | 75 | 13 | 0.8523 | 0.7143 | 0.7772 |
+| 27B neutral alone, saved validation run | 304 | — | 79 | 11 | 0.8778 | 0.7524 | 0.8103 |
+
+The NLI stage reached 92 of 105 labeled positives; the screen prompt kept 89 of those 92, and 27B retained 77. The new screen setup sent 208 of 304 candidates to 27B, 31.6% fewer candidate items, but also added a 4B call stage. It consumed 52,753 input and 3,830 output tokens in 16 4B calls, then 36,131 input and 2,845 output tokens in 11 27B calls; earlier Stage A/B costs are excluded. The saved 27B-only run did not record token usage, so overall cost savings have not been established. Its batching across the full validation set differs from the new cascade's five-paper-only batching, so the small F1 difference cannot establish equivalence. The prompts were developed iteratively on this sample, which has LLM-generated labels; independent held-out and human evaluation are needed.
