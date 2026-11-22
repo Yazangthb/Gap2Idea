@@ -1,0 +1,631 @@
+{
+  "plan_sha256": "f1b0b6b08689e29b7c31309e9b5f78ed45ac58e067c4b24bb6166a676fa966c0",
+  "models": {
+    "zero-shot": {
+      "methods": {
+        "positive": {
+          "0.8": {
+            "threshold": 0.5992506146430969,
+            "A": {
+              "sentences_passed": 822,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.3418491484184915,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 754,
+              "true_positives": 281,
+              "positive_total": 348,
+              "precision": 0.3726790450928382,
+              "recall": 0.8074712643678161,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.24059613049030304,
+            "A": {
+              "sentences_passed": 1520,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.20789473684210527,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 1400,
+              "true_positives": 313,
+              "positive_total": 348,
+              "precision": 0.22357142857142856,
+              "recall": 0.8994252873563219,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 0.10978924483060837,
+            "A": {
+              "sentences_passed": 2918,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.11446196024674435,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 2414,
+              "true_positives": 327,
+              "positive_total": 348,
+              "precision": 0.13545981772990887,
+              "recall": 0.9396551724137931,
+              "total_sentences": 4907
+            }
+          }
+        },
+        "negative": {
+          "0.8": {
+            "threshold": 0.9771973490715027,
+            "A": {
+              "sentences_passed": 1595,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.1761755485893417,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 1391,
+              "true_positives": 285,
+              "positive_total": 348,
+              "precision": 0.2048885693745507,
+              "recall": 0.8189655172413793,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.9538587331771851,
+            "A": {
+              "sentences_passed": 3604,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.0876803551609323,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 2800,
+              "true_positives": 318,
+              "positive_total": 348,
+              "precision": 0.11357142857142857,
+              "recall": 0.9137931034482759,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 0.9134837985038757,
+            "A": {
+              "sentences_passed": 4862,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.06869600987248047,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3649,
+              "true_positives": 332,
+              "positive_total": 348,
+              "precision": 0.09098383118662648,
+              "recall": 0.9540229885057471,
+              "total_sentences": 4907
+            }
+          }
+        },
+        "mean": {
+          "0.8": {
+            "threshold": 0.7612212896347046,
+            "A": {
+              "sentences_passed": 840,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.3345238095238095,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 782,
+              "true_positives": 281,
+              "positive_total": 348,
+              "precision": 0.3593350383631714,
+              "recall": 0.8074712643678161,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.5701388120651245,
+            "A": {
+              "sentences_passed": 1673,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.18888224745965332,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 1523,
+              "true_positives": 317,
+              "positive_total": 348,
+              "precision": 0.20814182534471437,
+              "recall": 0.9109195402298851,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 0.492099791765213,
+            "A": {
+              "sentences_passed": 4476,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.07462019660411082,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3447,
+              "true_positives": 331,
+              "positive_total": 348,
+              "precision": 0.09602552944589499,
+              "recall": 0.9511494252873564,
+              "total_sentences": 4907
+            }
+          }
+        },
+        "either": {
+          "0.8": {
+            "threshold": 0.9779992699623108,
+            "A": {
+              "sentences_passed": 1514,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.1856010568031704,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 1339,
+              "true_positives": 286,
+              "positive_total": 348,
+              "precision": 0.21359223300970873,
+              "recall": 0.8218390804597702,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.9564311504364014,
+            "A": {
+              "sentences_passed": 3421,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.0923706518561824,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 2697,
+              "true_positives": 317,
+              "positive_total": 348,
+              "precision": 0.11753800519095291,
+              "recall": 0.9109195402298851,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 0.9134837985038757,
+            "A": {
+              "sentences_passed": 4862,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.06869600987248047,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3649,
+              "true_positives": 332,
+              "positive_total": 348,
+              "precision": 0.09098383118662648,
+              "recall": 0.9540229885057471,
+              "total_sentences": 4907
+            }
+          }
+        },
+        "both": {
+          "0.8": {
+            "threshold": 0.581303060054779,
+            "A": {
+              "sentences_passed": 838,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.3353221957040573,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 773,
+              "true_positives": 283,
+              "positive_total": 348,
+              "precision": 0.36610608020698576,
+              "recall": 0.8132183908045977,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.24059613049030304,
+            "A": {
+              "sentences_passed": 1520,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.20789473684210527,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 1399,
+              "true_positives": 313,
+              "positive_total": 348,
+              "precision": 0.2237312365975697,
+              "recall": 0.8994252873563219,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 0.10978924483060837,
+            "A": {
+              "sentences_passed": 2918,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.11446196024674435,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 2413,
+              "true_positives": 327,
+              "positive_total": 348,
+              "precision": 0.13551595524243681,
+              "recall": 0.9396551724137931,
+              "total_sentences": 4907
+            }
+          }
+        }
+      },
+      "positive_vs_inverted_negative": {
+        "lim": {
+          "pearson": 0.41234472465114214,
+          "opposite_binary_fraction": 0.7659949622166247
+        },
+        "fw": {
+          "pearson": 0.12486021442001259,
+          "opposite_binary_fraction": 0.9521410579345088
+        },
+        "gap": {
+          "pearson": 0.2768775496500974,
+          "opposite_binary_fraction": 0.9138539042821159
+        }
+      }
+    },
+    "fine-tuned": {
+      "methods": {
+        "positive": {
+          "0.8": {
+            "threshold": 0.024645118042826653,
+            "A": {
+              "sentences_passed": 519,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.5414258188824663,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 469,
+              "true_positives": 267,
+              "positive_total": 348,
+              "precision": 0.5692963752665245,
+              "recall": 0.7672413793103449,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.0024871176574379206,
+            "A": {
+              "sentences_passed": 891,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.3546576879910213,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 778,
+              "true_positives": 308,
+              "positive_total": 348,
+              "precision": 0.39588688946015427,
+              "recall": 0.8850574712643678,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 6.841542199254036e-05,
+            "A": {
+              "sentences_passed": 2457,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.13593813593813595,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 2057,
+              "true_positives": 332,
+              "positive_total": 348,
+              "precision": 0.16140009722897422,
+              "recall": 0.9540229885057471,
+              "total_sentences": 4907
+            }
+          }
+        },
+        "negative": {
+          "0.8": {
+            "threshold": 0.8623806834220886,
+            "A": {
+              "sentences_passed": 5132,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.05475448168355417,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3909,
+              "true_positives": 288,
+              "positive_total": 348,
+              "precision": 0.07367613200306984,
+              "recall": 0.8275862068965517,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.6674322485923767,
+            "A": {
+              "sentences_passed": 5185,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.0609450337512054,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3949,
+              "true_positives": 315,
+              "positive_total": 348,
+              "precision": 0.07976702962775387,
+              "recall": 0.9051724137931034,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 0.3052959144115448,
+            "A": {
+              "sentences_passed": 5204,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.06418139892390469,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3968,
+              "true_positives": 332,
+              "positive_total": 348,
+              "precision": 0.08366935483870967,
+              "recall": 0.9540229885057471,
+              "total_sentences": 4907
+            }
+          }
+        },
+        "mean": {
+          "0.8": {
+            "threshold": 0.4999963641166687,
+            "A": {
+              "sentences_passed": 2856,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.09838935574229692,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 2050,
+              "true_positives": 285,
+              "positive_total": 348,
+              "precision": 0.13902439024390245,
+              "recall": 0.8189655172413793,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.4991202652454376,
+            "A": {
+              "sentences_passed": 4909,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.06437156243634141,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3712,
+              "true_positives": 322,
+              "positive_total": 348,
+              "precision": 0.08674568965517242,
+              "recall": 0.9252873563218391,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 0.49395817518234253,
+            "A": {
+              "sentences_passed": 5149,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.06486696445911827,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3907,
+              "true_positives": 331,
+              "positive_total": 348,
+              "precision": 0.08471973381110827,
+              "recall": 0.9511494252873564,
+              "total_sentences": 4907
+            }
+          }
+        },
+        "either": {
+          "0.8": {
+            "threshold": 0.9914556741714478,
+            "A": {
+              "sentences_passed": 4989,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.056323912607737024,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3759,
+              "true_positives": 266,
+              "positive_total": 348,
+              "precision": 0.07076350093109869,
+              "recall": 0.764367816091954,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.9788748025894165,
+            "A": {
+              "sentences_passed": 5126,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.06164650799843933,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3871,
+              "true_positives": 312,
+              "positive_total": 348,
+              "precision": 0.0805993283389305,
+              "recall": 0.896551724137931,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 0.9493885636329651,
+            "A": {
+              "sentences_passed": 5186,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.06440416505977632,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 3940,
+              "true_positives": 331,
+              "positive_total": 348,
+              "precision": 0.08401015228426396,
+              "recall": 0.9511494252873564,
+              "total_sentences": 4907
+            }
+          }
+        },
+        "both": {
+          "0.8": {
+            "threshold": 0.024645118042826653,
+            "A": {
+              "sentences_passed": 519,
+              "true_positives": 281,
+              "positive_total": 351,
+              "precision": 0.5414258188824663,
+              "recall": 0.8005698005698005,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 469,
+              "true_positives": 267,
+              "positive_total": 348,
+              "precision": 0.5692963752665245,
+              "recall": 0.7672413793103449,
+              "total_sentences": 4907
+            }
+          },
+          "0.9": {
+            "threshold": 0.0024871176574379206,
+            "A": {
+              "sentences_passed": 891,
+              "true_positives": 316,
+              "positive_total": 351,
+              "precision": 0.3546576879910213,
+              "recall": 0.9002849002849003,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 778,
+              "true_positives": 308,
+              "positive_total": 348,
+              "precision": 0.39588688946015427,
+              "recall": 0.8850574712643678,
+              "total_sentences": 4907
+            }
+          },
+          "0.95": {
+            "threshold": 6.841542199254036e-05,
+            "A": {
+              "sentences_passed": 2457,
+              "true_positives": 334,
+              "positive_total": 351,
+              "precision": 0.13593813593813595,
+              "recall": 0.9515669515669516,
+              "total_sentences": 6294
+            },
+            "B": {
+              "sentences_passed": 2057,
+              "true_positives": 332,
+              "positive_total": 348,
+              "precision": 0.16140009722897422,
+              "recall": 0.9540229885057471,
+              "total_sentences": 4907
+            }
+          }
+        }
+      },
+      "positive_vs_inverted_negative": {
+        "lim": {
+          "pearson": -0.5018262515378189,
+          "opposite_binary_fraction": 0.9435768261964735
+        },
+        "fw": {
+          "pearson": -0.4657962269487807,
+          "opposite_binary_fraction": 0.9727959697732997
+        },
+        "gap": {
+          "pearson": -0.6684522096363009,
+          "opposite_binary_fraction": 0.9564231738035265
+        }
+      }
+    }
+  }
+}
