@@ -1,0 +1,29 @@
+{
+  "purpose": "Match the existing single-request five-paper V100 Q4 neighbor experiment, replacing only zero-shot NLI candidates with fine-tuned candidates",
+  "model": "qwen38-v100:27b-q4",
+  "ollama_digest": "15d962ff762f7d02c565fd78afb81eb514692119fce228b6c429cbbdd28a373e",
+  "prompt": "neutral",
+  "prompt_sha256": "df9ff9616c95041dcd626b64120c9bf1645d7fe28892ed79332800961020543f",
+  "candidate_rule": "Stage A plus max typed fine-tuned NLI entailment/(entailment+contradiction), threshold chosen for 90% recall on all 34 validation papers",
+  "threshold": 0.0021033689845353365,
+  "candidate_count": 200,
+  "keys_sha256": "290fdbc2453878d90f6ec8ec50d32361bd3314f9d3010a129f0cdc0a2b8c4caa",
+  "input_sha256": "32412064b63ea23cef5d58f885ecad8f75af4da4e80e76ccbd6f3ace2f54c3dd",
+  "sample_papers": [
+    "2302.07477",
+    "2302.04972",
+    "2104.06303",
+    "2202.00740",
+    "2102.03018"
+  ],
+  "source_score_sha256": "a3c6a124dc487048a50f76eef5b325eba2828f5cfe4ce69a6a772244815b8c8f",
+  "source_dev_plan_sha256": "83756052210c8f8360e36e6095904dafb6510b58d558967d69ef16892c79eee2",
+  "comparison_result_sha256": "fbb330db9f2ac4f9aa82e9aecb36e53219af1643ca4ef444bb9b8cc0c758e203",
+  "runner_sha256": "f8f498961f08871ee71719fb903f11c425ba5139c9a36705fcdc5cf480f4cb2c",
+  "neighbors": "previous original sentence last 800 characters; next original sentence first 800 characters, within the same paper",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 8192,
+  "caveat": "Sample belongs to the validation set used for fine-tuned checkpoint/threshold selection; exploratory LLM labels"
+}
