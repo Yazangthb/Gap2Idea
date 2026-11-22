@@ -1,0 +1,197 @@
+{
+  "plan_sha256": "2b44fd5a2c769840622aec57f27118543aec0dfb506ef863ed52ebbbcd1759cc",
+  "inputs": {
+    "zero": {
+      "input_count": 258,
+      "run_count": 4,
+      "successful_count": 4,
+      "runs": [
+        {
+          "name": "original",
+          "status": "ok",
+          "metrics": {
+            "tp": 36,
+            "fp": 1,
+            "positives": 77,
+            "precision": 0.973,
+            "recall": 0.4675,
+            "f1": 0.6316
+          }
+        },
+        {
+          "name": "repeat_1",
+          "status": "ok",
+          "metrics": {
+            "tp": 36,
+            "fp": 1,
+            "positives": 77,
+            "precision": 0.973,
+            "recall": 0.4675,
+            "f1": 0.6316
+          }
+        },
+        {
+          "name": "repeat_2",
+          "status": "ok",
+          "metrics": {
+            "tp": 36,
+            "fp": 1,
+            "positives": 77,
+            "precision": 0.973,
+            "recall": 0.4675,
+            "f1": 0.6316
+          }
+        },
+        {
+          "name": "repeat_3",
+          "status": "ok",
+          "metrics": {
+            "tp": 36,
+            "fp": 1,
+            "positives": 77,
+            "precision": 0.973,
+            "recall": 0.4675,
+            "f1": 0.6316
+          }
+        }
+      ],
+      "stable_accepted": 37,
+      "ever_accepted": 37,
+      "variable_sentence_count": 0,
+      "pairwise": [
+        {
+          "a": "original",
+          "b": "repeat_1",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "original",
+          "b": "repeat_2",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "original",
+          "b": "repeat_3",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "repeat_1",
+          "b": "repeat_2",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "repeat_1",
+          "b": "repeat_3",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "repeat_2",
+          "b": "repeat_3",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        }
+      ]
+    },
+    "fine": {
+      "input_count": 200,
+      "run_count": 4,
+      "successful_count": 4,
+      "runs": [
+        {
+          "name": "original",
+          "status": "ok",
+          "metrics": {
+            "tp": 53,
+            "fp": 21,
+            "positives": 77,
+            "precision": 0.7162,
+            "recall": 0.6883,
+            "f1": 0.702
+          }
+        },
+        {
+          "name": "repeat_1",
+          "status": "ok",
+          "metrics": {
+            "tp": 53,
+            "fp": 21,
+            "positives": 77,
+            "precision": 0.7162,
+            "recall": 0.6883,
+            "f1": 0.702
+          }
+        },
+        {
+          "name": "repeat_2",
+          "status": "ok",
+          "metrics": {
+            "tp": 53,
+            "fp": 21,
+            "positives": 77,
+            "precision": 0.7162,
+            "recall": 0.6883,
+            "f1": 0.702
+          }
+        },
+        {
+          "name": "repeat_3",
+          "status": "ok",
+          "metrics": {
+            "tp": 53,
+            "fp": 21,
+            "positives": 77,
+            "precision": 0.7162,
+            "recall": 0.6883,
+            "f1": 0.702
+          }
+        }
+      ],
+      "stable_accepted": 74,
+      "ever_accepted": 74,
+      "variable_sentence_count": 0,
+      "pairwise": [
+        {
+          "a": "original",
+          "b": "repeat_1",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "original",
+          "b": "repeat_2",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "original",
+          "b": "repeat_3",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "repeat_1",
+          "b": "repeat_2",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "repeat_1",
+          "b": "repeat_3",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        },
+        {
+          "a": "repeat_2",
+          "b": "repeat_3",
+          "symmetric_difference": 0,
+          "jaccard": 1.0
+        }
+      ]
+    }
+  }
+}
