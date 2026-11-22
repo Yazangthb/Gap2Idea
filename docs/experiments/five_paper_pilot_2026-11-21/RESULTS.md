@@ -35,3 +35,19 @@ All settings use the same 304 Stage B candidates and the same 105 labeled positi
 | 4B | Keep-biased | 79 | 63 | 0.5563 | 0.7524 | 0.6397 |
 
 Each saved 27B validation verdict file contains all 2,278 unique candidate indices; the saved strict file matches the existing frozen reference. The neutral and keep-biased 4B runs each completed 16 batches with no missing verdicts, using the same BF16 GGUF model and runtime as the original 4B pilot. The prompts were established before this comparison, but some wording was informed by earlier test false positives. The five papers and labels remain development data with LLM-generated, non-human-validated labels; the choice of best prompt here is exploratory and requires confirmation on independent data.
+
+## 4B-to-27B cascade
+
+The 27B model reviewed only the sentences kept by the existing 4B strict or keep-biased Stage C run; source candidate order, 20-sentence batch maximum, context construction and rubric were retained. It saw no labels or 4B verdicts other than the shortlist itself. All four fresh 27B runs completed without failed batches. Every metric uses the original 105 labeled positives as the denominator.
+
+| Method | Candidates for 27B | TP | FP | Precision | Recall | F1 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 4B strict alone | — | 73 | 32 | 0.6952 | 0.6952 | 0.6952 |
+| 4B strict → 27B neutral | 105 | 70 | 9 | 0.8861 | 0.6667 | 0.7609 |
+| 4B strict → 27B keep-biased | 105 | 73 | 19 | 0.7935 | 0.6952 | 0.7411 |
+| 4B keep-biased → 27B neutral | 142 | 68 | 14 | 0.8293 | 0.6476 | 0.7273 |
+| 4B keep-biased → 27B keep-biased | 142 | 76 | 26 | 0.7451 | 0.7238 | 0.7343 |
+| 27B neutral without 4B shortlist, saved validation run | 304 | 79 | 11 | 0.8778 | 0.7524 | 0.8103 |
+| 27B keep-biased without 4B shortlist, saved validation run | 304 | 87 | 18 | 0.8286 | 0.8286 | 0.8286 |
+
+The strict-to-neutral cascade removed 23 of the 4B shortlist's 32 false positives while losing three of its 73 true positives. It used 18,281 input and 1,164 output tokens in six 27B calls, in addition to the earlier 4B processing and Stage A/B. The earlier 4B strict calls used 56,641 input and 3,010 output tokens. We cannot measure total savings against the old 27B-only run because its saved verdicts do not record token usage. The old 27B-only runs were batched across all validation papers; the new cascade batches only selected candidates from the five-paper pilot, so batch context and runtime differ. These small-sample, LLM-label results are exploratory.
