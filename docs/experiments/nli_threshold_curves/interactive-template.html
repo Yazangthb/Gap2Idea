@@ -1,0 +1,99 @@
+<section id="gap2idea-threshold-explorer" data-viz-composition>
+  <h2>NLI threshold explorer</h2>
+  <div class="text-small text-muted">34 test papers · 11,741 sentences · 664 LLM-labeled gaps · before 27B filtering</div>
+  <div class="viz-controls explorer-controls">
+    <label class="form-label" for="nli-version">NLI version
+      <select id="nli-version" class="form-select">
+        <option value="zero">Zero-shot ModernBERT</option>
+        <option value="fine">Fine-tuned ModernBERT</option>
+      </select>
+    </label>
+    <label class="form-label" for="nli-threshold">Threshold
+      <input id="nli-threshold" class="form-control tabular-nums" type="number" min="0.00001" max="1" step="any" />
+    </label>
+  </div>
+  <div class="explorer-slider">
+    <label class="form-label" for="nli-slider">Threshold position <span class="text-small text-muted">(log scale)</span></label>
+    <input id="nli-slider" class="form-range" type="range" min="0" max="1000" step="1" />
+  </div>
+  <div class="viz-grid explorer-stats" aria-live="polite">
+    <div class="card viz-stat"><div class="text-small text-muted">Precision</div><div id="nli-precision" class="viz-stat-value tabular-nums">—</div><div id="nli-precision-base" class="text-small text-muted"></div></div>
+    <div class="card viz-stat"><div class="text-small text-muted">Recall</div><div id="nli-recall" class="viz-stat-value tabular-nums">—</div><div id="nli-recall-base" class="text-small text-muted"></div></div>
+    <div class="card viz-stat"><div class="text-small text-muted">Sentences passed</div><div id="nli-passed" class="viz-stat-value tabular-nums">—</div><div class="text-small text-muted">of 11,741 sentences</div></div>
+  </div>
+  <div data-viz-container></div>
+  <script type="application/json" data-viz-chart data-model="zero">__ZERO_CONFIG__</script>
+  <script type="application/json" data-viz-chart data-model="fine">__FINE_CONFIG__</script>
+  <script type="application/json" id="nli-data">__SCORE_DATA__</script>
+  <div class="text-small text-muted explorer-footnote">Thresholds were chosen on development data; the test curves have been examined previously. Cleanup removes some labeled gaps before NLI.</div>
+</section>
+<style>
+  #gap2idea-threshold-explorer { display: flex; flex-direction: column; gap: calc(var(--font-size-base) * .7); }
+  #gap2idea-threshold-explorer .explorer-controls { display: flex; gap: calc(var(--font-size-base) * 1); flex-wrap: wrap; }
+  #gap2idea-threshold-explorer .explorer-controls label { flex: 1 1 210px; }
+  #gap2idea-threshold-explorer .explorer-slider { display: flex; flex-direction: column; }
+  #gap2idea-threshold-explorer .explorer-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #gap2idea-threshold-explorer .explorer-footnote { margin-top: calc(var(--font-size-base) * .15); }
+  @media (max-width: 420px) { #gap2idea-threshold-explorer .explorer-stats { grid-template-columns: 1fr; } }
+</style>
+<script type="module">
+  import { mountChart } from "https://persistent.oaistatic.com/plugins/visualize/charts/1.8.1/element.js";
+  const root = document.getElementById('gap2idea-threshold-explorer');
+  const models = JSON.parse(root.querySelector('#nli-data').textContent);
+  const configs = Object.fromEntries([...root.querySelectorAll('[data-viz-chart]')].map(e => [e.dataset.model, JSON.parse(e.textContent)]));
+  const select = root.querySelector('#nli-version');
+  const threshold = root.querySelector('#nli-threshold');
+  const slider = root.querySelector('#nli-slider');
+  const valueP = root.querySelector('#nli-precision');
+  const valueR = root.querySelector('#nli-recall');
+  const valueN = root.querySelector('#nli-passed');
+  const baseP = root.querySelector('#nli-precision-base');
+  const baseR = root.querySelector('#nli-recall-base');
+  const fmt = new Intl.NumberFormat('en-US');
+  let model = 'zero';
+  let current = models[model].default_threshold;
+  let chart;
+  let chartModel;
+
+  function countAbove(sorted, value) {
+    let lo = 0, hi = sorted.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (sorted[mid] >= value) lo = mid + 1; else hi = mid; }
+    return lo;
+  }
+  function setView() {
+    select.value = model;
+    threshold.value = String(current);
+    slider.value = String(Math.round((Math.log10(current) + 5) * 200));
+    const m = models[model], passed = countAbove(m.all, current), tp = countAbove(m.positive, current);
+    valueP.textContent = passed ? (100 * tp / passed).toFixed(1) + '%' : '—';
+    valueR.textContent = (100 * tp / 664).toFixed(1) + '%';
+    valueN.textContent = fmt.format(passed);
+    baseP.textContent = fmt.format(tp) + ' of ' + fmt.format(passed) + ' passed';
+    baseR.textContent = fmt.format(tp) + ' of 664 labeled gaps';
+    if (chart && chartModel !== model) { chart.config = configs[model]; chartModel = model; }
+  }
+  function persist() {
+    if (window.openai && typeof window.openai.setWidgetState === 'function') {
+      window.openai.setWidgetState({ modelContent: { model, threshold: current }, privateContent: null }).catch(() => {});
+    }
+  }
+  function restore(saved) {
+    const s = saved && saved.modelContent ? saved.modelContent : saved;
+    if (s && (s.model === 'zero' || s.model === 'fine') && Number.isFinite(s.threshold) && s.threshold >= .00001 && s.threshold <= 1) {
+      model = s.model; current = s.threshold; setView();
+    }
+  }
+  select.addEventListener('change', () => { model = select.value; current = models[model].default_threshold; setView(); persist(); });
+  slider.addEventListener('input', () => { current = Math.pow(10, -5 + Number(slider.value) / 200); setView(); });
+  slider.addEventListener('change', persist);
+  threshold.addEventListener('change', () => {
+    const n = Number(threshold.value);
+    if (Number.isFinite(n) && n >= .00001 && n <= 1) { current = n; setView(); persist(); }
+    else { threshold.value = String(current); }
+  });
+  window.addEventListener('openai:set_globals', e => restore(e.detail?.globals?.widgetState));
+  setView();
+  restore(window.openai?.widgetState);
+  chart = mountChart(root.querySelector('[data-viz-container]'), configs[model]);
+  chartModel = model;
+</script>
