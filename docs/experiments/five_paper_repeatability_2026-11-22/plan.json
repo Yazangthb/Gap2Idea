@@ -1,0 +1,54 @@
+{
+  "purpose": "Estimate short-run repeatability of exactly the previously compared single-request inputs",
+  "repeats_per_input": 3,
+  "call_order": [
+    [
+      "zero",
+      1
+    ],
+    [
+      "fine",
+      1
+    ],
+    [
+      "fine",
+      2
+    ],
+    [
+      "zero",
+      2
+    ],
+    [
+      "zero",
+      3
+    ],
+    [
+      "fine",
+      3
+    ]
+  ],
+  "model": "qwen38-v100:27b-q4",
+  "ollama_digest": "15d962ff762f7d02c565fd78afb81eb514692119fce228b6c429cbbdd28a373e",
+  "system_sha256": "df9ff9616c95041dcd626b64120c9bf1645d7fe28892ed79332800961020543f",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 8192,
+  "context_length": 131072,
+  "gpu": "single V100 GPU 0",
+  "inputs": {
+    "zero": {
+      "input_sha256": "861a3b0144084a842a089f98035506b804313a6ed8ce751e505814a57e09b9d2",
+      "candidate_count": 258,
+      "original_result_sha256": "fbb330db9f2ac4f9aa82e9aecb36e53219af1643ca4ef444bb9b8cc0c758e203"
+    },
+    "fine": {
+      "input_sha256": "32412064b63ea23cef5d58f885ecad8f75af4da4e80e76ccbd6f3ace2f54c3dd",
+      "candidate_count": 200,
+      "original_result_sha256": "487813604438c0cb1cd184017277d4e88e656c5ee82cabf38891641ae7431e38"
+    }
+  },
+  "runner_sha256": "8beb5bf4e184067f612b723fb88243215b0051cff4a6a3c15efcfc45683bd826",
+  "scope": "five development papers with LLM labels; repeated samples do not prove long-term determinism",
+  "invalid_output": "record failure; do not treat it as a negative result; duplicate valid IDs deduplicated as in original"
+}
