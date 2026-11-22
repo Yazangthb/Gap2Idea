@@ -1,0 +1,45 @@
+{
+  "status": "failed",
+  "split": "tune",
+  "prompt": "neutral",
+  "method": "funnel",
+  "plan_sha256": "986e10722dab81bb58c8c52c57e14d86a6c3e849659a8130d056711da5370bb6",
+  "attempts": [
+    {
+      "seconds": 7.558,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 706,
+        "prompt_tokens": 19973,
+        "total_tokens": 20679,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n\"positives\": [\n8,\n9,\n14,\n15,\n16,\n19,\n20,\n36,\n37,\n41,\n42,\n50,\n52,\n53,\n159,\n162,\n175,\n177,\n178,\n179,\n181,\n226,\n232,\n235,\n407,\n409,\n410,\n412,\n421,\n428,\n437,\n438,\n439,\n445,\n471,\n480,\n485,\n486,\n487,\n491,\n492,\n510,\n511,\n522,\n524,\n529,\n570,\n581,\n582,\n583,\n584,\n585,\n586,\n587,\n588,\n589,\n603,\n629,\n639,\n645,\n647,\n648,\n649,\n668,\n669,\n670,\n673,\n713,\n763,\n764,\n827,\n828,\n829,\n906,\n960,\n1032,\n1053,\n1056,\n1057,\n1061,\n1105,\n1322,\n1323,\n1342,\n1343,\n1344,\n1345,\n1348,\n1349,\n1350,\n1351,\n1353,\n1354,\n1356,\n1357,\n1358,\n1360,\n1361,\n1362,\n1363,\n1364,\n1366,\n1368,\n1369,\n1370,\n1373,\n1375,\n1379,\n1380,\n1381,\n1381,\n1391,\n1392,\n1399,\n1400,\n1401,\n1405,\n1408,\n1418,\n1671,\n1672,\n1744,\n1894,\n1898,\n1902,\n1903,\n1904,\n1910,\n1930,\n1934,\n1936\n]\n}",
+      "validation_error": "invalid, duplicate or non-input ids"
+    },
+    {
+      "seconds": 5.781,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 706,
+        "prompt_tokens": 19973,
+        "total_tokens": 20679,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n\"positives\": [\n8,\n9,\n14,\n15,\n16,\n19,\n20,\n36,\n37,\n41,\n42,\n50,\n52,\n53,\n159,\n162,\n175,\n177,\n178,\n179,\n181,\n226,\n232,\n235,\n407,\n409,\n410,\n412,\n421,\n428,\n437,\n438,\n439,\n445,\n471,\n480,\n485,\n486,\n487,\n491,\n492,\n510,\n511,\n522,\n524,\n529,\n570,\n581,\n582,\n583,\n584,\n585,\n586,\n587,\n588,\n589,\n603,\n629,\n639,\n645,\n647,\n648,\n649,\n668,\n669,\n670,\n673,\n713,\n763,\n764,\n827,\n828,\n829,\n906,\n960,\n1032,\n1053,\n1056,\n1057,\n1061,\n1105,\n1322,\n1323,\n1342,\n1343,\n1344,\n1345,\n1348,\n1349,\n1350,\n1351,\n1353,\n1354,\n1356,\n1357,\n1358,\n1360,\n1361,\n1362,\n1363,\n1364,\n1366,\n1368,\n1369,\n1370,\n1373,\n1375,\n1379,\n1380,\n1381,\n1381,\n1391,\n1392,\n1399,\n1400,\n1401,\n1405,\n1408,\n1418,\n1671,\n1672,\n1744,\n1894,\n1898,\n1902,\n1903,\n1904,\n1910,\n1930,\n1934,\n1936\n]\n}",
+      "validation_error": "invalid, duplicate or non-input ids"
+    }
+  ]
+}
