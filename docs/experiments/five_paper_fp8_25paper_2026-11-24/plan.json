@@ -1,0 +1,165 @@
+{
+  "purpose": "25-paper, one-call-per-five-papers comparison: full Qwen vs zero-shot and fine-tuned NLI candidates with local neighbors",
+  "status": "exploratory: previously studied test pool; LLM-generated labels, no human adjudication",
+  "selection": "shuffle sorted 28 arXiv test paper IDs with random.Random(20261124); first 25 in five consecutive groups; no label-dependent selection",
+  "unused_papers": [
+    "2503.00979",
+    "2202.00263",
+    "2512.20675"
+  ],
+  "grouping_seed": 20261124,
+  "model": "qwen3.8-27b",
+  "model_repo": "Qwen/Qwen3.8-27B-FP8",
+  "model_revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 8192,
+  "system_prompt": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"positives\":[<id>, ...]}: the ids of every sentence you answer YES for, in increasing order. Use only ids that appear in the input. If no sentence qualifies, return {\"positives\":[]}.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+  "system_sha256": "df9ff9616c95041dcd626b64120c9bf1645d7fe28892ed79332800961020543f",
+  "zero_threshold": 0.35411001352163435,
+  "fine_threshold": 0.0021033689845353365,
+  "nli_note": "same Stage A cleanup and max three type NLI scores; thresholds previously fixed on validation; fine-tuned model/threshold selected on validation",
+  "method_note": "full uses all sentences; zero and fine use their Stage A+B candidates, each with previous/next original sentence capped at 800 characters per side",
+  "output_rule": "one JSON positives list; deduplicate valid input IDs; reject invalid IDs or incomplete output; record all attempts, never count failed calls as negatives",
+  "groups": [
+    {
+      "paper_ids": [
+        "2504.14720",
+        "2206.13764",
+        "2208.02311",
+        "2110.15431",
+        "2310.01647"
+      ],
+      "row_keys_sha256": "d91eeb761985548bd01465aca7ae7569b0a9fbb14c531d27825a8c1d81b2caca",
+      "rows_sha256": "8bb6d5813ea2761ab2d94123bc636469b67a282fec8ab7e993a4bfdda8002080",
+      "inputs": {
+        "full": {
+          "sentence_count": 1525,
+          "input_sha256": "2c00d69e7f24ec9b839d0ee50dfc8ad52d3d1e7ce8eaa9632310a8ccb7d51875"
+        },
+        "zero": {
+          "sentence_count": 284,
+          "input_sha256": "e713d641c5911093629ba840cdf10e11445c205911fe01c22b66f0586fc7f0b9"
+        },
+        "fine": {
+          "sentence_count": 196,
+          "input_sha256": "0b824dbbde5fb831e4fcc086d0cb3b727579d1bcef69a69aa620ec3cd5a064bc"
+        }
+      }
+    },
+    {
+      "paper_ids": [
+        "2409.20534",
+        "2307.00522",
+        "2407.04521",
+        "2208.04226",
+        "2505.09022"
+      ],
+      "row_keys_sha256": "ba0221229b5676c100a8dac244e7898b9ae83dff21dfc4bc600934fd07ccc865",
+      "rows_sha256": "8671f94f2eb930716c3f5774b01ac530fb877dc2e54fb4c27db8bdbc4b0553cc",
+      "inputs": {
+        "full": {
+          "sentence_count": 1719,
+          "input_sha256": "235240303d3c4c44f9dd60f74f429c5b45a26cfb668e8ef12dda764066a36785"
+        },
+        "zero": {
+          "sentence_count": 266,
+          "input_sha256": "c6bea0d29bd48be556cb99fd44fef03c313e7e141c0f88daf44e2a0d993a28a1"
+        },
+        "fine": {
+          "sentence_count": 183,
+          "input_sha256": "c1c491e80d8a413d05de39295b3b0c645e34873025cf88f623b2ad8a6b33090a"
+        }
+      }
+    },
+    {
+      "paper_ids": [
+        "2504.15099",
+        "2112.05248",
+        "2303.01980",
+        "2410.06231",
+        "2310.08891"
+      ],
+      "row_keys_sha256": "d7ff9a0bdfde28dd9a0f22f146fc13f6383762ee86c03db26d65ce4edf54fc54",
+      "rows_sha256": "8bb72ef9c9ff799adda6297697070dade319e1047db175bad6a8374a0fee8b68",
+      "inputs": {
+        "full": {
+          "sentence_count": 1293,
+          "input_sha256": "861abf64aacee6e780274a741c04149704047baec4d36579e02cd04104e9cf0e"
+        },
+        "zero": {
+          "sentence_count": 311,
+          "input_sha256": "df63891efbee9eafba94c911c27d4048bf9f23e261130f025da22b444b11c015"
+        },
+        "fine": {
+          "sentence_count": 258,
+          "input_sha256": "770f46ab525db2a48a9a335bf29596b53fbb0e15dcd4aa4362810956d84bde4a"
+        }
+      }
+    },
+    {
+      "paper_ids": [
+        "2402.10999",
+        "2412.13630",
+        "2601.03085",
+        "2405.16002",
+        "2403.05034"
+      ],
+      "row_keys_sha256": "a24b18e944f53c675c3e8e90c4a1b881665485ead315441bf5fc0be58dc5ad62",
+      "rows_sha256": "8a05eb730e72bfd169657b170bd2517f201eeb6ff5eb08659856a7c50aabe39c",
+      "inputs": {
+        "full": {
+          "sentence_count": 3609,
+          "input_sha256": "b54e0fea55da9a32e114291fe452dc4c6a5a7c2aac85f061785619731c568e18"
+        },
+        "zero": {
+          "sentence_count": 754,
+          "input_sha256": "3d15d663fef58c3aa5212457ce0973a471d645d44122abe15c53a18f4a66665a"
+        },
+        "fine": {
+          "sentence_count": 610,
+          "input_sha256": "0bea0cdb60b990e80a93886c9d1a5523be5c575db01ca763b94a394791812151"
+        }
+      }
+    },
+    {
+      "paper_ids": [
+        "2410.16340",
+        "2201.01525",
+        "2509.21923",
+        "2101.06635",
+        "2009.05369"
+      ],
+      "row_keys_sha256": "afa69106ab6084c4c293fafbd580069998ad000269a6bb96464e23f10d5b0423",
+      "rows_sha256": "1e4bfa2e73d2fc4a6ed7795937c5438855991fce53acbe41ace85e7d28367ae2",
+      "inputs": {
+        "full": {
+          "sentence_count": 1697,
+          "input_sha256": "b6f9705e460f4b620b9990b3785bf7ae92d92bac36346e52b400b6a95a46302d"
+        },
+        "zero": {
+          "sentence_count": 379,
+          "input_sha256": "93095850b3f0997a5d0199d06d4281ca376b09dc0f80e8eea004ffb629d8f165"
+        },
+        "fine": {
+          "sentence_count": 306,
+          "input_sha256": "c253654773769f5d821e158f3f564f5ed10cb643ea7c403352f93bb0989af71a"
+        }
+      }
+    }
+  ],
+  "source_sha256": {
+    "scripts/bench/five_paper_fp8_comparison.py": "fc3fb998cb37fd0ef9b4bb4b4afc2aeab99eb676fa5874afb348968d7efc230f",
+    "scripts/bench/five_paper_dev_tuning.py": "7febff7de0f26eed8852ccc4908312fdf6c4f7369c078c56984d376de2a7c71b",
+    "scripts/bench/nli_variants.py": "521a8e2e5712102fdfd341ae2df0f328b60e65ab04b1d7327fe4eba32c257320",
+    "scripts/bench/stage_c_nli_qwen.py": "f22149b111849a5fbccac635aaae93e3e3f2a51641d901850f6cdcb3065e4e72",
+    "src/gap2idea/pipeline/gap_funnel.py": "0ee475c75107dd70fde4ac6aae0c132d2f623ac593f53588b444723062343969",
+    "data/gold/gap_gold_final.jsonl": "3325430fa8c507c6f7681c864c7e59b6f2f9840a4a41213951abf55baebac445",
+    "data/gold/splits.json": "e955fe742330a0eb0443b57a447073b18c8b5dd12523674317c08b7fba53c79c",
+    "data/paper_texts.jsonl": "74de2bb4858b7c5640041083a37b54c31236d5cba97c83d9e34cdd8a8eb16838",
+    "data/gold/nli_test_scores.npz": "5e443f0a86d0198938ca00cb33b8f9514807c094dc1c7113684aed951907fce8",
+    "data/gold/nli_ft/nli_ft_gold_test_scores.npz": "397c397743c0a63ed9f605e36d88978f3740825d335a931043206c81ed35ae82",
+    "data/gold/nli_ft/nli_ft_gold_val_scores.npz": "a3c6a124dc487048a50f76eef5b325eba2828f5cfe4ce69a6a772244815b8c8f"
+  }
+}
