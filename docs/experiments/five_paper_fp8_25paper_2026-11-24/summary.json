@@ -1,0 +1,236 @@
+{
+  "plan_sha256": "81c994fb41a5a76581f3a92033ee1717a4d2b1e07f0af25c70329a31df8ba421",
+  "methods": {
+    "full": {
+      "complete": true,
+      "groups": [
+        {
+          "group": 1,
+          "status": "ok",
+          "metrics": {
+            "tp": 42,
+            "fp": 3,
+            "positives": 85,
+            "precision": 0.9333,
+            "recall": 0.4941,
+            "f1": 0.6462
+          }
+        },
+        {
+          "group": 2,
+          "status": "ok",
+          "metrics": {
+            "tp": 34,
+            "fp": 6,
+            "positives": 77,
+            "precision": 0.85,
+            "recall": 0.4416,
+            "f1": 0.5812
+          }
+        },
+        {
+          "group": 3,
+          "status": "ok",
+          "metrics": {
+            "tp": 40,
+            "fp": 0,
+            "positives": 84,
+            "precision": 1.0,
+            "recall": 0.4762,
+            "f1": 0.6452
+          }
+        },
+        {
+          "group": 4,
+          "status": "ok",
+          "metrics": {
+            "tp": 73,
+            "fp": 5,
+            "positives": 148,
+            "precision": 0.9359,
+            "recall": 0.4932,
+            "f1": 0.646
+          }
+        },
+        {
+          "group": 5,
+          "status": "ok",
+          "metrics": {
+            "tp": 47,
+            "fp": 13,
+            "positives": 83,
+            "precision": 0.7833,
+            "recall": 0.5663,
+            "f1": 0.6573
+          }
+        }
+      ],
+      "total_candidates_sent": 9843,
+      "all_attempt_input_tokens": 522384,
+      "all_attempt_output_tokens": 1520,
+      "all_attempt_seconds": 88.182,
+      "metrics": {
+        "tp": 236,
+        "fp": 27,
+        "positives": 477,
+        "precision": 0.8973,
+        "recall": 0.4948,
+        "f1": 0.6378
+      }
+    },
+    "zero": {
+      "complete": true,
+      "groups": [
+        {
+          "group": 1,
+          "status": "ok",
+          "metrics": {
+            "tp": 66,
+            "fp": 18,
+            "positives": 85,
+            "precision": 0.7857,
+            "recall": 0.7765,
+            "f1": 0.7811
+          }
+        },
+        {
+          "group": 2,
+          "status": "ok",
+          "metrics": {
+            "tp": 56,
+            "fp": 42,
+            "positives": 77,
+            "precision": 0.5714,
+            "recall": 0.7273,
+            "f1": 0.64
+          }
+        },
+        {
+          "group": 3,
+          "status": "ok",
+          "metrics": {
+            "tp": 58,
+            "fp": 19,
+            "positives": 84,
+            "precision": 0.7532,
+            "recall": 0.6905,
+            "f1": 0.7205
+          }
+        },
+        {
+          "group": 4,
+          "status": "ok",
+          "metrics": {
+            "tp": 128,
+            "fp": 119,
+            "positives": 148,
+            "precision": 0.5182,
+            "recall": 0.8649,
+            "f1": 0.6481
+          }
+        },
+        {
+          "group": 5,
+          "status": "ok",
+          "metrics": {
+            "tp": 69,
+            "fp": 110,
+            "positives": 83,
+            "precision": 0.3855,
+            "recall": 0.8313,
+            "f1": 0.5267
+          }
+        }
+      ],
+      "total_candidates_sent": 1994,
+      "all_attempt_input_tokens": 266134,
+      "all_attempt_output_tokens": 4656,
+      "all_attempt_seconds": 70.191,
+      "metrics": {
+        "tp": 377,
+        "fp": 308,
+        "positives": 477,
+        "precision": 0.5504,
+        "recall": 0.7904,
+        "f1": 0.6489
+      }
+    },
+    "fine": {
+      "complete": true,
+      "groups": [
+        {
+          "group": 1,
+          "status": "ok",
+          "metrics": {
+            "tp": 74,
+            "fp": 32,
+            "positives": 85,
+            "precision": 0.6981,
+            "recall": 0.8706,
+            "f1": 0.7749
+          }
+        },
+        {
+          "group": 2,
+          "status": "ok",
+          "metrics": {
+            "tp": 63,
+            "fp": 41,
+            "positives": 77,
+            "precision": 0.6058,
+            "recall": 0.8182,
+            "f1": 0.6961
+          }
+        },
+        {
+          "group": 3,
+          "status": "ok",
+          "metrics": {
+            "tp": 53,
+            "fp": 21,
+            "positives": 84,
+            "precision": 0.7162,
+            "recall": 0.631,
+            "f1": 0.6709
+          }
+        },
+        {
+          "group": 4,
+          "status": "ok",
+          "metrics": {
+            "tp": 110,
+            "fp": 150,
+            "positives": 148,
+            "precision": 0.4231,
+            "recall": 0.7432,
+            "f1": 0.5392
+          }
+        },
+        {
+          "group": 5,
+          "status": "ok",
+          "metrics": {
+            "tp": 67,
+            "fp": 19,
+            "positives": 83,
+            "precision": 0.7791,
+            "recall": 0.8072,
+            "f1": 0.7929
+          }
+        }
+      ],
+      "total_candidates_sent": 1553,
+      "all_attempt_input_tokens": 210996,
+      "all_attempt_output_tokens": 4486,
+      "all_attempt_seconds": 60.38,
+      "metrics": {
+        "tp": 367,
+        "fp": 263,
+        "positives": 477,
+        "precision": 0.5825,
+        "recall": 0.7694,
+        "f1": 0.6631
+      }
+    }
+  }
+}
