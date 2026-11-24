@@ -1,0 +1,111 @@
+{
+  "plan_sha256": "81c994fb41a5a76581f3a92033ee1717a4d2b1e07f0af25c70329a31df8ba421",
+  "entries": [
+    {
+      "group": 1,
+      "method": "full",
+      "token_count_without_chat_template": 79430,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 1,
+      "method": "zero",
+      "token_count_without_chat_template": 36773,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 1,
+      "method": "fine",
+      "token_count_without_chat_template": 24010,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 2,
+      "method": "full",
+      "token_count_without_chat_template": 98647,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 2,
+      "method": "zero",
+      "token_count_without_chat_template": 36576,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 2,
+      "method": "fine",
+      "token_count_without_chat_template": 26541,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 3,
+      "method": "full",
+      "token_count_without_chat_template": 78454,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 3,
+      "method": "zero",
+      "token_count_without_chat_template": 45765,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 3,
+      "method": "fine",
+      "token_count_without_chat_template": 40664,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 4,
+      "method": "full",
+      "token_count_without_chat_template": 171290,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 4,
+      "method": "zero",
+      "token_count_without_chat_template": 99442,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 4,
+      "method": "fine",
+      "token_count_without_chat_template": 82648,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 5,
+      "method": "full",
+      "token_count_without_chat_template": 94483,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 5,
+      "method": "zero",
+      "token_count_without_chat_template": 47502,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    },
+    {
+      "group": 5,
+      "method": "fine",
+      "token_count_without_chat_template": 37056,
+      "max_model_len": 262144,
+      "fits_with_512_token_margin": true
+    }
+  ],
+  "status": "ok"
+}
