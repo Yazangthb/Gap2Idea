@@ -1,0 +1,51 @@
+{
+  "prompt": "verdicts",
+  "recall_floor_met": true,
+  "plan_sha256": "623309246a7aaac99bdddde1f65ca824ed52391ba257df5e51de53ce43361f13",
+  "tuning": [
+    {
+      "prompt": "neutral",
+      "metrics": {
+        "tp": 274,
+        "fp": 102,
+        "positives": 351,
+        "precision": 0.7287,
+        "recall": 0.7806,
+        "f1": 0.7538
+      }
+    },
+    {
+      "prompt": "grounded",
+      "metrics": {
+        "tp": 283,
+        "fp": 107,
+        "positives": 351,
+        "precision": 0.7256,
+        "recall": 0.8063,
+        "f1": 0.7638
+      }
+    },
+    {
+      "prompt": "unresolved",
+      "metrics": {
+        "tp": 279,
+        "fp": 93,
+        "positives": 351,
+        "precision": 0.75,
+        "recall": 0.7949,
+        "f1": 0.7718
+      }
+    },
+    {
+      "prompt": "verdicts",
+      "metrics": {
+        "tp": 287,
+        "fp": 81,
+        "positives": 351,
+        "precision": 0.7799,
+        "recall": 0.8177,
+        "f1": 0.7983
+      }
+    }
+  ]
+}
