@@ -1,0 +1,83 @@
+{
+  "purpose": "Test more selective fine-tuned NLI thresholds with unchanged neutral FP8 Qwen prompt and neighbors",
+  "selection": "highest tuning-set final precision with >=60% overall recall; ties higher recall then name; if none meet floor choose highest recall and flag unmet",
+  "recall_floor_note": "Exploratory 60% floor; not a scientific or publication requirement",
+  "sample_rule": "Exclude previous 15 arXiv validation papers used in recent five-paper pilots; shuffle sorted remaining IDs with random.Random(20261125); first five tune, next five check",
+  "unused_development_papers": [
+    "2409.07415",
+    "2305.14926",
+    "2004.12164"
+  ],
+  "thresholds": {
+    "original": 0.0021033689845353365,
+    "medium": 0.01,
+    "high": 0.05
+  },
+  "neutral_prompt_sha256": "df9ff9616c95041dcd626b64120c9bf1645d7fe28892ed79332800961020543f",
+  "model": "qwen3.8-27b",
+  "model_revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 8192,
+  "groups": {
+    "tune": {
+      "paper_ids": [
+        "2007.00128",
+        "2310.15325",
+        "2507.17931",
+        "2510.05092",
+        "2006.04492"
+      ],
+      "rows_sha256": "ea240924e2d4cc3cdc04cd49052a89175d4cbf2507c0d77e4dc44e5a97426bc2",
+      "candidates": {
+        "original": {
+          "count": 224,
+          "keys_sha256": "171288ea27016a4b1fa0fa761867e44aa3e7bb11ce32a438819feaeda323a4eb",
+          "input_sha256": "c124712c363a710bdcdf22377a78a8a2d50127cf68bae716e275cfde9142c9a4"
+        },
+        "medium": {
+          "count": 163,
+          "keys_sha256": "f9fa7a7cd50e02c0088c261bfb7f52996ba814db0db4abb375155f91dc905463",
+          "input_sha256": "58e20f48c30c72bfa98d8b1cf68fec4dae402ea67413eaa361aa3a191b1db417"
+        },
+        "high": {
+          "count": 134,
+          "keys_sha256": "51d01d77a3b91a04c49f8412e21a916343f81c1882a98b4fb5d4c781ffcf4dde",
+          "input_sha256": "699e001fc031453922b6720695a45419e08bfc38aeb566057b6327abc38fedc0"
+        }
+      }
+    },
+    "check": {
+      "paper_ids": [
+        "2502.11517",
+        "2210.01489",
+        "2511.18843",
+        "2207.01725",
+        "2412.01837"
+      ],
+      "rows_sha256": "2bfde77bf39ff73adc0eedd779e26ae6e95c0a6e92613aa108b16390a2fea428",
+      "candidates": {
+        "original": {
+          "count": 215,
+          "keys_sha256": "3198085d3a3cada6055258e176170e791f8fb7e2e7ef19c739eaf7cf7699278f",
+          "input_sha256": "fd562529b093374abc43f11f7aeee59aef5d62b86fc8acdc966aa3d0b69a6116"
+        },
+        "medium": {
+          "count": 141,
+          "keys_sha256": "e54e58a533bbd8ff60709aa273fca98178860f99ea1a55c9d57812be4dd04ff7",
+          "input_sha256": "fa901670a32b7c7807469d52c398e8d944d754b4f434b3b5a4aed2ed56f2f898"
+        },
+        "high": {
+          "count": 106,
+          "keys_sha256": "7078e3bf4348cb1baa427e1df52ef2cb1f6c101be87b6475d8f11fef74862d89",
+          "input_sha256": "a189e60333cb7ed3c4f7dfdbbfe91a3367a73688c6e5d5c8da7e75ffb43bc722"
+        }
+      }
+    }
+  },
+  "ft_scores_sha256": "a3c6a124dc487048a50f76eef5b325eba2828f5cfe4ce69a6a772244815b8c8f",
+  "runner_sha256": "34107faff905b2bbcfd5e9b29f9dc006352b05850f30c44a3249cfd24600c8d8",
+  "prior_dev_plan_sha256": "83756052210c8f8360e36e6095904dafb6510b58d558967d69ef16892c79eee2",
+  "caveat": "The checkpoint and original threshold were selected on all validation papers, including these; groups may have historical experiment exposure and labels are LLM-generated."
+}
