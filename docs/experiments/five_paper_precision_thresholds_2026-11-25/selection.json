@@ -1,0 +1,43 @@
+{
+  "threshold_name": "high",
+  "recall_floor_met": true,
+  "plan_sha256": "9703e80a33394193ce79c8819c0cba3d1c4ceb1bd704a60b9e003336bf37d95c",
+  "tuning_results": [
+    {
+      "threshold_name": "original",
+      "metrics": {
+        "tp": 83,
+        "fp": 74,
+        "positives": 99,
+        "precision": 0.5287,
+        "recall": 0.8384,
+        "f1": 0.6484
+      },
+      "candidate_count": 224
+    },
+    {
+      "threshold_name": "medium",
+      "metrics": {
+        "tp": 77,
+        "fp": 58,
+        "positives": 99,
+        "precision": 0.5704,
+        "recall": 0.7778,
+        "f1": 0.6581
+      },
+      "candidate_count": 163
+    },
+    {
+      "threshold_name": "high",
+      "metrics": {
+        "tp": 69,
+        "fp": 30,
+        "positives": 99,
+        "precision": 0.697,
+        "recall": 0.697,
+        "f1": 0.697
+      },
+      "candidate_count": 134
+    }
+  ]
+}
