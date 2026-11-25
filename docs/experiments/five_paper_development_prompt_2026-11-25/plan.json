@@ -1,0 +1,63 @@
+{
+  "description": "Single Qwen request per five papers; fixed fine-tuned NLI and neighbor context. Tune on groups 1-3 and check selected versus neutral on groups 4-5.",
+  "limitations": "All groups have earlier development exposure, including the check groups; labels are automatic and include apparent disagreements. The selection rule is exploratory, not an independent publication test.",
+  "selection": "Highest aggregate precision with overall recall >=70% on 15 tuning papers; ties higher recall then name. If none qualify choose highest recall. Reuse prior neutral results for all five groups.",
+  "paper_groups": [
+    [
+      "2409.07415",
+      "2302.07477",
+      "2405.02631",
+      "2411.17182",
+      "2202.00740"
+    ],
+    [
+      "2007.00128",
+      "2507.19233",
+      "2207.09511",
+      "2301.03441",
+      "2104.06303"
+    ],
+    [
+      "2507.17931",
+      "2510.05092",
+      "2408.08459",
+      "2412.01837",
+      "2502.11517"
+    ],
+    [
+      "2210.01489",
+      "2102.03018",
+      "2310.15325",
+      "2201.02967",
+      "2302.04972"
+    ],
+    [
+      "2401.17544",
+      "2006.04492",
+      "2207.01725",
+      "2402.07717",
+      "2305.14926"
+    ]
+  ],
+  "prior_plan_sha256": "ee47fe99f0ad15c9654899d0d0fc4d044bdb7317de10c64de6a66dcfe0b5e052",
+  "prior_neutral_runs_sha256": {
+    "1": "b31fe206bce4590554e8045e9b421d407bec4ba3f1b50a44417288c571436ae4",
+    "2": "19062c8da4583fa694bdb8e8d0206aca54de7054d829dbf98f4cbeb456918495",
+    "3": "5c761aafdb09fd3eed19e26468832084f887743281dd31d57a80af86cf29be34",
+    "4": "4199aa2251afb6ad07098c12b022500ceac1e01bdae7d70260ef7503e4e8bdd0",
+    "5": "e0f9fd1c4cbd77a394df7b86d69fa4a039fdbde4861068afda259716ad56f617"
+  },
+  "prompt_texts": {
+    "neutral": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"positives\":[<id>, ...]}: the ids of every sentence you answer YES for, in increasing order. Use only ids that appear in the input. If no sentence qualifies, return {\"positives\":[]}.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+    "grounded": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nDecide whether the target sentence conveys a substantive limitation, an unresolved research problem, or a concrete future investigation. A limitation of a previous method qualifies even if the new method addresses it. Do not count an ordinary method description, a standalone observation or numerical result, a hypothetical risk without an identified limitation, or a general property presented only as background. The neighboring sentences may resolve references but cannot supply the gap if the target does not convey it.\n\nReturn JSON of the form {\"positives\":[<id>, ...]}: the ids of every sentence you answer YES for, in increasing order. Use only ids that appear in the input. If no sentence qualifies, return {\"positives\":[]}.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+    "unresolved": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nIdentify the problem actually stated by the target. Keep a specific limitation of this work or existing approaches, an open problem, or a future study proposed by the authors. A limitation can be a constraint or weakness even when another approach is offered as a solution. Exclude descriptions of completed methods or experimental results unless the sentence itself presents a limitation, and exclude generic background or hypothetical concerns that do not identify a research limitation.\n\nReturn JSON of the form {\"positives\":[<id>, ...]}: the ids of every sentence you answer YES for, in increasing order. Use only ids that appear in the input. If no sentence qualifies, return {\"positives\":[]}.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+    "verdicts": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"results\":[{\"id\":<id>,\"keep\":<bool>}, ...]} with EXACTLY one entry for every numbered input candidate, using its original id. Set keep to true for YES and false for NO, in input order.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper."
+  },
+  "model": "qwen3.8-27b",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_tokens_positive_ids": 8192,
+  "max_tokens_full_verdicts": 16384,
+  "runner_sha256": "263a3e73bf3324f7ea5e249d843e7c3a0bf8114b8689b079c984b24e0c54d29a"
+}
