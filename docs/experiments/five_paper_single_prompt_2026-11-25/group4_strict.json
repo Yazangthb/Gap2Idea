@@ -1,0 +1,109 @@
+{
+  "status": "ok",
+  "group": 4,
+  "prompt": "strict",
+  "plan_sha256": "ee47fe99f0ad15c9654899d0d0fc4d044bdb7317de10c64de6a66dcfe0b5e052",
+  "input_sha256": "a64d7e9ffb23921c2ee3a2f5234e78d2260b29cc0ff46d2d30c7f92cca96fc88",
+  "kept": [
+    [
+      "2102.03018",
+      50
+    ],
+    [
+      "2102.03018",
+      52
+    ],
+    [
+      "2102.03018",
+      53
+    ],
+    [
+      "2102.03018",
+      78
+    ],
+    [
+      "2102.03018",
+      156
+    ],
+    [
+      "2102.03018",
+      158
+    ],
+    [
+      "2102.03018",
+      159
+    ],
+    [
+      "2102.03018",
+      163
+    ],
+    [
+      "2210.01489",
+      33
+    ],
+    [
+      "2210.01489",
+      47
+    ],
+    [
+      "2210.01489",
+      48
+    ],
+    [
+      "2210.01489",
+      49
+    ],
+    [
+      "2210.01489",
+      164
+    ],
+    [
+      "2210.01489",
+      165
+    ],
+    [
+      "2302.04972",
+      16
+    ],
+    [
+      "2302.04972",
+      19
+    ],
+    [
+      "2302.04972",
+      333
+    ],
+    [
+      "2310.15325",
+      42
+    ]
+  ],
+  "metrics": {
+    "tp": 18,
+    "fp": 0,
+    "positives": 61,
+    "precision": 1.0,
+    "recall": 0.2951,
+    "f1": 0.4557
+  },
+  "attempts": [
+    {
+      "seconds": 2.56,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 91,
+        "prompt_tokens": 17604,
+        "total_tokens": 17695,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"positives\":[33, 47, 48, 49, 164, 165, 405, 407, 408, 433, 511, 513, 514, 518, 561, 690, 693, 1007]}",
+      "duplicates": 0
+    }
+  ]
+}
