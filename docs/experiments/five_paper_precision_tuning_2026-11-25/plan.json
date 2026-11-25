@@ -1,0 +1,61 @@
+{
+  "purpose": "Improve precision of fine-tuned NLI + Qwen 27B FP8 with local neighbors",
+  "model": "qwen3.8-27b",
+  "model_repo": "Qwen/Qwen3.8-27B-FP8",
+  "model_revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+  "selection": "highest tuning precision among prompts with >=60% overall recall, ties higher recall then prompt name; if none meet floor choose highest recall and flag floor unmet",
+  "recall_floor_note": "60% is a practical exploratory guardrail chosen before scoring, not a publication requirement",
+  "run_order": "tune neutral/strict/specific; freeze selection; check neutral and selected, without inspecting check labels before selection",
+  "prompts": {
+    "neutral": {
+      "text": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"positives\":[<id>, ...]}: the ids of every sentence you answer YES for, in increasing order. Use only ids that appear in the input. If no sentence qualifies, return {\"positives\":[]}.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+      "sha256": "df9ff9616c95041dcd626b64120c9bf1645d7fe28892ed79332800961020543f"
+    },
+    "strict": {
+      "text": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nBe STRICT. Answer YES only when the sentence itself explicitly states the limitation, the proposed direction, or the unsolved problem. Also answer NO for: a general property or difficulty of a method or domain given as background or motivation; a statement of why the authors' approach is needed; an observed experimental outcome; and a passing remark that names no specific gap. When genuinely uncertain, answer NO.\n\nReturn JSON of the form {\"positives\":[<id>, ...]}: the ids of every sentence you answer YES for, in increasing order. Use only ids that appear in the input. If no sentence qualifies, return {\"positives\":[]}.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+      "sha256": "fdfa8446e23b0d34464db5fa4bfe997cb75871eace574e067e8ab7bc4d30dd3d"
+    },
+    "specific": {
+      "text": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nBe precise: keep a sentence only if it identifies a specific limitation, unresolved problem, or proposed future research direction in the sentence itself. A genuine limitation of an existing method or prior work also qualifies. Do not infer a gap merely from a general difficulty, motivation, method description, numerical outcome, positive claim, or a vague comparison; context may clarify what the sentence refers to but cannot turn a non-gap sentence into a gap. When the evidence is unclear, answer NO.\n\nReturn JSON of the form {\"positives\":[<id>, ...]}: the ids of every sentence you answer YES for, in increasing order. Use only ids that appear in the input. If no sentence qualifies, return {\"positives\":[]}.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+      "sha256": "51dede73a9b90f7b76b031f8e7256f29a43701346be2eed84fe8229424568ced"
+    }
+  },
+  "groups": {
+    "tune": {
+      "paper_ids": [
+        "2408.08459",
+        "2211.03489",
+        "2411.17182",
+        "2402.07717",
+        "2405.02631"
+      ],
+      "rows_sha256": "8812447f7a0abafe56ded62ca3b20a3ba76590c6d70fc3f2802a1c51480e6cd7",
+      "candidate_count": 346,
+      "candidate_sha256": "ccf1d0183bc2e7b774e026be1b7e94bf0acfef7b3deaecc64b34eecd65707670",
+      "input_sha256": "dc356bce894b251aaca58cd7044732dca2943bc5a45ebaa36bf1ae5a1228b2fd"
+    },
+    "check": {
+      "paper_ids": [
+        "2302.07477",
+        "2302.04972",
+        "2104.06303",
+        "2202.00740",
+        "2102.03018"
+      ],
+      "rows_sha256": "bb1327cae29aec79577a567ff0392fd78e187a84430183752ffc3dee0a030def",
+      "candidate_count": 200,
+      "candidate_sha256": "290fdbc2453878d90f6ec8ec50d32361bd3314f9d3010a129f0cdc0a2b8c4caa",
+      "input_sha256": "32412064b63ea23cef5d58f885ecad8f75af4da4e80e76ccbd6f3ace2f54c3dd"
+    }
+  },
+  "ft_threshold": 0.0021033689845353365,
+  "ft_scores_sha256": "a3c6a124dc487048a50f76eef5b325eba2828f5cfe4ce69a6a772244815b8c8f",
+  "source_plan_sha256": "83756052210c8f8360e36e6095904dafb6510b58d558967d69ef16892c79eee2",
+  "runner_sha256": "dcf72faf2465340c466f9fb92d0cd07b015897469de9bfab9cf13d043e9207ef",
+  "model_revision_note": "FP8 service from H100, 1 request per five-paper group, 800-character original neighbors",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 8192,
+  "caveats": "Both dev groups and fine-tuned checkpoint/threshold have prior development exposure; labels are LLM-generated and not human-validated."
+}
