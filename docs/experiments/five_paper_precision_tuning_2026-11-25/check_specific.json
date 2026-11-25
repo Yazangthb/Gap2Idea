@@ -1,0 +1,82 @@
+{
+  "status": "ok",
+  "split": "check",
+  "prompt": "specific",
+  "plan_sha256": "6200330c2dc089d10d17b42f2fd08606783df7a0578d94413c14a8794e609dee",
+  "input_sha256": "32412064b63ea23cef5d58f885ecad8f75af4da4e80e76ccbd6f3ace2f54c3dd",
+  "candidate_count": 200,
+  "kept": [
+    [
+      "2102.03018",
+      78
+    ],
+    [
+      "2102.03018",
+      156
+    ],
+    [
+      "2102.03018",
+      158
+    ],
+    [
+      "2102.03018",
+      159
+    ],
+    [
+      "2202.00740",
+      209
+    ],
+    [
+      "2202.00740",
+      234
+    ],
+    [
+      "2202.00740",
+      250
+    ],
+    [
+      "2202.00740",
+      267
+    ],
+    [
+      "2202.00740",
+      268
+    ],
+    [
+      "2202.00740",
+      269
+    ],
+    [
+      "2302.07477",
+      15
+    ]
+  ],
+  "attempts": [
+    {
+      "seconds": 3.351,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 75,
+        "prompt_tokens": 25986,
+        "total_tokens": 26061,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n\"positives\": [\n15,\n1281,\n1306,\n1322,\n1339,\n1340,\n1341,\n1457,\n1535,\n1537,\n1538\n]\n}",
+      "duplicate_id_count": 0
+    }
+  ],
+  "metrics": {
+    "tp": 11,
+    "fp": 0,
+    "positives": 77,
+    "precision": 1.0,
+    "recall": 0.1429,
+    "f1": 0.25
+  }
+}
