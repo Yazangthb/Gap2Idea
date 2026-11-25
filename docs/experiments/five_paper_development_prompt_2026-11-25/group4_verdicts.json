@@ -1,0 +1,284 @@
+{
+  "status": "ok",
+  "group": 4,
+  "prompt": "verdicts",
+  "plan_sha256": "623309246a7aaac99bdddde1f65ca824ed52391ba257df5e51de53ce43361f13",
+  "input_sha256": "a64d7e9ffb23921c2ee3a2f5234e78d2260b29cc0ff46d2d30c7f92cca96fc88",
+  "kept": [
+    [
+      "2102.03018",
+      3
+    ],
+    [
+      "2102.03018",
+      8
+    ],
+    [
+      "2102.03018",
+      13
+    ],
+    [
+      "2102.03018",
+      16
+    ],
+    [
+      "2102.03018",
+      20
+    ],
+    [
+      "2102.03018",
+      23
+    ],
+    [
+      "2102.03018",
+      29
+    ],
+    [
+      "2102.03018",
+      30
+    ],
+    [
+      "2102.03018",
+      32
+    ],
+    [
+      "2102.03018",
+      33
+    ],
+    [
+      "2102.03018",
+      35
+    ],
+    [
+      "2102.03018",
+      37
+    ],
+    [
+      "2102.03018",
+      38
+    ],
+    [
+      "2102.03018",
+      44
+    ],
+    [
+      "2102.03018",
+      45
+    ],
+    [
+      "2102.03018",
+      50
+    ],
+    [
+      "2102.03018",
+      52
+    ],
+    [
+      "2102.03018",
+      53
+    ],
+    [
+      "2102.03018",
+      61
+    ],
+    [
+      "2102.03018",
+      78
+    ],
+    [
+      "2102.03018",
+      97
+    ],
+    [
+      "2102.03018",
+      98
+    ],
+    [
+      "2102.03018",
+      99
+    ],
+    [
+      "2102.03018",
+      102
+    ],
+    [
+      "2102.03018",
+      152
+    ],
+    [
+      "2102.03018",
+      156
+    ],
+    [
+      "2102.03018",
+      158
+    ],
+    [
+      "2102.03018",
+      159
+    ],
+    [
+      "2102.03018",
+      161
+    ],
+    [
+      "2102.03018",
+      162
+    ],
+    [
+      "2102.03018",
+      163
+    ],
+    [
+      "2201.02967",
+      2
+    ],
+    [
+      "2201.02967",
+      9
+    ],
+    [
+      "2201.02967",
+      12
+    ],
+    [
+      "2201.02967",
+      19
+    ],
+    [
+      "2201.02967",
+      20
+    ],
+    [
+      "2201.02967",
+      25
+    ],
+    [
+      "2210.01489",
+      18
+    ],
+    [
+      "2210.01489",
+      30
+    ],
+    [
+      "2210.01489",
+      31
+    ],
+    [
+      "2210.01489",
+      33
+    ],
+    [
+      "2210.01489",
+      47
+    ],
+    [
+      "2210.01489",
+      48
+    ],
+    [
+      "2210.01489",
+      49
+    ],
+    [
+      "2210.01489",
+      105
+    ],
+    [
+      "2210.01489",
+      164
+    ],
+    [
+      "2210.01489",
+      165
+    ],
+    [
+      "2210.01489",
+      170
+    ],
+    [
+      "2210.01489",
+      193
+    ],
+    [
+      "2210.01489",
+      223
+    ],
+    [
+      "2302.04972",
+      16
+    ],
+    [
+      "2302.04972",
+      19
+    ],
+    [
+      "2302.04972",
+      27
+    ],
+    [
+      "2302.04972",
+      28
+    ],
+    [
+      "2302.04972",
+      119
+    ],
+    [
+      "2302.04972",
+      120
+    ],
+    [
+      "2302.04972",
+      121
+    ],
+    [
+      "2302.04972",
+      333
+    ],
+    [
+      "2310.15325",
+      7
+    ],
+    [
+      "2310.15325",
+      8
+    ],
+    [
+      "2310.15325",
+      14
+    ],
+    [
+      "2310.15325",
+      42
+    ]
+  ],
+  "metrics": {
+    "tp": 38,
+    "fp": 24,
+    "positives": 61,
+    "precision": 0.6129,
+    "recall": 0.623,
+    "f1": 0.6179
+  },
+  "attempts": [
+    {
+      "seconds": 17.53,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1439,
+        "prompt_tokens": 17544,
+        "total_tokens": 18983,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":11,\"keep\":false},{\"id\":18,\"keep\":true},{\"id\":30,\"keep\":true},{\"id\":31,\"keep\":true},{\"id\":33,\"keep\":true},{\"id\":47,\"keep\":true},{\"id\":48,\"keep\":true},{\"id\":49,\"keep\":true},{\"id\":58,\"keep\":false},{\"id\":60,\"keep\":false},{\"id\":105,\"keep\":true},{\"id\":123,\"keep\":false},{\"id\":151,\"keep\":false},{\"id\":164,\"keep\":true},{\"id\":165,\"keep\":true},{\"id\":168,\"keep\":false},{\"id\":170,\"keep\":true},{\"id\":192,\"keep\":false},{\"id\":193,\"keep\":true},{\"id\":204,\"keep\":false},{\"id\":206,\"keep\":false},{\"id\":207,\"keep\":false},{\"id\":220,\"keep\":false},{\"id\":223,\"keep\":true},{\"id\":263,\"keep\":false},{\"id\":269,\"keep\":false},{\"id\":270,\"keep\":false},{\"id\":298,\"keep\":false},{\"id\":356,\"keep\":false},{\"id\":358,\"keep\":true},{\"id\":363,\"keep\":true},{\"id\":368,\"keep\":true},{\"id\":371,\"keep\":true},{\"id\":374,\"keep\":false},{\"id\":375,\"keep\":true},{\"id\":377,\"keep\":false},{\"id\":378,\"keep\":true},{\"id\":379,\"keep\":false},{\"id\":384,\"keep\":true},{\"id\":385,\"keep\":true},{\"id\":387,\"keep\":true},{\"id\":388,\"keep\":true},{\"id\":390,\"keep\":true},{\"id\":392,\"keep\":true},{\"id\":393,\"keep\":true},{\"id\":394,\"keep\":false},{\"id\":395,\"keep\":false},{\"id\":396,\"keep\":false},{\"id\":399,\"keep\":true},{\"id\":400,\"keep\":true},{\"id\":404,\"keep\":false},{\"id\":405,\"keep\":true},{\"id\":407,\"keep\":true},{\"id\":408,\"keep\":true},{\"id\":411,\"keep\":false},{\"id\":416,\"keep\":true},{\"id\":433,\"keep\":true},{\"id\":452,\"keep\":true},{\"id\":453,\"keep\":true},{\"id\":454,\"keep\":true},{\"id\":457,\"keep\":true},{\"id\":487,\"keep\":false},{\"id\":488,\"keep\":false},{\"id\":490,\"keep\":false},{\"id\":491,\"keep\":false},{\"id\":492,\"keep\":false},{\"id\":494,\"keep\":false},{\"id\":495,\"keep\":false},{\"id\":496,\"keep\":false},{\"id\":502,\"keep\":false},{\"id\":503,\"keep\":false},{\"id\":507,\"keep\":true},{\"id\":509,\"keep\":false},{\"id\":511,\"keep\":true},{\"id\":513,\"keep\":true},{\"id\":514,\"keep\":true},{\"id\":515,\"keep\":false},{\"id\":516,\"keep\":true},{\"id\":517,\"keep\":true},{\"id\":518,\"keep\":true},{\"id\":526,\"keep\":true},{\"id\":527,\"keep\":true},{\"id\":532,\"keep\":false},{\"id\":533,\"keep\":true},{\"id\":559,\"keep\":false},{\"id\":561,\"keep\":true},{\"id\":563,\"keep\":false},{\"id\":568,\"keep\":true},{\"id\":575,\"keep\":true},{\"id\":578,\"keep\":true},{\"id\":585,\"keep\":true},{\"id\":586,\"keep\":true},{\"id\":591,\"keep\":true},{\"id\":612,\"keep\":false},{\"id\":623,\"keep\":false},{\"id\":624,\"keep\":false},{\"id\":625,\"keep\":false},{\"id\":628,\"keep\":false},{\"id\":629,\"keep\":false},{\"id\":630,\"keep\":false},{\"id\":633,\"keep\":false},{\"id\":634,\"keep\":false},{\"id\":644,\"keep\":false},{\"id\":645,\"keep\":false},{\"id\":647,\"keep\":false},{\"id\":650,\"keep\":false},{\"id\":652,\"keep\":false},{\"id\":656,\"keep\":false},{\"id\":660,\"keep\":false},{\"id\":661,\"keep\":false},{\"id\":690,\"keep\":true},{\"id\":693,\"keep\":true},{\"id\":699,\"keep\":false},{\"id\":700,\"keep\":false},{\"id\":701,\"keep\":true},{\"id\":702,\"keep\":true},{\"id\":756,\"keep\":false},{\"id\":757,\"keep\":false},{\"id\":766,\"keep\":false},{\"id\":767,\"keep\":false},{\"id\":793,\"keep\":true},{\"id\":794,\"keep\":true},{\"id\":795,\"keep\":true},{\"id\":796,\"keep\":false},{\"id\":843,\"keep\":false},{\"id\":850,\"keep\":false},{\"id\":854,\"keep\":false},{\"id\":855,\"keep\":false},{\"id\":865,\"keep\":false},{\"id\":868,\"keep\":false},{\"id\":869,\"keep\":false},{\"id\":874,\"keep\":false},{\"id\":877,\"keep\":false},{\"id\":879,\"keep\":false},{\"id\":880,\"keep\":false},{\"id\":882,\"keep\":false},{\"id\":885,\"keep\":false},{\"id\":890,\"keep\":false},{\"id\":891,\"keep\":false},{\"id\":972,\"keep\":false},{\"id\":1007,\"keep\":true},{\"id\":1057,\"keep\":false},{\"id\":1114,\"keep\":false},{\"id\":1124,\"keep\":false}]}"
+    }
+  ]
+}
