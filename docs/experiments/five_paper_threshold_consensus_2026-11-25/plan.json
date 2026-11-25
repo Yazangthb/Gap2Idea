@@ -1,0 +1,79 @@
+{
+  "purpose": "Exploratory high-threshold + original-threshold output intersection on prior 25 papers",
+  "selection": "post-hoc: intersection was noticed after inspecting both threshold development results",
+  "input_caveat": "25-paper test pool already analyzed previously, not independent or blind",
+  "model": "qwen3.8-27b",
+  "model_revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+  "prompt_sha256": "df9ff9616c95041dcd626b64120c9bf1645d7fe28892ed79332800961020543f",
+  "high_threshold": 0.05,
+  "original_plan_sha256": "81c994fb41a5a76581f3a92033ee1717a4d2b1e07f0af25c70329a31df8ba421",
+  "runner_sha256": "dfe19b4f930521d9dc6e5b58d61b9e5fe0c9c9b2a25ef4b915c30d83663cbda8",
+  "decision": "retain only sentence IDs accepted in both the existing original-threshold Qwen run and new high-threshold run",
+  "cost": "two Qwen requests per group, plus NLI; original calls already exist",
+  "groups": [
+    {
+      "paper_ids": [
+        "2504.14720",
+        "2206.13764",
+        "2208.02311",
+        "2110.15431",
+        "2310.01647"
+      ],
+      "high_candidates": 101,
+      "high_input_sha256": "34140ffdcdb8680c3070378a13056f49286c09643cc1deda3f6715c253393608",
+      "original_result_sha256": "f689093ce37976922c8021932031853ab6e17eab174a116abba8391e904396e7"
+    },
+    {
+      "paper_ids": [
+        "2409.20534",
+        "2307.00522",
+        "2407.04521",
+        "2208.04226",
+        "2505.09022"
+      ],
+      "high_candidates": 90,
+      "high_input_sha256": "f60875257560c6eb6427287eb7688c25a21e23d3ff17979ab1fce987ce349cb4",
+      "original_result_sha256": "bd257d3ecee344282e03b75a9e615856f46cf6bf7244e3f2e2c3fb22c6c48510"
+    },
+    {
+      "paper_ids": [
+        "2504.15099",
+        "2112.05248",
+        "2303.01980",
+        "2410.06231",
+        "2310.08891"
+      ],
+      "high_candidates": 129,
+      "high_input_sha256": "55f2a022a0b65515d146c58c9bea2b6ed351786caf7a67f9c7863fd42b287e41",
+      "original_result_sha256": "517277cc8b2311b39cdc450d19fb925a64da62e761721d5b15753ee99dd919ae"
+    },
+    {
+      "paper_ids": [
+        "2402.10999",
+        "2412.13630",
+        "2601.03085",
+        "2405.16002",
+        "2403.05034"
+      ],
+      "high_candidates": 256,
+      "high_input_sha256": "42ff118ec3f5574f3e45e74fc49b46fec3ba2e1ce1a732e925539bf5a09135a3",
+      "original_result_sha256": "2463b659189b9960216fa640b0dce67d33fe3c3d499b863273746725b84b8862"
+    },
+    {
+      "paper_ids": [
+        "2410.16340",
+        "2201.01525",
+        "2509.21923",
+        "2101.06635",
+        "2009.05369"
+      ],
+      "high_candidates": 133,
+      "high_input_sha256": "e419fd6484ad5e1c49bfc7f00fbfcf86e110c2a623348954ec97b077cdb83152",
+      "original_result_sha256": "5fe03704aa7a0cfa5f8169d37c6a6c3189295d1261e32f408e87de154ac07be6"
+    }
+  ],
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 8192
+}
