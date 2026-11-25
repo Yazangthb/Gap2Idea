@@ -1,0 +1,51 @@
+{
+  "prompt": "strict",
+  "recall_floor_met": true,
+  "plan_sha256": "ee47fe99f0ad15c9654899d0d0fc4d044bdb7317de10c64de6a66dcfe0b5e052",
+  "tuning_results": [
+    {
+      "prompt": "neutral",
+      "metrics": {
+        "tp": 274,
+        "fp": 102,
+        "positives": 351,
+        "precision": 0.7287,
+        "recall": 0.7806,
+        "f1": 0.7538
+      }
+    },
+    {
+      "prompt": "strict",
+      "metrics": {
+        "tp": 221,
+        "fp": 28,
+        "positives": 351,
+        "precision": 0.8876,
+        "recall": 0.6296,
+        "f1": 0.7367
+      }
+    },
+    {
+      "prompt": "contrastive",
+      "metrics": {
+        "tp": 293,
+        "fp": 186,
+        "positives": 351,
+        "precision": 0.6117,
+        "recall": 0.8348,
+        "f1": 0.706
+      }
+    },
+    {
+      "prompt": "focus",
+      "metrics": {
+        "tp": 293,
+        "fp": 142,
+        "positives": 351,
+        "precision": 0.6736,
+        "recall": 0.8348,
+        "f1": 0.7455
+      }
+    }
+  ]
+}
