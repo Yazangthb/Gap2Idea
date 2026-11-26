@@ -1,0 +1,7 @@
+{
+  "plan_sha256": "1f8ae1c40c4149f7a3cab3b42872ecc1839590b09981e693daf3673e63fa86de",
+  "input_tokens": 156899,
+  "max_tokens": 65536,
+  "limit": 262144,
+  "fits": true
+}
