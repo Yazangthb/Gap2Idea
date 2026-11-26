@@ -1,0 +1,435 @@
+{
+  "purpose": "Exploratory 68-paper matched Stage C benchmark: full paper, zero-shot NLI and fine-tuned NLI.",
+  "limitations": "Development papers tuned NLI and prompt; test papers were examined in earlier experiments. Gold labels are LLM-generated and incomplete/uncertain; no new human evaluation. Domains and original splits are reported separately.",
+  "group_rule": "Within each original split and domain, shuffle sorted paper IDs with random.Random(20261126 + test + 2*biomedical); consecutive groups of at most five. Final groups contain three or one papers.",
+  "calls": "One request per group per method; full input is all sentences, funnel inputs are Stage A plus frozen NLI candidates with immediate original neighbors, clipped to 800 characters per side.",
+  "output": "Exact one boolean verdict per numbered input; validate complete coverage, duplicates and IDs. Invalid or truncated output is a failure, never scored as negative.",
+  "model": "qwen3.8-27b",
+  "model_revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 32768,
+  "prompt": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"results\":[{\"id\":<id>,\"keep\":<bool>}, ...]} with EXACTLY one entry for every numbered input candidate, using its original id. Set keep to true for YES and false for NO, in input order.\n\nThere are five separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+  "zero_threshold": 0.35411001352163435,
+  "fine_threshold": 0.0021033689845353365,
+  "source_sha256": {
+    "scripts/bench/five_paper_68_verdicts.py": "44465cac9d5d8947a90e9774a4626c6a01813f230b825354b64ce8d45b7ccf38",
+    "scripts/bench/five_paper_fp8_comparison.py": "fc3fb998cb37fd0ef9b4bb4b4afc2aeab99eb676fa5874afb348968d7efc230f",
+    "scripts/bench/five_paper_development_prompt.py": "263a3e73bf3324f7ea5e249d843e7c3a0bf8114b8689b079c984b24e0c54d29a",
+    "scripts/bench/nli_variants.py": "521a8e2e5712102fdfd341ae2df0f328b60e65ab04b1d7327fe4eba32c257320",
+    "data/gold/gap_gold_final.jsonl": "3325430fa8c507c6f7681c864c7e59b6f2f9840a4a41213951abf55baebac445",
+    "data/gold/splits.json": "e955fe742330a0eb0443b57a447073b18c8b5dd12523674317c08b7fba53c79c",
+    "data/paper_texts.jsonl": "74de2bb4858b7c5640041083a37b54c31236d5cba97c83d9e34cdd8a8eb16838",
+    "data/gold/nli_val_scores.npz": "f2e99e7997f9b1e30baa13a186807c35756639d62a9310f2cad12348ae261a77",
+    "data/gold/nli_test_scores.npz": "5e443f0a86d0198938ca00cb33b8f9514807c094dc1c7113684aed951907fce8",
+    "data/gold/nli_ft/nli_ft_gold_val_scores.npz": "a3c6a124dc487048a50f76eef5b325eba2828f5cfe4ce69a6a772244815b8c8f",
+    "data/gold/nli_ft/nli_ft_gold_test_scores.npz": "397c397743c0a63ed9f605e36d88978f3740825d335a931043206c81ed35ae82"
+  },
+  "groups": [
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2104.06303",
+        "2004.12164",
+        "2510.05092",
+        "2507.19233",
+        "2507.17931"
+      ],
+      "rows_sha256": "e77c1567634ebf4a25a5a56431fabf8bf7d768dd574db81331f8c09fbd58addd",
+      "inputs": {
+        "full": {
+          "count": 2108,
+          "sha256": "0ad3ba9fe160ff79f706909128868532cadcffb4da841b06a5c5c8860cd9300c"
+        },
+        "zero": {
+          "count": 339,
+          "sha256": "3eb0d809b790cdc0a0e93940d42c26c35599a1460a89beb68fffdd506d3c98ea"
+        },
+        "fine": {
+          "count": 249,
+          "sha256": "9e0dfcac2a18f2eadcaf8513b63b93ae810527397ec8ca15624119e798944658"
+        }
+      }
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2511.18843",
+        "2201.02967",
+        "2409.07415",
+        "2202.00740",
+        "2405.02631"
+      ],
+      "rows_sha256": "ff75291de2ea8b04cb8d9f867a163328eb8f84c40aae7420b253ae96ee7d104e",
+      "inputs": {
+        "full": {
+          "count": 1729,
+          "sha256": "ba5cd6b087f6aaf831fbba4f528fa2cf1952dc45e5bb3f2d70f07b3c87771c3f"
+        },
+        "zero": {
+          "count": 532,
+          "sha256": "586b834c2676d87d34d077d9a125f67e246cc7fc9415ed61c2147acc78d46822"
+        },
+        "fine": {
+          "count": 433,
+          "sha256": "8e5f1048ddcfc7d13130aeff45f98a39358aa67681ee0dc3022868149e572b4f"
+        }
+      }
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2401.17544",
+        "2412.01837",
+        "2302.04972",
+        "2207.09511",
+        "2402.07717"
+      ],
+      "rows_sha256": "b0086991623f280e7887bf7e6a297a82e3e24fdef670ed303a070cb0886e39c8",
+      "inputs": {
+        "full": {
+          "count": 2402,
+          "sha256": "ce63aa2abc905880217b3b6d2797d9fe3fd5f7c7132a1ef1d8c00843b5297792"
+        },
+        "zero": {
+          "count": 326,
+          "sha256": "18e3bc6837374da359bb0caa05bdeb1fe903501021acfa9c83359affabab54a1"
+        },
+        "fine": {
+          "count": 218,
+          "sha256": "b942a1698fecdfd387132f0316632dd6d3a13414b25d464fddc2de6c69424459"
+        }
+      }
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2301.03441",
+        "2302.07477",
+        "2102.03018",
+        "2502.11517",
+        "2207.01725"
+      ],
+      "rows_sha256": "87a569e6ad71b3d2e048662529648d0904eaf37246f3eb15bef9704c95286bbf",
+      "inputs": {
+        "full": {
+          "count": 1357,
+          "sha256": "53ec9362459843f5a31f2758e41336c6f3afdbeede0aea689b4a976909940630"
+        },
+        "zero": {
+          "count": 303,
+          "sha256": "9c267e41a3b0eda2b57e636300bf5a5ac74b041504aab7bac3e2d48c589059c4"
+        },
+        "fine": {
+          "count": 227,
+          "sha256": "5c1f7a34b968b755189ed22e69eb2cd21c59de1f36c925b75101338ed61a2e77"
+        }
+      }
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2211.03489",
+        "2210.01489",
+        "2007.00128",
+        "2411.17182",
+        "2408.08459"
+      ],
+      "rows_sha256": "5893b57e6852ca7a6a342fbafc08fbde2e008930d714a9f7ace374a99024ee38",
+      "inputs": {
+        "full": {
+          "count": 1465,
+          "sha256": "02563851d174df842da1251a4389bef4a49530ab83ea3a365f4a0d89e75f154c"
+        },
+        "zero": {
+          "count": 285,
+          "sha256": "605ecd600429686b7d9f7792246cb1727b4f004e7f99bdb632d7267df9506c08"
+        },
+        "fine": {
+          "count": 191,
+          "sha256": "2d78f2ce69c95d7e3cc5034c6dbe3dc7397bfd692ebd7809236a18f34e8f1001"
+        }
+      }
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2006.04492",
+        "2305.14926",
+        "2310.15325"
+      ],
+      "rows_sha256": "3ee3af3f532ec492548a4cc556e5253c6a2e39010621a98d22a3d1e483bb0516",
+      "inputs": {
+        "full": {
+          "count": 1026,
+          "sha256": "5e940b1e74df37847e0cd5a8b685bfda1e81b61c259a1d8230a73c345505de6f"
+        },
+        "zero": {
+          "count": 180,
+          "sha256": "ac6bfed2757c55832b1933b1d4f672e0208fc52e06adb092e46af95abd173f2e"
+        },
+        "fine": {
+          "count": 143,
+          "sha256": "d24582c608697083e14e9e27aa7c6f45e1b4389b21c5cedd801102022185ab63"
+        }
+      }
+    },
+    {
+      "split": "val",
+      "domain": "biomed_sal",
+      "paper_ids": [
+        "PMC4797126",
+        "PMC3551748",
+        "PMC5721882",
+        "PMC5704386",
+        "PMC2924475"
+      ],
+      "rows_sha256": "f49e06d9a6bfe50eb1e9fe42e9ac0ae1385e12048afb0f0461466530a8eda90d",
+      "inputs": {
+        "full": {
+          "count": 926,
+          "sha256": "33f454ad106ecd9e9b7b020bb70a02220d38e43d8c8486cc1089d6de6580297f"
+        },
+        "zero": {
+          "count": 262,
+          "sha256": "547a62cb9a033b2e95a75853550540b45628b740be900f3d8526fd7544bd2f4f"
+        },
+        "fine": {
+          "count": 242,
+          "sha256": "69a325d6e4c3fa2c67a232948f295ca355fd07fb0b2dbd2f241f97fb64baf1fa"
+        }
+      }
+    },
+    {
+      "split": "val",
+      "domain": "biomed_sal",
+      "paper_ids": [
+        "PMC5381088"
+      ],
+      "rows_sha256": "373e58bcb4a0369b405ac138003b549c44c11cd2067e6f217658d34f4b9ce18b",
+      "inputs": {
+        "full": {
+          "count": 188,
+          "sha256": "d07f11722e46417c1c4ca7558b0f856d368d243ef0ee5697cb5af3cf7cee5e0a"
+        },
+        "zero": {
+          "count": 51,
+          "sha256": "005814a39aa52649d1a996d7ba058fac1e3151133cf3e507fb4a7ce82ec39176"
+        },
+        "fine": {
+          "count": 43,
+          "sha256": "2a6c2124901212ad885653ebc2a7759b96d4bc6ca06d8d7f3e1a6ed3fc85c5ce"
+        }
+      }
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2307.00522",
+        "2504.15099",
+        "2601.03085",
+        "2504.14720",
+        "2412.13630"
+      ],
+      "rows_sha256": "d40478d1f82accb4f2099105e4578c2ce51193dde944825f348b21fa42a257cf",
+      "inputs": {
+        "full": {
+          "count": 1597,
+          "sha256": "54a0826bd48e6d6e29bfd3b9577838ee176e3411dbe9f3bd58bc3a5bd997a482"
+        },
+        "zero": {
+          "count": 355,
+          "sha256": "1d9e476a233e03826e86356f2168d90b91aeb772dffb1b4a563ecbed8fcf8df6"
+        },
+        "fine": {
+          "count": 293,
+          "sha256": "b38f2e0375fcdee03cd8e9edfd07e0fc0a09fa3cc0267bb921b18a2c205b0c04"
+        }
+      }
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2206.13764",
+        "2405.16002",
+        "2410.16340",
+        "2403.05034",
+        "2402.10999"
+      ],
+      "rows_sha256": "5d8faa55c4a305adc06f2cd51e37e506200648f9b806eb3aeadf801dcb478775",
+      "inputs": {
+        "full": {
+          "count": 3286,
+          "sha256": "bb985b7f214ad40126c3641f20b217ce9f4bb67eabc5cee07f2d3f3b11614810"
+        },
+        "zero": {
+          "count": 617,
+          "sha256": "417a2fdd9e2c638c9db721e97d297a7b3f8d0492d475824513a76fae07270e5e"
+        },
+        "fine": {
+          "count": 476,
+          "sha256": "e366d2b74cd8d6b01abac0900904853fd39d9fe8d6580699f4ba46d4cc131c06"
+        }
+      }
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2112.05248",
+        "2310.01647",
+        "2407.04521",
+        "2009.05369",
+        "2512.20675"
+      ],
+      "rows_sha256": "a01be3aa167730adc134e50fd670ba70ea0c4b5090e76c2f2501cc8c61bd28c3",
+      "inputs": {
+        "full": {
+          "count": 1659,
+          "sha256": "73ba909746f173adbf9086663ca325cf845a660b94282e4fd49cc2d0d074a7a7"
+        },
+        "zero": {
+          "count": 402,
+          "sha256": "dd26f5c30d912bd2a595a3a589159143bc5ff85b5b749a7921a6a71b43ea85a9"
+        },
+        "fine": {
+          "count": 342,
+          "sha256": "477ea7c989ad15e50a2d75c59f8782ffce9bab3e37e62655ae156088becb098d"
+        }
+      }
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2503.00979",
+        "2110.15431",
+        "2509.21923",
+        "2208.02311",
+        "2310.08891"
+      ],
+      "rows_sha256": "401d7de68c77a0c36924cb593352354d76207834376ba9b37b345fd90590b778",
+      "inputs": {
+        "full": {
+          "count": 1589,
+          "sha256": "414e4e3295434fbbb1193cd673bfb9706d23545eb70e47a5f5f31619891dd967"
+        },
+        "zero": {
+          "count": 301,
+          "sha256": "084318264d25bad3222001eec50906c0dbf9e61e5c009af8bb7f5fff27f86dfd"
+        },
+        "fine": {
+          "count": 209,
+          "sha256": "88d684462a44e56371134493219114e7d87af7f78b992147978d65fd49f765bb"
+        }
+      }
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2505.09022",
+        "2202.00263",
+        "2201.01525",
+        "2409.20534",
+        "2303.01980"
+      ],
+      "rows_sha256": "3cd19af3898331583c4fa542eea238c4f0f9bcfae19d77a809662797d720856b",
+      "inputs": {
+        "full": {
+          "count": 1665,
+          "sha256": "33c80ce9cdd1f648c9969677c01afc1cd796c888614e3e7baa36de06aaf8a654"
+        },
+        "zero": {
+          "count": 346,
+          "sha256": "20b95ac95fd5d00ce6a688f6ad03643cf62b5274cf4e59ef467dfc169543cdde"
+        },
+        "fine": {
+          "count": 251,
+          "sha256": "677a28497a5a843b65d3fdf5efdb7241760b726793109935d2940952747d3a31"
+        }
+      }
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2208.04226",
+        "2410.06231",
+        "2101.06635"
+      ],
+      "rows_sha256": "b3642828190845cf1a51ba81f06d07dc3c371dd97349926b70f1f48f5a28633f",
+      "inputs": {
+        "full": {
+          "count": 592,
+          "sha256": "8ab5cad8c729821e94ccd6ea755516877707587f910350b2b17e5a1c9e909bdd"
+        },
+        "zero": {
+          "count": 116,
+          "sha256": "5ee0ab4bedbc975924c77282369d35477a80c35e969f066ae477ce20a49980b3"
+        },
+        "fine": {
+          "count": 99,
+          "sha256": "39fec3ae596177f771920f127e51d8763acd6cc6c638b033af9347a451148499"
+        }
+      }
+    },
+    {
+      "split": "test",
+      "domain": "biomed_sal",
+      "paper_ids": [
+        "PMC3441849",
+        "PMC5112179",
+        "PMC6371462",
+        "PMC3542201",
+        "PMC5064025"
+      ],
+      "rows_sha256": "d16928ae4d5b6bed02f6d7a762e8545f2cdef1a2df113ef71fd6c78abe657786",
+      "inputs": {
+        "full": {
+          "count": 1136,
+          "sha256": "ed85602006df2b1b6657047c8031f2cd34f3b2a6b1dfc9f83c2fb925d1664356"
+        },
+        "zero": {
+          "count": 315,
+          "sha256": "4b2b02af1bb11bddb46d243f4a0d9205acd281005a5bb833e2c2cdf5e96aa2fa"
+        },
+        "fine": {
+          "count": 274,
+          "sha256": "31a9535b7ce109d353f02032a27155d9b81fd63b424b7777fc229840e012535c"
+        }
+      }
+    },
+    {
+      "split": "test",
+      "domain": "biomed_sal",
+      "paper_ids": [
+        "PMC2917572"
+      ],
+      "rows_sha256": "637659ff77e3956dbc97a69adad0f4a1d577e5cc631e8bb2711cec415e763bb8",
+      "inputs": {
+        "full": {
+          "count": 217,
+          "sha256": "ae88496e40c6f3cdd6981c3b73cd926dd7e3ec7b725d6f51ec831dab983db620"
+        },
+        "zero": {
+          "count": 70,
+          "sha256": "1218e3f4416a997e71feacf09b6c64631a4e7166280d4476f5a360454f15bd90"
+        },
+        "fine": {
+          "count": 54,
+          "sha256": "e11af76fcc334d76f802a22b1e4ff352141f5e9e22f32aa1c073fd4b568d3d1a"
+        }
+      }
+    }
+  ]
+}
