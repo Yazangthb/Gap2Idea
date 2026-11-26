@@ -1,0 +1,183 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 34,
+  "method": "fine_current",
+  "input_sha256": "c6efd5f738bfe2ad0a285490340f803fccb3afa19d9d6bde50fb5330850a2b50",
+  "kept": [
+    [
+      "PMC6371462",
+      9
+    ],
+    [
+      "PMC6371462",
+      11
+    ],
+    [
+      "PMC6371462",
+      27
+    ],
+    [
+      "PMC6371462",
+      30
+    ],
+    [
+      "PMC6371462",
+      31
+    ],
+    [
+      "PMC6371462",
+      35
+    ],
+    [
+      "PMC6371462",
+      36
+    ],
+    [
+      "PMC6371462",
+      41
+    ],
+    [
+      "PMC6371462",
+      42
+    ],
+    [
+      "PMC6371462",
+      44
+    ],
+    [
+      "PMC6371462",
+      62
+    ],
+    [
+      "PMC6371462",
+      84
+    ],
+    [
+      "PMC6371462",
+      124
+    ],
+    [
+      "PMC6371462",
+      181
+    ],
+    [
+      "PMC6371462",
+      182
+    ],
+    [
+      "PMC6371462",
+      187
+    ],
+    [
+      "PMC6371462",
+      188
+    ],
+    [
+      "PMC6371462",
+      192
+    ],
+    [
+      "PMC6371462",
+      199
+    ],
+    [
+      "PMC6371462",
+      203
+    ],
+    [
+      "PMC6371462",
+      207
+    ],
+    [
+      "PMC6371462",
+      215
+    ],
+    [
+      "PMC6371462",
+      216
+    ],
+    [
+      "PMC6371462",
+      217
+    ],
+    [
+      "PMC6371462",
+      218
+    ],
+    [
+      "PMC6371462",
+      223
+    ],
+    [
+      "PMC6371462",
+      225
+    ],
+    [
+      "PMC6371462",
+      228
+    ],
+    [
+      "PMC6371462",
+      229
+    ],
+    [
+      "PMC6371462",
+      232
+    ],
+    [
+      "PMC6371462",
+      235
+    ],
+    [
+      "PMC6371462",
+      236
+    ],
+    [
+      "PMC6371462",
+      239
+    ],
+    [
+      "PMC6371462",
+      240
+    ],
+    [
+      "PMC6371462",
+      241
+    ],
+    [
+      "PMC6371462",
+      242
+    ]
+  ],
+  "metrics": {
+    "tp": 33,
+    "fp": 3,
+    "positives": 36,
+    "precision": 0.9167,
+    "recall": 0.9167,
+    "f1": 0.9167
+  },
+  "attempts": [
+    {
+      "seconds": 7.74,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 865,
+        "prompt_tokens": 6445,
+        "total_tokens": 7310,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 8, \"keep\": false},\n    {\"id\": 9, \"keep\": true},\n    {\"id\": 11, \"keep\": true},\n    {\"id\": 22, \"keep\": false},\n    {\"id\": 27, \"keep\": true},\n    {\"id\": 30, \"keep\": true},\n    {\"id\": 31, \"keep\": true},\n    {\"id\": 35, \"keep\": true},\n    {\"id\": 36, \"keep\": true},\n    {\"id\": 41, \"keep\": true},\n    {\"id\": 42, \"keep\": true},\n    {\"id\": 44, \"keep\": true},\n    {\"id\": 46, \"keep\": false},\n    {\"id\": 53, \"keep\": false},\n    {\"id\": 62, \"keep\": true},\n    {\"id\": 84, \"keep\": true},\n    {\"id\": 124, \"keep\": true},\n    {\"id\": 150, \"keep\": false},\n    {\"id\": 167, \"keep\": false},\n    {\"id\": 171, \"keep\": false},\n    {\"id\": 172, \"keep\": false},\n    {\"id\": 177, \"keep\": false},\n    {\"id\": 181, \"keep\": true},\n    {\"id\": 182, \"keep\": true},\n    {\"id\": 187, \"keep\": true},\n    {\"id\": 188, \"keep\": true},\n    {\"id\": 192, \"keep\": true},\n    {\"id\": 193, \"keep\": false},\n    {\"id\": 199, \"keep\": true},\n    {\"id\": 201, \"keep\": false},\n    {\"id\": 202, \"keep\": false},\n    {\"id\": 203, \"keep\": true},\n    {\"id\": 204, \"keep\": false},\n    {\"id\": 207, \"keep\": true},\n    {\"id\": 214, \"keep\": false},\n    {\"id\": 215, \"keep\": true},\n    {\"id\": 216, \"keep\": true},\n    {\"id\": 217, \"keep\": true},\n    {\"id\": 218, \"keep\": true},\n    {\"id\": 219, \"keep\": false},\n    {\"id\": 220, \"keep\": false},\n    {\"id\": 221, \"keep\": false},\n    {\"id\": 222, \"keep\": false},\n    {\"id\": 223, \"keep\": true},\n    {\"id\": 224, \"keep\": false},\n    {\"id\": 225, \"keep\": true},\n    {\"id\": 226, \"keep\": false},\n    {\"id\": 228, \"keep\": true},\n    {\"id\": 229, \"keep\": true},\n    {\"id\": 232, \"keep\": true},\n    {\"id\": 233, \"keep\": false},\n    {\"id\": 235, \"keep\": true},\n    {\"id\": 236, \"keep\": true},\n    {\"id\": 237, \"keep\": false},\n    {\"id\": 239, \"keep\": true},\n    {\"id\": 240, \"keep\": true},\n    {\"id\": 241, \"keep\": true},\n    {\"id\": 242, \"keep\": true}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

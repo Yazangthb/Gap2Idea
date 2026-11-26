@@ -1,0 +1,59 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 2,
+  "method": "fine_surrounding",
+  "input_sha256": "47ad251d14fe82692cb1d64269e3338cc2693ecdd2d831bf4bf7dc287f3ff59e",
+  "kept": [
+    [
+      "2101.06635",
+      2
+    ],
+    [
+      "2101.06635",
+      12
+    ],
+    [
+      "2101.06635",
+      17
+    ],
+    [
+      "2101.06635",
+      91
+    ],
+    [
+      "2101.06635",
+      195
+    ]
+  ],
+  "metrics": {
+    "tp": 5,
+    "fp": 0,
+    "positives": 6,
+    "precision": 1.0,
+    "recall": 0.8333,
+    "f1": 0.9091
+  },
+  "attempts": [
+    {
+      "seconds": 3.04,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 268,
+        "prompt_tokens": 3754,
+        "total_tokens": 4022,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":2,\"keep\":true},{\"id\":12,\"keep\":true},{\"id\":16,\"keep\":false},{\"id\":17,\"keep\":true},{\"id\":86,\"keep\":false},{\"id\":91,\"keep\":true},{\"id\":123,\"keep\":false},{\"id\":145,\"keep\":false},{\"id\":147,\"keep\":false},{\"id\":151,\"keep\":false},{\"id\":155,\"keep\":false},{\"id\":158,\"keep\":false},{\"id\":163,\"keep\":false},{\"id\":165,\"keep\":false},{\"id\":167,\"keep\":false},{\"id\":168,\"keep\":false},{\"id\":177,\"keep\":false},{\"id\":179,\"keep\":false},{\"id\":192,\"keep\":false},{\"id\":193,\"keep\":false},{\"id\":195,\"keep\":true},{\"id\":198,\"keep\":false},{\"id\":199,\"keep\":false},{\"id\":200,\"keep\":false},{\"id\":201,\"keep\":false},{\"id\":213,\"keep\":false},{\"id\":224,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

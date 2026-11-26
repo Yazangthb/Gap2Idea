@@ -1,0 +1,155 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 25,
+  "method": "zero",
+  "input_sha256": "2b722629f70742fb0db4eaa9eb3acb6c48e846ebaee01b222a0ce383f16e8ec5",
+  "kept": [
+    [
+      "2507.17931",
+      1
+    ],
+    [
+      "2507.17931",
+      7
+    ],
+    [
+      "2507.17931",
+      9
+    ],
+    [
+      "2507.17931",
+      11
+    ],
+    [
+      "2507.17931",
+      18
+    ],
+    [
+      "2507.17931",
+      129
+    ],
+    [
+      "2507.17931",
+      140
+    ],
+    [
+      "2507.17931",
+      144
+    ],
+    [
+      "2507.17931",
+      157
+    ],
+    [
+      "2507.17931",
+      178
+    ],
+    [
+      "2507.17931",
+      179
+    ],
+    [
+      "2507.17931",
+      180
+    ],
+    [
+      "2507.17931",
+      212
+    ],
+    [
+      "2507.17931",
+      254
+    ],
+    [
+      "2507.17931",
+      258
+    ],
+    [
+      "2507.17931",
+      261
+    ],
+    [
+      "2507.17931",
+      269
+    ],
+    [
+      "2507.17931",
+      282
+    ],
+    [
+      "2507.17931",
+      303
+    ],
+    [
+      "2507.17931",
+      305
+    ],
+    [
+      "2507.17931",
+      306
+    ],
+    [
+      "2507.17931",
+      307
+    ],
+    [
+      "2507.17931",
+      308
+    ],
+    [
+      "2507.17931",
+      309
+    ],
+    [
+      "2507.17931",
+      316
+    ],
+    [
+      "2507.17931",
+      317
+    ],
+    [
+      "2507.17931",
+      318
+    ],
+    [
+      "2507.17931",
+      325
+    ],
+    [
+      "2507.17931",
+      329
+    ]
+  ],
+  "metrics": {
+    "tp": 23,
+    "fp": 6,
+    "positives": 29,
+    "precision": 0.7931,
+    "recall": 0.7931,
+    "f1": 0.7931
+  },
+  "attempts": [
+    {
+      "seconds": 14.56,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1318,
+        "prompt_tokens": 10931,
+        "total_tokens": 12249,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 1, \"keep\": true},\n    {\"id\": 6, \"keep\": false},\n    {\"id\": 7, \"keep\": true},\n    {\"id\": 9, \"keep\": true},\n    {\"id\": 11, \"keep\": true},\n    {\"id\": 14, \"keep\": false},\n    {\"id\": 18, \"keep\": true},\n    {\"id\": 22, \"keep\": false},\n    {\"id\": 25, \"keep\": false},\n    {\"id\": 29, \"keep\": false},\n    {\"id\": 37, \"keep\": false},\n    {\"id\": 42, \"keep\": false},\n    {\"id\": 47, \"keep\": false},\n    {\"id\": 50, \"keep\": false},\n    {\"id\": 54, \"keep\": false},\n    {\"id\": 57, \"keep\": false},\n    {\"id\": 59, \"keep\": false},\n    {\"id\": 63, \"keep\": false},\n    {\"id\": 66, \"keep\": false},\n    {\"id\": 67, \"keep\": false},\n    {\"id\": 69, \"keep\": false},\n    {\"id\": 70, \"keep\": false},\n    {\"id\": 73, \"keep\": false},\n    {\"id\": 81, \"keep\": false},\n    {\"id\": 88, \"keep\": false},\n    {\"id\": 91, \"keep\": false},\n    {\"id\": 102, \"keep\": false},\n    {\"id\": 106, \"keep\": false},\n    {\"id\": 109, \"keep\": false},\n    {\"id\": 115, \"keep\": false},\n    {\"id\": 116, \"keep\": false},\n    {\"id\": 129, \"keep\": true},\n    {\"id\": 130, \"keep\": false},\n    {\"id\": 131, \"keep\": false},\n    {\"id\": 132, \"keep\": false},\n    {\"id\": 135, \"keep\": false},\n    {\"id\": 140, \"keep\": true},\n    {\"id\": 143, \"keep\": false},\n    {\"id\": 144, \"keep\": true},\n    {\"id\": 157, \"keep\": true},\n    {\"id\": 158, \"keep\": false},\n    {\"id\": 161, \"keep\": false},\n    {\"id\": 178, \"keep\": true},\n    {\"id\": 179, \"keep\": true},\n    {\"id\": 180, \"keep\": true},\n    {\"id\": 182, \"keep\": false},\n    {\"id\": 188, \"keep\": false},\n    {\"id\": 189, \"keep\": false},\n    {\"id\": 192, \"keep\": false},\n    {\"id\": 212, \"keep\": true},\n    {\"id\": 213, \"keep\": false},\n    {\"id\": 221, \"keep\": false},\n    {\"id\": 222, \"keep\": false},\n    {\"id\": 225, \"keep\": false},\n    {\"id\": 244, \"keep\": false},\n    {\"id\": 247, \"keep\": false},\n    {\"id\": 252, \"keep\": false},\n    {\"id\": 253, \"keep\": false},\n    {\"id\": 254, \"keep\": true},\n    {\"id\": 258, \"keep\": true},\n    {\"id\": 259, \"keep\": false},\n    {\"id\": 260, \"keep\": false},\n    {\"id\": 261, \"keep\": true},\n    {\"id\": 263, \"keep\": false},\n    {\"id\": 266, \"keep\": false},\n    {\"id\": 268, \"keep\": false},\n    {\"id\": 269, \"keep\": true},\n    {\"id\": 281, \"keep\": false},\n    {\"id\": 282, \"keep\": true},\n    {\"id\": 283, \"keep\": false},\n    {\"id\": 294, \"keep\": false},\n    {\"id\": 296, \"keep\": false},\n    {\"id\": 297, \"keep\": false},\n    {\"id\": 300, \"keep\": false},\n    {\"id\": 303, \"keep\": true},\n    {\"id\": 304, \"keep\": false},\n    {\"id\": 305, \"keep\": true},\n    {\"id\": 306, \"keep\": true},\n    {\"id\": 307, \"keep\": true},\n    {\"id\": 308, \"keep\": true},\n    {\"id\": 309, \"keep\": true},\n    {\"id\": 311, \"keep\": false},\n    {\"id\": 314, \"keep\": false},\n    {\"id\": 316, \"keep\": true},\n    {\"id\": 317, \"keep\": true},\n    {\"id\": 318, \"keep\": true},\n    {\"id\": 325, \"keep\": true},\n    {\"id\": 328, \"keep\": false},\n    {\"id\": 329, \"keep\": true}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

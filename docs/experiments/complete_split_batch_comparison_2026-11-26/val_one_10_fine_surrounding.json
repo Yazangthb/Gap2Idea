@@ -1,0 +1,91 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 10,
+  "method": "fine_surrounding",
+  "input_sha256": "a418c9586681634a4dc9d618effb0ab5c892852599e43dead9107ddb2bed3301",
+  "kept": [
+    [
+      "2210.01489",
+      18
+    ],
+    [
+      "2210.01489",
+      30
+    ],
+    [
+      "2210.01489",
+      31
+    ],
+    [
+      "2210.01489",
+      33
+    ],
+    [
+      "2210.01489",
+      47
+    ],
+    [
+      "2210.01489",
+      48
+    ],
+    [
+      "2210.01489",
+      49
+    ],
+    [
+      "2210.01489",
+      105
+    ],
+    [
+      "2210.01489",
+      164
+    ],
+    [
+      "2210.01489",
+      165
+    ],
+    [
+      "2210.01489",
+      170
+    ],
+    [
+      "2210.01489",
+      193
+    ],
+    [
+      "2210.01489",
+      223
+    ]
+  ],
+  "metrics": {
+    "tp": 9,
+    "fp": 4,
+    "positives": 11,
+    "precision": 0.6923,
+    "recall": 0.8182,
+    "f1": 0.75
+  },
+  "attempts": [
+    {
+      "seconds": 4.41,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 275,
+        "prompt_tokens": 3660,
+        "total_tokens": 3935,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":11,\"keep\":false},{\"id\":18,\"keep\":true},{\"id\":30,\"keep\":true},{\"id\":31,\"keep\":true},{\"id\":33,\"keep\":true},{\"id\":47,\"keep\":true},{\"id\":48,\"keep\":true},{\"id\":49,\"keep\":true},{\"id\":58,\"keep\":false},{\"id\":60,\"keep\":false},{\"id\":105,\"keep\":true},{\"id\":123,\"keep\":false},{\"id\":151,\"keep\":false},{\"id\":164,\"keep\":true},{\"id\":165,\"keep\":true},{\"id\":168,\"keep\":false},{\"id\":170,\"keep\":true},{\"id\":192,\"keep\":false},{\"id\":193,\"keep\":true},{\"id\":204,\"keep\":false},{\"id\":206,\"keep\":false},{\"id\":207,\"keep\":false},{\"id\":220,\"keep\":false},{\"id\":223,\"keep\":true},{\"id\":263,\"keep\":false},{\"id\":269,\"keep\":false},{\"id\":270,\"keep\":false},{\"id\":298,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

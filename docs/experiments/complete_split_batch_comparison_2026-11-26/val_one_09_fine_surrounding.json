@@ -1,0 +1,127 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 9,
+  "method": "fine_surrounding",
+  "input_sha256": "58b7dd6e7e6bf9756af10d141990ccce6ce965c83a1959e6d306f71720bfaf44",
+  "kept": [
+    [
+      "2207.09511",
+      22
+    ],
+    [
+      "2207.09511",
+      23
+    ],
+    [
+      "2207.09511",
+      220
+    ],
+    [
+      "2207.09511",
+      221
+    ],
+    [
+      "2207.09511",
+      247
+    ],
+    [
+      "2207.09511",
+      249
+    ],
+    [
+      "2207.09511",
+      250
+    ],
+    [
+      "2207.09511",
+      400
+    ],
+    [
+      "2207.09511",
+      646
+    ],
+    [
+      "2207.09511",
+      693
+    ],
+    [
+      "2207.09511",
+      716
+    ],
+    [
+      "2207.09511",
+      742
+    ],
+    [
+      "2207.09511",
+      780
+    ],
+    [
+      "2207.09511",
+      814
+    ],
+    [
+      "2207.09511",
+      815
+    ],
+    [
+      "2207.09511",
+      816
+    ],
+    [
+      "2207.09511",
+      820
+    ],
+    [
+      "2207.09511",
+      829
+    ],
+    [
+      "2207.09511",
+      830
+    ],
+    [
+      "2207.09511",
+      831
+    ],
+    [
+      "2207.09511",
+      832
+    ],
+    [
+      "2207.09511",
+      833
+    ]
+  ],
+  "metrics": {
+    "tp": 19,
+    "fp": 3,
+    "positives": 23,
+    "precision": 0.8636,
+    "recall": 0.8261,
+    "f1": 0.8444
+  },
+  "attempts": [
+    {
+      "seconds": 13.07,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 808,
+        "prompt_tokens": 9412,
+        "total_tokens": 10220,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":15,\"keep\":false},{\"id\":16,\"keep\":false},{\"id\":22,\"keep\":true},{\"id\":23,\"keep\":true},{\"id\":24,\"keep\":false},{\"id\":44,\"keep\":false},{\"id\":91,\"keep\":false},{\"id\":105,\"keep\":false},{\"id\":115,\"keep\":false},{\"id\":116,\"keep\":false},{\"id\":131,\"keep\":false},{\"id\":132,\"keep\":false},{\"id\":141,\"keep\":false},{\"id\":142,\"keep\":false},{\"id\":152,\"keep\":false},{\"id\":158,\"keep\":false},{\"id\":159,\"keep\":false},{\"id\":161,\"keep\":false},{\"id\":162,\"keep\":false},{\"id\":163,\"keep\":false},{\"id\":169,\"keep\":false},{\"id\":172,\"keep\":false},{\"id\":197,\"keep\":false},{\"id\":205,\"keep\":false},{\"id\":206,\"keep\":false},{\"id\":207,\"keep\":false},{\"id\":214,\"keep\":false},{\"id\":218,\"keep\":false},{\"id\":220,\"keep\":true},{\"id\":221,\"keep\":true},{\"id\":229,\"keep\":false},{\"id\":231,\"keep\":false},{\"id\":233,\"keep\":false},{\"id\":243,\"keep\":false},{\"id\":247,\"keep\":true},{\"id\":249,\"keep\":true},{\"id\":250,\"keep\":true},{\"id\":255,\"keep\":false},{\"id\":256,\"keep\":false},{\"id\":270,\"keep\":false},{\"id\":271,\"keep\":false},{\"id\":297,\"keep\":false},{\"id\":330,\"keep\":false},{\"id\":340,\"keep\":false},{\"id\":375,\"keep\":false},{\"id\":398,\"keep\":false},{\"id\":400,\"keep\":true},{\"id\":401,\"keep\":false},{\"id\":519,\"keep\":false},{\"id\":548,\"keep\":false},{\"id\":628,\"keep\":false},{\"id\":646,\"keep\":true},{\"id\":647,\"keep\":false},{\"id\":650,\"keep\":false},{\"id\":651,\"keep\":false},{\"id\":679,\"keep\":false},{\"id\":680,\"keep\":false},{\"id\":681,\"keep\":false},{\"id\":689,\"keep\":false},{\"id\":691,\"keep\":false},{\"id\":693,\"keep\":true},{\"id\":696,\"keep\":false},{\"id\":712,\"keep\":false},{\"id\":716,\"keep\":true},{\"id\":742,\"keep\":true},{\"id\":780,\"keep\":true},{\"id\":812,\"keep\":false},{\"id\":814,\"keep\":true},{\"id\":815,\"keep\":true},{\"id\":816,\"keep\":true},{\"id\":817,\"keep\":false},{\"id\":820,\"keep\":true},{\"id\":821,\"keep\":false},{\"id\":822,\"keep\":false},{\"id\":824,\"keep\":false},{\"id\":827,\"keep\":false},{\"id\":829,\"keep\":true},{\"id\":830,\"keep\":true},{\"id\":831,\"keep\":true},{\"id\":832,\"keep\":true},{\"id\":833,\"keep\":true}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

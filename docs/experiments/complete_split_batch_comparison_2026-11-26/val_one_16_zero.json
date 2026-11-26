@@ -1,0 +1,47 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 16,
+  "method": "zero",
+  "input_sha256": "16fab18633aa0f8492c3a4b73c70a26907fb0831e6a03adc552c30160fcd4e0b",
+  "kept": [
+    [
+      "2310.15325",
+      7
+    ],
+    [
+      "2310.15325",
+      8
+    ]
+  ],
+  "metrics": {
+    "tp": 2,
+    "fp": 0,
+    "positives": 4,
+    "precision": 1.0,
+    "recall": 0.5,
+    "f1": 0.6667
+  },
+  "attempts": [
+    {
+      "seconds": 4.91,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 122,
+        "prompt_tokens": 1225,
+        "total_tokens": 1347,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 6, \"keep\": false},\n    {\"id\": 7, \"keep\": true},\n    {\"id\": 8, \"keep\": true},\n    {\"id\": 14, \"keep\": false},\n    {\"id\": 26, \"keep\": false},\n    {\"id\": 27, \"keep\": false},\n    {\"id\": 40, \"keep\": false},\n    {\"id\": 44, \"keep\": false}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 12,
+  "method": "zero",
+  "input_sha256": "6c6983881a143468af041499e22280fe222428c94e52abd85498e647af803db8",
+  "kept": [
+    [
+      "2301.03441",
+      4
+    ],
+    [
+      "2301.03441",
+      5
+    ],
+    [
+      "2301.03441",
+      51
+    ],
+    [
+      "2301.03441",
+      52
+    ],
+    [
+      "2301.03441",
+      119
+    ],
+    [
+      "2301.03441",
+      195
+    ]
+  ],
+  "metrics": {
+    "tp": 4,
+    "fp": 2,
+    "positives": 8,
+    "precision": 0.6667,
+    "recall": 0.5,
+    "f1": 0.5714
+  },
+  "attempts": [
+    {
+      "seconds": 7.34,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 563,
+        "prompt_tokens": 7191,
+        "total_tokens": 7754,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n\"results\": [\n{\"id\": 3, \"keep\": false},\n{\"id\": 4, \"keep\": true},\n{\"id\": 5, \"keep\": true},\n{\"id\": 25, \"keep\": false},\n{\"id\": 32, \"keep\": false},\n{\"id\": 36, \"keep\": false},\n{\"id\": 38, \"keep\": false},\n{\"id\": 40, \"keep\": false},\n{\"id\": 45, \"keep\": false},\n{\"id\": 47, \"keep\": false},\n{\"id\": 49, \"keep\": false},\n{\"id\": 51, \"keep\": true},\n{\"id\": 52, \"keep\": true},\n{\"id\": 57, \"keep\": false},\n{\"id\": 63, \"keep\": false},\n{\"id\": 66, \"keep\": false},\n{\"id\": 70, \"keep\": false},\n{\"id\": 77, \"keep\": false},\n{\"id\": 93, \"keep\": false},\n{\"id\": 119, \"keep\": true},\n{\"id\": 144, \"keep\": false},\n{\"id\": 161, \"keep\": false},\n{\"id\": 162, \"keep\": false},\n{\"id\": 163, \"keep\": false},\n{\"id\": 167, \"keep\": false},\n{\"id\": 181, \"keep\": false},\n{\"id\": 187, \"keep\": false},\n{\"id\": 188, \"keep\": false},\n{\"id\": 193, \"keep\": false},\n{\"id\": 195, \"keep\": true},\n{\"id\": 197, \"keep\": false},\n{\"id\": 201, \"keep\": false},\n{\"id\": 202, \"keep\": false},\n{\"id\": 203, \"keep\": false},\n{\"id\": 205, \"keep\": false},\n{\"id\": 206, \"keep\": false},\n{\"id\": 208, \"keep\": false},\n{\"id\": 213, \"keep\": false},\n{\"id\": 217, \"keep\": false},\n{\"id\": 219, \"keep\": false},\n{\"id\": 227, \"keep\": false}\n]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

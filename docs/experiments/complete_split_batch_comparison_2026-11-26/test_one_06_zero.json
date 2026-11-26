@@ -1,0 +1,207 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 6,
+  "method": "zero",
+  "input_sha256": "77d72517b955fb3ca499721cdd6423fcbe2992b8e1efd8e232d124430412ae21",
+  "kept": [
+    [
+      "2202.00263",
+      2
+    ],
+    [
+      "2202.00263",
+      3
+    ],
+    [
+      "2202.00263",
+      5
+    ],
+    [
+      "2202.00263",
+      6
+    ],
+    [
+      "2202.00263",
+      7
+    ],
+    [
+      "2202.00263",
+      11
+    ],
+    [
+      "2202.00263",
+      13
+    ],
+    [
+      "2202.00263",
+      20
+    ],
+    [
+      "2202.00263",
+      21
+    ],
+    [
+      "2202.00263",
+      22
+    ],
+    [
+      "2202.00263",
+      29
+    ],
+    [
+      "2202.00263",
+      30
+    ],
+    [
+      "2202.00263",
+      43
+    ],
+    [
+      "2202.00263",
+      47
+    ],
+    [
+      "2202.00263",
+      50
+    ],
+    [
+      "2202.00263",
+      53
+    ],
+    [
+      "2202.00263",
+      56
+    ],
+    [
+      "2202.00263",
+      57
+    ],
+    [
+      "2202.00263",
+      58
+    ],
+    [
+      "2202.00263",
+      86
+    ],
+    [
+      "2202.00263",
+      87
+    ],
+    [
+      "2202.00263",
+      90
+    ],
+    [
+      "2202.00263",
+      91
+    ],
+    [
+      "2202.00263",
+      97
+    ],
+    [
+      "2202.00263",
+      100
+    ],
+    [
+      "2202.00263",
+      101
+    ],
+    [
+      "2202.00263",
+      102
+    ],
+    [
+      "2202.00263",
+      103
+    ],
+    [
+      "2202.00263",
+      106
+    ],
+    [
+      "2202.00263",
+      107
+    ],
+    [
+      "2202.00263",
+      112
+    ],
+    [
+      "2202.00263",
+      116
+    ],
+    [
+      "2202.00263",
+      117
+    ],
+    [
+      "2202.00263",
+      120
+    ],
+    [
+      "2202.00263",
+      130
+    ],
+    [
+      "2202.00263",
+      131
+    ],
+    [
+      "2202.00263",
+      147
+    ],
+    [
+      "2202.00263",
+      148
+    ],
+    [
+      "2202.00263",
+      176
+    ],
+    [
+      "2202.00263",
+      190
+    ],
+    [
+      "2202.00263",
+      200
+    ],
+    [
+      "2202.00263",
+      225
+    ]
+  ],
+  "metrics": {
+    "tp": 16,
+    "fp": 26,
+    "positives": 18,
+    "precision": 0.381,
+    "recall": 0.8889,
+    "f1": 0.5333
+  },
+  "attempts": [
+    {
+      "seconds": 21.49,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1018,
+        "prompt_tokens": 9898,
+        "total_tokens": 10916,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n\"results\": [\n{\"id\": 2, \"keep\": true},\n{\"id\": 3, \"keep\": true},\n{\"id\": 5, \"keep\": true},\n{\"id\": 6, \"keep\": true},\n{\"id\": 7, \"keep\": true},\n{\"id\": 9, \"keep\": false},\n{\"id\": 11, \"keep\": true},\n{\"id\": 12, \"keep\": false},\n{\"id\": 13, \"keep\": true},\n{\"id\": 18, \"keep\": false},\n{\"id\": 20, \"keep\": true},\n{\"id\": 21, \"keep\": true},\n{\"id\": 22, \"keep\": true},\n{\"id\": 26, \"keep\": false},\n{\"id\": 27, \"keep\": false},\n{\"id\": 29, \"keep\": true},\n{\"id\": 30, \"keep\": true},\n{\"id\": 31, \"keep\": false},\n{\"id\": 43, \"keep\": true},\n{\"id\": 47, \"keep\": true},\n{\"id\": 50, \"keep\": true},\n{\"id\": 53, \"keep\": true},\n{\"id\": 54, \"keep\": false},\n{\"id\": 56, \"keep\": true},\n{\"id\": 57, \"keep\": true},\n{\"id\": 58, \"keep\": true},\n{\"id\": 62, \"keep\": false},\n{\"id\": 65, \"keep\": false},\n{\"id\": 69, \"keep\": false},\n{\"id\": 72, \"keep\": false},\n{\"id\": 78, \"keep\": false},\n{\"id\": 86, \"keep\": true},\n{\"id\": 87, \"keep\": true},\n{\"id\": 89, \"keep\": false},\n{\"id\": 90, \"keep\": true},\n{\"id\": 91, \"keep\": true},\n{\"id\": 97, \"keep\": true},\n{\"id\": 100, \"keep\": true},\n{\"id\": 101, \"keep\": true},\n{\"id\": 102, \"keep\": true},\n{\"id\": 103, \"keep\": true},\n{\"id\": 105, \"keep\": false},\n{\"id\": 106, \"keep\": true},\n{\"id\": 107, \"keep\": true},\n{\"id\": 108, \"keep\": false},\n{\"id\": 112, \"keep\": true},\n{\"id\": 114, \"keep\": false},\n{\"id\": 115, \"keep\": false},\n{\"id\": 116, \"keep\": true},\n{\"id\": 117, \"keep\": true},\n{\"id\": 120, \"keep\": true},\n{\"id\": 129, \"keep\": false},\n{\"id\": 130, \"keep\": true},\n{\"id\": 131, \"keep\": true},\n{\"id\": 137, \"keep\": false},\n{\"id\": 144, \"keep\": false},\n{\"id\": 147, \"keep\": true},\n{\"id\": 148, \"keep\": true},\n{\"id\": 154, \"keep\": false},\n{\"id\": 155, \"keep\": false},\n{\"id\": 176, \"keep\": true},\n{\"id\": 178, \"keep\": false},\n{\"id\": 181, \"keep\": false},\n{\"id\": 185, \"keep\": false},\n{\"id\": 186, \"keep\": false},\n{\"id\": 189, \"keep\": false},\n{\"id\": 190, \"keep\": true},\n{\"id\": 199, \"keep\": false},\n{\"id\": 200, \"keep\": true},\n{\"id\": 203, \"keep\": false},\n{\"id\": 208, \"keep\": false},\n{\"id\": 214, \"keep\": false},\n{\"id\": 215, \"keep\": false},\n{\"id\": 219, \"keep\": false},\n{\"id\": 225, \"keep\": true}\n]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

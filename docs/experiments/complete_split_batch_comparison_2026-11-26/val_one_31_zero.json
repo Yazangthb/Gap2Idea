@@ -1,0 +1,55 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 31,
+  "method": "zero",
+  "input_sha256": "7d5f9e18cced4659722e886889f9423f9fb96f95ec50fef76026735dfdafb83f",
+  "kept": [
+    [
+      "PMC4797126",
+      160
+    ],
+    [
+      "PMC4797126",
+      163
+    ],
+    [
+      "PMC4797126",
+      169
+    ],
+    [
+      "PMC4797126",
+      170
+    ]
+  ],
+  "metrics": {
+    "tp": 4,
+    "fp": 0,
+    "positives": 7,
+    "precision": 1.0,
+    "recall": 0.5714,
+    "f1": 0.7273
+  },
+  "attempts": [
+    {
+      "seconds": 4.54,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 387,
+        "prompt_tokens": 5405,
+        "total_tokens": 5792,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":3,\"keep\":false},{\"id\":7,\"keep\":false},{\"id\":8,\"keep\":false},{\"id\":9,\"keep\":false},{\"id\":11,\"keep\":false},{\"id\":15,\"keep\":false},{\"id\":16,\"keep\":false},{\"id\":27,\"keep\":false},{\"id\":45,\"keep\":false},{\"id\":65,\"keep\":false},{\"id\":66,\"keep\":false},{\"id\":72,\"keep\":false},{\"id\":84,\"keep\":false},{\"id\":97,\"keep\":false},{\"id\":122,\"keep\":false},{\"id\":131,\"keep\":false},{\"id\":135,\"keep\":false},{\"id\":144,\"keep\":false},{\"id\":145,\"keep\":false},{\"id\":146,\"keep\":false},{\"id\":147,\"keep\":false},{\"id\":151,\"keep\":false},{\"id\":152,\"keep\":false},{\"id\":153,\"keep\":false},{\"id\":156,\"keep\":false},{\"id\":157,\"keep\":false},{\"id\":158,\"keep\":false},{\"id\":160,\"keep\":true},{\"id\":161,\"keep\":false},{\"id\":162,\"keep\":false},{\"id\":163,\"keep\":true},{\"id\":164,\"keep\":false},{\"id\":166,\"keep\":false},{\"id\":167,\"keep\":false},{\"id\":168,\"keep\":false},{\"id\":169,\"keep\":true},{\"id\":170,\"keep\":true},{\"id\":171,\"keep\":false},{\"id\":172,\"keep\":false},{\"id\":173,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 34,
+  "method": "fine_surrounding",
+  "input_sha256": "51c8ca45709dd7f6d83417783f140f654a7bc27855d239df1438946ed5e565e3",
+  "kept": [
+    [
+      "PMC5721882",
+      1
+    ],
+    [
+      "PMC5721882",
+      14
+    ],
+    [
+      "PMC5721882",
+      18
+    ],
+    [
+      "PMC5721882",
+      20
+    ],
+    [
+      "PMC5721882",
+      66
+    ],
+    [
+      "PMC5721882",
+      79
+    ],
+    [
+      "PMC5721882",
+      83
+    ],
+    [
+      "PMC5721882",
+      85
+    ],
+    [
+      "PMC5721882",
+      86
+    ],
+    [
+      "PMC5721882",
+      88
+    ],
+    [
+      "PMC5721882",
+      89
+    ],
+    [
+      "PMC5721882",
+      90
+    ],
+    [
+      "PMC5721882",
+      91
+    ],
+    [
+      "PMC5721882",
+      92
+    ],
+    [
+      "PMC5721882",
+      93
+    ],
+    [
+      "PMC5721882",
+      94
+    ],
+    [
+      "PMC5721882",
+      95
+    ],
+    [
+      "PMC5721882",
+      97
+    ],
+    [
+      "PMC5721882",
+      98
+    ],
+    [
+      "PMC5721882",
+      99
+    ],
+    [
+      "PMC5721882",
+      102
+    ],
+    [
+      "PMC5721882",
+      103
+    ]
+  ],
+  "metrics": {
+    "tp": 17,
+    "fp": 5,
+    "positives": 19,
+    "precision": 0.7727,
+    "recall": 0.8947,
+    "f1": 0.8293
+  },
+  "attempts": [
+    {
+      "seconds": 4.15,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 449,
+        "prompt_tokens": 4133,
+        "total_tokens": 4582,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 1, \"keep\": true},\n    {\"id\": 13, \"keep\": false},\n    {\"id\": 14, \"keep\": true},\n    {\"id\": 18, \"keep\": true},\n    {\"id\": 20, \"keep\": true},\n    {\"id\": 63, \"keep\": false},\n    {\"id\": 66, \"keep\": true},\n    {\"id\": 70, \"keep\": false},\n    {\"id\": 79, \"keep\": true},\n    {\"id\": 81, \"keep\": false},\n    {\"id\": 82, \"keep\": false},\n    {\"id\": 83, \"keep\": true},\n    {\"id\": 84, \"keep\": false},\n    {\"id\": 85, \"keep\": true},\n    {\"id\": 86, \"keep\": true},\n    {\"id\": 87, \"keep\": false},\n    {\"id\": 88, \"keep\": true},\n    {\"id\": 89, \"keep\": true},\n    {\"id\": 90, \"keep\": true},\n    {\"id\": 91, \"keep\": true},\n    {\"id\": 92, \"keep\": true},\n    {\"id\": 93, \"keep\": true},\n    {\"id\": 94, \"keep\": true},\n    {\"id\": 95, \"keep\": true},\n    {\"id\": 96, \"keep\": false},\n    {\"id\": 97, \"keep\": true},\n    {\"id\": 98, \"keep\": true},\n    {\"id\": 99, \"keep\": true},\n    {\"id\": 101, \"keep\": false},\n    {\"id\": 102, \"keep\": true},\n    {\"id\": 103, \"keep\": true}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

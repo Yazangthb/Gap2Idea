@@ -1,0 +1,139 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 20,
+  "method": "zero",
+  "input_sha256": "135f54fc97cd28e80b197c2a7750f5b9d27c6b48462b50e9de29b14a4c9816f2",
+  "kept": [
+    [
+      "2410.16340",
+      1
+    ],
+    [
+      "2410.16340",
+      8
+    ],
+    [
+      "2410.16340",
+      19
+    ],
+    [
+      "2410.16340",
+      29
+    ],
+    [
+      "2410.16340",
+      33
+    ],
+    [
+      "2410.16340",
+      39
+    ],
+    [
+      "2410.16340",
+      40
+    ],
+    [
+      "2410.16340",
+      41
+    ],
+    [
+      "2410.16340",
+      45
+    ],
+    [
+      "2410.16340",
+      46
+    ],
+    [
+      "2410.16340",
+      51
+    ],
+    [
+      "2410.16340",
+      52
+    ],
+    [
+      "2410.16340",
+      53
+    ],
+    [
+      "2410.16340",
+      54
+    ],
+    [
+      "2410.16340",
+      56
+    ],
+    [
+      "2410.16340",
+      57
+    ],
+    [
+      "2410.16340",
+      69
+    ],
+    [
+      "2410.16340",
+      70
+    ],
+    [
+      "2410.16340",
+      71
+    ],
+    [
+      "2410.16340",
+      72
+    ],
+    [
+      "2410.16340",
+      196
+    ],
+    [
+      "2410.16340",
+      575
+    ],
+    [
+      "2410.16340",
+      576
+    ],
+    [
+      "2410.16340",
+      577
+    ],
+    [
+      "2410.16340",
+      578
+    ]
+  ],
+  "metrics": {
+    "tp": 17,
+    "fp": 8,
+    "positives": 18,
+    "precision": 0.68,
+    "recall": 0.9444,
+    "f1": 0.7907
+  },
+  "attempts": [
+    {
+      "seconds": 7.43,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 696,
+        "prompt_tokens": 10499,
+        "total_tokens": 11195,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":0,\"keep\":false},{\"id\":1,\"keep\":true},{\"id\":3,\"keep\":false},{\"id\":8,\"keep\":true},{\"id\":9,\"keep\":false},{\"id\":14,\"keep\":false},{\"id\":17,\"keep\":false},{\"id\":19,\"keep\":true},{\"id\":20,\"keep\":false},{\"id\":23,\"keep\":false},{\"id\":24,\"keep\":false},{\"id\":25,\"keep\":false},{\"id\":29,\"keep\":true},{\"id\":33,\"keep\":true},{\"id\":39,\"keep\":true},{\"id\":40,\"keep\":true},{\"id\":41,\"keep\":true},{\"id\":42,\"keep\":false},{\"id\":43,\"keep\":false},{\"id\":45,\"keep\":true},{\"id\":46,\"keep\":true},{\"id\":47,\"keep\":false},{\"id\":49,\"keep\":false},{\"id\":51,\"keep\":true},{\"id\":52,\"keep\":true},{\"id\":53,\"keep\":true},{\"id\":54,\"keep\":true},{\"id\":55,\"keep\":false},{\"id\":56,\"keep\":true},{\"id\":57,\"keep\":true},{\"id\":69,\"keep\":true},{\"id\":70,\"keep\":true},{\"id\":71,\"keep\":true},{\"id\":72,\"keep\":true},{\"id\":100,\"keep\":false},{\"id\":104,\"keep\":false},{\"id\":122,\"keep\":false},{\"id\":127,\"keep\":false},{\"id\":138,\"keep\":false},{\"id\":149,\"keep\":false},{\"id\":150,\"keep\":false},{\"id\":158,\"keep\":false},{\"id\":162,\"keep\":false},{\"id\":171,\"keep\":false},{\"id\":172,\"keep\":false},{\"id\":188,\"keep\":false},{\"id\":189,\"keep\":false},{\"id\":190,\"keep\":false},{\"id\":191,\"keep\":false},{\"id\":194,\"keep\":false},{\"id\":195,\"keep\":false},{\"id\":196,\"keep\":true},{\"id\":199,\"keep\":false},{\"id\":217,\"keep\":false},{\"id\":234,\"keep\":false},{\"id\":236,\"keep\":false},{\"id\":237,\"keep\":false},{\"id\":239,\"keep\":false},{\"id\":247,\"keep\":false},{\"id\":263,\"keep\":false},{\"id\":264,\"keep\":false},{\"id\":289,\"keep\":false},{\"id\":380,\"keep\":false},{\"id\":439,\"keep\":false},{\"id\":447,\"keep\":false},{\"id\":452,\"keep\":false},{\"id\":473,\"keep\":false},{\"id\":515,\"keep\":false},{\"id\":545,\"keep\":false},{\"id\":575,\"keep\":true},{\"id\":576,\"keep\":true},{\"id\":577,\"keep\":true},{\"id\":578,\"keep\":true}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

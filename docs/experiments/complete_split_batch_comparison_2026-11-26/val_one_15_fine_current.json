@@ -1,0 +1,179 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 15,
+  "method": "fine_current",
+  "input_sha256": "2061ccf441c82795c7f9aecd8a50d4298268d1d040e8d3f380fe92e76e787ff7",
+  "kept": [
+    [
+      "2305.14926",
+      2
+    ],
+    [
+      "2305.14926",
+      12
+    ],
+    [
+      "2305.14926",
+      14
+    ],
+    [
+      "2305.14926",
+      15
+    ],
+    [
+      "2305.14926",
+      16
+    ],
+    [
+      "2305.14926",
+      17
+    ],
+    [
+      "2305.14926",
+      40
+    ],
+    [
+      "2305.14926",
+      41
+    ],
+    [
+      "2305.14926",
+      42
+    ],
+    [
+      "2305.14926",
+      55
+    ],
+    [
+      "2305.14926",
+      69
+    ],
+    [
+      "2305.14926",
+      87
+    ],
+    [
+      "2305.14926",
+      88
+    ],
+    [
+      "2305.14926",
+      91
+    ],
+    [
+      "2305.14926",
+      94
+    ],
+    [
+      "2305.14926",
+      106
+    ],
+    [
+      "2305.14926",
+      107
+    ],
+    [
+      "2305.14926",
+      108
+    ],
+    [
+      "2305.14926",
+      148
+    ],
+    [
+      "2305.14926",
+      149
+    ],
+    [
+      "2305.14926",
+      155
+    ],
+    [
+      "2305.14926",
+      156
+    ],
+    [
+      "2305.14926",
+      157
+    ],
+    [
+      "2305.14926",
+      158
+    ],
+    [
+      "2305.14926",
+      159
+    ],
+    [
+      "2305.14926",
+      160
+    ],
+    [
+      "2305.14926",
+      161
+    ],
+    [
+      "2305.14926",
+      385
+    ],
+    [
+      "2305.14926",
+      388
+    ],
+    [
+      "2305.14926",
+      390
+    ],
+    [
+      "2305.14926",
+      391
+    ],
+    [
+      "2305.14926",
+      392
+    ],
+    [
+      "2305.14926",
+      393
+    ],
+    [
+      "2305.14926",
+      460
+    ],
+    [
+      "2305.14926",
+      531
+    ]
+  ],
+  "metrics": {
+    "tp": 24,
+    "fp": 11,
+    "positives": 26,
+    "precision": 0.6857,
+    "recall": 0.9231,
+    "f1": 0.7869
+  },
+  "attempts": [
+    {
+      "seconds": 8.73,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 563,
+        "prompt_tokens": 10984,
+        "total_tokens": 11547,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":2,\"keep\":true},{\"id\":12,\"keep\":true},{\"id\":14,\"keep\":true},{\"id\":15,\"keep\":true},{\"id\":16,\"keep\":true},{\"id\":17,\"keep\":true},{\"id\":21,\"keep\":false},{\"id\":40,\"keep\":true},{\"id\":41,\"keep\":true},{\"id\":42,\"keep\":true},{\"id\":55,\"keep\":true},{\"id\":68,\"keep\":false},{\"id\":69,\"keep\":true},{\"id\":72,\"keep\":false},{\"id\":75,\"keep\":false},{\"id\":87,\"keep\":true},{\"id\":88,\"keep\":true},{\"id\":91,\"keep\":true},{\"id\":94,\"keep\":true},{\"id\":95,\"keep\":false},{\"id\":97,\"keep\":false},{\"id\":100,\"keep\":false},{\"id\":106,\"keep\":true},{\"id\":107,\"keep\":true},{\"id\":108,\"keep\":true},{\"id\":127,\"keep\":false},{\"id\":135,\"keep\":false},{\"id\":148,\"keep\":true},{\"id\":149,\"keep\":true},{\"id\":155,\"keep\":true},{\"id\":156,\"keep\":true},{\"id\":157,\"keep\":true},{\"id\":158,\"keep\":true},{\"id\":159,\"keep\":true},{\"id\":160,\"keep\":true},{\"id\":161,\"keep\":true},{\"id\":385,\"keep\":true},{\"id\":388,\"keep\":true},{\"id\":390,\"keep\":true},{\"id\":391,\"keep\":true},{\"id\":392,\"keep\":true},{\"id\":393,\"keep\":true},{\"id\":432,\"keep\":false},{\"id\":442,\"keep\":false},{\"id\":458,\"keep\":false},{\"id\":459,\"keep\":false},{\"id\":460,\"keep\":true},{\"id\":461,\"keep\":false},{\"id\":462,\"keep\":false},{\"id\":480,\"keep\":false},{\"id\":513,\"keep\":false},{\"id\":531,\"keep\":true},{\"id\":540,\"keep\":false},{\"id\":547,\"keep\":false},{\"id\":554,\"keep\":false},{\"id\":560,\"keep\":false},{\"id\":570,\"keep\":false},{\"id\":629,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

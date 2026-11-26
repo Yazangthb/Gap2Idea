@@ -1,0 +1,55 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 16,
+  "method": "fine_no_context",
+  "input_sha256": "c8bf7581259d9cdf2049a7cc91ba0af601079b7296a97306fb19b44eb1c52d3d",
+  "kept": [
+    [
+      "2310.15325",
+      7
+    ],
+    [
+      "2310.15325",
+      8
+    ],
+    [
+      "2310.15325",
+      14
+    ],
+    [
+      "2310.15325",
+      42
+    ]
+  ],
+  "metrics": {
+    "tp": 3,
+    "fp": 1,
+    "positives": 4,
+    "precision": 0.75,
+    "recall": 0.75,
+    "f1": 0.75
+  },
+  "attempts": [
+    {
+      "seconds": 3.69,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 66,
+        "prompt_tokens": 679,
+        "total_tokens": 745,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":7,\"keep\":true},{\"id\":8,\"keep\":true},{\"id\":13,\"keep\":false},{\"id\":14,\"keep\":true},{\"id\":40,\"keep\":false},{\"id\":42,\"keep\":true},{\"id\":44,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

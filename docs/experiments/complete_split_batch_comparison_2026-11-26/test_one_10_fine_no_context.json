@@ -1,0 +1,155 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 10,
+  "method": "fine_no_context",
+  "input_sha256": "9071a732cfcfeb45961278e7909c6a518f9a2a4e2b8bfde49c7db5b5b9f2be92",
+  "kept": [
+    [
+      "2303.01980",
+      22
+    ],
+    [
+      "2303.01980",
+      23
+    ],
+    [
+      "2303.01980",
+      45
+    ],
+    [
+      "2303.01980",
+      48
+    ],
+    [
+      "2303.01980",
+      49
+    ],
+    [
+      "2303.01980",
+      56
+    ],
+    [
+      "2303.01980",
+      57
+    ],
+    [
+      "2303.01980",
+      63
+    ],
+    [
+      "2303.01980",
+      64
+    ],
+    [
+      "2303.01980",
+      66
+    ],
+    [
+      "2303.01980",
+      67
+    ],
+    [
+      "2303.01980",
+      68
+    ],
+    [
+      "2303.01980",
+      78
+    ],
+    [
+      "2303.01980",
+      185
+    ],
+    [
+      "2303.01980",
+      192
+    ],
+    [
+      "2303.01980",
+      193
+    ],
+    [
+      "2303.01980",
+      196
+    ],
+    [
+      "2303.01980",
+      212
+    ],
+    [
+      "2303.01980",
+      237
+    ],
+    [
+      "2303.01980",
+      239
+    ],
+    [
+      "2303.01980",
+      240
+    ],
+    [
+      "2303.01980",
+      245
+    ],
+    [
+      "2303.01980",
+      247
+    ],
+    [
+      "2303.01980",
+      248
+    ],
+    [
+      "2303.01980",
+      252
+    ],
+    [
+      "2303.01980",
+      256
+    ],
+    [
+      "2303.01980",
+      257
+    ],
+    [
+      "2303.01980",
+      259
+    ],
+    [
+      "2303.01980",
+      260
+    ]
+  ],
+  "metrics": {
+    "tp": 18,
+    "fp": 11,
+    "positives": 19,
+    "precision": 0.6207,
+    "recall": 0.9474,
+    "f1": 0.75
+  },
+  "attempts": [
+    {
+      "seconds": 21.95,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 772,
+        "prompt_tokens": 2287,
+        "total_tokens": 3059,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n\"results\": [\n{\"id\": 8, \"keep\": false},\n{\"id\": 9, \"keep\": false},\n{\"id\": 15, \"keep\": false},\n{\"id\": 16, \"keep\": false},\n{\"id\": 22, \"keep\": true},\n{\"id\": 23, \"keep\": true},\n{\"id\": 45, \"keep\": true},\n{\"id\": 46, \"keep\": false},\n{\"id\": 48, \"keep\": true},\n{\"id\": 49, \"keep\": true},\n{\"id\": 56, \"keep\": true},\n{\"id\": 57, \"keep\": true},\n{\"id\": 61, \"keep\": false},\n{\"id\": 62, \"keep\": false},\n{\"id\": 63, \"keep\": true},\n{\"id\": 64, \"keep\": true},\n{\"id\": 66, \"keep\": true},\n{\"id\": 67, \"keep\": true},\n{\"id\": 68, \"keep\": true},\n{\"id\": 78, \"keep\": true},\n{\"id\": 92, \"keep\": false},\n{\"id\": 111, \"keep\": false},\n{\"id\": 116, \"keep\": false},\n{\"id\": 120, \"keep\": false},\n{\"id\": 138, \"keep\": false},\n{\"id\": 141, \"keep\": false},\n{\"id\": 146, \"keep\": false},\n{\"id\": 165, \"keep\": false},\n{\"id\": 170, \"keep\": false},\n{\"id\": 185, \"keep\": true},\n{\"id\": 187, \"keep\": false},\n{\"id\": 188, \"keep\": false},\n{\"id\": 192, \"keep\": true},\n{\"id\": 193, \"keep\": true},\n{\"id\": 195, \"keep\": false},\n{\"id\": 196, \"keep\": true},\n{\"id\": 197, \"keep\": false},\n{\"id\": 207, \"keep\": false},\n{\"id\": 211, \"keep\": false},\n{\"id\": 212, \"keep\": true},\n{\"id\": 234, \"keep\": false},\n{\"id\": 237, \"keep\": true},\n{\"id\": 239, \"keep\": true},\n{\"id\": 240, \"keep\": true},\n{\"id\": 241, \"keep\": false},\n{\"id\": 243, \"keep\": false},\n{\"id\": 245, \"keep\": true},\n{\"id\": 247, \"keep\": true},\n{\"id\": 248, \"keep\": true},\n{\"id\": 252, \"keep\": true},\n{\"id\": 253, \"keep\": false},\n{\"id\": 255, \"keep\": false},\n{\"id\": 256, \"keep\": true},\n{\"id\": 257, \"keep\": true},\n{\"id\": 259, \"keep\": true},\n{\"id\": 260, \"keep\": true}\n]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

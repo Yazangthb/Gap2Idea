@@ -1,0 +1,111 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 3,
+  "method": "zero",
+  "input_sha256": "45389a2882d27f050a575433bee960c9fc189679b7fdc6fbace9ff04865f38f5",
+  "kept": [
+    [
+      "2110.15431",
+      1
+    ],
+    [
+      "2110.15431",
+      15
+    ],
+    [
+      "2110.15431",
+      16
+    ],
+    [
+      "2110.15431",
+      19
+    ],
+    [
+      "2110.15431",
+      23
+    ],
+    [
+      "2110.15431",
+      39
+    ],
+    [
+      "2110.15431",
+      204
+    ],
+    [
+      "2110.15431",
+      205
+    ],
+    [
+      "2110.15431",
+      460
+    ],
+    [
+      "2110.15431",
+      593
+    ],
+    [
+      "2110.15431",
+      597
+    ],
+    [
+      "2110.15431",
+      658
+    ],
+    [
+      "2110.15431",
+      659
+    ],
+    [
+      "2110.15431",
+      661
+    ],
+    [
+      "2110.15431",
+      676
+    ],
+    [
+      "2110.15431",
+      677
+    ],
+    [
+      "2110.15431",
+      684
+    ],
+    [
+      "2110.15431",
+      688
+    ]
+  ],
+  "metrics": {
+    "tp": 18,
+    "fp": 0,
+    "positives": 20,
+    "precision": 1.0,
+    "recall": 0.9,
+    "f1": 0.9474
+  },
+  "attempts": [
+    {
+      "seconds": 25.95,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 921,
+        "prompt_tokens": 13259,
+        "total_tokens": 14180,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":1,\"keep\":true},{\"id\":2,\"keep\":false},{\"id\":14,\"keep\":false},{\"id\":15,\"keep\":true},{\"id\":16,\"keep\":true},{\"id\":17,\"keep\":false},{\"id\":19,\"keep\":true},{\"id\":20,\"keep\":false},{\"id\":22,\"keep\":false},{\"id\":23,\"keep\":true},{\"id\":27,\"keep\":false},{\"id\":28,\"keep\":false},{\"id\":29,\"keep\":false},{\"id\":30,\"keep\":false},{\"id\":31,\"keep\":false},{\"id\":34,\"keep\":false},{\"id\":36,\"keep\":false},{\"id\":39,\"keep\":true},{\"id\":41,\"keep\":false},{\"id\":44,\"keep\":false},{\"id\":54,\"keep\":false},{\"id\":59,\"keep\":false},{\"id\":60,\"keep\":false},{\"id\":66,\"keep\":false},{\"id\":78,\"keep\":false},{\"id\":80,\"keep\":false},{\"id\":81,\"keep\":false},{\"id\":83,\"keep\":false},{\"id\":86,\"keep\":false},{\"id\":87,\"keep\":false},{\"id\":93,\"keep\":false},{\"id\":96,\"keep\":false},{\"id\":108,\"keep\":false},{\"id\":111,\"keep\":false},{\"id\":112,\"keep\":false},{\"id\":114,\"keep\":false},{\"id\":115,\"keep\":false},{\"id\":131,\"keep\":false},{\"id\":133,\"keep\":false},{\"id\":155,\"keep\":false},{\"id\":163,\"keep\":false},{\"id\":164,\"keep\":false},{\"id\":168,\"keep\":false},{\"id\":174,\"keep\":false},{\"id\":178,\"keep\":false},{\"id\":179,\"keep\":false},{\"id\":197,\"keep\":false},{\"id\":203,\"keep\":false},{\"id\":204,\"keep\":true},{\"id\":205,\"keep\":true},{\"id\":211,\"keep\":false},{\"id\":212,\"keep\":false},{\"id\":215,\"keep\":false},{\"id\":227,\"keep\":false},{\"id\":238,\"keep\":false},{\"id\":245,\"keep\":false},{\"id\":251,\"keep\":false},{\"id\":267,\"keep\":false},{\"id\":285,\"keep\":false},{\"id\":287,\"keep\":false},{\"id\":304,\"keep\":false},{\"id\":325,\"keep\":false},{\"id\":326,\"keep\":false},{\"id\":327,\"keep\":false},{\"id\":328,\"keep\":false},{\"id\":357,\"keep\":false},{\"id\":358,\"keep\":false},{\"id\":359,\"keep\":false},{\"id\":393,\"keep\":false},{\"id\":435,\"keep\":false},{\"id\":441,\"keep\":false},{\"id\":460,\"keep\":true},{\"id\":467,\"keep\":false},{\"id\":471,\"keep\":false},{\"id\":546,\"keep\":false},{\"id\":553,\"keep\":false},{\"id\":570,\"keep\":false},{\"id\":574,\"keep\":false},{\"id\":575,\"keep\":false},{\"id\":593,\"keep\":true},{\"id\":596,\"keep\":false},{\"id\":597,\"keep\":true},{\"id\":619,\"keep\":false},{\"id\":624,\"keep\":false},{\"id\":627,\"keep\":false},{\"id\":629,\"keep\":false},{\"id\":658,\"keep\":true},{\"id\":659,\"keep\":true},{\"id\":661,\"keep\":true},{\"id\":676,\"keep\":true},{\"id\":677,\"keep\":true},{\"id\":681,\"keep\":false},{\"id\":684,\"keep\":true},{\"id\":688,\"keep\":true},{\"id\":689,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

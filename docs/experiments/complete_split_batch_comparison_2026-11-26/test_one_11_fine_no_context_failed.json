@@ -1,0 +1,48 @@
+{
+  "status": "failed",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 11,
+  "method": "fine_no_context",
+  "attempts": [
+    {
+      "seconds": 2.28,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 149,
+        "prompt_tokens": 887,
+        "total_tokens": 1036,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 5, \"keep\": true},\n    {\"id\": 6, \"keep\": true},\n    {\"id\": 7, \"keep\": true},\n    {\"id\": 19, \"keep\": true},\n    {\"id\": 27, \"keep\": true},\n    {\"id\": 28, \"keep\": false},\n    {\"id\": 61, \"keep\": false},\n    {\"id\": 66, \"keep\": true},\n    {\"id\": 67, \"keep\": false},\n    {\"id\": 7, \"keep\": false}\n  ]\n}",
+      "error_type": "ValueError",
+      "error": "Missing or duplicate target ID"
+    },
+    {
+      "seconds": 2.56,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 149,
+        "prompt_tokens": 887,
+        "total_tokens": 1036,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 5, \"keep\": true},\n    {\"id\": 6, \"keep\": true},\n    {\"id\": 7, \"keep\": true},\n    {\"id\": 19, \"keep\": true},\n    {\"id\": 27, \"keep\": true},\n    {\"id\": 28, \"keep\": false},\n    {\"id\": 61, \"keep\": false},\n    {\"id\": 66, \"keep\": true},\n    {\"id\": 67, \"keep\": false},\n    {\"id\": 7, \"keep\": false}\n  ]\n}",
+      "error_type": "ValueError",
+      "error": "Missing or duplicate target ID"
+    }
+  ]
+}

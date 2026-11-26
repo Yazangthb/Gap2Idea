@@ -1,0 +1,63 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 11,
+  "method": "fine_current",
+  "input_sha256": "d6c754ff3c31ebd35b2958661d36d98ebbbe1641b6e11721169181a7e299e64e",
+  "kept": [
+    [
+      "2307.00522",
+      5
+    ],
+    [
+      "2307.00522",
+      6
+    ],
+    [
+      "2307.00522",
+      7
+    ],
+    [
+      "2307.00522",
+      19
+    ],
+    [
+      "2307.00522",
+      27
+    ],
+    [
+      "2307.00522",
+      66
+    ]
+  ],
+  "metrics": {
+    "tp": 6,
+    "fp": 0,
+    "positives": 7,
+    "precision": 1.0,
+    "recall": 0.8571,
+    "f1": 0.9231
+  },
+  "attempts": [
+    {
+      "seconds": 2.13,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 136,
+        "prompt_tokens": 1698,
+        "total_tokens": 1834,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 5, \"keep\": true},\n    {\"id\": 6, \"keep\": true},\n    {\"id\": 7, \"keep\": true},\n    {\"id\": 19, \"keep\": true},\n    {\"id\": 27, \"keep\": true},\n    {\"id\": 28, \"keep\": false},\n    {\"id\": 61, \"keep\": false},\n    {\"id\": 66, \"keep\": true},\n    {\"id\": 67, \"keep\": false}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

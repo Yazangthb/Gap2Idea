@@ -1,0 +1,59 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 6,
+  "method": "zero",
+  "input_sha256": "6b3dc592685b7b37f4a6cb8c4652751f7dbce0d5b4f76603932a6532b5ca99a4",
+  "kept": [
+    [
+      "2201.02967",
+      2
+    ],
+    [
+      "2201.02967",
+      9
+    ],
+    [
+      "2201.02967",
+      12
+    ],
+    [
+      "2201.02967",
+      19
+    ],
+    [
+      "2201.02967",
+      20
+    ]
+  ],
+  "metrics": {
+    "tp": 4,
+    "fp": 1,
+    "positives": 8,
+    "precision": 0.8,
+    "recall": 0.5,
+    "f1": 0.6154
+  },
+  "attempts": [
+    {
+      "seconds": 8.36,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 403,
+        "prompt_tokens": 4459,
+        "total_tokens": 4862,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 2, \"keep\": true},\n    {\"id\": 3, \"keep\": false},\n    {\"id\": 9, \"keep\": true},\n    {\"id\": 12, \"keep\": true},\n    {\"id\": 16, \"keep\": false},\n    {\"id\": 19, \"keep\": true},\n    {\"id\": 20, \"keep\": true},\n    {\"id\": 25, \"keep\": false},\n    {\"id\": 30, \"keep\": false},\n    {\"id\": 46, \"keep\": false},\n    {\"id\": 57, \"keep\": false},\n    {\"id\": 58, \"keep\": false},\n    {\"id\": 59, \"keep\": false},\n    {\"id\": 62, \"keep\": false},\n    {\"id\": 63, \"keep\": false},\n    {\"id\": 64, \"keep\": false},\n    {\"id\": 68, \"keep\": false},\n    {\"id\": 70, \"keep\": false},\n    {\"id\": 73, \"keep\": false},\n    {\"id\": 78, \"keep\": false},\n    {\"id\": 79, \"keep\": false},\n    {\"id\": 81, \"keep\": false},\n    {\"id\": 84, \"keep\": false},\n    {\"id\": 86, \"keep\": false},\n    {\"id\": 88, \"keep\": false},\n    {\"id\": 90, \"keep\": false},\n    {\"id\": 98, \"keep\": false},\n    {\"id\": 106, \"keep\": false}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

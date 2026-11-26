@@ -1,0 +1,111 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 32,
+  "method": "fine_no_context",
+  "input_sha256": "2c7a617180b413830627fe75ced76ff1ce0f58dd244783e54d06c2a38c66fe33",
+  "kept": [
+    [
+      "PMC5381088",
+      24
+    ],
+    [
+      "PMC5381088",
+      121
+    ],
+    [
+      "PMC5381088",
+      126
+    ],
+    [
+      "PMC5381088",
+      131
+    ],
+    [
+      "PMC5381088",
+      132
+    ],
+    [
+      "PMC5381088",
+      133
+    ],
+    [
+      "PMC5381088",
+      134
+    ],
+    [
+      "PMC5381088",
+      135
+    ],
+    [
+      "PMC5381088",
+      138
+    ],
+    [
+      "PMC5381088",
+      139
+    ],
+    [
+      "PMC5381088",
+      141
+    ],
+    [
+      "PMC5381088",
+      144
+    ],
+    [
+      "PMC5381088",
+      146
+    ],
+    [
+      "PMC5381088",
+      147
+    ],
+    [
+      "PMC5381088",
+      148
+    ],
+    [
+      "PMC5381088",
+      149
+    ],
+    [
+      "PMC5381088",
+      153
+    ],
+    [
+      "PMC5381088",
+      157
+    ]
+  ],
+  "metrics": {
+    "tp": 17,
+    "fp": 1,
+    "positives": 22,
+    "precision": 0.9444,
+    "recall": 0.7727,
+    "f1": 0.85
+  },
+  "attempts": [
+    {
+      "seconds": 3.83,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 424,
+        "prompt_tokens": 1945,
+        "total_tokens": 2369,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":17,\"keep\":false},{\"id\":18,\"keep\":false},{\"id\":19,\"keep\":false},{\"id\":22,\"keep\":false},{\"id\":24,\"keep\":true},{\"id\":34,\"keep\":false},{\"id\":61,\"keep\":false},{\"id\":78,\"keep\":false},{\"id\":87,\"keep\":false},{\"id\":91,\"keep\":false},{\"id\":98,\"keep\":false},{\"id\":102,\"keep\":false},{\"id\":103,\"keep\":false},{\"id\":105,\"keep\":false},{\"id\":106,\"keep\":false},{\"id\":109,\"keep\":false},{\"id\":118,\"keep\":false},{\"id\":120,\"keep\":false},{\"id\":121,\"keep\":true},{\"id\":125,\"keep\":false},{\"id\":126,\"keep\":true},{\"id\":128,\"keep\":false},{\"id\":129,\"keep\":false},{\"id\":130,\"keep\":false},{\"id\":131,\"keep\":true},{\"id\":132,\"keep\":true},{\"id\":133,\"keep\":true},{\"id\":134,\"keep\":true},{\"id\":135,\"keep\":true},{\"id\":138,\"keep\":true},{\"id\":139,\"keep\":true},{\"id\":141,\"keep\":true},{\"id\":144,\"keep\":true},{\"id\":146,\"keep\":true},{\"id\":147,\"keep\":true},{\"id\":148,\"keep\":true},{\"id\":149,\"keep\":true},{\"id\":150,\"keep\":false},{\"id\":151,\"keep\":false},{\"id\":153,\"keep\":true},{\"id\":154,\"keep\":false},{\"id\":155,\"keep\":false},{\"id\":157,\"keep\":true}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

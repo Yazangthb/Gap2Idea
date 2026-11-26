@@ -1,0 +1,163 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 26,
+  "method": "fine_current",
+  "input_sha256": "f64e052617d9dfd2b99525a6fc089cc0140fecad4bd99f28dface52bad6130e5",
+  "kept": [
+    [
+      "2509.21923",
+      2
+    ],
+    [
+      "2509.21923",
+      4
+    ],
+    [
+      "2509.21923",
+      9
+    ],
+    [
+      "2509.21923",
+      10
+    ],
+    [
+      "2509.21923",
+      13
+    ],
+    [
+      "2509.21923",
+      16
+    ],
+    [
+      "2509.21923",
+      17
+    ],
+    [
+      "2509.21923",
+      25
+    ],
+    [
+      "2509.21923",
+      26
+    ],
+    [
+      "2509.21923",
+      27
+    ],
+    [
+      "2509.21923",
+      31
+    ],
+    [
+      "2509.21923",
+      53
+    ],
+    [
+      "2509.21923",
+      55
+    ],
+    [
+      "2509.21923",
+      56
+    ],
+    [
+      "2509.21923",
+      67
+    ],
+    [
+      "2509.21923",
+      78
+    ],
+    [
+      "2509.21923",
+      84
+    ],
+    [
+      "2509.21923",
+      89
+    ],
+    [
+      "2509.21923",
+      91
+    ],
+    [
+      "2509.21923",
+      106
+    ],
+    [
+      "2509.21923",
+      108
+    ],
+    [
+      "2509.21923",
+      187
+    ],
+    [
+      "2509.21923",
+      188
+    ],
+    [
+      "2509.21923",
+      189
+    ],
+    [
+      "2509.21923",
+      190
+    ],
+    [
+      "2509.21923",
+      191
+    ],
+    [
+      "2509.21923",
+      198
+    ],
+    [
+      "2509.21923",
+      199
+    ],
+    [
+      "2509.21923",
+      200
+    ],
+    [
+      "2509.21923",
+      201
+    ],
+    [
+      "2509.21923",
+      202
+    ]
+  ],
+  "metrics": {
+    "tp": 27,
+    "fp": 4,
+    "positives": 29,
+    "precision": 0.871,
+    "recall": 0.931,
+    "f1": 0.9
+  },
+  "attempts": [
+    {
+      "seconds": 5.63,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 543,
+        "prompt_tokens": 4530,
+        "total_tokens": 5073,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 2, \"keep\": true},\n    {\"id\": 4, \"keep\": true},\n    {\"id\": 9, \"keep\": true},\n    {\"id\": 10, \"keep\": true},\n    {\"id\": 13, \"keep\": true},\n    {\"id\": 16, \"keep\": true},\n    {\"id\": 17, \"keep\": true},\n    {\"id\": 25, \"keep\": true},\n    {\"id\": 26, \"keep\": true},\n    {\"id\": 27, \"keep\": true},\n    {\"id\": 31, \"keep\": true},\n    {\"id\": 53, \"keep\": true},\n    {\"id\": 55, \"keep\": true},\n    {\"id\": 56, \"keep\": true},\n    {\"id\": 67, \"keep\": true},\n    {\"id\": 72, \"keep\": false},\n    {\"id\": 75, \"keep\": false},\n    {\"id\": 77, \"keep\": false},\n    {\"id\": 78, \"keep\": true},\n    {\"id\": 84, \"keep\": true},\n    {\"id\": 89, \"keep\": true},\n    {\"id\": 91, \"keep\": true},\n    {\"id\": 106, \"keep\": true},\n    {\"id\": 108, \"keep\": true},\n    {\"id\": 134, \"keep\": false},\n    {\"id\": 168, \"keep\": false},\n    {\"id\": 170, \"keep\": false},\n    {\"id\": 187, \"keep\": true},\n    {\"id\": 188, \"keep\": true},\n    {\"id\": 189, \"keep\": true},\n    {\"id\": 190, \"keep\": true},\n    {\"id\": 191, \"keep\": true},\n    {\"id\": 198, \"keep\": true},\n    {\"id\": 199, \"keep\": true},\n    {\"id\": 200, \"keep\": true},\n    {\"id\": 201, \"keep\": true},\n    {\"id\": 202, \"keep\": true}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

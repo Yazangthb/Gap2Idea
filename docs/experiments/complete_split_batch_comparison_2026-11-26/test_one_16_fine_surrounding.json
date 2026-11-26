@@ -1,0 +1,63 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 16,
+  "method": "fine_surrounding",
+  "input_sha256": "b37c343a7ff0bf9efabcfec7743d75e19f833cf72bdcd98d4614a83c94468ec1",
+  "kept": [
+    [
+      "2405.16002",
+      224
+    ],
+    [
+      "2405.16002",
+      225
+    ],
+    [
+      "2405.16002",
+      227
+    ],
+    [
+      "2405.16002",
+      228
+    ],
+    [
+      "2405.16002",
+      526
+    ],
+    [
+      "2405.16002",
+      679
+    ]
+  ],
+  "metrics": {
+    "tp": 6,
+    "fp": 0,
+    "positives": 10,
+    "precision": 1.0,
+    "recall": 0.6,
+    "f1": 0.75
+  },
+  "attempts": [
+    {
+      "seconds": 15.6,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 809,
+        "prompt_tokens": 12536,
+        "total_tokens": 13345,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":4,\"keep\":false},{\"id\":5,\"keep\":false},{\"id\":11,\"keep\":false},{\"id\":13,\"keep\":false},{\"id\":30,\"keep\":false},{\"id\":34,\"keep\":false},{\"id\":69,\"keep\":false},{\"id\":81,\"keep\":false},{\"id\":82,\"keep\":false},{\"id\":83,\"keep\":false},{\"id\":86,\"keep\":false},{\"id\":89,\"keep\":false},{\"id\":93,\"keep\":false},{\"id\":96,\"keep\":false},{\"id\":104,\"keep\":false},{\"id\":107,\"keep\":false},{\"id\":112,\"keep\":false},{\"id\":114,\"keep\":false},{\"id\":115,\"keep\":false},{\"id\":118,\"keep\":false},{\"id\":121,\"keep\":false},{\"id\":125,\"keep\":false},{\"id\":127,\"keep\":false},{\"id\":131,\"keep\":false},{\"id\":132,\"keep\":false},{\"id\":143,\"keep\":false},{\"id\":147,\"keep\":false},{\"id\":154,\"keep\":false},{\"id\":156,\"keep\":false},{\"id\":159,\"keep\":false},{\"id\":171,\"keep\":false},{\"id\":173,\"keep\":false},{\"id\":178,\"keep\":false},{\"id\":179,\"keep\":false},{\"id\":189,\"keep\":false},{\"id\":197,\"keep\":false},{\"id\":199,\"keep\":false},{\"id\":200,\"keep\":false},{\"id\":218,\"keep\":false},{\"id\":219,\"keep\":false},{\"id\":224,\"keep\":true},{\"id\":225,\"keep\":true},{\"id\":226,\"keep\":false},{\"id\":227,\"keep\":true},{\"id\":228,\"keep\":true},{\"id\":287,\"keep\":false},{\"id\":359,\"keep\":false},{\"id\":371,\"keep\":false},{\"id\":435,\"keep\":false},{\"id\":502,\"keep\":false},{\"id\":509,\"keep\":false},{\"id\":511,\"keep\":false},{\"id\":526,\"keep\":true},{\"id\":528,\"keep\":false},{\"id\":549,\"keep\":false},{\"id\":556,\"keep\":false},{\"id\":563,\"keep\":false},{\"id\":568,\"keep\":false},{\"id\":574,\"keep\":false},{\"id\":575,\"keep\":false},{\"id\":576,\"keep\":false},{\"id\":602,\"keep\":false},{\"id\":603,\"keep\":false},{\"id\":605,\"keep\":false},{\"id\":607,\"keep\":false},{\"id\":609,\"keep\":false},{\"id\":615,\"keep\":false},{\"id\":616,\"keep\":false},{\"id\":628,\"keep\":false},{\"id\":631,\"keep\":false},{\"id\":636,\"keep\":false},{\"id\":640,\"keep\":false},{\"id\":641,\"keep\":false},{\"id\":646,\"keep\":false},{\"id\":651,\"keep\":false},{\"id\":652,\"keep\":false},{\"id\":675,\"keep\":false},{\"id\":677,\"keep\":false},{\"id\":678,\"keep\":false},{\"id\":679,\"keep\":true},{\"id\":680,\"keep\":false},{\"id\":693,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

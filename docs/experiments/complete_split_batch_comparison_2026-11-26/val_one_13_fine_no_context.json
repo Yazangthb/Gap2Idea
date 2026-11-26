@@ -1,0 +1,51 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 13,
+  "method": "fine_no_context",
+  "input_sha256": "7b3caf6b63cc5c7c7b1b64bacece603b334beb942d541252fabead2f9c6bea92",
+  "kept": [
+    [
+      "2302.04972",
+      16
+    ],
+    [
+      "2302.04972",
+      333
+    ],
+    [
+      "2302.04972",
+      383
+    ]
+  ],
+  "metrics": {
+    "tp": 3,
+    "fp": 0,
+    "positives": 21,
+    "precision": 1.0,
+    "recall": 0.1429,
+    "f1": 0.25
+  },
+  "attempts": [
+    {
+      "seconds": 6.96,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 335,
+        "prompt_tokens": 1676,
+        "total_tokens": 2011,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":16,\"keep\":true},{\"id\":19,\"keep\":false},{\"id\":25,\"keep\":false},{\"id\":26,\"keep\":false},{\"id\":27,\"keep\":false},{\"id\":28,\"keep\":false},{\"id\":82,\"keep\":false},{\"id\":83,\"keep\":false},{\"id\":92,\"keep\":false},{\"id\":93,\"keep\":false},{\"id\":119,\"keep\":false},{\"id\":120,\"keep\":false},{\"id\":121,\"keep\":false},{\"id\":122,\"keep\":false},{\"id\":169,\"keep\":false},{\"id\":176,\"keep\":false},{\"id\":180,\"keep\":false},{\"id\":181,\"keep\":false},{\"id\":191,\"keep\":false},{\"id\":194,\"keep\":false},{\"id\":195,\"keep\":false},{\"id\":200,\"keep\":false},{\"id\":203,\"keep\":false},{\"id\":205,\"keep\":false},{\"id\":206,\"keep\":false},{\"id\":208,\"keep\":false},{\"id\":211,\"keep\":false},{\"id\":216,\"keep\":false},{\"id\":217,\"keep\":false},{\"id\":298,\"keep\":false},{\"id\":333,\"keep\":true},{\"id\":383,\"keep\":true},{\"id\":440,\"keep\":false},{\"id\":450,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

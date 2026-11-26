@@ -1,0 +1,183 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 2,
+  "method": "zero",
+  "input_sha256": "241af83b75db1c102a8a55c2351207a889b25c4906e76ad4f65ad9581cef8457",
+  "kept": [
+    [
+      "2006.04492",
+      1
+    ],
+    [
+      "2006.04492",
+      7
+    ],
+    [
+      "2006.04492",
+      8
+    ],
+    [
+      "2006.04492",
+      10
+    ],
+    [
+      "2006.04492",
+      12
+    ],
+    [
+      "2006.04492",
+      14
+    ],
+    [
+      "2006.04492",
+      16
+    ],
+    [
+      "2006.04492",
+      24
+    ],
+    [
+      "2006.04492",
+      35
+    ],
+    [
+      "2006.04492",
+      43
+    ],
+    [
+      "2006.04492",
+      45
+    ],
+    [
+      "2006.04492",
+      51
+    ],
+    [
+      "2006.04492",
+      60
+    ],
+    [
+      "2006.04492",
+      61
+    ],
+    [
+      "2006.04492",
+      62
+    ],
+    [
+      "2006.04492",
+      65
+    ],
+    [
+      "2006.04492",
+      66
+    ],
+    [
+      "2006.04492",
+      67
+    ],
+    [
+      "2006.04492",
+      72
+    ],
+    [
+      "2006.04492",
+      75
+    ],
+    [
+      "2006.04492",
+      110
+    ],
+    [
+      "2006.04492",
+      124
+    ],
+    [
+      "2006.04492",
+      127
+    ],
+    [
+      "2006.04492",
+      133
+    ],
+    [
+      "2006.04492",
+      134
+    ],
+    [
+      "2006.04492",
+      139
+    ],
+    [
+      "2006.04492",
+      233
+    ],
+    [
+      "2006.04492",
+      239
+    ],
+    [
+      "2006.04492",
+      240
+    ],
+    [
+      "2006.04492",
+      244
+    ],
+    [
+      "2006.04492",
+      251
+    ],
+    [
+      "2006.04492",
+      252
+    ],
+    [
+      "2006.04492",
+      254
+    ],
+    [
+      "2006.04492",
+      257
+    ],
+    [
+      "2006.04492",
+      298
+    ],
+    [
+      "2006.04492",
+      302
+    ]
+  ],
+  "metrics": {
+    "tp": 21,
+    "fp": 15,
+    "positives": 26,
+    "precision": 0.5833,
+    "recall": 0.8077,
+    "f1": 0.6774
+  },
+  "attempts": [
+    {
+      "seconds": 23.44,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1146,
+        "prompt_tokens": 12157,
+        "total_tokens": 13303,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 1, \"keep\": true},\n    {\"id\": 6, \"keep\": false},\n    {\"id\": 7, \"keep\": true},\n    {\"id\": 8, \"keep\": true},\n    {\"id\": 10, \"keep\": true},\n    {\"id\": 12, \"keep\": true},\n    {\"id\": 14, \"keep\": true},\n    {\"id\": 16, \"keep\": true},\n    {\"id\": 24, \"keep\": true},\n    {\"id\": 26, \"keep\": false},\n    {\"id\": 31, \"keep\": false},\n    {\"id\": 32, \"keep\": false},\n    {\"id\": 35, \"keep\": true},\n    {\"id\": 37, \"keep\": false},\n    {\"id\": 43, \"keep\": true},\n    {\"id\": 44, \"keep\": false},\n    {\"id\": 45, \"keep\": true},\n    {\"id\": 49, \"keep\": false},\n    {\"id\": 51, \"keep\": true},\n    {\"id\": 53, \"keep\": false},\n    {\"id\": 55, \"keep\": false},\n    {\"id\": 56, \"keep\": false},\n    {\"id\": 57, \"keep\": false},\n    {\"id\": 60, \"keep\": true},\n    {\"id\": 61, \"keep\": true},\n    {\"id\": 62, \"keep\": true},\n    {\"id\": 65, \"keep\": true},\n    {\"id\": 66, \"keep\": true},\n    {\"id\": 67, \"keep\": true},\n    {\"id\": 72, \"keep\": true},\n    {\"id\": 75, \"keep\": true},\n    {\"id\": 93, \"keep\": false},\n    {\"id\": 95, \"keep\": false},\n    {\"id\": 103, \"keep\": false},\n    {\"id\": 110, \"keep\": true},\n    {\"id\": 111, \"keep\": false},\n    {\"id\": 120, \"keep\": false},\n    {\"id\": 121, \"keep\": false},\n    {\"id\": 122, \"keep\": false},\n    {\"id\": 124, \"keep\": true},\n    {\"id\": 127, \"keep\": true},\n    {\"id\": 133, \"keep\": true},\n    {\"id\": 134, \"keep\": true},\n    {\"id\": 137, \"keep\": false},\n    {\"id\": 138, \"keep\": false},\n    {\"id\": 139, \"keep\": true},\n    {\"id\": 169, \"keep\": false},\n    {\"id\": 210, \"keep\": false},\n    {\"id\": 233, \"keep\": true},\n    {\"id\": 239, \"keep\": true},\n    {\"id\": 240, \"keep\": true},\n    {\"id\": 241, \"keep\": false},\n    {\"id\": 242, \"keep\": false},\n    {\"id\": 244, \"keep\": true},\n    {\"id\": 245, \"keep\": false},\n    {\"id\": 251, \"keep\": true},\n    {\"id\": 252, \"keep\": true},\n    {\"id\": 254, \"keep\": true},\n    {\"id\": 256, \"keep\": false},\n    {\"id\": 257, \"keep\": true},\n    {\"id\": 263, \"keep\": false},\n    {\"id\": 264, \"keep\": false},\n    {\"id\": 266, \"keep\": false},\n    {\"id\": 267, \"keep\": false},\n    {\"id\": 273, \"keep\": false},\n    {\"id\": 275, \"keep\": false},\n    {\"id\": 290, \"keep\": false},\n    {\"id\": 296, \"keep\": false},\n    {\"id\": 298, \"keep\": true},\n    {\"id\": 300, \"keep\": false},\n    {\"id\": 302, \"keep\": true},\n    {\"id\": 321, \"keep\": false},\n    {\"id\": 322, \"keep\": false},\n    {\"id\": 323, \"keep\": false},\n    {\"id\": 324, \"keep\": false},\n    {\"id\": 326, \"keep\": false},\n    {\"id\": 336, \"keep\": false},\n    {\"id\": 337, \"keep\": false}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

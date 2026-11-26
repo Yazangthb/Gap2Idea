@@ -1,0 +1,107 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 28,
+  "method": "zero",
+  "input_sha256": "fc9f7cd34fdf98ab15e51d20ca302ae8fb620e9480b471f665c8defc42dcf6a2",
+  "kept": [
+    [
+      "2601.03085",
+      5
+    ],
+    [
+      "2601.03085",
+      31
+    ],
+    [
+      "2601.03085",
+      67
+    ],
+    [
+      "2601.03085",
+      71
+    ],
+    [
+      "2601.03085",
+      72
+    ],
+    [
+      "2601.03085",
+      75
+    ],
+    [
+      "2601.03085",
+      81
+    ],
+    [
+      "2601.03085",
+      95
+    ],
+    [
+      "2601.03085",
+      100
+    ],
+    [
+      "2601.03085",
+      110
+    ],
+    [
+      "2601.03085",
+      111
+    ],
+    [
+      "2601.03085",
+      113
+    ],
+    [
+      "2601.03085",
+      114
+    ],
+    [
+      "2601.03085",
+      115
+    ],
+    [
+      "2601.03085",
+      116
+    ],
+    [
+      "2601.03085",
+      212
+    ],
+    [
+      "2601.03085",
+      479
+    ]
+  ],
+  "metrics": {
+    "tp": 15,
+    "fp": 2,
+    "positives": 18,
+    "precision": 0.8824,
+    "recall": 0.8333,
+    "f1": 0.8571
+  },
+  "attempts": [
+    {
+      "seconds": 16.12,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1603,
+        "prompt_tokens": 13603,
+        "total_tokens": 15206,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 5, \"keep\": true},\n    {\"id\": 12, \"keep\": false},\n    {\"id\": 15, \"keep\": false},\n    {\"id\": 18, \"keep\": false},\n    {\"id\": 19, \"keep\": false},\n    {\"id\": 20, \"keep\": false},\n    {\"id\": 21, \"keep\": false},\n    {\"id\": 22, \"keep\": false},\n    {\"id\": 23, \"keep\": false},\n    {\"id\": 31, \"keep\": true},\n    {\"id\": 32, \"keep\": false},\n    {\"id\": 48, \"keep\": false},\n    {\"id\": 50, \"keep\": false},\n    {\"id\": 57, \"keep\": false},\n    {\"id\": 60, \"keep\": false},\n    {\"id\": 62, \"keep\": false},\n    {\"id\": 63, \"keep\": false},\n    {\"id\": 64, \"keep\": false},\n    {\"id\": 65, \"keep\": false},\n    {\"id\": 66, \"keep\": false},\n    {\"id\": 67, \"keep\": true},\n    {\"id\": 68, \"keep\": false},\n    {\"id\": 71, \"keep\": true},\n    {\"id\": 72, \"keep\": true},\n    {\"id\": 74, \"keep\": false},\n    {\"id\": 75, \"keep\": true},\n    {\"id\": 81, \"keep\": true},\n    {\"id\": 95, \"keep\": true},\n    {\"id\": 98, \"keep\": false},\n    {\"id\": 100, \"keep\": true},\n    {\"id\": 105, \"keep\": false},\n    {\"id\": 110, \"keep\": true},\n    {\"id\": 111, \"keep\": true},\n    {\"id\": 112, \"keep\": false},\n    {\"id\": 113, \"keep\": true},\n    {\"id\": 114, \"keep\": true},\n    {\"id\": 115, \"keep\": true},\n    {\"id\": 116, \"keep\": true},\n    {\"id\": 124, \"keep\": false},\n    {\"id\": 127, \"keep\": false},\n    {\"id\": 136, \"keep\": false},\n    {\"id\": 138, \"keep\": false},\n    {\"id\": 139, \"keep\": false},\n    {\"id\": 140, \"keep\": false},\n    {\"id\": 145, \"keep\": false},\n    {\"id\": 146, \"keep\": false},\n    {\"id\": 147, \"keep\": false},\n    {\"id\": 149, \"keep\": false},\n    {\"id\": 150, \"keep\": false},\n    {\"id\": 152, \"keep\": false},\n    {\"id\": 155, \"keep\": false},\n    {\"id\": 162, \"keep\": false},\n    {\"id\": 168, \"keep\": false},\n    {\"id\": 194, \"keep\": false},\n    {\"id\": 212, \"keep\": true},\n    {\"id\": 225, \"keep\": false},\n    {\"id\": 226, \"keep\": false},\n    {\"id\": 260, \"keep\": false},\n    {\"id\": 267, \"keep\": false},\n    {\"id\": 284, \"keep\": false},\n    {\"id\": 291, \"keep\": false},\n    {\"id\": 292, \"keep\": false},\n    {\"id\": 294, \"keep\": false},\n    {\"id\": 295, \"keep\": false},\n    {\"id\": 298, \"keep\": false},\n    {\"id\": 311, \"keep\": false},\n    {\"id\": 312, \"keep\": false},\n    {\"id\": 314, \"keep\": false},\n    {\"id\": 315, \"keep\": false},\n    {\"id\": 316, \"keep\": false},\n    {\"id\": 317, \"keep\": false},\n    {\"id\": 319, \"keep\": false},\n    {\"id\": 337, \"keep\": false},\n    {\"id\": 363, \"keep\": false},\n    {\"id\": 370, \"keep\": false},\n    {\"id\": 374, \"keep\": false},\n    {\"id\": 376, \"keep\": false},\n    {\"id\": 377, \"keep\": false},\n    {\"id\": 379, \"keep\": false},\n    {\"id\": 384, \"keep\": false},\n    {\"id\": 386, \"keep\": false},\n    {\"id\": 396, \"keep\": false},\n    {\"id\": 402, \"keep\": false},\n    {\"id\": 403, \"keep\": false},\n    {\"id\": 409, \"keep\": false},\n    {\"id\": 414, \"keep\": false},\n    {\"id\": 417, \"keep\": false},\n    {\"id\": 418, \"keep\": false},\n    {\"id\": 419, \"keep\": false},\n    {\"id\": 421, \"keep\": false},\n    {\"id\": 422, \"keep\": false},\n    {\"id\": 428, \"keep\": false},\n    {\"id\": 439, \"keep\": false},\n    {\"id\": 440, \"keep\": false},\n    {\"id\": 441, \"keep\": false},\n    {\"id\": 451, \"keep\": false},\n    {\"id\": 455, \"keep\": false},\n    {\"id\": 456, \"keep\": false},\n    {\"id\": 457, \"keep\": false},\n    {\"id\": 458, \"keep\": false},\n    {\"id\": 460, \"keep\": false},\n    {\"id\": 462, \"keep\": false},\n    {\"id\": 464, \"keep\": false},\n    {\"id\": 465, \"keep\": false},\n    {\"id\": 470, \"keep\": false},\n    {\"id\": 471, \"keep\": false},\n    {\"id\": 472, \"keep\": false},\n    {\"id\": 479, \"keep\": true}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

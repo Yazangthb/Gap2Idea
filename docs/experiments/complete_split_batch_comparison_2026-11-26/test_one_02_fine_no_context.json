@@ -1,0 +1,59 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "test",
+  "batch": "one",
+  "index": 2,
+  "method": "fine_no_context",
+  "input_sha256": "74105fa1071856e9fab0c13917749fed598a0ec3b85e4421f3878965d1e37256",
+  "kept": [
+    [
+      "2101.06635",
+      2
+    ],
+    [
+      "2101.06635",
+      12
+    ],
+    [
+      "2101.06635",
+      17
+    ],
+    [
+      "2101.06635",
+      91
+    ],
+    [
+      "2101.06635",
+      195
+    ]
+  ],
+  "metrics": {
+    "tp": 5,
+    "fp": 0,
+    "positives": 6,
+    "precision": 1.0,
+    "recall": 0.8333,
+    "f1": 0.9091
+  },
+  "attempts": [
+    {
+      "seconds": 3.71,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 382,
+        "prompt_tokens": 1401,
+        "total_tokens": 1783,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n\"results\": [\n{\"id\": 2, \"keep\": true},\n{\"id\": 12, \"keep\": true},\n{\"id\": 16, \"keep\": false},\n{\"id\": 17, \"keep\": true},\n{\"id\": 86, \"keep\": false},\n{\"id\": 91, \"keep\": true},\n{\"id\": 123, \"keep\": false},\n{\"id\": 145, \"keep\": false},\n{\"id\": 147, \"keep\": false},\n{\"id\": 151, \"keep\": false},\n{\"id\": 155, \"keep\": false},\n{\"id\": 158, \"keep\": false},\n{\"id\": 163, \"keep\": false},\n{\"id\": 165, \"keep\": false},\n{\"id\": 167, \"keep\": false},\n{\"id\": 168, \"keep\": false},\n{\"id\": 177, \"keep\": false},\n{\"id\": 179, \"keep\": false},\n{\"id\": 192, \"keep\": false},\n{\"id\": 193, \"keep\": false},\n{\"id\": 195, \"keep\": true},\n{\"id\": 198, \"keep\": false},\n{\"id\": 199, \"keep\": false},\n{\"id\": 200, \"keep\": false},\n{\"id\": 201, \"keep\": false},\n{\"id\": 213, \"keep\": false},\n{\"id\": 224, \"keep\": false}\n]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

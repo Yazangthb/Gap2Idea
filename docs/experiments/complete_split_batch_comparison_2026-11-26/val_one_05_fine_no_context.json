@@ -1,0 +1,59 @@
+{
+  "status": "ok",
+  "plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "split": "val",
+  "batch": "one",
+  "index": 5,
+  "method": "fine_no_context",
+  "input_sha256": "a4f3217631674902cd7f28432d162a540843034d9c8b338d58f4c7bfc371eaea",
+  "kept": [
+    [
+      "2104.06303",
+      18
+    ],
+    [
+      "2104.06303",
+      48
+    ],
+    [
+      "2104.06303",
+      52
+    ],
+    [
+      "2104.06303",
+      83
+    ],
+    [
+      "2104.06303",
+      124
+    ]
+  ],
+  "metrics": {
+    "tp": 5,
+    "fp": 0,
+    "positives": 10,
+    "precision": 1.0,
+    "recall": 0.5,
+    "f1": 0.6667
+  },
+  "attempts": [
+    {
+      "seconds": 4.67,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 257,
+        "prompt_tokens": 1567,
+        "total_tokens": 1824,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":1,\"keep\":false},{\"id\":9,\"keep\":false},{\"id\":10,\"keep\":false},{\"id\":11,\"keep\":false},{\"id\":16,\"keep\":false},{\"id\":18,\"keep\":true},{\"id\":23,\"keep\":false},{\"id\":48,\"keep\":true},{\"id\":49,\"keep\":false},{\"id\":50,\"keep\":false},{\"id\":52,\"keep\":true},{\"id\":66,\"keep\":false},{\"id\":78,\"keep\":false},{\"id\":81,\"keep\":false},{\"id\":82,\"keep\":false},{\"id\":83,\"keep\":true},{\"id\":114,\"keep\":false},{\"id\":124,\"keep\":true},{\"id\":135,\"keep\":false},{\"id\":148,\"keep\":false},{\"id\":150,\"keep\":false},{\"id\":155,\"keep\":false},{\"id\":157,\"keep\":false},{\"id\":166,\"keep\":false},{\"id\":182,\"keep\":false},{\"id\":217,\"keep\":false},{\"id\":225,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ]
+}
