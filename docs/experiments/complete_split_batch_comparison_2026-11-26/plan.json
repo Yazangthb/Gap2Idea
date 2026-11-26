@@ -1,0 +1,2448 @@
+{
+  "description": "Compare all 34 development and 34 test papers per method for batches of 1 and up to 17, plus reuse existing batches of up to 5.",
+  "selection": "Within each split sort papers by total original sentence characters, then paper ID. First group is 17 shortest (the prior experiment). Greedily pack remaining papers in that order without exceeding full-paper context budget or 17 papers; one-paper jobs cover all papers.",
+  "fairness": "Each method uses exactly the same papers, order, and groups for a given split and batch size. Full input includes all sentences; NLI methods send Stage A+B candidates, with the specified context layout.",
+  "caveats": "Up-to-17 groups may contain fewer papers to fit; group composition and prompts differ from earlier up-to-5 study. Development was used for tuning, test was examined before, and labels are LLM-generated.",
+  "methods": [
+    "full",
+    "zero",
+    "fine_current",
+    "fine_surrounding",
+    "fine_no_context"
+  ],
+  "model": "qwen3.8-27b",
+  "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_output_tokens": 65536,
+  "output_validation": "Each input ID must receive exactly one boolean decision. Extra out-of-input IDs are excluded and reported; missing, duplicate, malformed or truncated real IDs cause a failure.",
+  "source_plan_sha256": "b92369b82f892b26f489a2999e7cb5f331dd3bb6f4723791158bcf64e7e45ff2",
+  "runner_sha256": "69b11653ab67c165590e7776a5dc3f4100c2a5e2f5f76f02197b1f24192d428b",
+  "reuse_17_sha256": {
+    "val_full": "ece8f39f6aef07ed7a195503824792d3857ae4bdc11d7c6e253f7b3ad9601334",
+    "val_zero": "aa95d6124d39b5b2d293fc54d565c68d4374babc90673a7b1d254b454224adf9",
+    "val_fine_surrounding": "879e88d6bc3c8062f936fa4366132ade1a4cc2597955f3578a5a7a2ab97b280d",
+    "test_full": "e921be86bc923d5930a65e4b114d2b6a49dcb47ed91674dff3d43d0d419dd5ba",
+    "test_zero": "6653d33c851e6c55b05590909f4d100ba4f21468705e331df57c8f60ff74d1c0",
+    "test_fine_surrounding": "5241051ac764d82fc09c44c6be9a7dfb1170fab40ca7042e4d8fad763c5a1714"
+  },
+  "groups": [
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 1,
+      "paper_ids": [
+        "2004.12164"
+      ],
+      "rows_sha256": "74e814f241d0044922f6aeebbee68a77bc37076f29002379f4fe83e37e234918",
+      "inputs": {
+        "full": {
+          "sha256": "f88c124f84880b4f90c5c627de690464bef69cade211e7cb5d7484b7d153a1bd",
+          "sentences": 746
+        },
+        "zero": {
+          "sha256": "b76a4bd07f0509161567fafa1a6f3113f951fbcc9d089a89aba9769634d038aa",
+          "sentences": 90
+        },
+        "fine_current": {
+          "sha256": "fb98a1556a583b38d6f90d84e31943b5673208ce2b29d184fd78599ce29a33dc",
+          "sentences": 64
+        },
+        "fine_surrounding": {
+          "sha256": "9a1ff898d155fd5a76c5cce5948b5225ae4a6fd701f24eef733a710d4cfdae4d",
+          "sentences": 64
+        },
+        "fine_no_context": {
+          "sha256": "c8916cc6b7afa64d910e345bf902fff5fe5b4344bc6fc9447c345a9d20f4d70b",
+          "sentences": 64
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 2,
+      "paper_ids": [
+        "2006.04492"
+      ],
+      "rows_sha256": "7ebd6bb08db3c7d04841809ee5477ab8655f67d95c07ca1ebd62f60ece78a9ca",
+      "inputs": {
+        "full": {
+          "sha256": "2cc5570d91878dac08d7830811dba1571506cf311f063e63857d4f1e8a585347",
+          "sentences": 340
+        },
+        "zero": {
+          "sha256": "241af83b75db1c102a8a55c2351207a889b25c4906e76ad4f65ad9581cef8457",
+          "sentences": 78
+        },
+        "fine_current": {
+          "sha256": "3fc067141933c5e96aaa963857e50acb24d5e77925eeb4e2ec0fc2b15b89d660",
+          "sentences": 78
+        },
+        "fine_surrounding": {
+          "sha256": "988b23633f463bc3d7941aa3493d28fcaf717383957faeccd2d95ff10b91c838",
+          "sentences": 78
+        },
+        "fine_no_context": {
+          "sha256": "b4fd9998b8c8fb23fb32c0ef431cd314b4381e06110af197c11a1322071d5709",
+          "sentences": 78
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 3,
+      "paper_ids": [
+        "2007.00128"
+      ],
+      "rows_sha256": "23e7bbad657c86e70abd8885408f865dcaceb6ee49a9b8f6d65f224b936fb6c6",
+      "inputs": {
+        "full": {
+          "sha256": "18ae621681b976e6be6b1db3e747a44d1f147ef5d50789905234d7f42271c94a",
+          "sentences": 520
+        },
+        "zero": {
+          "sha256": "cd096d35087703c442dbc464852146a9f5c4d56cc8112e2eed26ec75b5b96af9",
+          "sentences": 67
+        },
+        "fine_current": {
+          "sha256": "412f6f6fbeda54a11121b2ac2693f0532b9b39bb892845ac78091dc89b123393",
+          "sentences": 43
+        },
+        "fine_surrounding": {
+          "sha256": "079c7d2d9b86617c5f4fe0176e0f90b46a04aeeabd73dd26fa234b902fd54273",
+          "sentences": 43
+        },
+        "fine_no_context": {
+          "sha256": "166778a576a50b274c388cf933dac31240fa0ad537947d97b66bb61b3321dd30",
+          "sentences": 43
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 4,
+      "paper_ids": [
+        "2102.03018"
+      ],
+      "rows_sha256": "2f4d3e7b0a7fd23b9cf0900c3c5e8ca238a75b0a3824d4242fdfbf17950cf3e1",
+      "inputs": {
+        "full": {
+          "sha256": "15519b24d6ec62e27465f725d014fb8d8865c8927a2e6bdb17a9189ec11d09be",
+          "sentences": 164
+        },
+        "zero": {
+          "sha256": "3a60fe4fa7ed2aec0f6b77a3d5ffe020ba188562d255569d165a73af5cc919d1",
+          "sentences": 60
+        },
+        "fine_current": {
+          "sha256": "cf93d726d90c166e6bc4c8a613b3d22c1af6524edbf20374ab6c33ba7f546d94",
+          "sentences": 52
+        },
+        "fine_surrounding": {
+          "sha256": "457dcd625d925850a7dc3c6165d8e3fe6a67a042d053827e81caa258090f2e2b",
+          "sentences": 52
+        },
+        "fine_no_context": {
+          "sha256": "cc67f7411e6c4b1449f0a1edd9c7ff576e06946e7e55006a09b9c24513b2b9eb",
+          "sentences": 52
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 5,
+      "paper_ids": [
+        "2104.06303"
+      ],
+      "rows_sha256": "bc6aac0761e89ba0182527466224e2da8168f0a412b50363284fb4fb61331cc0",
+      "inputs": {
+        "full": {
+          "sha256": "a9574bf8a847141b7254837292f39687b6ddb0ebd669b7f54114bebeced73c18",
+          "sentences": 226
+        },
+        "zero": {
+          "sha256": "418866e142b0cab1b2cde0a9c7db031fd39fe6928ef44ed7b0ef46d04854ecbd",
+          "sentences": 35
+        },
+        "fine_current": {
+          "sha256": "f628cdd422e207697f9fedd4bc2245aa79e4cd6bc82a3d7195cb51e9f2c35069",
+          "sentences": 27
+        },
+        "fine_surrounding": {
+          "sha256": "d9bc9df4e2effd8534d048983f176025bbe6ee958bbe0b15f7d649271571b3bc",
+          "sentences": 27
+        },
+        "fine_no_context": {
+          "sha256": "a4f3217631674902cd7f28432d162a540843034d9c8b338d58f4c7bfc371eaea",
+          "sentences": 27
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 6,
+      "paper_ids": [
+        "2201.02967"
+      ],
+      "rows_sha256": "f6986c111bd881ba594a2dda1f7b2fdcd91f4c7b4f2e36525117463bbd007c15",
+      "inputs": {
+        "full": {
+          "sha256": "2ef36ded30be79f4a6d5074726a2b19072a25f7eaed41c455bd9ea768e58fd2f",
+          "sentences": 108
+        },
+        "zero": {
+          "sha256": "6b3dc592685b7b37f4a6cb8c4652751f7dbce0d5b4f76603932a6532b5ca99a4",
+          "sentences": 28
+        },
+        "fine_current": {
+          "sha256": "4cd6e6233a04cb392082dc63f36119d91e289cdf6327b01c25a931e6b8e512a3",
+          "sentences": 23
+        },
+        "fine_surrounding": {
+          "sha256": "adf34d859a39fd2fe505019e7e8670a4218291a040eb157a74c842ae989f3bcc",
+          "sentences": 23
+        },
+        "fine_no_context": {
+          "sha256": "553fb4ccf9f8e9a4c4dfd8794af5fbe4e84ae400111df39e72a783f9275e5c3c",
+          "sentences": 23
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 7,
+      "paper_ids": [
+        "2202.00740"
+      ],
+      "rows_sha256": "98e3ee6c94e8875322949c10de813bff9f841672ef482bd0cebb12415589ceb8",
+      "inputs": {
+        "full": {
+          "sha256": "7e5976c1741a7a2ac8e23bb6c9e8233b0fdd523fbc8171490faaa4d93b50a8c9",
+          "sentences": 307
+        },
+        "zero": {
+          "sha256": "b11f81c82d2da2a8f15adea78ea0a1b72f5793316b416e02f0f778960b90d27e",
+          "sentences": 52
+        },
+        "fine_current": {
+          "sha256": "ee4e6f36a5dde085abcce212dbe1277d40a70209a61c7affb9e445c7a73e61f3",
+          "sentences": 52
+        },
+        "fine_surrounding": {
+          "sha256": "8a0ec8eef0997faa351ed4c18c90485965a7f94c1ff49401911e4041cb448595",
+          "sentences": 52
+        },
+        "fine_no_context": {
+          "sha256": "b3ae0a2a52b8cc48b76cd113c9a22ec4a52a9b7a624911063fd5080e01b05598",
+          "sentences": 52
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 8,
+      "paper_ids": [
+        "2207.01725"
+      ],
+      "rows_sha256": "c5caf439d5d24b781ddbbfbbeba3738705da6100653b675b1416c21ab7b27aa7",
+      "inputs": {
+        "full": {
+          "sha256": "57369ef6372d170a905b5524f7695631181f62c72fd198f0abe8c605908cdb3c",
+          "sentences": 265
+        },
+        "zero": {
+          "sha256": "181d333996ed4b18e5a320b2b87183ba58757d3fd8e08d9f8fdd705eba5a0d87",
+          "sentences": 76
+        },
+        "fine_current": {
+          "sha256": "236e2750fa85c0931c5e80be9437c414c110ba633e835bd9178918f4971ebe7b",
+          "sentences": 65
+        },
+        "fine_surrounding": {
+          "sha256": "3765604105bc498d04c8711f7670f72e9c40dde71af1cee826fc71d3696f18a0",
+          "sentences": 65
+        },
+        "fine_no_context": {
+          "sha256": "1bae90e2390e93aff9a1073a2b7a71b090f06a09f29b57c72a861d5621dc4e30",
+          "sentences": 65
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 9,
+      "paper_ids": [
+        "2207.09511"
+      ],
+      "rows_sha256": "a15eba3ed4022649f9ecd18f42ef36e64a86a59da987654b7951d5d834f1c757",
+      "inputs": {
+        "full": {
+          "sha256": "a7c1025f4e6bc5d3ff435d3c7bb2eb452d0b2929551ef1179e06a533f35ede56",
+          "sentences": 834
+        },
+        "zero": {
+          "sha256": "cc69b4fa7a926f259e08488010f34db450ee95de71bb7e72fe79270113d86f62",
+          "sentences": 121
+        },
+        "fine_current": {
+          "sha256": "2c1d28a95d3866e96d1754bf6afe4ad5ebc55856d7321576d554d3c4e038d1db",
+          "sentences": 81
+        },
+        "fine_surrounding": {
+          "sha256": "58b7dd6e7e6bf9756af10d141990ccce6ce965c83a1959e6d306f71720bfaf44",
+          "sentences": 81
+        },
+        "fine_no_context": {
+          "sha256": "915a57926ff987eb8f573d452b3070e94ae4a87c8c80a66ab4d278e6808c8dbc",
+          "sentences": 81
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 10,
+      "paper_ids": [
+        "2210.01489"
+      ],
+      "rows_sha256": "26ada2dc11cdeaa6dbdbb3111ace71d8d308b321c2f11f67e6ba782d4625f4fd",
+      "inputs": {
+        "full": {
+          "sha256": "e840301cdd0330bf059bc28dbb98d125dd23bd7198d94c0307e0bfdf058102f6",
+          "sentences": 355
+        },
+        "zero": {
+          "sha256": "0679777dacb305d1c112b7e4ba9ef467b95519051de57ed3551b19b50dbd1a30",
+          "sentences": 56
+        },
+        "fine_current": {
+          "sha256": "1aef3167bc100f1164800d68546597125842edb17f3fb4c1a6868917ec2b1842",
+          "sentences": 28
+        },
+        "fine_surrounding": {
+          "sha256": "a418c9586681634a4dc9d618effb0ab5c892852599e43dead9107ddb2bed3301",
+          "sentences": 28
+        },
+        "fine_no_context": {
+          "sha256": "9028ae944aa710e21416d46e8c39311b40593d6e591edbab878bebafaa9173e2",
+          "sentences": 28
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 11,
+      "paper_ids": [
+        "2211.03489"
+      ],
+      "rows_sha256": "03ea9d4e0c88aa9b9fbb65b7726f146c96fffe375462da6ce983cbdf50d526e6",
+      "inputs": {
+        "full": {
+          "sha256": "e0d45551a43791af3d075f6e12b8bf93ff9c60af7546f3151e5f0eea73f5bcc3",
+          "sentences": 236
+        },
+        "zero": {
+          "sha256": "6300a0206eb11619f1b224816010b67b6ec5647939d8109bcbf2109af68221fc",
+          "sentences": 64
+        },
+        "fine_current": {
+          "sha256": "0bf79cabc0c3bb0193cc0be125add6210dff885916cb8c490eb0dd5167d6f31d",
+          "sentences": 41
+        },
+        "fine_surrounding": {
+          "sha256": "ed2a3a8d69035a1bc6bd6653aa4901ce19d53e4e9f3792d59302718f6c0ef1f9",
+          "sentences": 41
+        },
+        "fine_no_context": {
+          "sha256": "f1c6cc6f714ac1b9acf034b7fae62e86131693d8c5b2ef7e9a9d934a92715fb3",
+          "sentences": 41
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 12,
+      "paper_ids": [
+        "2301.03441"
+      ],
+      "rows_sha256": "9fa192a12fbea2edfa2a6cf4b82a9403a8bb897d43409fff9ec2637c124693fb",
+      "inputs": {
+        "full": {
+          "sha256": "31fad8f6b7ba562057626e591a1210f26a7d78a716f2aaaade21c8672c2c5986",
+          "sentences": 228
+        },
+        "zero": {
+          "sha256": "6c6983881a143468af041499e22280fe222428c94e52abd85498e647af803db8",
+          "sentences": 41
+        },
+        "fine_current": {
+          "sha256": "c990213478bae14f9c2816e0681c71f4b5607adb3e81275c0ac0a355038b1f6c",
+          "sentences": 37
+        },
+        "fine_surrounding": {
+          "sha256": "53af87ebf62be1e650bd796790a202bf71a2fca24c389a0b59736440882b1eb9",
+          "sentences": 37
+        },
+        "fine_no_context": {
+          "sha256": "5c253b6134d20fce88529fe596701c26263f472befc115a3cd602185d75b28be",
+          "sentences": 37
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 13,
+      "paper_ids": [
+        "2302.04972"
+      ],
+      "rows_sha256": "da8d5edb43bdfc2e567f79b6e63245298acc15b9d19822483bd82eb918ab0d98",
+      "inputs": {
+        "full": {
+          "sha256": "8c0338fae3d6997e2df21c247b75622637bb7910c44e770816c8832a5fdfce83",
+          "sentences": 452
+        },
+        "zero": {
+          "sha256": "6ff1f7eae4e493798c55a6fc6f3923762d0b721bfaea0702f4f0fb16beb478df",
+          "sentences": 48
+        },
+        "fine_current": {
+          "sha256": "ef61acb1b92e7b2bf1e7887db7661194e0ec0fee40dbcbd819c2725cb8d7b4a4",
+          "sentences": 34
+        },
+        "fine_surrounding": {
+          "sha256": "c801f1d518668a7813a5336f87071b20188f2b7061f085f7e52e342302c13f47",
+          "sentences": 34
+        },
+        "fine_no_context": {
+          "sha256": "7b3caf6b63cc5c7c7b1b64bacece603b334beb942d541252fabead2f9c6bea92",
+          "sentences": 34
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 14,
+      "paper_ids": [
+        "2302.07477"
+      ],
+      "rows_sha256": "64e8ea3fc665c480bd4d92c09530edf3f30e5f72b14430a9554c0cfc2ba5a34c",
+      "inputs": {
+        "full": {
+          "sha256": "bb46ffbb190cc784a631398bc0850c7bd8b51b25a2fb5170fa30321ea22324fa",
+          "sentences": 394
+        },
+        "zero": {
+          "sha256": "c43f873ab37feb5be969b33240a17c41491df9030cc9a79dad49914b4befad2c",
+          "sentences": 63
+        },
+        "fine_current": {
+          "sha256": "6bfed4df16b966f858042d9012af57e0931950f6edd695c0207da397f005e616",
+          "sentences": 35
+        },
+        "fine_surrounding": {
+          "sha256": "dd28d0fbee8d09540a40c0fa8275e49cbe6f21b172bec196cd01fa5e6ce81a6a",
+          "sentences": 35
+        },
+        "fine_no_context": {
+          "sha256": "7bb54e9a0c52598702e008adf53fae465482283d09f4a10803061c4f8e6f5828",
+          "sentences": 35
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 15,
+      "paper_ids": [
+        "2305.14926"
+      ],
+      "rows_sha256": "700e78041ced645167992d15ea33c00af072bfe8fca0cf116c877e6c06140a5a",
+      "inputs": {
+        "full": {
+          "sha256": "16ca7b9a3752ea7d8c99ad0007d6c0bc14512fe3fc0474a4c6ba8269e63b69f1",
+          "sentences": 639
+        },
+        "zero": {
+          "sha256": "002c40af45c42a68759b32b2b368d79a93be5aa4a974107bc9581f1d086e416e",
+          "sentences": 94
+        },
+        "fine_current": {
+          "sha256": "2061ccf441c82795c7f9aecd8a50d4298268d1d040e8d3f380fe92e76e787ff7",
+          "sentences": 58
+        },
+        "fine_surrounding": {
+          "sha256": "79d790e8597faf894c97d25e94527f7b4ba680329d6470b56297adcadff75705",
+          "sentences": 58
+        },
+        "fine_no_context": {
+          "sha256": "829e0d4d43eae695479a693184b134d6935a66905a6824f049bd0c8e82072436",
+          "sentences": 58
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 16,
+      "paper_ids": [
+        "2310.15325"
+      ],
+      "rows_sha256": "5409286fe0aa3f2e2fb29be82f8a543c963943177f46eccb785d7ca39baafd7c",
+      "inputs": {
+        "full": {
+          "sha256": "83a0e4b000880380b6c311cd30d255298be1733804542b5a9ef77853378a9550",
+          "sentences": 47
+        },
+        "zero": {
+          "sha256": "16fab18633aa0f8492c3a4b73c70a26907fb0831e6a03adc552c30160fcd4e0b",
+          "sentences": 8
+        },
+        "fine_current": {
+          "sha256": "4f348929746895805b0cd759dcd0c32bde68a35023e94b0c412609125880c608",
+          "sentences": 7
+        },
+        "fine_surrounding": {
+          "sha256": "96f7d58bbe43ed2c7a27d0f0c979120e8b598c3b3a6fcf77b07e607e52b606ae",
+          "sentences": 7
+        },
+        "fine_no_context": {
+          "sha256": "c8bf7581259d9cdf2049a7cc91ba0af601079b7296a97306fb19b44eb1c52d3d",
+          "sentences": 7
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 17,
+      "paper_ids": [
+        "2401.17544"
+      ],
+      "rows_sha256": "adde3903c56546d0817af710f3ec9c39b154d52e6b98f1362b62c7c7e355bcc9",
+      "inputs": {
+        "full": {
+          "sha256": "a647af10185dc0bc15d4b16a72002bc58269dd8eb9efd6cdb1cf3cc81d0052ab",
+          "sentences": 210
+        },
+        "zero": {
+          "sha256": "f450ab4e30cb46eddf3b637e15a4a92ece9ebdb870b35649b0fc881db2710ecc",
+          "sentences": 48
+        },
+        "fine_current": {
+          "sha256": "66d90edcc820227c7995c3c683dbf3ab3fe291b988158598c6ec435263b91532",
+          "sentences": 33
+        },
+        "fine_surrounding": {
+          "sha256": "dcae12e47596e881043105563b8ea3a2b6a8d873a5a4dbd0fedc9f59811ec637",
+          "sentences": 33
+        },
+        "fine_no_context": {
+          "sha256": "033ad66dd4a2676c530e1e8cdaad070db21847392661cc299c98d9db2e4c43f6",
+          "sentences": 33
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 18,
+      "paper_ids": [
+        "2402.07717"
+      ],
+      "rows_sha256": "eac7242525357d3f75f56d6563d8094d6d37e6ca1fe63b71600dbf9a1da67d73",
+      "inputs": {
+        "full": {
+          "sha256": "3c5a8530a4ab271d14444ba49b3a7d5cfeb319a93de2b4d731e379a65f5bcf71",
+          "sentences": 729
+        },
+        "zero": {
+          "sha256": "42132beac45ad7efa10c2d791a51bf7d3754cc8f9c408f1058de962fa6170250",
+          "sentences": 88
+        },
+        "fine_current": {
+          "sha256": "13292626ac1f4cd94f848103065751efa849c2534660b8c8699b53521b26ea0d",
+          "sentences": 57
+        },
+        "fine_surrounding": {
+          "sha256": "58f4e29c10049c2fa5cdb21b665976a4a17a8cba8a4607b1b4a0f845282b778d",
+          "sentences": 57
+        },
+        "fine_no_context": {
+          "sha256": "110ca0bfb7d0c5a316b84bb1281a99bb02fb6816ab07d30967192023de9b4be0",
+          "sentences": 57
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 19,
+      "paper_ids": [
+        "2405.02631"
+      ],
+      "rows_sha256": "00b568363fee36803e107bb4c8d9f03eb5b996ff5a9ed1e75572798a3c1c6158",
+      "inputs": {
+        "full": {
+          "sha256": "96fe8f6ddb976e13d71cd8576ba3c6d740ce9a540a817eb5749387a980f5ff5c",
+          "sentences": 628
+        },
+        "zero": {
+          "sha256": "c6f76b03e08883d7686a072adf8e42fb960ddabff799d1a05e2004ca6e842bdf",
+          "sentences": 193
+        },
+        "fine_current": {
+          "sha256": "947c3baf5ab47382d9a06a0c1d96dcd0aed61a09bb07a154aaeb10667ff81c9a",
+          "sentences": 169
+        },
+        "fine_surrounding": {
+          "sha256": "5df5cf5b633d75f31360997def46123776e85a55a105edb35c4a405b5fbbb2c1",
+          "sentences": 169
+        },
+        "fine_no_context": {
+          "sha256": "7ceb0f960a8ef52528f467fa11e92abf8b391d9c48d1055878392fd83d292dae",
+          "sentences": 169
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 20,
+      "paper_ids": [
+        "2408.08459"
+      ],
+      "rows_sha256": "c30b09305a2f81ac77c1b72ecfd0a750f2411a222387df9deafae9a4bbf601ec",
+      "inputs": {
+        "full": {
+          "sha256": "8769d91eab695e8572b79e300a9fd04ee02c688564c220412587f39b5d0ad25f",
+          "sentences": 183
+        },
+        "zero": {
+          "sha256": "590b67cd529fa4b3889f50451a5f913d2a9fbc2243567fb08d6cc9997538315c",
+          "sentences": 51
+        },
+        "fine_current": {
+          "sha256": "94808d39546324c6d512aef3e7b86b8903141034e32d18ec5a5f9355404a6952",
+          "sentences": 37
+        },
+        "fine_surrounding": {
+          "sha256": "3013ae68b019a1c188f807763f7e75aba5b1d234d04814a1656161982d4596e5",
+          "sentences": 37
+        },
+        "fine_no_context": {
+          "sha256": "19fc9e2e44b014ca43d23f79424150e8bdd60dc25875511b6d3b71e76f70274b",
+          "sentences": 37
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 21,
+      "paper_ids": [
+        "2409.07415"
+      ],
+      "rows_sha256": "5f76eb348d706baa8d8b6bcd046556ede9703e42d15ec2a6304fff33fc81d6b3",
+      "inputs": {
+        "full": {
+          "sha256": "df3cd0e9375f5d6240b068dda3552199a6d093182bcedbc13626492140457b84",
+          "sentences": 436
+        },
+        "zero": {
+          "sha256": "0c4625b98de3e47082e020513f59db86243ad8a31888f98e7bfdf4a4bce7f41a",
+          "sentences": 173
+        },
+        "fine_current": {
+          "sha256": "07de576b51b7ff85bb558e1845e34fad19fab179a5035b6fba5e4915d565dd81",
+          "sentences": 118
+        },
+        "fine_surrounding": {
+          "sha256": "26709763310c4402c53d0d05724c63cda25ad6febfd2c1ded57e6ec293a70648",
+          "sentences": 118
+        },
+        "fine_no_context": {
+          "sha256": "7ae689f8729c5d50a44f49f8de97a57fb030aea86108a36273a31c8a122dea18",
+          "sentences": 118
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 22,
+      "paper_ids": [
+        "2411.17182"
+      ],
+      "rows_sha256": "67a091a64ed3bed49be2d1a1d4e8e8787f85e0959821f8ed24be23341c3df79f",
+      "inputs": {
+        "full": {
+          "sha256": "b37b7f0661a2ce073d8253a02e22d477666befc8cf3624b7c81f6915aa302789",
+          "sentences": 171
+        },
+        "zero": {
+          "sha256": "1c5218ad3ba4cfb9d8fe12c9995339808a6219a30af8650f0e6be41ef46fa476",
+          "sentences": 47
+        },
+        "fine_current": {
+          "sha256": "9128d7160be1f85641c71e725c2f04e398212aa6773ec5f81ae61c0713b75947",
+          "sentences": 42
+        },
+        "fine_surrounding": {
+          "sha256": "b4681840e824e7638b8b15cb6cea556995145bbd74b2306bad2e3ee71ee625c2",
+          "sentences": 42
+        },
+        "fine_no_context": {
+          "sha256": "83e282414f482a0cfcfee9cd1bb713a29d7913efdac4cf382d522f3fb396e9a9",
+          "sentences": 42
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 23,
+      "paper_ids": [
+        "2412.01837"
+      ],
+      "rows_sha256": "2243e51acdb245c0f6dce70cd5627f91f59a8e6f14a0f577f1e5ffee5c6438f5",
+      "inputs": {
+        "full": {
+          "sha256": "b5164d21dae66e4de6c905a36a848552ff6d39659d254f2ffb14c16ebb4fe877",
+          "sentences": 177
+        },
+        "zero": {
+          "sha256": "24e36f978f0e26ec164437d922e9fc9edce88e89a23883d3f613992c32859afb",
+          "sentences": 21
+        },
+        "fine_current": {
+          "sha256": "25e6f85560719cf7f30b163c460fe5613050657b050391f12792e3a0da8d1282",
+          "sentences": 13
+        },
+        "fine_surrounding": {
+          "sha256": "abf0bb268abb9582b819ccd4a41adb0d7599a4cab1807d89d163110108f990a0",
+          "sentences": 13
+        },
+        "fine_no_context": {
+          "sha256": "39dc339a20b59d73ec01f3b650cec6b5a692cee44310c1c73985f4ed37d2035d",
+          "sentences": 13
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 24,
+      "paper_ids": [
+        "2502.11517"
+      ],
+      "rows_sha256": "d311a7617a9b7de45895f725cce2669ac6a9c3020ce507862348e6a6abe778ae",
+      "inputs": {
+        "full": {
+          "sha256": "b0a516e2f8494aa5d3b8423762ec2b9996a7a0726cf410c82daf0b6a00ced618",
+          "sentences": 306
+        },
+        "zero": {
+          "sha256": "3007092104b45fc58146d3726baf22a023b69259f87ea8cf5a4da904764af13a",
+          "sentences": 63
+        },
+        "fine_current": {
+          "sha256": "1275157203d15c69405334eb6d96714113cb0da37e3222502745dd2cd7eacd60",
+          "sentences": 38
+        },
+        "fine_surrounding": {
+          "sha256": "60a9370807c1b03f497f890c4e114f0b187f4747df4527d26cb532143c1cae05",
+          "sentences": 38
+        },
+        "fine_no_context": {
+          "sha256": "76ddb1638dbea8931d4a03885a054889335d808d29462d32dfd7dc99d9ac6c10",
+          "sentences": 38
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 25,
+      "paper_ids": [
+        "2507.17931"
+      ],
+      "rows_sha256": "954520aaa634999ef29456b954919a5750ddb087f6903fd415d9c51b321c10d7",
+      "inputs": {
+        "full": {
+          "sha256": "593a0156ff2be3fe8cffc701f77d904b7193ef7e596fc9d363cbe189d9c7bc1d",
+          "sentences": 330
+        },
+        "zero": {
+          "sha256": "2b722629f70742fb0db4eaa9eb3acb6c48e846ebaee01b222a0ce383f16e8ec5",
+          "sentences": 89
+        },
+        "fine_current": {
+          "sha256": "7819b96efc41679d88f084a1814f172833caa1e8061e92cf5a07ef6c03b5269f",
+          "sentences": 58
+        },
+        "fine_surrounding": {
+          "sha256": "12759b4d6f1ee7bac46885fa75dc0a64213f574e9ac9a6d61803e795724f4203",
+          "sentences": 58
+        },
+        "fine_no_context": {
+          "sha256": "1d2d7a67742c19efb080444ad80dc59656af8f9fcc64471f65477114c48e60ad",
+          "sentences": 58
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 26,
+      "paper_ids": [
+        "2507.19233"
+      ],
+      "rows_sha256": "be4c74e2c43ac485b17c8dbdc2dc6df2a416fe0efe2c29c67215d841b0ff2899",
+      "inputs": {
+        "full": {
+          "sha256": "9e9fd81f70593b24d1137731f17e2e409a887c03d459d15a80606df41708f995",
+          "sentences": 333
+        },
+        "zero": {
+          "sha256": "236010bdeae7434021b7438c4f9f5dafa5fa928b6322b7f854170d90b52ec99c",
+          "sentences": 66
+        },
+        "fine_current": {
+          "sha256": "85352fb8c6ad86733f460dbae78dac4881b25609ca8e877a66079d9a1f4c50d9",
+          "sentences": 62
+        },
+        "fine_surrounding": {
+          "sha256": "20a65cc6a08e6ad8a1058f8a27db2268da8cef221e623a6804f7e167e43a3000",
+          "sentences": 62
+        },
+        "fine_no_context": {
+          "sha256": "3387b0951fdb3e7255300fda0e48b9c8c665c393ae1ef415ae272bf63c987106",
+          "sentences": 62
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 27,
+      "paper_ids": [
+        "2510.05092"
+      ],
+      "rows_sha256": "7dd28dd6c236270f0cfc394d8f6b9e3438731043169305d2793ed899a734f6c4",
+      "inputs": {
+        "full": {
+          "sha256": "78c9088e31a9ca8a279a2b5ad100127abc92328c33f551ca5f1ac496f67dc31c",
+          "sentences": 473
+        },
+        "zero": {
+          "sha256": "e079253ac35a4334989d67f3fe016e6c27004312e377accf8aa45b30c37a0487",
+          "sentences": 59
+        },
+        "fine_current": {
+          "sha256": "22b2f61c3a3013e88b2a98c693d6bce5ea0963d2585d5b6a3f49ecff7ff85a57",
+          "sentences": 38
+        },
+        "fine_surrounding": {
+          "sha256": "a78645eb87246bb1b7fc89b021facb0aee17f6f2c3aacb3bbe982dccde005a63",
+          "sentences": 38
+        },
+        "fine_no_context": {
+          "sha256": "ef43a7e0668d9c2c8e142b11a8cd4558c0f7c19709dadfe813fedad7a1e13987",
+          "sentences": 38
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 28,
+      "paper_ids": [
+        "2511.18843"
+      ],
+      "rows_sha256": "3632e3c742a243bd131ac41a8539b1ff9f0b9081eaf9fcd0e4cd533ac03a8bb0",
+      "inputs": {
+        "full": {
+          "sha256": "2f131aea01ecbfd69cd1a57921a645ebb171c4259e158d9145228e7b495091f5",
+          "sentences": 250
+        },
+        "zero": {
+          "sha256": "5993e6bd145db35b71a86f07f61cd3733abebcf796c8895d5bc06cd63fc0523c",
+          "sentences": 86
+        },
+        "fine_current": {
+          "sha256": "a50783a4b72e19caed2f0bd8f14c3dac8886c79cbf48348b29c4937a7eb51352",
+          "sentences": 71
+        },
+        "fine_surrounding": {
+          "sha256": "465f7a279d2bf8fc7d3b5d0ee4c72f99d5919f27f273493f141b350d9e06dfd8",
+          "sentences": 71
+        },
+        "fine_no_context": {
+          "sha256": "c0ae65a54f4f0fa220783931b1629b48d6b7af2811b1ba5c2f125915ede9e9b7",
+          "sentences": 71
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 29,
+      "paper_ids": [
+        "PMC2924475"
+      ],
+      "rows_sha256": "34b73edf8d48aeba5d145528ec8c76ce8b14e34116d6737690349e97d57aa0c0",
+      "inputs": {
+        "full": {
+          "sha256": "4713ba773971ff0c9d21589876c25e2d519737bf7cc04a554ba8a9a4fc9c5f26",
+          "sentences": 202
+        },
+        "zero": {
+          "sha256": "4a531f997e849616a05ac3d15033fbfac820955fc856ab3e2c0a684feb2d7bb2",
+          "sentences": 55
+        },
+        "fine_current": {
+          "sha256": "511d53f2f80d2cf29b6b1bff7e45085e251f6e217daf3d8b93aff023b179daae",
+          "sentences": 60
+        },
+        "fine_surrounding": {
+          "sha256": "0cf8d425cb37ba076ebd71b2bca15ccd384623b9a499b7f851d3788ff225c58c",
+          "sentences": 60
+        },
+        "fine_no_context": {
+          "sha256": "30fb51fe7a9e6e51f712625f70466e131a50d3ac08b83c19aaaf8f550542f38f",
+          "sentences": 60
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 30,
+      "paper_ids": [
+        "PMC3551748"
+      ],
+      "rows_sha256": "305cd4da83a4b0ad621b82c8bf07f12d366e468cae83ccf184d3771a8f41c5ec",
+      "inputs": {
+        "full": {
+          "sha256": "a4d8dfcc39af344d955a9bc701a45f67a0bee6de13dcfc5da0ff98dc5ea7ff1d",
+          "sentences": 186
+        },
+        "zero": {
+          "sha256": "4d6e63073db1d5725ff4588dbcda319fd10a87f38993d470b613c1c5cddd14a4",
+          "sentences": 72
+        },
+        "fine_current": {
+          "sha256": "d01cd2043222184d1ec863bb6da12b84c4f2db648b4efc11fd5ba2a912a47d41",
+          "sentences": 60
+        },
+        "fine_surrounding": {
+          "sha256": "516a3f49970611d8527d7040497995d2c09d10c2bd6ebf5491c9e281325bc94a",
+          "sentences": 60
+        },
+        "fine_no_context": {
+          "sha256": "f6ecf782669a3880fadd15244a946f5f1a31db21a579648470a593fee23d1c90",
+          "sentences": 60
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 31,
+      "paper_ids": [
+        "PMC4797126"
+      ],
+      "rows_sha256": "4a83964828a48185c79d2d0158339fdec3b077a93013db776c18d078e9436ca9",
+      "inputs": {
+        "full": {
+          "sha256": "3c0527d3230e146a5b709a12d1b221c52292086035469d328f37578ae25ace56",
+          "sentences": 198
+        },
+        "zero": {
+          "sha256": "7d5f9e18cced4659722e886889f9423f9fb96f95ec50fef76026735dfdafb83f",
+          "sentences": 40
+        },
+        "fine_current": {
+          "sha256": "ceea5d2c361cb5f4b57d7b544b934c85b1a020c1e16159547f0599971a34e9ca",
+          "sentences": 35
+        },
+        "fine_surrounding": {
+          "sha256": "99d76ccc7d70fd46dc62615d121399769fdaf37a5ee96a7c7093d92dcbc865d0",
+          "sentences": 35
+        },
+        "fine_no_context": {
+          "sha256": "f8de59ba5fab09b84feed67781c260ba1ea0afd9b28c7d6965d113ea67ff6115",
+          "sentences": 35
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 32,
+      "paper_ids": [
+        "PMC5381088"
+      ],
+      "rows_sha256": "373e58bcb4a0369b405ac138003b549c44c11cd2067e6f217658d34f4b9ce18b",
+      "inputs": {
+        "full": {
+          "sha256": "d07f11722e46417c1c4ca7558b0f856d368d243ef0ee5697cb5af3cf7cee5e0a",
+          "sentences": 188
+        },
+        "zero": {
+          "sha256": "df74e60e598fc6e6edf3727955bf37062064f34a495853f919bb3010b3c22b7d",
+          "sentences": 51
+        },
+        "fine_current": {
+          "sha256": "2a6c2124901212ad885653ebc2a7759b96d4bc6ca06d8d7f3e1a6ed3fc85c5ce",
+          "sentences": 43
+        },
+        "fine_surrounding": {
+          "sha256": "f35aeb86d05a120169a4ff0fb91593ef3b468d9985a89b04f8770e6c5b681e2d",
+          "sentences": 43
+        },
+        "fine_no_context": {
+          "sha256": "2c7a617180b413830627fe75ced76ff1ce0f58dd244783e54d06c2a38c66fe33",
+          "sentences": 43
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 33,
+      "paper_ids": [
+        "PMC5704386"
+      ],
+      "rows_sha256": "618f4a8e75465ea25823461de171fe74d462a44feb00133a34a556b996da095a",
+      "inputs": {
+        "full": {
+          "sha256": "d9e89db1d3be24a461f688bb7e6e535e54f31400af3ed5e2c750c9a3a322a987",
+          "sentences": 213
+        },
+        "zero": {
+          "sha256": "5c0b5565aca4fbceb0f7facd0877397f028d367478c6d0004b753dcc692c3b4b",
+          "sentences": 61
+        },
+        "fine_current": {
+          "sha256": "00e3681e278b50fc4ba978e7e273ea6d5fef2582f84d1d09d2675626c31be764",
+          "sentences": 56
+        },
+        "fine_surrounding": {
+          "sha256": "0d5aa404ee201b3605dfca413af0f0e7ebdc6707843d9bc8d084567c8346d7ab",
+          "sentences": 56
+        },
+        "fine_no_context": {
+          "sha256": "0d33e1b7520a980581a8c0a3856616375b3d8422c38f14ebabdb7d022e271654",
+          "sentences": 56
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "one",
+      "index": 34,
+      "paper_ids": [
+        "PMC5721882"
+      ],
+      "rows_sha256": "3b54849d39b2f026ccf49aecf6b1238aca32756f154d041d8a7ae62895ccde4c",
+      "inputs": {
+        "full": {
+          "sha256": "c4c7321a835976ca6424a465f2480f35cac8cd757b8a37b809daf9e0614491cd",
+          "sentences": 127
+        },
+        "zero": {
+          "sha256": "ad26bc5679afde97cd45ec62879550ca80d067570a19b96245f0a4a9ab4231fc",
+          "sentences": 34
+        },
+        "fine_current": {
+          "sha256": "8db20a5316e85d31a342c366ea17afec63ebb7388eafd974dec5819533105f9f",
+          "sentences": 31
+        },
+        "fine_surrounding": {
+          "sha256": "51c8ca45709dd7f6d83417783f140f654a7bc27855d239df1438946ed5e565e3",
+          "sentences": 31
+        },
+        "fine_no_context": {
+          "sha256": "b829ca3d2ae7d68b29a12035b1d119ce271a67141d6e8ff8fe9770a42a5804b4",
+          "sentences": 31
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "up_to_17",
+      "index": 1,
+      "paper_ids": [
+        "2310.15325",
+        "2201.02967",
+        "2102.03018",
+        "PMC5381088",
+        "PMC5721882",
+        "PMC3551748",
+        "2412.01837",
+        "2401.17544",
+        "PMC5704386",
+        "PMC4797126",
+        "2411.17182",
+        "2408.08459",
+        "PMC2924475",
+        "2104.06303",
+        "2207.01725",
+        "2211.03489",
+        "2301.03441"
+      ],
+      "rows_sha256": "010418301c1ae9567c8206090c68ca47170090f4952d954539f87ac9e37cd12d",
+      "inputs": {
+        "full": {
+          "sha256": "9936c0dfd4b38a76f64f5197dd64894433c8b5f71d4139fd203efc5fac759043",
+          "sentences": 3129
+        },
+        "zero": {
+          "sha256": "97b091f82cfc9084208df78e273c7b9b6efcf4dc609adeab96ab1f26aa749e0a",
+          "sentences": 792
+        },
+        "fine_current": {
+          "sha256": "d527929d08bfa1498687c4d1b2a60f5298c73ea7005e07a1b1542f38297591f6",
+          "sentences": 662
+        },
+        "fine_surrounding": {
+          "sha256": "18fc2970b00c9d2ca04bd55a8a815d424ea4e5aae66f7d8bb3e0101550ffe877",
+          "sentences": 662
+        },
+        "fine_no_context": {
+          "sha256": "879101a60ad25047f2945a40906fbd379ad3f8af6a18925107831ee885a120c9",
+          "sentences": 662
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "up_to_17",
+      "index": 2,
+      "paper_ids": [
+        "2502.11517",
+        "2202.00740",
+        "2511.18843",
+        "2507.17931",
+        "2302.07477",
+        "2507.19233",
+        "2210.01489",
+        "2007.00128",
+        "2302.04972",
+        "2409.07415"
+      ],
+      "rows_sha256": "63f691c12f96f33a9a9e8979c73266cf5a46e3afb9c897b9d8e93106096f72b0",
+      "inputs": {
+        "full": {
+          "sha256": "6662a07e4776c94b5ce3b3fe94857ba9e73419599e8d7031d96038bbae2210ac",
+          "sentences": 3683
+        },
+        "zero": {
+          "sha256": "cc06d5ca3f62c2d8b28278cc206bf010028b825a1694ede9252779e7b58a70d9",
+          "sentences": 763
+        },
+        "fine_current": {
+          "sha256": "f41fe40ec320d9d7da3ddde3956aef418aab755f503db7dabe53aeb9f6b7bc03",
+          "sentences": 539
+        },
+        "fine_surrounding": {
+          "sha256": "26ba5eab55687f6b0235e445acd7d281e9caf33a7eedcdde2d28c650e751eaee",
+          "sentences": 539
+        },
+        "fine_no_context": {
+          "sha256": "9c78ce4e8bc6bd4fc7ad2aadf225f041975cd534f7ba7d291e84924057365452",
+          "sentences": 539
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "up_to_17",
+      "index": 3,
+      "paper_ids": [
+        "2006.04492",
+        "2510.05092",
+        "2305.14926",
+        "2405.02631",
+        "2402.07717"
+      ],
+      "rows_sha256": "92f0a13a5fa8624dae9a9a86d8250b4d6e111a1a84dc9c28d61a6908a23c76b9",
+      "inputs": {
+        "full": {
+          "sha256": "61e46246210cbb1fe9469201b2eab1c7f35ad10edb45b9235ef01a4383b8d873",
+          "sentences": 2809
+        },
+        "zero": {
+          "sha256": "c3af3ad3c26cb49643eaeb3a762b59ef411c52d63bcafcb2f82ff5b8b4249fe2",
+          "sentences": 512
+        },
+        "fine_current": {
+          "sha256": "df8e35dd5ca094d2bfd29a2e9d093e142ae9aa92899b2fe390054339462edf91",
+          "sentences": 400
+        },
+        "fine_surrounding": {
+          "sha256": "463c7d0ed9279bd3f4b8cb55e775c1c76066f5569c37fe43ef9a06d8834e0433",
+          "sentences": 400
+        },
+        "fine_no_context": {
+          "sha256": "d70fd4a5f0c4aaa321688c7e7a8fa01151c87da2ca3dbfd57bf3798f304058de",
+          "sentences": 400
+        }
+      }
+    },
+    {
+      "split": "val",
+      "batch": "up_to_17",
+      "index": 4,
+      "paper_ids": [
+        "2004.12164",
+        "2207.09511"
+      ],
+      "rows_sha256": "a2c6c67086916f687c60b522307f9dd1b10960dc425f3bfc6e41e0e87f8498b9",
+      "inputs": {
+        "full": {
+          "sha256": "433a9c2d891b9314d1b6ff52de00b545255a15119cc1591833987d3ec31c65e2",
+          "sentences": 1580
+        },
+        "zero": {
+          "sha256": "0c437e7591c8dd5cbccf029666fa1acedb751fef0e8ed09cdbf9383fdf4e25e0",
+          "sentences": 211
+        },
+        "fine_current": {
+          "sha256": "5cf36258139aeddda131a279e95c1c61a2f1b2bb04b8f6e09c5620ef22e89da9",
+          "sentences": 145
+        },
+        "fine_surrounding": {
+          "sha256": "bb6aa05a1547770c2d9be99988392de2fb53922c8dc750802040a6ad42054735",
+          "sentences": 145
+        },
+        "fine_no_context": {
+          "sha256": "9166e6142990ed9f03536601487c72ebc760c88432beffed7a8fccf32aa867ba",
+          "sentences": 145
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 1,
+      "paper_ids": [
+        "2009.05369"
+      ],
+      "rows_sha256": "9e123d939f0490d38f129c910e8c6d40a0ea6dbc7da86ec6825bcb0f7fc7a05a",
+      "inputs": {
+        "full": {
+          "sha256": "e4df60e199158b5841b6dac0ee3df1fb71fbdac5810779ecac0cfff5d40251de",
+          "sentences": 523
+        },
+        "zero": {
+          "sha256": "a762a4a4a860ba5adb4c0221fc0251edbc373647ee6a1fc65844bd11e9565685",
+          "sentences": 201
+        },
+        "fine_current": {
+          "sha256": "120ba1f693e94de160ea3501bf27730fc96e878fa5f2f19b35be3bc6b5890974",
+          "sentences": 176
+        },
+        "fine_surrounding": {
+          "sha256": "422646063569c5837190b5d8a5967d20ce373e764b01243c006372b28d75990a",
+          "sentences": 176
+        },
+        "fine_no_context": {
+          "sha256": "de4440d65af9c6fe47c66e498303c9955ca378087f08970a0806e248cb215470",
+          "sentences": 176
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 2,
+      "paper_ids": [
+        "2101.06635"
+      ],
+      "rows_sha256": "3a00e2fdcbc637b74138ccd8d20e458a4677f14178d0e7c933de927594268602",
+      "inputs": {
+        "full": {
+          "sha256": "af272cd46b22ae28d2bfd6af9e8072bb46458d13d61bf198535d57ca6a4423d0",
+          "sentences": 230
+        },
+        "zero": {
+          "sha256": "a58cbe3f04cee03ff0c370df00c4d9b4a9333ecc6c20df6c42436ed6891d5720",
+          "sentences": 34
+        },
+        "fine_current": {
+          "sha256": "17fc0450829e9cdf1b2d0c487ea462d1016ac688d8404dac7daac14abdec79f1",
+          "sentences": 27
+        },
+        "fine_surrounding": {
+          "sha256": "47ad251d14fe82692cb1d64269e3338cc2693ecdd2d831bf4bf7dc287f3ff59e",
+          "sentences": 27
+        },
+        "fine_no_context": {
+          "sha256": "74105fa1071856e9fab0c13917749fed598a0ec3b85e4421f3878965d1e37256",
+          "sentences": 27
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 3,
+      "paper_ids": [
+        "2110.15431"
+      ],
+      "rows_sha256": "e42543789e870e70c32b16d0da91334d5dc7316532c22455858bb5451b83c6ea",
+      "inputs": {
+        "full": {
+          "sha256": "a957ad8fefda50e51558f3e9ed636c3c95b1cb5733d56984177aea553e3614a4",
+          "sentences": 690
+        },
+        "zero": {
+          "sha256": "45389a2882d27f050a575433bee960c9fc189679b7fdc6fbace9ff04865f38f5",
+          "sentences": 95
+        },
+        "fine_current": {
+          "sha256": "8b95bd9c636d90f0d38f9983f4d01413eca620d2392d32587597086f22378b99",
+          "sentences": 46
+        },
+        "fine_surrounding": {
+          "sha256": "353d193c0e81817a8923ad96e2e5dae860902a63950085739e214f25801e2866",
+          "sentences": 46
+        },
+        "fine_no_context": {
+          "sha256": "78c4f2d3a13c925f7ca3ea843706a699b3f8db902d5475c3172a5d6758c6649d",
+          "sentences": 46
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 4,
+      "paper_ids": [
+        "2112.05248"
+      ],
+      "rows_sha256": "a68e9b8a1135ad94ee586fe2189a7b941a05f28da24397e5e75c20ce83813215",
+      "inputs": {
+        "full": {
+          "sha256": "2bbf21310ce763f5b7fd6cc6a34b9b9f9dc903ef7e27503088c73ebdec906abc",
+          "sentences": 391
+        },
+        "zero": {
+          "sha256": "99f6810bfb42cbfa256980ef76457963e8472bbf13134006c7b8ccc8f056703a",
+          "sentences": 91
+        },
+        "fine_current": {
+          "sha256": "3dd04a2c823bbeb83404226aff7f1dfaa95ceb7b15baa66467ecb87622de5adc",
+          "sentences": 81
+        },
+        "fine_surrounding": {
+          "sha256": "3b51424d0ff29be6199f48f2c9da96f90d22f614e634bd17812502e13c6aff94",
+          "sentences": 81
+        },
+        "fine_no_context": {
+          "sha256": "a3ec29c1b5f08bb92e1981629cb447678543756ad27123a21fecd0257b2d56ff",
+          "sentences": 81
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 5,
+      "paper_ids": [
+        "2201.01525"
+      ],
+      "rows_sha256": "e2a442897df25181fe57285b87acce053d7cd5e18ae0920066ca96a37f914585",
+      "inputs": {
+        "full": {
+          "sha256": "23b0303a3210d713f48d7233852488629f854d7f69d7faa9a94e87df771fee75",
+          "sentences": 160
+        },
+        "zero": {
+          "sha256": "2bbb196292454354aeab996bd82c044fcef824b35b9d516a47e9c591e2e181c8",
+          "sentences": 18
+        },
+        "fine_current": {
+          "sha256": "61f9a171de15d711ac697fdfcec2eb1d618468ac3a5c1e531ea675c4b045afaa",
+          "sentences": 19
+        },
+        "fine_surrounding": {
+          "sha256": "e32a1ce6d3a21f55391cf6ebea9ee832d325d57bfe279efb7e8a2c8ed2aeced7",
+          "sentences": 19
+        },
+        "fine_no_context": {
+          "sha256": "4dfdcf91d5928ae3ff267106a61381e010c2b69e0f9f9c985d1a067a8d8547ea",
+          "sentences": 19
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 6,
+      "paper_ids": [
+        "2202.00263"
+      ],
+      "rows_sha256": "03023a4d7bc14c3c8af435531c90c2fa8bdfc0b7d12e74326bfc1ecdb06d21fd",
+      "inputs": {
+        "full": {
+          "sha256": "35a6be9615ef8178e7ce55ec69af350d50da59bd6699940e1b8fa7b24fc9db95",
+          "sentences": 226
+        },
+        "zero": {
+          "sha256": "77d72517b955fb3ca499721cdd6423fcbe2992b8e1efd8e232d124430412ae21",
+          "sentences": 75
+        },
+        "fine_current": {
+          "sha256": "08dc0d7700dbca5a6cb238d0a3ad87268ebf97263423075ce5183ed0be8c0dfb",
+          "sentences": 65
+        },
+        "fine_surrounding": {
+          "sha256": "a51867f1afde117186e5a3f03dc495338b12d405bc30cdca1871e2682b1c9762",
+          "sentences": 65
+        },
+        "fine_no_context": {
+          "sha256": "05836d09354eb9df5ec2d242ee4c9b9423a90b7422411d5f3819e62f13b57013",
+          "sentences": 65
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 7,
+      "paper_ids": [
+        "2206.13764"
+      ],
+      "rows_sha256": "38505d6aa4d5d1a81fdc838af4df26f339f1d1078808340d74278879ffad288d",
+      "inputs": {
+        "full": {
+          "sha256": "1f3de2d794f23c3b7c05b45f2216d49b0dc2b8b792e951ad2cb100c3c37eb0c1",
+          "sentences": 268
+        },
+        "zero": {
+          "sha256": "f76a0fcbc654b48fd7527166214f21d942d697146778621c4dd6990db31ffa57",
+          "sentences": 47
+        },
+        "fine_current": {
+          "sha256": "b0f501e4781efadd41fde1d1e5484598c414dd5fb5818521308154bce7f9c7f2",
+          "sentences": 32
+        },
+        "fine_surrounding": {
+          "sha256": "b0806cd90978a644085e71d6f578cd75600365250fd477dfe70f10723c2d8249",
+          "sentences": 32
+        },
+        "fine_no_context": {
+          "sha256": "c6c808ccc63a268b21d2f73c85f9230e76974dc8fd7a8fbb9163ce0ecbd735d8",
+          "sentences": 32
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 8,
+      "paper_ids": [
+        "2208.02311"
+      ],
+      "rows_sha256": "c97aab97b57f2bd0ed2e793c740ea5803a56c85ae2e115742325a38748906476",
+      "inputs": {
+        "full": {
+          "sha256": "d0cb04640863c01a08efc1b8f2024b2f0a4b145d16213a66b4dba33a20d73078",
+          "sentences": 132
+        },
+        "zero": {
+          "sha256": "26cec2b4121b934cb3f30f730816950e898f751946f8c426b279a28e0a52ea65",
+          "sentences": 30
+        },
+        "fine_current": {
+          "sha256": "c67d77a5545fcb975808d541b47feebc05e2dc9cc15953ae91ba1d849e2bb985",
+          "sentences": 27
+        },
+        "fine_surrounding": {
+          "sha256": "df079875ba7be15bbb6d121f41edcd9f8393970482c9c71c0acbde2d27c80e56",
+          "sentences": 27
+        },
+        "fine_no_context": {
+          "sha256": "e5caecba9bc3cc6fd9eab6d98cee2be620114ed45f2f0678ad36f8e7a19576fe",
+          "sentences": 27
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 9,
+      "paper_ids": [
+        "2208.04226"
+      ],
+      "rows_sha256": "11dd13befd1a756bf886c830ae534e188c4f307eeb5d10e6c83480bbc35be171",
+      "inputs": {
+        "full": {
+          "sha256": "69265eb740f5b73268996a8cb6ec6e7effba055e3d76a28ccf095b664df83f29",
+          "sentences": 172
+        },
+        "zero": {
+          "sha256": "8a42955afa6770db5519af3db5e77ef9da8e3c1a91bfbbff77b4a03185386c1e",
+          "sentences": 47
+        },
+        "fine_current": {
+          "sha256": "30c9299bdc4de9d2ecfe0bedee225da0d52aa8ea7abd187a68f406a5d45e8bb6",
+          "sentences": 43
+        },
+        "fine_surrounding": {
+          "sha256": "fc64d40501afcaccbdd0908843285004d9c02567f5bd7a3991a1bff617b0bcbd",
+          "sentences": 43
+        },
+        "fine_no_context": {
+          "sha256": "337ba326e2b3f4a0509772bc6571d71b6fc970f84a7e233a263277bbcf050b23",
+          "sentences": 43
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 10,
+      "paper_ids": [
+        "2303.01980"
+      ],
+      "rows_sha256": "55a2724c73513f9eb31fdeae42b73adef8b3e813dbaf188d60e1a61cd2377f22",
+      "inputs": {
+        "full": {
+          "sha256": "6ee17d1da2e5fb1a7391eebfc602a421347c6435d288730e3d856ad12fd5531f",
+          "sentences": 261
+        },
+        "zero": {
+          "sha256": "ab6cbadb0e235f0cce2dc430f980b559c16714a52cb1dd73e2e4f4fbcb263cd6",
+          "sentences": 80
+        },
+        "fine_current": {
+          "sha256": "9e33cd3eecbf921320c20d9580bd4695ccf9be78c11b619590d643ca8fce1b23",
+          "sentences": 56
+        },
+        "fine_surrounding": {
+          "sha256": "861a28679543447692075a52dae9d28f6906d7276ff07fc7159fede36061ada5",
+          "sentences": 56
+        },
+        "fine_no_context": {
+          "sha256": "9071a732cfcfeb45961278e7909c6a518f9a2a4e2b8bfde49c7db5b5b9f2be92",
+          "sentences": 56
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 11,
+      "paper_ids": [
+        "2307.00522"
+      ],
+      "rows_sha256": "8717bb4ebae9d1340ae45c62e48183ba7f3e8f2983e5036557a792f18fc06a9f",
+      "inputs": {
+        "full": {
+          "sha256": "fabfbd28e8f0697a37b5c7e67e1760ef47dfe41ae76aaeaf53f379820995a078",
+          "sentences": 76
+        },
+        "zero": {
+          "sha256": "468011b5b3496a49eeb9610d14c6697002aad5466d82e2c2a1328b969b928039",
+          "sentences": 10
+        },
+        "fine_current": {
+          "sha256": "d6c754ff3c31ebd35b2958661d36d98ebbbe1641b6e11721169181a7e299e64e",
+          "sentences": 9
+        },
+        "fine_surrounding": {
+          "sha256": "91ce675f5fb2c2f2d2e3f4aed66e290a07f6807936eb9241c95243530786faa9",
+          "sentences": 9
+        },
+        "fine_no_context": {
+          "sha256": "557c8ee9df6108146c29d4aa05e072721886ca459161201fd2ecf4c4b8c9a780",
+          "sentences": 9
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 12,
+      "paper_ids": [
+        "2310.01647"
+      ],
+      "rows_sha256": "fe7778ca64d63e61f155586e7a8541572b3245ca93729e78134e0d65c5dfbfbc",
+      "inputs": {
+        "full": {
+          "sha256": "7020dc09a28fcff298a7d45c0476698700902ff7ce3bc76f2759153d069dfc28",
+          "sentences": 220
+        },
+        "zero": {
+          "sha256": "4ea0e21e5b93d2eb64dcf7ba0bac389a6d05fdfbff3a1b81112a94bfaa0f8c1b",
+          "sentences": 58
+        },
+        "fine_current": {
+          "sha256": "8f21ad43e6542089eb6a6db3a9628038c68f608e5c39141b0872a4234d100b60",
+          "sentences": 51
+        },
+        "fine_surrounding": {
+          "sha256": "ba87db12b18786e97040a5f1b62c15e75bfe852ea8f1794bfee6c267170bc2ee",
+          "sentences": 51
+        },
+        "fine_no_context": {
+          "sha256": "d5c35d65a2b223ea712ac679d9929c8fcc22a0e8861d9f3a97b93b44675345a0",
+          "sentences": 51
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 13,
+      "paper_ids": [
+        "2310.08891"
+      ],
+      "rows_sha256": "1aaea7dc5e560c4962b9c70ae7cf9b86b358757d77dc35af49730bf5d8c932d4",
+      "inputs": {
+        "full": {
+          "sha256": "e2b5254b0b357dee910d5700487324d5a60fa58ec78863df5406146a86b94bd6",
+          "sentences": 317
+        },
+        "zero": {
+          "sha256": "ee8803cb742ab5751d3c8d081b42bd534449395aaa32002278a3437704b6ba63",
+          "sentences": 71
+        },
+        "fine_current": {
+          "sha256": "d7622ca61fcf0ee85f184c58580da00b432d2d84438b07437d8ee57f7692d0e9",
+          "sentences": 61
+        },
+        "fine_surrounding": {
+          "sha256": "7c66e5e251ab1652a8862006e1989c6ba94e9683d09b012034f9a4961f5155a5",
+          "sentences": 61
+        },
+        "fine_no_context": {
+          "sha256": "e241816dc880cb86bc85b8adf0b2e769a4955535d4c85c07ccf75586cf16eecc",
+          "sentences": 61
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 14,
+      "paper_ids": [
+        "2402.10999"
+      ],
+      "rows_sha256": "80d2f69122c1ef0f9541f22e23255cacefad5f43a6d33a5fe4c825ac34fb7f51",
+      "inputs": {
+        "full": {
+          "sha256": "fb88c8aa97d556b2329a05d8107be93849bd7649b64a95864d395df97b2c18e6",
+          "sentences": 1526
+        },
+        "zero": {
+          "sha256": "646791ef745948c15f51bf215eb2a969aa735825a37bb177d24ecf4da10ebe07",
+          "sentences": 357
+        },
+        "fine_current": {
+          "sha256": "c1e90353758ab1db2d27925596fc9122e6a048d60ae31ca647cec119549cf1b1",
+          "sentences": 285
+        },
+        "fine_surrounding": {
+          "sha256": "0f738a20be93ea5a343e24eb7e4f7e240c1fbb3d173d0797eef43f4757d06bff",
+          "sentences": 285
+        },
+        "fine_no_context": {
+          "sha256": "0a051c0fc2bfcdaaedf6faa53995b8dcd316ec34a4ef593acbf9cd91d0be36e0",
+          "sentences": 285
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 15,
+      "paper_ids": [
+        "2403.05034"
+      ],
+      "rows_sha256": "7c71f1efb80fa61ed9bc4cbf497435f81f6bc79ee55b4376f98d49b7aae8d450",
+      "inputs": {
+        "full": {
+          "sha256": "bfa84a1dcdf47e60978edd798f319c3c4a298361d5afdacce6ee5eacb80fe029",
+          "sentences": 217
+        },
+        "zero": {
+          "sha256": "7cc886d2c20d87c84314d4e272f4d754e68281572695f97d3ffb0ffa92b593f3",
+          "sentences": 30
+        },
+        "fine_current": {
+          "sha256": "f6867aa6ca61e9e3cee71cacf5f090e5f0601c225be787e2acc7d25881947783",
+          "sentences": 30
+        },
+        "fine_surrounding": {
+          "sha256": "6058668038ec96422b766484ac633902e592c97cb344a5cfa254c484c51fe025",
+          "sentences": 30
+        },
+        "fine_no_context": {
+          "sha256": "9bf526535086b7fe8c9b0f290a21cca3807db420f8e05d09680d657fba1a77dc",
+          "sentences": 30
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 16,
+      "paper_ids": [
+        "2405.16002"
+      ],
+      "rows_sha256": "ef8e57b48c72cbffe3f08913af3c06901be47d2acfad67009a8f87d24fc6574c",
+      "inputs": {
+        "full": {
+          "sha256": "1d22e98364951e094e2bb780aba93b044126e64188bd1b49c5a61feb4477ee16",
+          "sentences": 694
+        },
+        "zero": {
+          "sha256": "6e9528fc12a6b32758e7bf80659b1fe7c750c9a0ea944c8c353aa8e5fc0eb7bb",
+          "sentences": 110
+        },
+        "fine_current": {
+          "sha256": "73b8b82f93656370a64a04269457162eb996fed1755d9e83825e71a17cb12910",
+          "sentences": 82
+        },
+        "fine_surrounding": {
+          "sha256": "b37c343a7ff0bf9efabcfec7743d75e19f833cf72bdcd98d4614a83c94468ec1",
+          "sentences": 82
+        },
+        "fine_no_context": {
+          "sha256": "9c21e1a1c328e2fb9c33fe3c08dd9f527c8b28eee4d9d22e43f0fa31282c8663",
+          "sentences": 82
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 17,
+      "paper_ids": [
+        "2407.04521"
+      ],
+      "rows_sha256": "5bbd0957ba9f8049ef9b8f5bc1866178569d8829f6bed960ebc26c1510252d2d",
+      "inputs": {
+        "full": {
+          "sha256": "a6d09914673b6249b252343a6cfeac91a66c5168fea749e745dd8648609afa81",
+          "sentences": 453
+        },
+        "zero": {
+          "sha256": "2afce7c7737351a893349761ccce702c9c42d66969fce8e661a28e3ee2618557",
+          "sentences": 36
+        },
+        "fine_current": {
+          "sha256": "143df82c207295b846e653927c7e58867f79f32409f7fba1cf18ee663d1a3215",
+          "sentences": 20
+        },
+        "fine_surrounding": {
+          "sha256": "f369cc13a0fa7e79d890a6188c8ce4a52d549a0678156608f64a8f0e3fd2f315",
+          "sentences": 20
+        },
+        "fine_no_context": {
+          "sha256": "82f3025c01c9f9857dd8595b1197471f6fd0514aa0bba5698e6d49cc9b75e9e2",
+          "sentences": 20
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 18,
+      "paper_ids": [
+        "2409.20534"
+      ],
+      "rows_sha256": "b19fbcc35ac958cf3d295089ef0580a3b371e19e9b3d631afed80618b1ca34b6",
+      "inputs": {
+        "full": {
+          "sha256": "252eed6f2df9d7e44b428c59f44536e50f2a58519319c248b8233e0f891d7117",
+          "sentences": 194
+        },
+        "zero": {
+          "sha256": "ee5422c5b70697245501e80363fba32e65d65bc64a88a6b2131d958762e3c22d",
+          "sentences": 51
+        },
+        "fine_current": {
+          "sha256": "2e030a86be1d7c1fcd6f9036546c86cbb8bf8bbb8f80c9de64a9dd3c409d36af",
+          "sentences": 39
+        },
+        "fine_surrounding": {
+          "sha256": "49c2d1a7aa3e2d30b6563050c3086a945d10dafd7124b0eff26d418e8e2619e7",
+          "sentences": 39
+        },
+        "fine_no_context": {
+          "sha256": "b3d0ee9fcbcd32540dfc7ea7f28722525d0b270d1531ca3e090aa653dfd3e23f",
+          "sentences": 39
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 19,
+      "paper_ids": [
+        "2410.06231"
+      ],
+      "rows_sha256": "b19a65df0271a70ad8f35a1112660296494163cefa145371c1d61d0efa1dc5d7",
+      "inputs": {
+        "full": {
+          "sha256": "d819de489eeb130afcd394d913df844707686151987ec72d25fcbedfa5eb31dc",
+          "sentences": 190
+        },
+        "zero": {
+          "sha256": "e296b170e629d81d27ae869333c8f078b5691fc1d5893573f73e94573e7cd0a2",
+          "sentences": 35
+        },
+        "fine_current": {
+          "sha256": "9a6a8177c9b4882bb3f1704433d02388799b86cc3bdd8a8f17bc9ecf92966280",
+          "sentences": 29
+        },
+        "fine_surrounding": {
+          "sha256": "d3fff1a0de8e266eeb1bcb440da6dec0d10739ce9fa6f62ad6435c6169e2d14a",
+          "sentences": 29
+        },
+        "fine_no_context": {
+          "sha256": "fef155ca12a499b04fc34007f7a195b5abe07ea87acb0581694d10f9b860925c",
+          "sentences": 29
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 20,
+      "paper_ids": [
+        "2410.16340"
+      ],
+      "rows_sha256": "27bbe63ad7cb6114b3fb48b5ba8ba015577e333654e264da3f43984dcfbee822",
+      "inputs": {
+        "full": {
+          "sha256": "67134ee7c18bdccff3e9f988160ff3a1f0ec8ec9a47f1e03e4799385a88f66ff",
+          "sentences": 581
+        },
+        "zero": {
+          "sha256": "135f54fc97cd28e80b197c2a7750f5b9d27c6b48462b50e9de29b14a4c9816f2",
+          "sentences": 73
+        },
+        "fine_current": {
+          "sha256": "93ad59ecb5db48b7c2f287db77a7dfc80480bdd12642dc06afde3e3b095115b0",
+          "sentences": 47
+        },
+        "fine_surrounding": {
+          "sha256": "e14e2e312e6a32292fca24bdf7b47256d04d654c18342635fd8474f0d8beaddb",
+          "sentences": 47
+        },
+        "fine_no_context": {
+          "sha256": "ab8b2cb0c1331990f6102fdc40ee594c715299734b9dbbc8479440104431cc9c",
+          "sentences": 47
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 21,
+      "paper_ids": [
+        "2412.13630"
+      ],
+      "rows_sha256": "bbca2904fe657c8649c3a59dae52099f7ed778703de12c7612c37d18d7536540",
+      "inputs": {
+        "full": {
+          "sha256": "03f4fe2fd818e2e388ec636d650c76452ce10a9ef90759a42eb1722a8077a246",
+          "sentences": 692
+        },
+        "zero": {
+          "sha256": "3b41e1a5cc4324554c07c8ef919647fc866119c35023a99f4e55c8307c207a5d",
+          "sentences": 149
+        },
+        "fine_current": {
+          "sha256": "e0ebb76cee08d6fbba6992b8402f7585ee49117fcb8fbb7efbc2a480b99017f8",
+          "sentences": 121
+        },
+        "fine_surrounding": {
+          "sha256": "6750949936f228d9541570df44f6cda2607be39b25fd5cf31c3bba38e42889b8",
+          "sentences": 121
+        },
+        "fine_no_context": {
+          "sha256": "96313528caa7efdbc4bc2d87b803f68f105a16011ea32499ed52df96ab4a8db6",
+          "sentences": 121
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 22,
+      "paper_ids": [
+        "2503.00979"
+      ],
+      "rows_sha256": "20dcdc123bf97e703ecf7a026fc2d1ce2c53efe705cc66f504ae6e3a73cbe3d3",
+      "inputs": {
+        "full": {
+          "sha256": "f9a167781aa88ecda57dda90bf3025ba9d97efb74bf4a041ea77bd1922dbc387",
+          "sentences": 247
+        },
+        "zero": {
+          "sha256": "22e38fee3349a60da81fa40e8de77c5bd390a73e4476b016df1463c443b816a6",
+          "sentences": 52
+        },
+        "fine_current": {
+          "sha256": "1b22e037e7a62a742422a823b8dc719bd6cb47a3a2e89d8254f7e5ff94464199",
+          "sentences": 38
+        },
+        "fine_surrounding": {
+          "sha256": "9e49606e78d2aaca080d94a6fcfba035d0bcbc26ef1f1a0d96491d71562d49a6",
+          "sentences": 38
+        },
+        "fine_no_context": {
+          "sha256": "e081cca51da5cd11b5183ce1988b96f8e88b06aefef17355ad0641bd58814e1a",
+          "sentences": 38
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 23,
+      "paper_ids": [
+        "2504.14720"
+      ],
+      "rows_sha256": "e7240a49b016ec945fef41bbaf805bcdbbbc0f4178a7d828cc3ed2497c04f07d",
+      "inputs": {
+        "full": {
+          "sha256": "ba348c73d3bb01551f4400e3fab38d798be8f66783b23b6ef54d699f4eca9928",
+          "sentences": 215
+        },
+        "zero": {
+          "sha256": "0cb89a74a05113416ea827e407a929c5bb3951371f31b61aa265b29d30838fff",
+          "sentences": 54
+        },
+        "fine_current": {
+          "sha256": "25c3a0e0e7dc2c2de402f24030d0d733314561081e28bfe7a51d0af1f9861d80",
+          "sentences": 40
+        },
+        "fine_surrounding": {
+          "sha256": "067033d6781a66e11f50b9740723c0fc9442fa82f175054f07837a6a032b1f78",
+          "sentences": 40
+        },
+        "fine_no_context": {
+          "sha256": "2a803c507ee44f40017c3a15c266da443379276b390f7705b5b886e8d83f5aee",
+          "sentences": 40
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 24,
+      "paper_ids": [
+        "2504.15099"
+      ],
+      "rows_sha256": "c0b918da61254988ed2564ed35a64e6ed6bd4b38495e3fa6e97751b9e181314a",
+      "inputs": {
+        "full": {
+          "sha256": "337e32073bf61281ba72660aec3ad8f61e227b30b51d183c5c48bb0cf85862f6",
+          "sentences": 134
+        },
+        "zero": {
+          "sha256": "50b970e60a3b3e0f0b4cf8b08dea05045269910aded96fe362ad1d768f33e25e",
+          "sentences": 34
+        },
+        "fine_current": {
+          "sha256": "801f522e37bfb66cbc7fb3c631e6054d0f0e67dc4e3c35ff1c9f87f6ae7613a6",
+          "sentences": 31
+        },
+        "fine_surrounding": {
+          "sha256": "39af26cd987732bc05c59b59434ec0c1da24ead2dda073d3b3b3bbbb4ac4fc99",
+          "sentences": 31
+        },
+        "fine_no_context": {
+          "sha256": "90938f11b7c7b7045ffd0f6712abc4d5f8cd159979609ebac4f771483601b656",
+          "sentences": 31
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 25,
+      "paper_ids": [
+        "2505.09022"
+      ],
+      "rows_sha256": "68bca44e1a067504763240a6cd38c59acf0e15947e42fcc59784c19ed5218845",
+      "inputs": {
+        "full": {
+          "sha256": "cacfd2cf7eb53567b8e9d8afd3ab7bec23acbb8518c218d53ee03ce9c0ccf0f7",
+          "sentences": 824
+        },
+        "zero": {
+          "sha256": "5186947941f6b760c0da5821af688c3192530b2b354e6afd5eb0ed2c011da537",
+          "sentences": 122
+        },
+        "fine_current": {
+          "sha256": "1440853fd96c86d5b2a767f51d3677f28edede69e8608776c90ff9dc10c795af",
+          "sentences": 72
+        },
+        "fine_surrounding": {
+          "sha256": "ce9fdce3a3579226e55f9224cae7497a8f8fbd2f28b4b6051099b9ac392a6235",
+          "sentences": 72
+        },
+        "fine_no_context": {
+          "sha256": "21142a691ae4af4a9c4a2eff2869ab70a979fb7e0d760d22ef0302295cc39260",
+          "sentences": 72
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 26,
+      "paper_ids": [
+        "2509.21923"
+      ],
+      "rows_sha256": "5c8455d4583df3794120edb9db7a2c02497a40860fca7a96dd2cee1334f17b21",
+      "inputs": {
+        "full": {
+          "sha256": "cd5a477a595e39d1106ca1f1fc1f7cf94e51d444668eca3189dacef763b50dd8",
+          "sentences": 203
+        },
+        "zero": {
+          "sha256": "b94b273f616054f66827babd1d3790ac9f7484a79baca9626edfc577e5412372",
+          "sentences": 53
+        },
+        "fine_current": {
+          "sha256": "f64e052617d9dfd2b99525a6fc089cc0140fecad4bd99f28dface52bad6130e5",
+          "sentences": 37
+        },
+        "fine_surrounding": {
+          "sha256": "b5136f6b91588648c91a6e748945e7712c62b7ec2544eec8cd25311c7bf3de5a",
+          "sentences": 37
+        },
+        "fine_no_context": {
+          "sha256": "331cf4937d0c6524f41a03fef81a5640577625623d3bcf081e6dd7b1f55d3b24",
+          "sentences": 37
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 27,
+      "paper_ids": [
+        "2512.20675"
+      ],
+      "rows_sha256": "f239c997d2668178d97b20781a88ff5fa4adaf882aaa56648d503358b590cad3",
+      "inputs": {
+        "full": {
+          "sha256": "5ac48c87c0792cac4f96f0dfaf83d33da3af7e24bdc530578e81597f65f41832",
+          "sentences": 72
+        },
+        "zero": {
+          "sha256": "b29266090b09c0ab6f9fcf0226cbf1f0445a6c89b3692943b910bed052fa365b",
+          "sentences": 16
+        },
+        "fine_current": {
+          "sha256": "c4303fa976359da880a51a2203ee37308e3cc4dc9adac0cd3d282a1073a898f5",
+          "sentences": 14
+        },
+        "fine_surrounding": {
+          "sha256": "938c88fc2e3abad2d7d7a942a1bfef468ed1190c69b4c4d3c186b1d9d5a1eb7d",
+          "sentences": 14
+        },
+        "fine_no_context": {
+          "sha256": "74eb5de63a3fe994cc3e1611b30eb49bd9941f55de47fc264e469a4ecf14441a",
+          "sentences": 14
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 28,
+      "paper_ids": [
+        "2601.03085"
+      ],
+      "rows_sha256": "650526587389664daf7bc4a5e4a0ce9d295ba7ce300040629aa7b5a24266caf5",
+      "inputs": {
+        "full": {
+          "sha256": "aeb048264a1b7e4eb37c3056b0b782925e648d83e1e474cac1635c4e7ee74e29",
+          "sentences": 480
+        },
+        "zero": {
+          "sha256": "fc9f7cd34fdf98ab15e51d20ca302ae8fb620e9480b471f665c8defc42dcf6a2",
+          "sentences": 108
+        },
+        "fine_current": {
+          "sha256": "6deb940cd308b016a4fc969542928053b6b86dd73c217cc7bbdce4aec75bd8a7",
+          "sentences": 92
+        },
+        "fine_surrounding": {
+          "sha256": "157bcf863f75c0d135113f2775476fd2e0c77e32bca54bbdec0424eb6896d461",
+          "sentences": 92
+        },
+        "fine_no_context": {
+          "sha256": "58fb74f7c31be5526870ae21640f875c866cfd514db23aaa06293c4126a9aa28",
+          "sentences": 92
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 29,
+      "paper_ids": [
+        "PMC2917572"
+      ],
+      "rows_sha256": "637659ff77e3956dbc97a69adad0f4a1d577e5cc631e8bb2711cec415e763bb8",
+      "inputs": {
+        "full": {
+          "sha256": "ae88496e40c6f3cdd6981c3b73cd926dd7e3ec7b725d6f51ec831dab983db620",
+          "sentences": 217
+        },
+        "zero": {
+          "sha256": "fe483ea0fa6b9a534f28ca6ad58379b8dd6b5b70ed1554364575fa969de74758",
+          "sentences": 70
+        },
+        "fine_current": {
+          "sha256": "e11af76fcc334d76f802a22b1e4ff352141f5e9e22f32aa1c073fd4b568d3d1a",
+          "sentences": 54
+        },
+        "fine_surrounding": {
+          "sha256": "395f0b8d0d763f8b7a1cf60dc88c17e3cd6d99998ce53ebd3c9809ab567b2b75",
+          "sentences": 54
+        },
+        "fine_no_context": {
+          "sha256": "9aaa615296ee787f020600624d148672740c0cf986054f954c9607c0cf120fae",
+          "sentences": 54
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 30,
+      "paper_ids": [
+        "PMC3441849"
+      ],
+      "rows_sha256": "e7b016fb32dbcffba9e1325e080b612bbf047544687f9aaf94f10b6722202c80",
+      "inputs": {
+        "full": {
+          "sha256": "925de2e5eb517a213be89d79e3a9e5be46e2a44e1372592167912382cc779494",
+          "sentences": 166
+        },
+        "zero": {
+          "sha256": "8f4769aae681322b3b87e5e8e64e90ad03e9d5dc248e3c0fc19c9c9ac33c557c",
+          "sentences": 51
+        },
+        "fine_current": {
+          "sha256": "6ff943cfe296933190a3cfb2961a2f50e848d452f2d969c05b44c9ad159fffda",
+          "sentences": 41
+        },
+        "fine_surrounding": {
+          "sha256": "aec7ce476471549dc3df2331eb9559abf86d94ffd7aad684536824841313f7c3",
+          "sentences": 41
+        },
+        "fine_no_context": {
+          "sha256": "274ebb5a2a298afaa5188c7be4f553795ec68ea36618d4d429c7c9c0c45fa5e1",
+          "sentences": 41
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 31,
+      "paper_ids": [
+        "PMC3542201"
+      ],
+      "rows_sha256": "baf62606f74571f447c3e71b23e96ecd8621e554e7874186fe7b70fe3e37e879",
+      "inputs": {
+        "full": {
+          "sha256": "abcc76a13ff55ab739d97cafe600c8a8785886835182ed5a8a494250b66f96b4",
+          "sentences": 217
+        },
+        "zero": {
+          "sha256": "1d4a1e9a89e58a9a29d5c947acbc5c180b87730dad002530af04e5bb65f593e9",
+          "sentences": 75
+        },
+        "fine_current": {
+          "sha256": "17b0fed38489ee30e0c1fcc86192cbc7cc7fac026ab3e7242b28b1bd4bd93ff0",
+          "sentences": 73
+        },
+        "fine_surrounding": {
+          "sha256": "7415e57e503c37f752ba42f75ae03191480c2629979eec9e204c80cab3762398",
+          "sentences": 73
+        },
+        "fine_no_context": {
+          "sha256": "a9dee15506a39d7cc3eca6877d52476310ab329edbab518491e053bdd36bc824",
+          "sentences": 73
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 32,
+      "paper_ids": [
+        "PMC5064025"
+      ],
+      "rows_sha256": "d9c81b717b8916e19b75bfa9b56753cc06c9a48db88d46fee187289b325f1afd",
+      "inputs": {
+        "full": {
+          "sha256": "28f7a664c58d103b2afb12ca437ac392481dfdd4b9038b635c441e20012b1ceb",
+          "sentences": 226
+        },
+        "zero": {
+          "sha256": "a7511c5b481be5664a3f591b7912c49d71333fa95d81bb340fe0b07fad7d2477",
+          "sentences": 43
+        },
+        "fine_current": {
+          "sha256": "5fb8613fa1084187fc2becb93c51c318847d6ca32afcc1dd9c8d005990b9e1b5",
+          "sentences": 42
+        },
+        "fine_surrounding": {
+          "sha256": "290f66e57ccebba04818260f67903228c55ccc5223cc01e2a8923c7d08763bd8",
+          "sentences": 42
+        },
+        "fine_no_context": {
+          "sha256": "4908da71a2d7e29e2d316233c23ca4f681c3a69196c1c40de771bf2e19b649c7",
+          "sentences": 42
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 33,
+      "paper_ids": [
+        "PMC5112179"
+      ],
+      "rows_sha256": "d8bd6bc05271770336cb57fe41c71ebfb10999a8bc266d08d778420c897a6e63",
+      "inputs": {
+        "full": {
+          "sha256": "58a30c6bc81a75410446440339ffcae187d34544135a1c0a49361a4854c075c2",
+          "sentences": 256
+        },
+        "zero": {
+          "sha256": "bbff2520539709121bb58184b29e8aa7f30220fa938f5183c26caef199fd22c4",
+          "sentences": 63
+        },
+        "fine_current": {
+          "sha256": "a7d5eab974ec8cd9c9aba250ca932453a76e33508bf0419be9c9e5181eb62b3a",
+          "sentences": 60
+        },
+        "fine_surrounding": {
+          "sha256": "012b6a4aabb6edb10f9aa1471a4187398eb011be8f5dd3fc307534e24963816a",
+          "sentences": 60
+        },
+        "fine_no_context": {
+          "sha256": "d7306872fd482c62c65f5e373b8baccaf2661ab24211f51914886cee27e40999",
+          "sentences": 60
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "one",
+      "index": 34,
+      "paper_ids": [
+        "PMC6371462"
+      ],
+      "rows_sha256": "63801d738171ff6a74381cb4eb638560e155a1d00862a1b67367a24d00190b49",
+      "inputs": {
+        "full": {
+          "sha256": "8fa924067ff5c0f464149724eb9bc9f81fbed41fd18afbd71f0b1d9d68eff378",
+          "sentences": 271
+        },
+        "zero": {
+          "sha256": "6b601733304e02f5eb59d8ab6401c3c1f922d0099054cd7079809c7f776158de",
+          "sentences": 83
+        },
+        "fine_current": {
+          "sha256": "c6efd5f738bfe2ad0a285490340f803fccb3afa19d9d6bde50fb5330850a2b50",
+          "sentences": 58
+        },
+        "fine_surrounding": {
+          "sha256": "79f8d7d01474943534e5083f1e47e536f8310992138e63b22b1e3342ca355983",
+          "sentences": 58
+        },
+        "fine_no_context": {
+          "sha256": "883db2a527a6d002d8eab5b9ee7f38ad8e76b152d226d591612d3c9323ba68be",
+          "sentences": 58
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "up_to_17",
+      "index": 1,
+      "paper_ids": [
+        "2307.00522",
+        "2512.20675",
+        "2208.02311",
+        "PMC3441849",
+        "2201.01525",
+        "2403.05034",
+        "2208.04226",
+        "2504.14720",
+        "PMC3542201",
+        "PMC2917572",
+        "2504.15099",
+        "PMC6371462",
+        "2410.06231",
+        "2509.21923",
+        "2101.06635",
+        "2310.01647",
+        "2503.00979"
+      ],
+      "rows_sha256": "4d924e25e712588272a3a1bc622ed557d7428c7908e5d6930b47e842ef8d6413",
+      "inputs": {
+        "full": {
+          "sha256": "bc00c4740e6b3834ce48443a635ea3d6b2aa7cc0ff033e1504743fbc49b80da5",
+          "sentences": 3139
+        },
+        "zero": {
+          "sha256": "2edb67ba6055d66372a1ab6308dc775095cd3230ac7123f857e28e275ff44fd1",
+          "sentences": 750
+        },
+        "fine_current": {
+          "sha256": "c90a5e3576a5940e44145d58c3012eea11008137e9dc6ecfc8bdc7782ce2a115",
+          "sentences": 621
+        },
+        "fine_surrounding": {
+          "sha256": "c8e8c6723216ba6972512a67fa3daa40f4e553e25c840edb157d62f359d21359",
+          "sentences": 621
+        },
+        "fine_no_context": {
+          "sha256": "3bf5971b9770c4a52374b3afcf5a21c2efbe0b447441b384a6c9729355f2f8cb",
+          "sentences": 621
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "up_to_17",
+      "index": 2,
+      "paper_ids": [
+        "2409.20534",
+        "2202.00263",
+        "2303.01980",
+        "PMC5064025",
+        "2206.13764",
+        "PMC5112179",
+        "2310.08891",
+        "2009.05369",
+        "2410.16340",
+        "2601.03085"
+      ],
+      "rows_sha256": "c0ab283b15bb09d2d7e1780ede171908c5aef08f7916e1a10b7e692dd27e3d48",
+      "inputs": {
+        "full": {
+          "sha256": "21c4b96cc986c77278d01a24e916703c10d9b1284ce5a72bb37f1d933205436e",
+          "sentences": 3332
+        },
+        "zero": {
+          "sha256": "f3d35d0c4f5ef2ab230d6995aa136113129933af4c53a45be9568d5431d8ecf7",
+          "sentences": 812
+        },
+        "fine_current": {
+          "sha256": "624896c0636929bbbe25d9e750f7e11bb8e071d9589abf1878eaa4abefb613a4",
+          "sentences": 670
+        },
+        "fine_surrounding": {
+          "sha256": "99519af1a3be61d6360e28caf515f084ca44a10dd28cc45ba05ddefc942552cd",
+          "sentences": 670
+        },
+        "fine_no_context": {
+          "sha256": "65646266a7d1cdc023b4e35969fada7174b9deae309da7cca7928384848836f2",
+          "sentences": 670
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "up_to_17",
+      "index": 3,
+      "paper_ids": [
+        "2112.05248",
+        "2407.04521",
+        "2505.09022",
+        "2405.16002",
+        "2412.13630"
+      ],
+      "rows_sha256": "2318a61f6e47d62b74fb62b9e1ca58c3e72c770784602a1577b35fdeae5717cc",
+      "inputs": {
+        "full": {
+          "sha256": "d32c9fd982f5a7690cc2a25a2121b2cc5f05e67566ae96cf8ccdb0345daaac04",
+          "sentences": 3054
+        },
+        "zero": {
+          "sha256": "2a2c84b5c4aafba18844661546504fb455e1346213b3947509fd471322b05925",
+          "sentences": 508
+        },
+        "fine_current": {
+          "sha256": "ec35822818e571f3ab6db8bc091e9db3c21be1a67e5a3081d40d51dfab72854b",
+          "sentences": 376
+        },
+        "fine_surrounding": {
+          "sha256": "e017008c0838bb3c17ec009b15aaffa2d8097f002f729fc114d470debbe8612c",
+          "sentences": 376
+        },
+        "fine_no_context": {
+          "sha256": "ec06a303523c1f1a580dd0aedfa4dbe3c6c100c118d79d27cb7d38d985a55e0a",
+          "sentences": 376
+        }
+      }
+    },
+    {
+      "split": "test",
+      "batch": "up_to_17",
+      "index": 4,
+      "paper_ids": [
+        "2110.15431",
+        "2402.10999"
+      ],
+      "rows_sha256": "d154cb95d3e2d1738ad3f169f7111f31ea9d9cd98e72a2234cae591ab846c2da",
+      "inputs": {
+        "full": {
+          "sha256": "39e3333ba9a864dc7a09aa9bf490b49e9c13363e8a73faa51da8d60ec5244d5a",
+          "sentences": 2216
+        },
+        "zero": {
+          "sha256": "42d64855257423055247e859c90766a8e7a7600aea30c6b00f14bed828b94fb8",
+          "sentences": 452
+        },
+        "fine_current": {
+          "sha256": "dfedc3b44136a3d55f90d0d94ec65aaa6dc7a3b4a06f9a57769e97fdf9cab86a",
+          "sentences": 331
+        },
+        "fine_surrounding": {
+          "sha256": "c403afb482ac1f681adf078287d2c661d4969bd23477cbf860fd624e71397fe2",
+          "sentences": 331
+        },
+        "fine_no_context": {
+          "sha256": "3f67296cfa36b6af7e35db4b87906727a86e646dd8f0f40642280a139405d892",
+          "sentences": 331
+        }
+      }
+    }
+  ]
+}
