@@ -1,0 +1,433 @@
+{
+  "plan_sha256": "b92369b82f892b26f489a2999e7cb5f331dd3bb6f4723791158bcf64e7e45ff2",
+  "strata": {
+    "all": {
+      "full": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 68,
+        "sentences_passed": 22942,
+        "all_attempt_input_tokens": 1431284,
+        "all_attempt_output_tokens": 326711,
+        "recovered": [
+          {
+            "group": 2,
+            "excluded": [
+              {
+                "id": 1729,
+                "keep": false
+              }
+            ]
+          },
+          {
+            "group": 3,
+            "excluded": [
+              {
+                "id": 2402,
+                "keep": false
+              }
+            ]
+          }
+        ],
+        "metrics": {
+          "tp": 862,
+          "fp": 114,
+          "positives": 1363,
+          "precision": 0.8832,
+          "recall": 0.6324,
+          "f1": 0.7371
+        }
+      },
+      "zero": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 68,
+        "sentences_passed": 4800,
+        "all_attempt_input_tokens": 627137,
+        "all_attempt_output_tokens": 62100,
+        "recovered": [],
+        "metrics": {
+          "tp": 985,
+          "fp": 302,
+          "positives": 1363,
+          "precision": 0.7653,
+          "recall": 0.7227,
+          "f1": 0.7434
+        }
+      },
+      "fine": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 68,
+        "sentences_passed": 3744,
+        "all_attempt_input_tokens": 492685,
+        "all_attempt_output_tokens": 52456,
+        "recovered": [],
+        "metrics": {
+          "tp": 1013,
+          "fp": 278,
+          "positives": 1363,
+          "precision": 0.7847,
+          "recall": 0.7432,
+          "f1": 0.7634
+        }
+      }
+    },
+    "val": {
+      "full": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 34,
+        "sentences_passed": 11201,
+        "all_attempt_input_tokens": 819946,
+        "all_attempt_output_tokens": 182607,
+        "recovered": [
+          {
+            "group": 2,
+            "excluded": [
+              {
+                "id": 1729,
+                "keep": false
+              }
+            ]
+          },
+          {
+            "group": 3,
+            "excluded": [
+              {
+                "id": 2402,
+                "keep": false
+              }
+            ]
+          }
+        ],
+        "metrics": {
+          "tp": 404,
+          "fp": 31,
+          "positives": 699,
+          "precision": 0.9287,
+          "recall": 0.578,
+          "f1": 0.7125
+        }
+      },
+      "zero": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 34,
+        "sentences_passed": 2278,
+        "all_attempt_input_tokens": 299456,
+        "all_attempt_output_tokens": 28981,
+        "recovered": [],
+        "metrics": {
+          "tp": 487,
+          "fp": 112,
+          "positives": 699,
+          "precision": 0.813,
+          "recall": 0.6967,
+          "f1": 0.7504
+        }
+      },
+      "fine": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 34,
+        "sentences_passed": 1746,
+        "all_attempt_input_tokens": 229786,
+        "all_attempt_output_tokens": 23595,
+        "recovered": [],
+        "metrics": {
+          "tp": 512,
+          "fp": 98,
+          "positives": 699,
+          "precision": 0.8393,
+          "recall": 0.7325,
+          "f1": 0.7823
+        }
+      }
+    },
+    "test": {
+      "full": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 34,
+        "sentences_passed": 11741,
+        "all_attempt_input_tokens": 611338,
+        "all_attempt_output_tokens": 144104,
+        "recovered": [],
+        "metrics": {
+          "tp": 458,
+          "fp": 83,
+          "positives": 664,
+          "precision": 0.8466,
+          "recall": 0.6898,
+          "f1": 0.7602
+        }
+      },
+      "zero": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 34,
+        "sentences_passed": 2522,
+        "all_attempt_input_tokens": 327681,
+        "all_attempt_output_tokens": 33119,
+        "recovered": [],
+        "metrics": {
+          "tp": 498,
+          "fp": 190,
+          "positives": 664,
+          "precision": 0.7238,
+          "recall": 0.75,
+          "f1": 0.7367
+        }
+      },
+      "fine": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 34,
+        "sentences_passed": 1998,
+        "all_attempt_input_tokens": 262899,
+        "all_attempt_output_tokens": 28861,
+        "recovered": [],
+        "metrics": {
+          "tp": 501,
+          "fp": 180,
+          "positives": 664,
+          "precision": 0.7357,
+          "recall": 0.7545,
+          "f1": 0.745
+        }
+      }
+    },
+    "val_arxiv": {
+      "full": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 28,
+        "sentences_passed": 10087,
+        "all_attempt_input_tokens": 770033,
+        "all_attempt_output_tokens": 166091,
+        "recovered": [
+          {
+            "group": 2,
+            "excluded": [
+              {
+                "id": 1729,
+                "keep": false
+              }
+            ]
+          },
+          {
+            "group": 3,
+            "excluded": [
+              {
+                "id": 2402,
+                "keep": false
+              }
+            ]
+          }
+        ],
+        "metrics": {
+          "tp": 336,
+          "fp": 29,
+          "positives": 600,
+          "precision": 0.9205,
+          "recall": 0.56,
+          "f1": 0.6964
+        }
+      },
+      "zero": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 28,
+        "sentences_passed": 1965,
+        "all_attempt_input_tokens": 260488,
+        "all_attempt_output_tokens": 25609,
+        "recovered": [],
+        "metrics": {
+          "tp": 414,
+          "fp": 107,
+          "positives": 600,
+          "precision": 0.7946,
+          "recall": 0.69,
+          "f1": 0.7386
+        }
+      },
+      "fine": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 28,
+        "sentences_passed": 1461,
+        "all_attempt_input_tokens": 193614,
+        "all_attempt_output_tokens": 19317,
+        "recovered": [],
+        "metrics": {
+          "tp": 438,
+          "fp": 90,
+          "positives": 600,
+          "precision": 0.8295,
+          "recall": 0.73,
+          "f1": 0.7766
+        }
+      }
+    },
+    "val_biomed": {
+      "full": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 6,
+        "sentences_passed": 1114,
+        "all_attempt_input_tokens": 49913,
+        "all_attempt_output_tokens": 16516,
+        "recovered": [],
+        "metrics": {
+          "tp": 68,
+          "fp": 2,
+          "positives": 99,
+          "precision": 0.9714,
+          "recall": 0.6869,
+          "f1": 0.8047
+        }
+      },
+      "zero": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 6,
+        "sentences_passed": 313,
+        "all_attempt_input_tokens": 38968,
+        "all_attempt_output_tokens": 3372,
+        "recovered": [],
+        "metrics": {
+          "tp": 73,
+          "fp": 5,
+          "positives": 99,
+          "precision": 0.9359,
+          "recall": 0.7374,
+          "f1": 0.8249
+        }
+      },
+      "fine": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 6,
+        "sentences_passed": 285,
+        "all_attempt_input_tokens": 36172,
+        "all_attempt_output_tokens": 4278,
+        "recovered": [],
+        "metrics": {
+          "tp": 74,
+          "fp": 8,
+          "positives": 99,
+          "precision": 0.9024,
+          "recall": 0.7475,
+          "f1": 0.8177
+        }
+      }
+    },
+    "test_arxiv": {
+      "full": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 28,
+        "sentences_passed": 10388,
+        "all_attempt_input_tokens": 550734,
+        "all_attempt_output_tokens": 130648,
+        "recovered": [],
+        "metrics": {
+          "tp": 364,
+          "fp": 82,
+          "positives": 527,
+          "precision": 0.8161,
+          "recall": 0.6907,
+          "f1": 0.7482
+        }
+      },
+      "zero": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 28,
+        "sentences_passed": 2137,
+        "all_attempt_input_tokens": 284468,
+        "all_attempt_output_tokens": 27338,
+        "recovered": [],
+        "metrics": {
+          "tp": 393,
+          "fp": 188,
+          "positives": 527,
+          "precision": 0.6764,
+          "recall": 0.7457,
+          "f1": 0.7094
+        }
+      },
+      "fine": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 28,
+        "sentences_passed": 1670,
+        "all_attempt_input_tokens": 225991,
+        "all_attempt_output_tokens": 23917,
+        "recovered": [],
+        "metrics": {
+          "tp": 392,
+          "fp": 178,
+          "positives": 527,
+          "precision": 0.6877,
+          "recall": 0.7438,
+          "f1": 0.7147
+        }
+      }
+    },
+    "test_biomed": {
+      "full": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 6,
+        "sentences_passed": 1353,
+        "all_attempt_input_tokens": 60604,
+        "all_attempt_output_tokens": 13456,
+        "recovered": [],
+        "metrics": {
+          "tp": 94,
+          "fp": 1,
+          "positives": 137,
+          "precision": 0.9895,
+          "recall": 0.6861,
+          "f1": 0.8103
+        }
+      },
+      "zero": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 6,
+        "sentences_passed": 385,
+        "all_attempt_input_tokens": 43213,
+        "all_attempt_output_tokens": 5781,
+        "recovered": [],
+        "metrics": {
+          "tp": 105,
+          "fp": 2,
+          "positives": 137,
+          "precision": 0.9813,
+          "recall": 0.7664,
+          "f1": 0.8607
+        }
+      },
+      "fine": {
+        "complete": true,
+        "missing_groups": [],
+        "papers_completed": 6,
+        "sentences_passed": 328,
+        "all_attempt_input_tokens": 36908,
+        "all_attempt_output_tokens": 4944,
+        "recovered": [],
+        "metrics": {
+          "tp": 109,
+          "fp": 2,
+          "positives": 137,
+          "precision": 0.982,
+          "recall": 0.7956,
+          "f1": 0.879
+        }
+      }
+    }
+  }
+}
