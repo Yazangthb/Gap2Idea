@@ -10,7 +10,7 @@ from nli_variants import load_val
 
 DEST=p.ROOT/'docs/experiments/five_paper_68_verdicts_2026-11-26'
 PLAN=DEST/'plan.json'; PRE=DEST/'preflight.json'; METHODS=('full','zero','fine')
-MAXOUT=32768; MODEL='qwen3.8-27b'; SEED=20261126
+MAXOUT=65536; MODEL='qwen3.8-27b'; SEED=20261126
 SCORES={'val':(p.ROOT/'data/gold/nli_val_scores.npz',prior.VAL_FT),
         'test':(prior.TEST_ZS,prior.TEST_FT)}
 
