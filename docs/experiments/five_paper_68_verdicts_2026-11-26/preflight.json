@@ -1,0 +1,390 @@
+{
+  "plan_sha256": "b92369b82f892b26f489a2999e7cb5f331dd3bb6f4723791158bcf64e7e45ff2",
+  "entries": [
+    {
+      "group": 1,
+      "method": "full",
+      "sentences": 2108,
+      "input_tokens": 114657,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 1,
+      "method": "zero",
+      "sentences": 339,
+      "input_tokens": 44614,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 1,
+      "method": "fine",
+      "sentences": 249,
+      "input_tokens": 31467,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 2,
+      "method": "full",
+      "sentences": 1729,
+      "input_tokens": 81299,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 2,
+      "method": "zero",
+      "sentences": 532,
+      "input_tokens": 67206,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 2,
+      "method": "fine",
+      "sentences": 433,
+      "input_tokens": 56609,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 3,
+      "method": "full",
+      "sentences": 2402,
+      "input_tokens": 140378,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 3,
+      "method": "zero",
+      "sentences": 326,
+      "input_tokens": 42590,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 3,
+      "method": "fine",
+      "sentences": 218,
+      "input_tokens": 28328,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 4,
+      "method": "full",
+      "sentences": 1357,
+      "input_tokens": 68926,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 4,
+      "method": "zero",
+      "sentences": 303,
+      "input_tokens": 39540,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 4,
+      "method": "fine",
+      "sentences": 227,
+      "input_tokens": 28958,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 5,
+      "method": "full",
+      "sentences": 1465,
+      "input_tokens": 84298,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 5,
+      "method": "zero",
+      "sentences": 285,
+      "input_tokens": 37756,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 5,
+      "method": "fine",
+      "sentences": 191,
+      "input_tokens": 23992,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 6,
+      "method": "full",
+      "sentences": 1026,
+      "input_tokens": 59086,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 6,
+      "method": "zero",
+      "sentences": 180,
+      "input_tokens": 28998,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 6,
+      "method": "fine",
+      "sentences": 143,
+      "input_tokens": 24476,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 7,
+      "method": "full",
+      "sentences": 926,
+      "input_tokens": 42768,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 7,
+      "method": "zero",
+      "sentences": 262,
+      "input_tokens": 33243,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 7,
+      "method": "fine",
+      "sentences": 242,
+      "input_tokens": 31238,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 8,
+      "method": "full",
+      "sentences": 188,
+      "input_tokens": 7217,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 8,
+      "method": "zero",
+      "sentences": 51,
+      "input_tokens": 5797,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 8,
+      "method": "fine",
+      "sentences": 43,
+      "input_tokens": 5006,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 9,
+      "method": "full",
+      "sentences": 1597,
+      "input_tokens": 75683,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 9,
+      "method": "zero",
+      "sentences": 355,
+      "input_tokens": 45310,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 9,
+      "method": "fine",
+      "sentences": 293,
+      "input_tokens": 36906,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 10,
+      "method": "full",
+      "sentences": 3286,
+      "input_tokens": 171305,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 10,
+      "method": "zero",
+      "sentences": 617,
+      "input_tokens": 84046,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 10,
+      "method": "fine",
+      "sentences": 476,
+      "input_tokens": 66136,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 11,
+      "method": "full",
+      "sentences": 1659,
+      "input_tokens": 107307,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 11,
+      "method": "zero",
+      "sentences": 402,
+      "input_tokens": 53743,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 11,
+      "method": "fine",
+      "sentences": 342,
+      "input_tokens": 46754,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 12,
+      "method": "full",
+      "sentences": 1589,
+      "input_tokens": 88764,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 12,
+      "method": "zero",
+      "sentences": 301,
+      "input_tokens": 41063,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 12,
+      "method": "fine",
+      "sentences": 209,
+      "input_tokens": 28720,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 13,
+      "method": "full",
+      "sentences": 1665,
+      "input_tokens": 75996,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 13,
+      "method": "zero",
+      "sentences": 346,
+      "input_tokens": 43135,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 13,
+      "method": "fine",
+      "sentences": 251,
+      "input_tokens": 33032,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 14,
+      "method": "full",
+      "sentences": 592,
+      "input_tokens": 31895,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 14,
+      "method": "zero",
+      "sentences": 116,
+      "input_tokens": 17387,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 14,
+      "method": "fine",
+      "sentences": 99,
+      "input_tokens": 14659,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 15,
+      "method": "full",
+      "sentences": 1136,
+      "input_tokens": 52018,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 15,
+      "method": "zero",
+      "sentences": 315,
+      "input_tokens": 35532,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 15,
+      "method": "fine",
+      "sentences": 274,
+      "input_tokens": 30520,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 16,
+      "method": "full",
+      "sentences": 217,
+      "input_tokens": 8658,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 16,
+      "method": "zero",
+      "sentences": 70,
+      "input_tokens": 7753,
+      "context_limit": 262144,
+      "fits": true
+    },
+    {
+      "group": 16,
+      "method": "fine",
+      "sentences": 54,
+      "input_tokens": 6460,
+      "context_limit": 262144,
+      "fits": true
+    }
+  ],
+  "status": "ok"
+}
