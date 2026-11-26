@@ -1,0 +1,203 @@
+{
+  "purpose": "Compare one 68-paper call to 16 calls on the same 68 papers and same fine-NLI candidates without neighboring context.",
+  "caveat": "Full-paper and neighbor-context 68-paper calls exceed the served context limit, so no-context funnel only. All papers have prior development/test exposure and LLM-generated labels.",
+  "comparison": "Original order of papers and targets preserved, only grouping and numbering change; system paper count updated to 68. Results grouped by original split/domain, not an independent test.",
+  "model": "qwen3.8-27b",
+  "model_revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+  "temperature": 0,
+  "seed": 0,
+  "thinking": false,
+  "max_tokens": 65536,
+  "validation": "Require exactly one boolean verdict per real candidate. Discard and record extra IDs only when every real candidate appears exactly once; incomplete answers are failures.",
+  "prompt": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"results\":[{\"id\":<id>,\"keep\":<bool>}, ...]} with EXACTLY one entry for every numbered input candidate, using its original id. Set keep to true for YES and false for NO, in input order.\n\nThere are 68 separate papers below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+  "input_sha256": "405e10aac267b3c9c747cc5697a8da4b60b21b32d02bb6640eb87654ad0602af",
+  "rows_sha256": "b647d07d83b11bdda5d55e1c11ae954b65ee0b539dc8c4c39c817dc3ce8afb24",
+  "candidate_count": 3744,
+  "original_plan_sha256": "b92369b82f892b26f489a2999e7cb5f331dd3bb6f4723791158bcf64e7e45ff2",
+  "runner_sha256": "3b35d9a39656a739e09cdb7f993c06cc690a0c60784de205288a0f564a5085cf",
+  "format_runner_sha256": "c32e7a4499a8bb509f9758b3574287b8796d90fb2d263c1fece915697fe73229",
+  "baseline_sha256": {
+    "1": "8f8a45bda38d0070498cd7710c89cf57104a569068cc72ad286c32a500619b1f",
+    "2": "fe5a056aabcd32965e817fe1d4cda2e85151d818064e1d6b656aba2916c37654",
+    "3": "529b1c40242e4c6d9183c2ee63a56c9f25978ed244978c685244c90ff794cedc",
+    "4": "47c41a36f2fdf114987b526b2430d4026d40450903ac82dc5471e2c4e8c826f5",
+    "5": "270587c84aa278c6e9663fc2c264f60e042eea0979b94f80e48e113e58ff42c5",
+    "6": "8f1c99016addd23196846a32b2951c3d2f4182a716c83c3e2e8e81d990dfa2e7",
+    "7": "29bafea19247d828d020958ba80f5ebcd8d822cfb10d8abdf5f37ce93f4dc956",
+    "8": "6d7d7ac9293b6a7b4f3fac91bbab55537ee919c8664fdf59d4389c4450fb3fba",
+    "9": "eec70d9f727dc5cc1041e34845e6e51e539f7ff6a58668e8ce80d117ee47b339",
+    "10": "b25f49846859aef09544e7776f869e619b54bd5a86b3d379046f0c0a42fc335e",
+    "11": "8bb6b239914c39fba7ce97483ce63522478b95b3b5c26901bca8c30aa7d70cc4",
+    "12": "935694c7d551961c18eb1ae35ff89df7ca2344b3bb98b9a460f22ce80e70f552",
+    "13": "0e345f94f65ac7c484266eaa78599cb5a20eafe0365ae4206ad6124d8607a494",
+    "14": "6b5fe5cf983fbc44ca3a42c29324c2ced07b7b974033b28000c3d8e9601ae7dc",
+    "15": "281117797ed17704576df1c3938c5a91d6df2f376400d729a7f024698867455f",
+    "16": "d4a3df6674110f6d2b5a8f28a2b1c43a661677c63dc31bfbbd06d8aa7f1981b1"
+  },
+  "groups": [
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2104.06303",
+        "2004.12164",
+        "2510.05092",
+        "2507.19233",
+        "2507.17931"
+      ]
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2511.18843",
+        "2201.02967",
+        "2409.07415",
+        "2202.00740",
+        "2405.02631"
+      ]
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2401.17544",
+        "2412.01837",
+        "2302.04972",
+        "2207.09511",
+        "2402.07717"
+      ]
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2301.03441",
+        "2302.07477",
+        "2102.03018",
+        "2502.11517",
+        "2207.01725"
+      ]
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2211.03489",
+        "2210.01489",
+        "2007.00128",
+        "2411.17182",
+        "2408.08459"
+      ]
+    },
+    {
+      "split": "val",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2006.04492",
+        "2305.14926",
+        "2310.15325"
+      ]
+    },
+    {
+      "split": "val",
+      "domain": "biomed_sal",
+      "paper_ids": [
+        "PMC4797126",
+        "PMC3551748",
+        "PMC5721882",
+        "PMC5704386",
+        "PMC2924475"
+      ]
+    },
+    {
+      "split": "val",
+      "domain": "biomed_sal",
+      "paper_ids": [
+        "PMC5381088"
+      ]
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2307.00522",
+        "2504.15099",
+        "2601.03085",
+        "2504.14720",
+        "2412.13630"
+      ]
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2206.13764",
+        "2405.16002",
+        "2410.16340",
+        "2403.05034",
+        "2402.10999"
+      ]
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2112.05248",
+        "2310.01647",
+        "2407.04521",
+        "2009.05369",
+        "2512.20675"
+      ]
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2503.00979",
+        "2110.15431",
+        "2509.21923",
+        "2208.02311",
+        "2310.08891"
+      ]
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2505.09022",
+        "2202.00263",
+        "2201.01525",
+        "2409.20534",
+        "2303.01980"
+      ]
+    },
+    {
+      "split": "test",
+      "domain": "arxiv_cs",
+      "paper_ids": [
+        "2208.04226",
+        "2410.06231",
+        "2101.06635"
+      ]
+    },
+    {
+      "split": "test",
+      "domain": "biomed_sal",
+      "paper_ids": [
+        "PMC3441849",
+        "PMC5112179",
+        "PMC6371462",
+        "PMC3542201",
+        "PMC5064025"
+      ]
+    },
+    {
+      "split": "test",
+      "domain": "biomed_sal",
+      "paper_ids": [
+        "PMC2917572"
+      ]
+    }
+  ]
+}
