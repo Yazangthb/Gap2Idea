@@ -1,0 +1,179 @@
+{
+  "plan_sha256": "60893af20515f962353423f2d4ba2ce7f574f25a7ab3b3577ea4ce327c336d35",
+  "results": {
+    "all": {
+      "full": {
+        "metrics": {
+          "tp": 458,
+          "fp": 83,
+          "positives": 664,
+          "precision": 0.8466,
+          "recall": 0.6898,
+          "f1": 0.7602
+        },
+        "sentences_passed": 11741,
+        "input_tokens": 611338,
+        "output_tokens": 144104,
+        "extras": []
+      },
+      "baseline": {
+        "metrics": {
+          "tp": 501,
+          "fp": 180,
+          "positives": 664,
+          "precision": 0.7357,
+          "recall": 0.7545,
+          "f1": 0.745
+        },
+        "sentences_passed": 1998,
+        "input_tokens": 262899,
+        "output_tokens": 28861,
+        "extras": []
+      },
+      "surrounding": {
+        "metrics": {
+          "tp": 510,
+          "fp": 173,
+          "positives": 664,
+          "precision": 0.7467,
+          "recall": 0.7681,
+          "f1": 0.7572
+        },
+        "sentences_passed": 1998,
+        "input_tokens": 260900,
+        "output_tokens": 24660,
+        "extras": []
+      },
+      "no_context": {
+        "metrics": {
+          "tp": 506,
+          "fp": 218,
+          "positives": 664,
+          "precision": 0.6989,
+          "recall": 0.762,
+          "f1": 0.7291
+        },
+        "sentences_passed": 1998,
+        "input_tokens": 81128,
+        "output_tokens": 30781,
+        "extras": []
+      }
+    },
+    "arxiv_cs": {
+      "full": {
+        "metrics": {
+          "tp": 364,
+          "fp": 82,
+          "positives": 527,
+          "precision": 0.8161,
+          "recall": 0.6907,
+          "f1": 0.7482
+        },
+        "sentences_passed": 10388,
+        "input_tokens": 550734,
+        "output_tokens": 130648,
+        "extras": []
+      },
+      "baseline": {
+        "metrics": {
+          "tp": 392,
+          "fp": 178,
+          "positives": 527,
+          "precision": 0.6877,
+          "recall": 0.7438,
+          "f1": 0.7147
+        },
+        "sentences_passed": 1670,
+        "input_tokens": 225991,
+        "output_tokens": 23917,
+        "extras": []
+      },
+      "surrounding": {
+        "metrics": {
+          "tp": 404,
+          "fp": 171,
+          "positives": 527,
+          "precision": 0.7026,
+          "recall": 0.7666,
+          "f1": 0.7332
+        },
+        "sentences_passed": 1670,
+        "input_tokens": 224320,
+        "output_tokens": 19716,
+        "extras": []
+      },
+      "no_context": {
+        "metrics": {
+          "tp": 413,
+          "fp": 217,
+          "positives": 527,
+          "precision": 0.6556,
+          "recall": 0.7837,
+          "f1": 0.7139
+        },
+        "sentences_passed": 1670,
+        "input_tokens": 67299,
+        "output_tokens": 25893,
+        "extras": []
+      }
+    },
+    "biomed_sal": {
+      "full": {
+        "metrics": {
+          "tp": 94,
+          "fp": 1,
+          "positives": 137,
+          "precision": 0.9895,
+          "recall": 0.6861,
+          "f1": 0.8103
+        },
+        "sentences_passed": 1353,
+        "input_tokens": 60604,
+        "output_tokens": 13456,
+        "extras": []
+      },
+      "baseline": {
+        "metrics": {
+          "tp": 109,
+          "fp": 2,
+          "positives": 137,
+          "precision": 0.982,
+          "recall": 0.7956,
+          "f1": 0.879
+        },
+        "sentences_passed": 328,
+        "input_tokens": 36908,
+        "output_tokens": 4944,
+        "extras": []
+      },
+      "surrounding": {
+        "metrics": {
+          "tp": 106,
+          "fp": 2,
+          "positives": 137,
+          "precision": 0.9815,
+          "recall": 0.7737,
+          "f1": 0.8653
+        },
+        "sentences_passed": 328,
+        "input_tokens": 36580,
+        "output_tokens": 4944,
+        "extras": []
+      },
+      "no_context": {
+        "metrics": {
+          "tp": 93,
+          "fp": 1,
+          "positives": 137,
+          "precision": 0.9894,
+          "recall": 0.6788,
+          "f1": 0.8052
+        },
+        "sentences_passed": 328,
+        "input_tokens": 13829,
+        "output_tokens": 4888,
+        "extras": []
+      }
+    }
+  }
+}
