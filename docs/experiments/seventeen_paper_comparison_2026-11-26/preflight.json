@@ -1,0 +1,54 @@
+{
+  "plan_sha256": "a4cd6ca03a5ff1510d69c3962d0f81f68d6020e80f61240c5a0363a409c211d2",
+  "entries": [
+    {
+      "split": "val",
+      "method": "full",
+      "sentences": 3129,
+      "input_tokens": 162297,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "split": "val",
+      "method": "zero",
+      "sentences": 792,
+      "input_tokens": 97865,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "split": "val",
+      "method": "fine",
+      "sentences": 662,
+      "input_tokens": 81311,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "split": "test",
+      "method": "full",
+      "sentences": 3139,
+      "input_tokens": 149691,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "split": "test",
+      "method": "zero",
+      "sentences": 750,
+      "input_tokens": 91850,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "split": "test",
+      "method": "fine",
+      "sentences": 621,
+      "input_tokens": 75581,
+      "limit": 262144,
+      "fits": true
+    }
+  ],
+  "status": "ok"
+}
