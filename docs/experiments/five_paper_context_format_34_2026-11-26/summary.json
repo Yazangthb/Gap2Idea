@@ -1,0 +1,137 @@
+{
+  "plan_sha256": "383ba5322cdf34afb5f406e10b861b0e413065cdcd68766f6c990954bb21b9b4",
+  "results": {
+    "all": {
+      "baseline": {
+        "metrics": {
+          "tp": 512,
+          "fp": 98,
+          "positives": 699,
+          "precision": 0.8393,
+          "recall": 0.7325,
+          "f1": 0.7823
+        },
+        "candidate_count": 1746,
+        "input_tokens": 229786,
+        "output_tokens": 23595,
+        "extras": []
+      },
+      "surrounding": {
+        "metrics": {
+          "tp": 503,
+          "fp": 93,
+          "positives": 699,
+          "precision": 0.844,
+          "recall": 0.7196,
+          "f1": 0.7768
+        },
+        "candidate_count": 1746,
+        "input_tokens": 228040,
+        "output_tokens": 24581,
+        "extras": []
+      },
+      "no_context": {
+        "metrics": {
+          "tp": 461,
+          "fp": 81,
+          "positives": 699,
+          "precision": 0.8506,
+          "recall": 0.6595,
+          "f1": 0.7429
+        },
+        "candidate_count": 1746,
+        "input_tokens": 77185,
+        "output_tokens": 24581,
+        "extras": []
+      }
+    },
+    "arxiv_cs": {
+      "baseline": {
+        "metrics": {
+          "tp": 438,
+          "fp": 90,
+          "positives": 600,
+          "precision": 0.8295,
+          "recall": 0.73,
+          "f1": 0.7766
+        },
+        "candidate_count": 1461,
+        "input_tokens": 193614,
+        "output_tokens": 19317,
+        "extras": []
+      },
+      "surrounding": {
+        "metrics": {
+          "tp": 423,
+          "fp": 85,
+          "positives": 600,
+          "precision": 0.8327,
+          "recall": 0.705,
+          "f1": 0.7635
+        },
+        "candidate_count": 1461,
+        "input_tokens": 192153,
+        "output_tokens": 20348,
+        "extras": []
+      },
+      "no_context": {
+        "metrics": {
+          "tp": 388,
+          "fp": 72,
+          "positives": 600,
+          "precision": 0.8435,
+          "recall": 0.6467,
+          "f1": 0.7321
+        },
+        "candidate_count": 1461,
+        "input_tokens": 64067,
+        "output_tokens": 20348,
+        "extras": []
+      }
+    },
+    "biomed_sal": {
+      "baseline": {
+        "metrics": {
+          "tp": 74,
+          "fp": 8,
+          "positives": 99,
+          "precision": 0.9024,
+          "recall": 0.7475,
+          "f1": 0.8177
+        },
+        "candidate_count": 285,
+        "input_tokens": 36172,
+        "output_tokens": 4278,
+        "extras": []
+      },
+      "surrounding": {
+        "metrics": {
+          "tp": 80,
+          "fp": 8,
+          "positives": 99,
+          "precision": 0.9091,
+          "recall": 0.8081,
+          "f1": 0.8556
+        },
+        "candidate_count": 285,
+        "input_tokens": 35887,
+        "output_tokens": 4233,
+        "extras": []
+      },
+      "no_context": {
+        "metrics": {
+          "tp": 73,
+          "fp": 9,
+          "positives": 99,
+          "precision": 0.8902,
+          "recall": 0.7374,
+          "f1": 0.8066
+        },
+        "candidate_count": 285,
+        "input_tokens": 13118,
+        "output_tokens": 4233,
+        "extras": []
+      }
+    }
+  }
+}
