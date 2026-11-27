@@ -1,0 +1,216 @@
+{
+  "plan_sha256": "33bf70d529d937eb860811d2bce6dfe1ed6a8672990fe92b1ba261dc146e153a",
+  "status": "too_large",
+  "entries": [
+    {
+      "group": 1,
+      "case": "first_no_context",
+      "input_tokens": 1697,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 1,
+      "case": "first_surrounding",
+      "input_tokens": 3698,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 1,
+      "case": "max_followup",
+      "input_tokens": 7783,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 2,
+      "case": "first_no_context",
+      "input_tokens": 2962,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 2,
+      "case": "first_surrounding",
+      "input_tokens": 8604,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 2,
+      "case": "max_followup",
+      "input_tokens": 20538,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 3,
+      "case": "first_no_context",
+      "input_tokens": 2183,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 3,
+      "case": "first_surrounding",
+      "input_tokens": 5428,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 3,
+      "case": "max_followup",
+      "input_tokens": 11746,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 4,
+      "case": "first_no_context",
+      "input_tokens": 3086,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 4,
+      "case": "first_surrounding",
+      "input_tokens": 7746,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 4,
+      "case": "max_followup",
+      "input_tokens": 17348,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 5,
+      "case": "first_no_context",
+      "input_tokens": 2900,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 5,
+      "case": "first_surrounding",
+      "input_tokens": 7755,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 5,
+      "case": "max_followup",
+      "input_tokens": 15228,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 6,
+      "case": "first_no_context",
+      "input_tokens": 3405,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 6,
+      "case": "first_surrounding",
+      "input_tokens": 9422,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 6,
+      "case": "max_followup",
+      "input_tokens": 20049,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 7,
+      "case": "first_no_context",
+      "input_tokens": 1414,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 7,
+      "case": "first_surrounding",
+      "input_tokens": 3556,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 7,
+      "case": "max_followup",
+      "input_tokens": 7865,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 8,
+      "case": "first_no_context",
+      "input_tokens": 5058,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 8,
+      "case": "first_surrounding",
+      "input_tokens": 14861,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 8,
+      "case": "max_followup",
+      "input_tokens": 31461,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 9,
+      "case": "first_no_context",
+      "input_tokens": 2409,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 9,
+      "case": "first_surrounding",
+      "input_tokens": 7569,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 9,
+      "case": "max_followup",
+      "input_tokens": 17535,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 10,
+      "case": "first_no_context",
+      "input_tokens": 8293,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 10,
+      "case": "first_surrounding",
+      "input_tokens": 22693,
+      "limit": 49152,
+      "fits": true
+    },
+    {
+      "group": 10,
+      "case": "max_followup",
+      "input_tokens": 50531,
+      "limit": 49152,
+      "fits": false
+    }
+  ]
+}

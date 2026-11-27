@@ -8,7 +8,7 @@ import five_paper_pilot as p
 import five_paper_dev_tuning as guard
 from baseline_evidence import digest
 
-DEST=p.ROOT/'docs/experiments/adaptive_context_gpu1_pilot_2026-11-27'
+DEST=p.ROOT/'docs/experiments/adaptive_context_gpu1_pilot_2026-11-27_rev1'
 PLAN=DEST/'plan.json';PRE=DEST/'preflight.json';RUNNER=p.ROOT/'scripts/bench/adaptive_context_gpu1_pilot.py'
 LAYOUTS=('no_context','surrounding');MAXOUT=8192;LOCK=threading.Lock()
 OUTPUT=rubric.NEW
@@ -26,6 +26,10 @@ def data():
             rows=[r for r in old['rows'] if r['pid']==pid];keys=[(r['pid'],r['idx']) for r in rows]
             result.append({'paper_ids':[pid],'rows':rows,'keys':keys,'fine':old['fine']&set(keys)})
     if len(result)!=10:raise ValueError('Expected ten dev papers')
+    # The tenth paper's worst-case follow-up exceeds GPU 1's context limit.
+    # Split its label-free candidate IDs evenly, preserving original order.
+    last=result.pop();ordered=[k for k in last['keys'] if k in last['fine']];mid=len(ordered)//2
+    result.extend([{**last,'fine':set(ordered[:mid])},{**last,'fine':set(ordered[mid:])}])
     return result
 
 def prompt(mode):
@@ -42,7 +46,7 @@ def prompt(mode):
 def plan():
     gs=data()
     return {'purpose':'Matched uncertainty-routing pilot with and without first-pass neighbors, and matching one-pass baselines, on GPU 1.',
-      'dataset':'The ten arXiv development papers in the first two groups of the earlier 34-paper study. One paper per request. They have prior development exposure and LLM-generated labels.',
+      'dataset':'The ten arXiv development papers in the first two groups of the earlier 34-paper study. Each request contains targets from one paper; the tenth paper is divided into two candidate groups to fit context (11 request groups total). Previously studied, LLM-generated labels.',
       'stages':'Baseline: one boolean call per paper and layout. Adaptive: initial keep/drop/unsure call; only unsure targets get a second boolean call with up to three previous and three following original sentences (800 characters per neighbor).',
       'first_layouts':list(LAYOUTS),'prompts':{m:prompt(m) for m in ('baseline','first','followup')},
       'backend':'Existing GPU 1 shared vLLM 0.34.0 service via SSH tunnel; Qwen3.8-27B-FP8 snapshot 017b9c7af6b5689d5dd426a76e0bc077eb5ca20a, max context 49152. GPU 0 runs were stopped and are excluded.',
@@ -124,20 +128,22 @@ def run():
 def summary():
     gs=frozen();out={}
     for layout in LAYOUTS:
-        rows=[];baseline=set();kept=set();unsure=set();followup_yes=set();binp=bout=ainp=aout=bcalls=acalls=0
+        rows_by_key={};baseline=set();kept=set();unsure=set();followup_yes=set();binp=bout=ainp=aout=bcalls=acalls=0
         for i,g in enumerate(gs,1):
             br,fr,sr=[json.loads((DEST/f'paper{i:02d}_{layout}_{stage}.json').read_text(encoding='utf8')) for stage in ('baseline','first','followup')]
             if any(r.get('status')!='ok' or r.get('plan_sha256')!=p.sha(PLAN) for r in (br,fr,sr)):raise ValueError('Incomplete output')
             uu={tuple(z['key']) for z in fr['decisions'] if z['decision']=='unsure'}
             if sr['selected_sha256']!=digest(sorted(uu)) or {tuple(z['key']) for z in sr['decisions']}!=uu:raise ValueError('Followup mismatch')
-            rows+=g['rows'];baseline|={tuple(z['key']) for z in br['decisions'] if z['decision']=='keep'};kept|={tuple(z['key']) for z in fr['decisions'] if z['decision']=='keep'};unsure|=uu
+            for r in g['rows']:rows_by_key[(r['pid'],r['idx'])]=r
+            baseline|={tuple(z['key']) for z in br['decisions'] if z['decision']=='keep'};kept|={tuple(z['key']) for z in fr['decisions'] if z['decision']=='keep'};unsure|=uu
             yes={tuple(z['key']) for z in sr['decisions'] if z['decision']=='keep'};followup_yes|=yes;kept|=yes
             for a in br['attempts']:
                 u=a.get('usage') or {};binp+=u.get('prompt_tokens',0);bout+=u.get('completion_tokens',0);bcalls+=1
             for r in (fr,sr):
                 for a in r['attempts']:
                     u=a.get('usage') or {};ainp+=u.get('prompt_tokens',0);aout+=u.get('completion_tokens',0);acalls+=1
-        out[layout]={'papers':10,'candidates':sum(len(g['fine']) for g in gs),'unsure':len(unsure),'followup_kept':len(followup_yes),
+        rows=list(rows_by_key.values())
+        out[layout]={'papers':10,'request_groups':len(gs),'candidates':sum(len(g['fine']) for g in gs),'unsure':len(unsure),'followup_kept':len(followup_yes),
           'baseline':{'kept':len(baseline),'metrics':p.metrics(rows,baseline),'input_tokens':binp,'output_tokens':bout,'calls':bcalls},
           'adaptive':{'kept':len(kept),'metrics':p.metrics(rows,kept),'input_tokens':ainp,'output_tokens':aout,'calls':acalls}}
     result={'plan_sha256':p.sha(PLAN),'results':out};print(json.dumps(result,indent=2),flush=True)

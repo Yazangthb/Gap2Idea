@@ -1,0 +1,166 @@
+{
+  "purpose": "Matched uncertainty-routing pilot with and without first-pass neighbors, and matching one-pass baselines, on GPU 1.",
+  "dataset": "The ten arXiv development papers in the first two groups of the earlier 34-paper study. Each request contains targets from one paper; the tenth paper is divided into two candidate groups to fit context (11 request groups total). Previously studied, LLM-generated labels.",
+  "stages": "Baseline: one boolean call per paper and layout. Adaptive: initial keep/drop/unsure call; only unsure targets get a second boolean call with up to three previous and three following original sentences (800 characters per neighbor).",
+  "first_layouts": [
+    "no_context",
+    "surrounding"
+  ],
+  "prompts": {
+    "baseline": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"results\":[{\"id\":<id>,\"keep\":<bool>}, ...]} with EXACTLY one entry for every numbered input candidate, using its original id. Set keep to true for YES and false for NO, in input order.\n\nThere is one paper below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+    "first": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"results\":[{\"id\":<id>,\"decision\":\"keep\"|\"drop\"|\"unsure\"}, ...]} with exactly one entry for every numbered target and the original ID. Choose \"keep\" when the target itself clearly states a gap and \"drop\" when it clearly does not. Choose \"unsure\" whenever the target cannot be reliably judged without more original surrounding text: for example, a reference such as \"this\", \"these\", \"it\", or \"the approach\" hides what is limited, or the target could be either a limitation or an ordinary observation depending on its context. When context could change the decision, prefer \"unsure\". Only numbered targets are judged; unnumbered neighbors are context.\n\nThere is one paper below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.",
+    "followup": "You are reading sentences from scientific papers. Judge each sentence: does it genuinely state a research gap?\n\nThe input is sentences from scientific papers, in reading order, one per line as \"[id] sentence\". Judge every sentence on its own.\n\nDecision — answer YES (keep) if the sentence states ANY of:\n  (a) a limitation / weakness / caveat / bias / constraint / assumption of the authors' OWN work (e.g., small sample, no blinding, single setting, short follow-up, confounding, limited generalizability, unvalidated measure, \"we did not / could not ...\", \"a limitation is ...\");\n  (b) an explicit FUTURE-WORK direction the authors propose (\"in future work we will ...\", \"future research should ...\", \"it would be interesting to ...\");\n  (c) an unsolved problem / missing capability / open research gap in the field or prior work (\"it remains unknown ...\", \"no existing method ...\", \"current approaches struggle with ...\").\n\nAnswer NO (drop) if the sentence is instead: a result or finding, a method/experimental-setup description, a positive or contribution claim (\"we propose/show/achieve ...\"), background or related-work description, a citation or reference fragment, acknowledgements / funding / author contributions / competing interests, a figure or table caption, a dataset/metric definition, or a generic non-gap statement.\n\nJudge each sentence on the rules above, without favouring YES or NO.\n\nReturn JSON of the form {\"results\":[{\"id\":<id>,\"keep\":<bool>}, ...]} with EXACTLY one entry for every numbered input candidate, using its original id. Set keep to true for YES and false for NO, in input order.\n\nThere is one paper below. Lines starting \"PAPER \" are boundaries, not sentences. Judge each numbered sentence only in its own paper.\n\nThe numbered targets were marked unsure in a first pass. Use the original neighboring sentences to disambiguate but judge the target itself. Give a final keep or drop decision for every target."
+  },
+  "backend": "Existing GPU 1 shared vLLM 0.34.0 service via SSH tunnel; Qwen3.8-27B-FP8 snapshot 017b9c7af6b5689d5dd426a76e0bc077eb5ca20a, max context 49152. GPU 0 runs were stopped and are excluded.",
+  "decoding": "temperature 0, seed 0, thinking disabled, 8192 max output tokens, strict JSON schema; every target ID must appear exactly once, extras discarded and recorded.",
+  "calibration_note": "The first wording on GPU 0 returned zero unsure outcomes across six calls on 15 papers. This pilot uses a more explicit uncertainty instruction after observing that failure, and is exploratory.",
+  "limitations": "Development labels are LLM-generated and previously studied. One paper per request; ten papers, no test set and no human adjudication. Different backend and batching from earlier five-paper runs.",
+  "runner_sha256": "6e66b86ab7b0f6d7b72d4f500d7ab4da37f3bca3b5e83249a14f39675e6f9bb1",
+  "base_plan_sha256": "b92369b82f892b26f489a2999e7cb5f331dd3bb6f4723791158bcf64e7e45ff2",
+  "expansion_script_sha256": "dca04143282c2e4596aedcc7d6071fb15823d813252eb8ec7720ddae2da053a0",
+  "groups": [
+    {
+      "paper_ids": [
+        "2104.06303"
+      ],
+      "rows_sha256": "bc6aac0761e89ba0182527466224e2da8168f0a412b50363284fb4fb61331cc0",
+      "candidate_sha256": "1e7909948eb8c802fef83f21e51d12ee0b56cced94a93e7996809d9a8d024318",
+      "candidate_count": 27,
+      "first_input_sha256": {
+        "no_context": "a4f3217631674902cd7f28432d162a540843034d9c8b338d58f4c7bfc371eaea",
+        "surrounding": "d9bc9df4e2effd8534d048983f176025bbe6ee958bbe0b15f7d649271571b3bc"
+      },
+      "max_followup_sha256": "d2c940b2336263e6732fdf568e226e243c0de0e070d404dfb4934efcac2c8f17"
+    },
+    {
+      "paper_ids": [
+        "2004.12164"
+      ],
+      "rows_sha256": "74e814f241d0044922f6aeebbee68a77bc37076f29002379f4fe83e37e234918",
+      "candidate_sha256": "46870059921d20b48280acd4365a759768d20af92e3997914a7c54fcc3be21c8",
+      "candidate_count": 64,
+      "first_input_sha256": {
+        "no_context": "c8916cc6b7afa64d910e345bf902fff5fe5b4344bc6fc9447c345a9d20f4d70b",
+        "surrounding": "9a1ff898d155fd5a76c5cce5948b5225ae4a6fd701f24eef733a710d4cfdae4d"
+      },
+      "max_followup_sha256": "bcab2fd29049571e486bb494dec3a344b546c70aa4f03797a2eb38c5f4c60585"
+    },
+    {
+      "paper_ids": [
+        "2510.05092"
+      ],
+      "rows_sha256": "7dd28dd6c236270f0cfc394d8f6b9e3438731043169305d2793ed899a734f6c4",
+      "candidate_sha256": "4003689addff43e9ad02ffba8bb7f71093d7eebc277f0aed675969959b8baa19",
+      "candidate_count": 38,
+      "first_input_sha256": {
+        "no_context": "ef43a7e0668d9c2c8e142b11a8cd4558c0f7c19709dadfe813fedad7a1e13987",
+        "surrounding": "a78645eb87246bb1b7fc89b021facb0aee17f6f2c3aacb3bbe982dccde005a63"
+      },
+      "max_followup_sha256": "f93bf9f677143263788a32d0e31c5313743c57b784bac8755cf17239cd1bea46"
+    },
+    {
+      "paper_ids": [
+        "2507.19233"
+      ],
+      "rows_sha256": "be4c74e2c43ac485b17c8dbdc2dc6df2a416fe0efe2c29c67215d841b0ff2899",
+      "candidate_sha256": "bcd4401204dcb13c4996da13839bd129ff50302dec2d4d5863f7beb8bd5272a5",
+      "candidate_count": 62,
+      "first_input_sha256": {
+        "no_context": "3387b0951fdb3e7255300fda0e48b9c8c665c393ae1ef415ae272bf63c987106",
+        "surrounding": "20a65cc6a08e6ad8a1058f8a27db2268da8cef221e623a6804f7e167e43a3000"
+      },
+      "max_followup_sha256": "30a6b3da04fd1d75afc406e5cf380fc345690b1c3063b40068740d3ed3cedfe1"
+    },
+    {
+      "paper_ids": [
+        "2507.17931"
+      ],
+      "rows_sha256": "954520aaa634999ef29456b954919a5750ddb087f6903fd415d9c51b321c10d7",
+      "candidate_sha256": "ad252c87de0659e97e3579d3d29ac850453690baf009b105117544d9c1db0324",
+      "candidate_count": 58,
+      "first_input_sha256": {
+        "no_context": "1d2d7a67742c19efb080444ad80dc59656af8f9fcc64471f65477114c48e60ad",
+        "surrounding": "12759b4d6f1ee7bac46885fa75dc0a64213f574e9ac9a6d61803e795724f4203"
+      },
+      "max_followup_sha256": "6ed0a13a76dab66a2f42687c38ccfa9b95af6730fac628d87284be7478f66fea"
+    },
+    {
+      "paper_ids": [
+        "2511.18843"
+      ],
+      "rows_sha256": "3632e3c742a243bd131ac41a8539b1ff9f0b9081eaf9fcd0e4cd533ac03a8bb0",
+      "candidate_sha256": "525e8495eba6bb35cad87b2bfaf4b8c328227e48d35dd8dd64640a8cd1c09397",
+      "candidate_count": 71,
+      "first_input_sha256": {
+        "no_context": "c0ae65a54f4f0fa220783931b1629b48d6b7af2811b1ba5c2f125915ede9e9b7",
+        "surrounding": "465f7a279d2bf8fc7d3b5d0ee4c72f99d5919f27f273493f141b350d9e06dfd8"
+      },
+      "max_followup_sha256": "04bdc4737dfdbb6242926ca1dcc47a42b9754977df7522b9fd09766abc6ca098"
+    },
+    {
+      "paper_ids": [
+        "2201.02967"
+      ],
+      "rows_sha256": "f6986c111bd881ba594a2dda1f7b2fdcd91f4c7b4f2e36525117463bbd007c15",
+      "candidate_sha256": "e3c9b97ce61d57b4053d166783fbe5d776d061a4586b1032b382578bbec5110f",
+      "candidate_count": 23,
+      "first_input_sha256": {
+        "no_context": "553fb4ccf9f8e9a4c4dfd8794af5fbe4e84ae400111df39e72a783f9275e5c3c",
+        "surrounding": "adf34d859a39fd2fe505019e7e8670a4218291a040eb157a74c842ae989f3bcc"
+      },
+      "max_followup_sha256": "dc20bdce77a3c6ed710bea37d21085275798d884c1cb3f07ddb726a0c84fb27f"
+    },
+    {
+      "paper_ids": [
+        "2409.07415"
+      ],
+      "rows_sha256": "5f76eb348d706baa8d8b6bcd046556ede9703e42d15ec2a6304fff33fc81d6b3",
+      "candidate_sha256": "d045b13a9ef1bb0b39b7700d0f9de0de0c09afeb2d5d3866e3d590a4bb503689",
+      "candidate_count": 118,
+      "first_input_sha256": {
+        "no_context": "7ae689f8729c5d50a44f49f8de97a57fb030aea86108a36273a31c8a122dea18",
+        "surrounding": "26709763310c4402c53d0d05724c63cda25ad6febfd2c1ded57e6ec293a70648"
+      },
+      "max_followup_sha256": "ce33bdcaa1a7b9b47166cf22e07060f85f29bbf3d205688871fd13fd8f388e1e"
+    },
+    {
+      "paper_ids": [
+        "2202.00740"
+      ],
+      "rows_sha256": "98e3ee6c94e8875322949c10de813bff9f841672ef482bd0cebb12415589ceb8",
+      "candidate_sha256": "bec51d4465f8c36dc7cdca5a425ed9f841265b253ca3d85d21a68fb3bb23b969",
+      "candidate_count": 52,
+      "first_input_sha256": {
+        "no_context": "b3ae0a2a52b8cc48b76cd113c9a22ec4a52a9b7a624911063fd5080e01b05598",
+        "surrounding": "8a0ec8eef0997faa351ed4c18c90485965a7f94c1ff49401911e4041cb448595"
+      },
+      "max_followup_sha256": "4ee62157c767094b1b07cc076cb1e7e95bd58f66eb13134f50c9966a6be8889c"
+    },
+    {
+      "paper_ids": [
+        "2405.02631"
+      ],
+      "rows_sha256": "00b568363fee36803e107bb4c8d9f03eb5b996ff5a9ed1e75572798a3c1c6158",
+      "candidate_sha256": "c952e5f1e918d7e6c078500e8db90add2f53f481834b58bbe0e9800827af19a5",
+      "candidate_count": 84,
+      "first_input_sha256": {
+        "no_context": "947425b50fa2a8ad0545d396452249d7f6577b9f6e847c8f452d60dcb41fbc35",
+        "surrounding": "2109fb583a68883ec778f3047f40a01940860cbade5d87f9e8cd6a9b22273a5b"
+      },
+      "max_followup_sha256": "dcedd6c1850716aa998580063d0f7f204ea302fcf38060269f9ddf896da9fc5f"
+    },
+    {
+      "paper_ids": [
+        "2405.02631"
+      ],
+      "rows_sha256": "00b568363fee36803e107bb4c8d9f03eb5b996ff5a9ed1e75572798a3c1c6158",
+      "candidate_sha256": "f6057e19c7f99cd36775525df196bbe0dada4001a27313c22aa4d4a2c93bd85b",
+      "candidate_count": 85,
+      "first_input_sha256": {
+        "no_context": "d63563d10696d7afc295cb36f5c15888b5518f7e3625760c1d409d9830aa10ed",
+        "surrounding": "fdbead0473398b7d24ae90e8f0fdf2c56940d0dc4e79672214d5ddd42230c62d"
+      },
+      "max_followup_sha256": "690c048136b00170ef16487108e946b8956ef8a330bcac16b23e5dfb5fe8ed4c"
+    }
+  ]
+}
