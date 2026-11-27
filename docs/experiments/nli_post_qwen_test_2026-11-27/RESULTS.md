@@ -22,4 +22,12 @@ The recall denominator is all 664 LLM-labeled gaps in the 34 papers, including g
 
 The biomedical subset has only six papers, and these are LLM-generated three-type labels rather than the separate SAL human limitation labels. The test split has been examined in earlier experiments; the thresholds were chosen after development exploration. This is exploratory and does not establish independent or statistically significant superiority. Labels have not been fully validated by humans.
 
-The original full-paper calls used 612,965 Qwen input tokens; the original funnel calls used 259,776 (57.6% fewer). Post-filtering does not reduce the Qwen tokens already used, and these figures exclude NLI and preprocessing. The NLI score is the maximum typed entailment/(entailment+contradiction) score, not a calibrated probability. Exact outputs, thresholds, hashes, domain counts, and code appear in `results.json`, `plan.json`, the original run records, and `scripts/bench/nli_post_qwen_test.py`.
+## Qwen token usage
+
+| Method | Input tokens | Output tokens | Total tokens |
+|---|---:|---:|---:|
+| Full-paper Qwen | 612,965 | 134,727 | 747,692 |
+| Fine-tuned NLI funnel → Qwen | 259,776 | 27,734 | 287,510 |
+| Funnel reduction | 57.6% | 79.4% | 61.5% |
+
+Both post-Qwen thresholds use exactly the same saved funnel calls, so their Qwen input and output token counts are identical to the unfiltered funnel. Post-filtering does not reduce tokens already used. These are Qwen token counts, not end-to-end cost: they exclude NLI, preprocessing and any hardware expenses. The NLI score is the maximum typed entailment/(entailment+contradiction) score, not a calibrated probability. Exact outputs, thresholds, hashes, domain counts, and code appear in `results.json`, `plan.json`, the original run records, and `scripts/bench/nli_post_qwen_test.py`.
