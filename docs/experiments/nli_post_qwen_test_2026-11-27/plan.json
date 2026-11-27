@@ -1,0 +1,67 @@
+{
+  "purpose": "Evaluate user-selected post-Qwen thresholds 0.02 and 0.1 against existing full-paper Qwen on all 34 test papers.",
+  "rule": "Filter previously Qwen-positive fine-NLI candidates by their existing fine-tuned NLI score >= threshold; Qwen inputs and outputs are unchanged.",
+  "thresholds": [
+    0.02,
+    0.1
+  ],
+  "score": "max over three typed entailment/(entailment+contradiction) scores; not a calibrated probability",
+  "grouping": "Same original up-to-17 groups of 17, 10, 5 and 2 papers for full-paper and funnel; 28 arxiv and 6 biomedical papers.",
+  "caveats": "Test papers were examined during earlier experiments; the LLM-generated labels are not human validated. Exploratory, no new inference; no untouched confirmation.",
+  "papers": [
+    "PMC3441849",
+    "PMC2917572",
+    "PMC3542201",
+    "PMC6371462",
+    "PMC5112179",
+    "PMC5064025",
+    "2208.04226",
+    "2405.16002",
+    "2101.06635",
+    "2310.08891",
+    "2402.10999",
+    "2206.13764",
+    "2403.05034",
+    "2412.13630",
+    "2512.20675",
+    "2208.02311",
+    "2410.16340",
+    "2201.01525",
+    "2202.00263",
+    "2307.00522",
+    "2407.04521",
+    "2503.00979",
+    "2110.15431",
+    "2410.06231",
+    "2112.05248",
+    "2504.15099",
+    "2505.09022",
+    "2509.21923",
+    "2303.01980",
+    "2409.20534",
+    "2504.14720",
+    "2009.05369",
+    "2310.01647",
+    "2601.03085"
+  ],
+  "rows_sha256": "9ff80f3617a9bd659a08979f4c1de7d3b751dfd9d413b6da88d7d2e81e0142c4",
+  "scores_sha256": "397c397743c0a63ed9f605e36d88978f3740825d335a931043206c81ed35ae82",
+  "runner_sha256": "f5011df8d2c22cb44728d54a819d2bc2750b8b64a354f75f0f746ae6aa5cfce3",
+  "batch_plan_sha256": "6a7d08d3abd1cda958914d6345a43bb8216e448ee2a4f18828065794aa2eb6ca",
+  "development_plan_sha256": "c6db5ef247ec1b99193522f6c748b7b2980fe6da47f00551a26f8cf275b99526",
+  "development_results_sha256": "c02688c6814aca309833896eeebb11c36225860bf4f2c667c3e4175cc1cce988",
+  "input_sha256": {
+    "full": {
+      "docs/experiments/complete_split_batch_comparison_2026-11-26/test_up_to_17_01_full.json": "d28fa67ee85cfaae5915c98bf725aba4e1bc96c4ee3ab14f095c4dc535985491",
+      "docs/experiments/complete_split_batch_comparison_2026-11-26/test_up_to_17_02_full.json": "5f63e0f69aab8d1367095ea041c865ec4f4907f4c587c0990dd3d3a471cc3d48",
+      "docs/experiments/complete_split_batch_comparison_2026-11-26/test_up_to_17_03_full.json": "9ef4b5204aac9f9fbb942f4fd81d30f53579d6428bb70004783913474d19ac3b",
+      "docs/experiments/complete_split_batch_comparison_2026-11-26/test_up_to_17_04_full.json": "f1b106900b975cb38ba9f7aef3dc001eebce7bcff7370975754feefcab0a6234"
+    },
+    "fine_surrounding": {
+      "docs/experiments/complete_split_batch_comparison_2026-11-26/test_up_to_17_01_fine_surrounding.json": "e5c92d36e359d4b5c951d2acba5c17358d1155053f4e969befebbd1ff0a80ee7",
+      "docs/experiments/complete_split_batch_comparison_2026-11-26/test_up_to_17_02_fine_surrounding.json": "029e0ea425c38075e49ce56a0c52f6f27bd909c1e533066a4b9212f5ffe31093",
+      "docs/experiments/complete_split_batch_comparison_2026-11-26/test_up_to_17_03_fine_surrounding.json": "323dd636fa21e6d6c95077d19638b11e42881a64e958e10f3c7b6ca382c12bd0",
+      "docs/experiments/complete_split_batch_comparison_2026-11-26/test_up_to_17_04_fine_surrounding.json": "999c33b416b57e73b08f93c9596c76d9b786e678495b63cdaefbcc5b5d9e2d22"
+    }
+  }
+}
