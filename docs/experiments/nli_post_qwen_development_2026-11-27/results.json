@@ -1,0 +1,950 @@
+{
+  "plan_sha256": "c6db5ef247ec1b99193522f6c748b7b2980fe6da47f00551a26f8cf275b99526",
+  "results": {
+    "one": {
+      "qwen_kept_before_postfilter": 637,
+      "thresholds": [
+        {
+          "threshold": 0.0021033689845353365,
+          "sentences_kept": 637,
+          "removed_from_qwen": 0,
+          "metrics": {
+            "tp": 509,
+            "fp": 128,
+            "positives": 699,
+            "precision": 0.7991,
+            "recall": 0.7282,
+            "f1": 0.762
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 433,
+              "fp": 118,
+              "positives": 600,
+              "precision": 0.7858,
+              "recall": 0.7217,
+              "f1": 0.7524
+            },
+            "biomed_sal": {
+              "tp": 76,
+              "fp": 10,
+              "positives": 99,
+              "precision": 0.8837,
+              "recall": 0.7677,
+              "f1": 0.8216
+            }
+          }
+        },
+        {
+          "threshold": 0.003,
+          "sentences_kept": 625,
+          "removed_from_qwen": 12,
+          "metrics": {
+            "tp": 503,
+            "fp": 122,
+            "positives": 699,
+            "precision": 0.8048,
+            "recall": 0.7196,
+            "f1": 0.7598
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 427,
+              "fp": 112,
+              "positives": 600,
+              "precision": 0.7922,
+              "recall": 0.7117,
+              "f1": 0.7498
+            },
+            "biomed_sal": {
+              "tp": 76,
+              "fp": 10,
+              "positives": 99,
+              "precision": 0.8837,
+              "recall": 0.7677,
+              "f1": 0.8216
+            }
+          }
+        },
+        {
+          "threshold": 0.005,
+          "sentences_kept": 613,
+          "removed_from_qwen": 24,
+          "metrics": {
+            "tp": 497,
+            "fp": 116,
+            "positives": 699,
+            "precision": 0.8108,
+            "recall": 0.711,
+            "f1": 0.7576
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 421,
+              "fp": 107,
+              "positives": 600,
+              "precision": 0.7973,
+              "recall": 0.7017,
+              "f1": 0.7465
+            },
+            "biomed_sal": {
+              "tp": 76,
+              "fp": 9,
+              "positives": 99,
+              "precision": 0.8941,
+              "recall": 0.7677,
+              "f1": 0.8261
+            }
+          }
+        },
+        {
+          "threshold": 0.01,
+          "sentences_kept": 586,
+          "removed_from_qwen": 51,
+          "metrics": {
+            "tp": 486,
+            "fp": 100,
+            "positives": 699,
+            "precision": 0.8294,
+            "recall": 0.6953,
+            "f1": 0.7564
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 411,
+              "fp": 93,
+              "positives": 600,
+              "precision": 0.8155,
+              "recall": 0.685,
+              "f1": 0.7446
+            },
+            "biomed_sal": {
+              "tp": 75,
+              "fp": 7,
+              "positives": 99,
+              "precision": 0.9146,
+              "recall": 0.7576,
+              "f1": 0.8287
+            }
+          }
+        },
+        {
+          "threshold": 0.02,
+          "sentences_kept": 558,
+          "removed_from_qwen": 79,
+          "metrics": {
+            "tp": 473,
+            "fp": 85,
+            "positives": 699,
+            "precision": 0.8477,
+            "recall": 0.6767,
+            "f1": 0.7526
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 400,
+              "fp": 78,
+              "positives": 600,
+              "precision": 0.8368,
+              "recall": 0.6667,
+              "f1": 0.7421
+            },
+            "biomed_sal": {
+              "tp": 73,
+              "fp": 7,
+              "positives": 99,
+              "precision": 0.9125,
+              "recall": 0.7374,
+              "f1": 0.8156
+            }
+          }
+        },
+        {
+          "threshold": 0.05,
+          "sentences_kept": 527,
+          "removed_from_qwen": 110,
+          "metrics": {
+            "tp": 456,
+            "fp": 71,
+            "positives": 699,
+            "precision": 0.8653,
+            "recall": 0.6524,
+            "f1": 0.7439
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 387,
+              "fp": 65,
+              "positives": 600,
+              "precision": 0.8562,
+              "recall": 0.645,
+              "f1": 0.7357
+            },
+            "biomed_sal": {
+              "tp": 69,
+              "fp": 6,
+              "positives": 99,
+              "precision": 0.92,
+              "recall": 0.697,
+              "f1": 0.7931
+            }
+          }
+        },
+        {
+          "threshold": 0.1,
+          "sentences_kept": 512,
+          "removed_from_qwen": 125,
+          "metrics": {
+            "tp": 449,
+            "fp": 63,
+            "positives": 699,
+            "precision": 0.877,
+            "recall": 0.6423,
+            "f1": 0.7415
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 380,
+              "fp": 58,
+              "positives": 600,
+              "precision": 0.8676,
+              "recall": 0.6333,
+              "f1": 0.7322
+            },
+            "biomed_sal": {
+              "tp": 69,
+              "fp": 5,
+              "positives": 99,
+              "precision": 0.9324,
+              "recall": 0.697,
+              "f1": 0.7977
+            }
+          }
+        },
+        {
+          "threshold": 0.2,
+          "sentences_kept": 493,
+          "removed_from_qwen": 144,
+          "metrics": {
+            "tp": 434,
+            "fp": 59,
+            "positives": 699,
+            "precision": 0.8803,
+            "recall": 0.6209,
+            "f1": 0.7282
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 367,
+              "fp": 54,
+              "positives": 600,
+              "precision": 0.8717,
+              "recall": 0.6117,
+              "f1": 0.7189
+            },
+            "biomed_sal": {
+              "tp": 67,
+              "fp": 5,
+              "positives": 99,
+              "precision": 0.9306,
+              "recall": 0.6768,
+              "f1": 0.7836
+            }
+          }
+        },
+        {
+          "threshold": 0.5,
+          "sentences_kept": 460,
+          "removed_from_qwen": 177,
+          "metrics": {
+            "tp": 410,
+            "fp": 50,
+            "positives": 699,
+            "precision": 0.8913,
+            "recall": 0.5866,
+            "f1": 0.7075
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 347,
+              "fp": 46,
+              "positives": 600,
+              "precision": 0.883,
+              "recall": 0.5783,
+              "f1": 0.6989
+            },
+            "biomed_sal": {
+              "tp": 63,
+              "fp": 4,
+              "positives": 99,
+              "precision": 0.9403,
+              "recall": 0.6364,
+              "f1": 0.759
+            }
+          }
+        },
+        {
+          "threshold": 0.9,
+          "sentences_kept": 411,
+          "removed_from_qwen": 226,
+          "metrics": {
+            "tp": 375,
+            "fp": 36,
+            "positives": 699,
+            "precision": 0.9124,
+            "recall": 0.5365,
+            "f1": 0.6757
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 317,
+              "fp": 32,
+              "positives": 600,
+              "precision": 0.9083,
+              "recall": 0.5283,
+              "f1": 0.6681
+            },
+            "biomed_sal": {
+              "tp": 58,
+              "fp": 4,
+              "positives": 99,
+              "precision": 0.9355,
+              "recall": 0.5859,
+              "f1": 0.7205
+            }
+          }
+        }
+      ]
+    },
+    "up_to_17": {
+      "qwen_kept_before_postfilter": 706,
+      "thresholds": [
+        {
+          "threshold": 0.0021033689845353365,
+          "sentences_kept": 706,
+          "removed_from_qwen": 0,
+          "metrics": {
+            "tp": 534,
+            "fp": 172,
+            "positives": 699,
+            "precision": 0.7564,
+            "recall": 0.7639,
+            "f1": 0.7601
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 451,
+              "fp": 154,
+              "positives": 600,
+              "precision": 0.7455,
+              "recall": 0.7517,
+              "f1": 0.7485
+            },
+            "biomed_sal": {
+              "tp": 83,
+              "fp": 18,
+              "positives": 99,
+              "precision": 0.8218,
+              "recall": 0.8384,
+              "f1": 0.83
+            }
+          }
+        },
+        {
+          "threshold": 0.003,
+          "sentences_kept": 695,
+          "removed_from_qwen": 11,
+          "metrics": {
+            "tp": 528,
+            "fp": 167,
+            "positives": 699,
+            "precision": 0.7597,
+            "recall": 0.7554,
+            "f1": 0.7575
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 445,
+              "fp": 149,
+              "positives": 600,
+              "precision": 0.7492,
+              "recall": 0.7417,
+              "f1": 0.7454
+            },
+            "biomed_sal": {
+              "tp": 83,
+              "fp": 18,
+              "positives": 99,
+              "precision": 0.8218,
+              "recall": 0.8384,
+              "f1": 0.83
+            }
+          }
+        },
+        {
+          "threshold": 0.005,
+          "sentences_kept": 677,
+          "removed_from_qwen": 29,
+          "metrics": {
+            "tp": 521,
+            "fp": 156,
+            "positives": 699,
+            "precision": 0.7696,
+            "recall": 0.7454,
+            "f1": 0.7573
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 438,
+              "fp": 139,
+              "positives": 600,
+              "precision": 0.7591,
+              "recall": 0.73,
+              "f1": 0.7443
+            },
+            "biomed_sal": {
+              "tp": 83,
+              "fp": 17,
+              "positives": 99,
+              "precision": 0.83,
+              "recall": 0.8384,
+              "f1": 0.8342
+            }
+          }
+        },
+        {
+          "threshold": 0.01,
+          "sentences_kept": 652,
+          "removed_from_qwen": 54,
+          "metrics": {
+            "tp": 509,
+            "fp": 143,
+            "positives": 699,
+            "precision": 0.7807,
+            "recall": 0.7282,
+            "f1": 0.7535
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 427,
+              "fp": 127,
+              "positives": 600,
+              "precision": 0.7708,
+              "recall": 0.7117,
+              "f1": 0.74
+            },
+            "biomed_sal": {
+              "tp": 82,
+              "fp": 16,
+              "positives": 99,
+              "precision": 0.8367,
+              "recall": 0.8283,
+              "f1": 0.8325
+            }
+          }
+        },
+        {
+          "threshold": 0.02,
+          "sentences_kept": 620,
+          "removed_from_qwen": 86,
+          "metrics": {
+            "tp": 494,
+            "fp": 126,
+            "positives": 699,
+            "precision": 0.7968,
+            "recall": 0.7067,
+            "f1": 0.7491
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 414,
+              "fp": 110,
+              "positives": 600,
+              "precision": 0.7901,
+              "recall": 0.69,
+              "f1": 0.7367
+            },
+            "biomed_sal": {
+              "tp": 80,
+              "fp": 16,
+              "positives": 99,
+              "precision": 0.8333,
+              "recall": 0.8081,
+              "f1": 0.8205
+            }
+          }
+        },
+        {
+          "threshold": 0.05,
+          "sentences_kept": 573,
+          "removed_from_qwen": 133,
+          "metrics": {
+            "tp": 474,
+            "fp": 99,
+            "positives": 699,
+            "precision": 0.8272,
+            "recall": 0.6781,
+            "f1": 0.7453
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 398,
+              "fp": 86,
+              "positives": 600,
+              "precision": 0.8223,
+              "recall": 0.6633,
+              "f1": 0.7343
+            },
+            "biomed_sal": {
+              "tp": 76,
+              "fp": 13,
+              "positives": 99,
+              "precision": 0.8539,
+              "recall": 0.7677,
+              "f1": 0.8085
+            }
+          }
+        },
+        {
+          "threshold": 0.1,
+          "sentences_kept": 555,
+          "removed_from_qwen": 151,
+          "metrics": {
+            "tp": 467,
+            "fp": 88,
+            "positives": 699,
+            "precision": 0.8414,
+            "recall": 0.6681,
+            "f1": 0.7448
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 391,
+              "fp": 76,
+              "positives": 600,
+              "precision": 0.8373,
+              "recall": 0.6517,
+              "f1": 0.7329
+            },
+            "biomed_sal": {
+              "tp": 76,
+              "fp": 12,
+              "positives": 99,
+              "precision": 0.8636,
+              "recall": 0.7677,
+              "f1": 0.8128
+            }
+          }
+        },
+        {
+          "threshold": 0.2,
+          "sentences_kept": 532,
+          "removed_from_qwen": 174,
+          "metrics": {
+            "tp": 450,
+            "fp": 82,
+            "positives": 699,
+            "precision": 0.8459,
+            "recall": 0.6438,
+            "f1": 0.7311
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 376,
+              "fp": 71,
+              "positives": 600,
+              "precision": 0.8412,
+              "recall": 0.6267,
+              "f1": 0.7182
+            },
+            "biomed_sal": {
+              "tp": 74,
+              "fp": 11,
+              "positives": 99,
+              "precision": 0.8706,
+              "recall": 0.7475,
+              "f1": 0.8043
+            }
+          }
+        },
+        {
+          "threshold": 0.5,
+          "sentences_kept": 490,
+          "removed_from_qwen": 216,
+          "metrics": {
+            "tp": 423,
+            "fp": 67,
+            "positives": 699,
+            "precision": 0.8633,
+            "recall": 0.6052,
+            "f1": 0.7115
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 354,
+              "fp": 57,
+              "positives": 600,
+              "precision": 0.8613,
+              "recall": 0.59,
+              "f1": 0.7003
+            },
+            "biomed_sal": {
+              "tp": 69,
+              "fp": 10,
+              "positives": 99,
+              "precision": 0.8734,
+              "recall": 0.697,
+              "f1": 0.7753
+            }
+          }
+        },
+        {
+          "threshold": 0.9,
+          "sentences_kept": 433,
+          "removed_from_qwen": 273,
+          "metrics": {
+            "tp": 387,
+            "fp": 46,
+            "positives": 699,
+            "precision": 0.8938,
+            "recall": 0.5536,
+            "f1": 0.6837
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 324,
+              "fp": 37,
+              "positives": 600,
+              "precision": 0.8975,
+              "recall": 0.54,
+              "f1": 0.6743
+            },
+            "biomed_sal": {
+              "tp": 63,
+              "fp": 9,
+              "positives": 99,
+              "precision": 0.875,
+              "recall": 0.6364,
+              "f1": 0.7368
+            }
+          }
+        }
+      ]
+    },
+    "up_to_5": {
+      "qwen_kept_before_postfilter": 596,
+      "thresholds": [
+        {
+          "threshold": 0.0021033689845353365,
+          "sentences_kept": 596,
+          "removed_from_qwen": 0,
+          "metrics": {
+            "tp": 503,
+            "fp": 93,
+            "positives": 699,
+            "precision": 0.844,
+            "recall": 0.7196,
+            "f1": 0.7768
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 423,
+              "fp": 85,
+              "positives": 600,
+              "precision": 0.8327,
+              "recall": 0.705,
+              "f1": 0.7635
+            },
+            "biomed_sal": {
+              "tp": 80,
+              "fp": 8,
+              "positives": 99,
+              "precision": 0.9091,
+              "recall": 0.8081,
+              "f1": 0.8556
+            }
+          }
+        },
+        {
+          "threshold": 0.003,
+          "sentences_kept": 585,
+          "removed_from_qwen": 11,
+          "metrics": {
+            "tp": 497,
+            "fp": 88,
+            "positives": 699,
+            "precision": 0.8496,
+            "recall": 0.711,
+            "f1": 0.7741
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 417,
+              "fp": 80,
+              "positives": 600,
+              "precision": 0.839,
+              "recall": 0.695,
+              "f1": 0.7603
+            },
+            "biomed_sal": {
+              "tp": 80,
+              "fp": 8,
+              "positives": 99,
+              "precision": 0.9091,
+              "recall": 0.8081,
+              "f1": 0.8556
+            }
+          }
+        },
+        {
+          "threshold": 0.005,
+          "sentences_kept": 578,
+          "removed_from_qwen": 18,
+          "metrics": {
+            "tp": 492,
+            "fp": 86,
+            "positives": 699,
+            "precision": 0.8512,
+            "recall": 0.7039,
+            "f1": 0.7706
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 412,
+              "fp": 78,
+              "positives": 600,
+              "precision": 0.8408,
+              "recall": 0.6867,
+              "f1": 0.756
+            },
+            "biomed_sal": {
+              "tp": 80,
+              "fp": 8,
+              "positives": 99,
+              "precision": 0.9091,
+              "recall": 0.8081,
+              "f1": 0.8556
+            }
+          }
+        },
+        {
+          "threshold": 0.01,
+          "sentences_kept": 564,
+          "removed_from_qwen": 32,
+          "metrics": {
+            "tp": 485,
+            "fp": 79,
+            "positives": 699,
+            "precision": 0.8599,
+            "recall": 0.6938,
+            "f1": 0.768
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 406,
+              "fp": 72,
+              "positives": 600,
+              "precision": 0.8494,
+              "recall": 0.6767,
+              "f1": 0.7532
+            },
+            "biomed_sal": {
+              "tp": 79,
+              "fp": 7,
+              "positives": 99,
+              "precision": 0.9186,
+              "recall": 0.798,
+              "f1": 0.8541
+            }
+          }
+        },
+        {
+          "threshold": 0.02,
+          "sentences_kept": 541,
+          "removed_from_qwen": 55,
+          "metrics": {
+            "tp": 471,
+            "fp": 70,
+            "positives": 699,
+            "precision": 0.8706,
+            "recall": 0.6738,
+            "f1": 0.7597
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 394,
+              "fp": 63,
+              "positives": 600,
+              "precision": 0.8621,
+              "recall": 0.6567,
+              "f1": 0.7455
+            },
+            "biomed_sal": {
+              "tp": 77,
+              "fp": 7,
+              "positives": 99,
+              "precision": 0.9167,
+              "recall": 0.7778,
+              "f1": 0.8415
+            }
+          }
+        },
+        {
+          "threshold": 0.05,
+          "sentences_kept": 509,
+          "removed_from_qwen": 87,
+          "metrics": {
+            "tp": 451,
+            "fp": 58,
+            "positives": 699,
+            "precision": 0.8861,
+            "recall": 0.6452,
+            "f1": 0.7467
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 378,
+              "fp": 52,
+              "positives": 600,
+              "precision": 0.8791,
+              "recall": 0.63,
+              "f1": 0.734
+            },
+            "biomed_sal": {
+              "tp": 73,
+              "fp": 6,
+              "positives": 99,
+              "precision": 0.9241,
+              "recall": 0.7374,
+              "f1": 0.8202
+            }
+          }
+        },
+        {
+          "threshold": 0.1,
+          "sentences_kept": 497,
+          "removed_from_qwen": 99,
+          "metrics": {
+            "tp": 444,
+            "fp": 53,
+            "positives": 699,
+            "precision": 0.8934,
+            "recall": 0.6352,
+            "f1": 0.7425
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 371,
+              "fp": 48,
+              "positives": 600,
+              "precision": 0.8854,
+              "recall": 0.6183,
+              "f1": 0.7282
+            },
+            "biomed_sal": {
+              "tp": 73,
+              "fp": 5,
+              "positives": 99,
+              "precision": 0.9359,
+              "recall": 0.7374,
+              "f1": 0.8249
+            }
+          }
+        },
+        {
+          "threshold": 0.2,
+          "sentences_kept": 479,
+          "removed_from_qwen": 117,
+          "metrics": {
+            "tp": 429,
+            "fp": 50,
+            "positives": 699,
+            "precision": 0.8956,
+            "recall": 0.6137,
+            "f1": 0.7284
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 358,
+              "fp": 45,
+              "positives": 600,
+              "precision": 0.8883,
+              "recall": 0.5967,
+              "f1": 0.7139
+            },
+            "biomed_sal": {
+              "tp": 71,
+              "fp": 5,
+              "positives": 99,
+              "precision": 0.9342,
+              "recall": 0.7172,
+              "f1": 0.8114
+            }
+          }
+        },
+        {
+          "threshold": 0.5,
+          "sentences_kept": 447,
+          "removed_from_qwen": 149,
+          "metrics": {
+            "tp": 404,
+            "fp": 43,
+            "positives": 699,
+            "precision": 0.9038,
+            "recall": 0.578,
+            "f1": 0.7051
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 337,
+              "fp": 39,
+              "positives": 600,
+              "precision": 0.8963,
+              "recall": 0.5617,
+              "f1": 0.6906
+            },
+            "biomed_sal": {
+              "tp": 67,
+              "fp": 4,
+              "positives": 99,
+              "precision": 0.9437,
+              "recall": 0.6768,
+              "f1": 0.7882
+            }
+          }
+        },
+        {
+          "threshold": 0.9,
+          "sentences_kept": 398,
+          "removed_from_qwen": 198,
+          "metrics": {
+            "tp": 369,
+            "fp": 29,
+            "positives": 699,
+            "precision": 0.9271,
+            "recall": 0.5279,
+            "f1": 0.6727
+          },
+          "by_domain": {
+            "arxiv_cs": {
+              "tp": 308,
+              "fp": 25,
+              "positives": 600,
+              "precision": 0.9249,
+              "recall": 0.5133,
+              "f1": 0.6602
+            },
+            "biomed_sal": {
+              "tp": 61,
+              "fp": 4,
+              "positives": 99,
+              "precision": 0.9385,
+              "recall": 0.6162,
+              "f1": 0.7439
+            }
+          }
+        }
+      ]
+    }
+  }
+}
