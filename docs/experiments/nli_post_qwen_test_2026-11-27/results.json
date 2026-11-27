@@ -1,0 +1,135 @@
+{
+  "plan_sha256": "c4bcc433337cc25a1c4f9b00ce9770410756e11fef8eb6692f3c96323e2d4757",
+  "results": {
+    "full_paper": {
+      "sentences_kept": 560,
+      "metrics": {
+        "tp": 478,
+        "fp": 82,
+        "positives": 664,
+        "precision": 0.8536,
+        "recall": 0.7199,
+        "f1": 0.781
+      },
+      "by_domain": {
+        "arxiv_cs": {
+          "tp": 376,
+          "fp": 81,
+          "positives": 527,
+          "precision": 0.8228,
+          "recall": 0.7135,
+          "f1": 0.7642
+        },
+        "biomed_sal": {
+          "tp": 102,
+          "fp": 1,
+          "positives": 137,
+          "precision": 0.9903,
+          "recall": 0.7445,
+          "f1": 0.85
+        }
+      },
+      "removed_from_qwen": null
+    },
+    "funnel_original": {
+      "sentences_kept": 643,
+      "metrics": {
+        "tp": 510,
+        "fp": 133,
+        "positives": 664,
+        "precision": 0.7932,
+        "recall": 0.7681,
+        "f1": 0.7804
+      },
+      "by_domain": {
+        "arxiv_cs": {
+          "tp": 408,
+          "fp": 132,
+          "positives": 527,
+          "precision": 0.7556,
+          "recall": 0.7742,
+          "f1": 0.7648
+        },
+        "biomed_sal": {
+          "tp": 102,
+          "fp": 1,
+          "positives": 137,
+          "precision": 0.9903,
+          "recall": 0.7445,
+          "f1": 0.85
+        }
+      },
+      "removed_from_qwen": 0
+    },
+    "funnel_0.02": {
+      "sentences_kept": 586,
+      "metrics": {
+        "tp": 484,
+        "fp": 102,
+        "positives": 664,
+        "precision": 0.8259,
+        "recall": 0.7289,
+        "f1": 0.7744
+      },
+      "by_domain": {
+        "arxiv_cs": {
+          "tp": 385,
+          "fp": 101,
+          "positives": 527,
+          "precision": 0.7922,
+          "recall": 0.7306,
+          "f1": 0.7601
+        },
+        "biomed_sal": {
+          "tp": 99,
+          "fp": 1,
+          "positives": 137,
+          "precision": 0.99,
+          "recall": 0.7226,
+          "f1": 0.8354
+        }
+      },
+      "removed_from_qwen": 57
+    },
+    "funnel_0.1": {
+      "sentences_kept": 542,
+      "metrics": {
+        "tp": 461,
+        "fp": 81,
+        "positives": 664,
+        "precision": 0.8506,
+        "recall": 0.6943,
+        "f1": 0.7645
+      },
+      "by_domain": {
+        "arxiv_cs": {
+          "tp": 365,
+          "fp": 80,
+          "positives": 527,
+          "precision": 0.8202,
+          "recall": 0.6926,
+          "f1": 0.751
+        },
+        "biomed_sal": {
+          "tp": 96,
+          "fp": 1,
+          "positives": 137,
+          "precision": 0.9897,
+          "recall": 0.7007,
+          "f1": 0.8205
+        }
+      },
+      "removed_from_qwen": 101
+    }
+  },
+  "usage": {
+    "full": {
+      "input_tokens": 612965,
+      "output_tokens": 134727
+    },
+    "fine_surrounding": {
+      "input_tokens": 259776,
+      "output_tokens": 27734
+    }
+  }
+}
