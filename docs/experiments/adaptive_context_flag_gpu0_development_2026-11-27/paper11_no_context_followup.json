@@ -1,0 +1,11 @@
+{
+  "status": "ok",
+  "plan_sha256": "d323a3029ccae003e853f73bd73d612694919da372186c06e4a092a0c2866c69",
+  "paper": 11,
+  "layout": "no_context",
+  "stage": "followup",
+  "selected_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "decisions": [],
+  "attempts": [],
+  "skipped_empty": true
+}

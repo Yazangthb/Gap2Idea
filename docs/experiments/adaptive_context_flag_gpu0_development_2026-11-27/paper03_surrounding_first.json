@@ -1,0 +1,335 @@
+{
+  "status": "ok",
+  "plan_sha256": "d323a3029ccae003e853f73bd73d612694919da372186c06e4a092a0c2866c69",
+  "paper": 3,
+  "layout": "surrounding",
+  "stage": "first",
+  "selected_sha256": "4003689addff43e9ad02ffba8bb7f71093d7eebc277f0aed675969959b8baa19",
+  "input_sha256": "a78645eb87246bb1b7fc89b021facb0aee17f6f2c3aacb3bbe982dccde005a63",
+  "decisions": [
+    {
+      "key": [
+        "2510.05092",
+        2
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        3
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        9
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        10
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        25
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        32
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        45
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        96
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        109
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        118
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        122
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        126
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        130
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        147
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        148
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        151
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        152
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        153
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        154
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        159
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        163
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        164
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        166
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        167
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        168
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        170
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        171
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        189
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        190
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        195
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        196
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        200
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        201
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        202
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        203
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        392
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        438
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2510.05092",
+        461
+      ],
+      "keep": false,
+      "needs_more_context": false
+    }
+  ],
+  "attempts": [
+    {
+      "seconds": 7.77,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 838,
+        "prompt_tokens": 5383,
+        "total_tokens": 6221,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 2, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 3, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 9, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 10, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 25, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 32, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 45, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 96, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 109, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 118, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 122, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 126, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 130, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 147, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 148, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 151, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 152, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 153, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 154, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 159, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 163, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 164, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 166, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 167, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 168, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 170, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 171, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 189, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 190, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 195, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 196, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 200, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 201, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 202, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 203, \"keep\": true, \"needs_more_context\": false},\n    {\"id\": 392, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 438, \"keep\": false, \"needs_more_context\": false},\n    {\"id\": 461, \"keep\": false, \"needs_more_context\": false}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

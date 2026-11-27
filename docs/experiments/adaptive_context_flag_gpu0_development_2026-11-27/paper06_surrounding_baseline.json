@@ -1,0 +1,530 @@
+{
+  "status": "ok",
+  "plan_sha256": "d323a3029ccae003e853f73bd73d612694919da372186c06e4a092a0c2866c69",
+  "paper": 6,
+  "layout": "surrounding",
+  "stage": "baseline",
+  "selected_sha256": "525e8495eba6bb35cad87b2bfaf4b8c328227e48d35dd8dd64640a8cd1c09397",
+  "input_sha256": "465f7a279d2bf8fc7d3b5d0ee4c72f99d5919f27f273493f141b350d9e06dfd8",
+  "decisions": [
+    {
+      "key": [
+        "2511.18843",
+        5
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        12
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        13
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        18
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        19
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        22
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        30
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        32
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        36
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        39
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        41
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        48
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        49
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        50
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        51
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        52
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        53
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        72
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        95
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        100
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        115
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        117
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        121
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        123
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        124
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        127
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        135
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        137
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        138
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        144
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        146
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        155
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        159
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        160
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        163
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        168
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        169
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        172
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        173
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        178
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        184
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        187
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        188
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        189
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        190
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        191
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        192
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        193
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        194
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        195
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        196
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        197
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        198
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        199
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2511.18843",
+        200
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        203
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        204
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        205
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        206
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        213
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        215
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        218
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        220
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        230
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        231
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        232
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        234
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        236
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        238
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        241
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2511.18843",
+        244
+      ],
+      "decision": "drop"
+    }
+  ],
+  "attempts": [
+    {
+      "seconds": 9.95,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1058,
+        "prompt_tokens": 9292,
+        "total_tokens": 10350,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 5, \"keep\": false},\n    {\"id\": 12, \"keep\": true},\n    {\"id\": 13, \"keep\": true},\n    {\"id\": 18, \"keep\": true},\n    {\"id\": 19, \"keep\": false},\n    {\"id\": 22, \"keep\": false},\n    {\"id\": 30, \"keep\": true},\n    {\"id\": 32, \"keep\": false},\n    {\"id\": 36, \"keep\": false},\n    {\"id\": 39, \"keep\": false},\n    {\"id\": 41, \"keep\": true},\n    {\"id\": 48, \"keep\": true},\n    {\"id\": 49, \"keep\": false},\n    {\"id\": 50, \"keep\": true},\n    {\"id\": 51, \"keep\": false},\n    {\"id\": 52, \"keep\": true},\n    {\"id\": 53, \"keep\": false},\n    {\"id\": 72, \"keep\": false},\n    {\"id\": 95, \"keep\": false},\n    {\"id\": 100, \"keep\": false},\n    {\"id\": 115, \"keep\": false},\n    {\"id\": 117, \"keep\": false},\n    {\"id\": 121, \"keep\": false},\n    {\"id\": 123, \"keep\": false},\n    {\"id\": 124, \"keep\": false},\n    {\"id\": 127, \"keep\": false},\n    {\"id\": 135, \"keep\": false},\n    {\"id\": 137, \"keep\": false},\n    {\"id\": 138, \"keep\": false},\n    {\"id\": 144, \"keep\": false},\n    {\"id\": 146, \"keep\": true},\n    {\"id\": 155, \"keep\": false},\n    {\"id\": 159, \"keep\": false},\n    {\"id\": 160, \"keep\": false},\n    {\"id\": 163, \"keep\": false},\n    {\"id\": 168, \"keep\": false},\n    {\"id\": 169, \"keep\": false},\n    {\"id\": 172, \"keep\": false},\n    {\"id\": 173, \"keep\": false},\n    {\"id\": 178, \"keep\": false},\n    {\"id\": 184, \"keep\": true},\n    {\"id\": 187, \"keep\": true},\n    {\"id\": 188, \"keep\": true},\n    {\"id\": 189, \"keep\": true},\n    {\"id\": 190, \"keep\": true},\n    {\"id\": 191, \"keep\": true},\n    {\"id\": 192, \"keep\": true},\n    {\"id\": 193, \"keep\": true},\n    {\"id\": 194, \"keep\": true},\n    {\"id\": 195, \"keep\": true},\n    {\"id\": 196, \"keep\": true},\n    {\"id\": 197, \"keep\": true},\n    {\"id\": 198, \"keep\": true},\n    {\"id\": 199, \"keep\": true},\n    {\"id\": 200, \"keep\": false},\n    {\"id\": 203, \"keep\": false},\n    {\"id\": 204, \"keep\": false},\n    {\"id\": 205, \"keep\": false},\n    {\"id\": 206, \"keep\": false},\n    {\"id\": 213, \"keep\": false},\n    {\"id\": 215, \"keep\": false},\n    {\"id\": 218, \"keep\": false},\n    {\"id\": 220, \"keep\": false},\n    {\"id\": 230, \"keep\": false},\n    {\"id\": 231, \"keep\": false},\n    {\"id\": 232, \"keep\": false},\n    {\"id\": 234, \"keep\": false},\n    {\"id\": 236, \"keep\": false},\n    {\"id\": 238, \"keep\": false},\n    {\"id\": 241, \"keep\": false},\n    {\"id\": 244, \"keep\": false}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ],
+  "reused_from": "docs/experiments/complete_split_batch_comparison_2026-11-26/val_one_28_fine_surrounding.json",
+  "source_sha256": "7c9db82882c8b674c364ab92c1cd36d25e832e048ebdca53e576c13c29540f31"
+}

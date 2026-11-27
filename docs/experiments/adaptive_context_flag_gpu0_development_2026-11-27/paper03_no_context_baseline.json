@@ -1,0 +1,299 @@
+{
+  "status": "ok",
+  "plan_sha256": "d323a3029ccae003e853f73bd73d612694919da372186c06e4a092a0c2866c69",
+  "paper": 3,
+  "layout": "no_context",
+  "stage": "baseline",
+  "selected_sha256": "4003689addff43e9ad02ffba8bb7f71093d7eebc277f0aed675969959b8baa19",
+  "input_sha256": "ef43a7e0668d9c2c8e142b11a8cd4558c0f7c19709dadfe813fedad7a1e13987",
+  "decisions": [
+    {
+      "key": [
+        "2510.05092",
+        2
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        3
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        9
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        10
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        25
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        32
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        45
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        96
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        109
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        118
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        122
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        126
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        130
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        147
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        148
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        151
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        152
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        153
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        154
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        159
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        163
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        164
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        166
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        167
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        168
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        170
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        171
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        189
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        190
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        195
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        196
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        200
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        201
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        202
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        203
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2510.05092",
+        392
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        438
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2510.05092",
+        461
+      ],
+      "decision": "drop"
+    }
+  ],
+  "attempts": [
+    {
+      "seconds": 7.35,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 532,
+        "prompt_tokens": 2053,
+        "total_tokens": 2585,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n\"results\": [\n{\"id\": 2, \"keep\": true},\n{\"id\": 3, \"keep\": true},\n{\"id\": 9, \"keep\": true},\n{\"id\": 10, \"keep\": false},\n{\"id\": 25, \"keep\": true},\n{\"id\": 32, \"keep\": true},\n{\"id\": 45, \"keep\": false},\n{\"id\": 96, \"keep\": true},\n{\"id\": 109, \"keep\": false},\n{\"id\": 118, \"keep\": false},\n{\"id\": 122, \"keep\": false},\n{\"id\": 126, \"keep\": false},\n{\"id\": 130, \"keep\": false},\n{\"id\": 147, \"keep\": false},\n{\"id\": 148, \"keep\": true},\n{\"id\": 151, \"keep\": true},\n{\"id\": 152, \"keep\": true},\n{\"id\": 153, \"keep\": true},\n{\"id\": 154, \"keep\": true},\n{\"id\": 159, \"keep\": false},\n{\"id\": 163, \"keep\": false},\n{\"id\": 164, \"keep\": false},\n{\"id\": 166, \"keep\": false},\n{\"id\": 167, \"keep\": true},\n{\"id\": 168, \"keep\": true},\n{\"id\": 170, \"keep\": true},\n{\"id\": 171, \"keep\": false},\n{\"id\": 189, \"keep\": true},\n{\"id\": 190, \"keep\": true},\n{\"id\": 195, \"keep\": false},\n{\"id\": 196, \"keep\": false},\n{\"id\": 200, \"keep\": false},\n{\"id\": 201, \"keep\": true},\n{\"id\": 202, \"keep\": false},\n{\"id\": 203, \"keep\": true},\n{\"id\": 392, \"keep\": false},\n{\"id\": 438, \"keep\": false},\n{\"id\": 461, \"keep\": false}\n]\n}",
+      "excluded_extra_entries": []
+    }
+  ],
+  "reused_from": "docs/experiments/complete_split_batch_comparison_2026-11-26/val_one_27_fine_no_context.json",
+  "source_sha256": "62a5f7cf989ea682ce97550a70f1744c6d0630dfd0ef7cbfbeaf8389d3f71cd7"
+}

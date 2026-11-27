@@ -1,0 +1,194 @@
+{
+  "status": "ok",
+  "plan_sha256": "d323a3029ccae003e853f73bd73d612694919da372186c06e4a092a0c2866c69",
+  "paper": 7,
+  "layout": "surrounding",
+  "stage": "baseline",
+  "selected_sha256": "e3c9b97ce61d57b4053d166783fbe5d776d061a4586b1032b382578bbec5110f",
+  "input_sha256": "adf34d859a39fd2fe505019e7e8670a4218291a040eb157a74c842ae989f3bcc",
+  "decisions": [
+    {
+      "key": [
+        "2201.02967",
+        2
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        9
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        12
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        19
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        20
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        25
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        46
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        57
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        58
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        59
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        62
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        63
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        64
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        67
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        68
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        78
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        79
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        81
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        84
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        86
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        90
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        94
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        95
+      ],
+      "decision": "drop"
+    }
+  ],
+  "attempts": [
+    {
+      "seconds": 4.97,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 210,
+        "prompt_tokens": 3426,
+        "total_tokens": 3636,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":2,\"keep\":true},{\"id\":9,\"keep\":true},{\"id\":12,\"keep\":true},{\"id\":19,\"keep\":true},{\"id\":20,\"keep\":true},{\"id\":25,\"keep\":false},{\"id\":46,\"keep\":false},{\"id\":57,\"keep\":false},{\"id\":58,\"keep\":false},{\"id\":59,\"keep\":false},{\"id\":62,\"keep\":false},{\"id\":63,\"keep\":false},{\"id\":64,\"keep\":false},{\"id\":67,\"keep\":false},{\"id\":68,\"keep\":false},{\"id\":78,\"keep\":false},{\"id\":79,\"keep\":false},{\"id\":81,\"keep\":false},{\"id\":84,\"keep\":false},{\"id\":86,\"keep\":false},{\"id\":90,\"keep\":false},{\"id\":94,\"keep\":false},{\"id\":95,\"keep\":false}]}",
+      "excluded_extra_entries": []
+    }
+  ],
+  "reused_from": "docs/experiments/complete_split_batch_comparison_2026-11-26/val_one_06_fine_surrounding.json",
+  "source_sha256": "6665ebbb6831c05bb7948d85784cfe2473a748e4cde8b01131db069870e24e04"
+}

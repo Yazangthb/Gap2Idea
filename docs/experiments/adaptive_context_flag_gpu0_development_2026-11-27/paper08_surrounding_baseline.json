@@ -1,0 +1,859 @@
+{
+  "status": "ok",
+  "plan_sha256": "d323a3029ccae003e853f73bd73d612694919da372186c06e4a092a0c2866c69",
+  "paper": 8,
+  "layout": "surrounding",
+  "stage": "baseline",
+  "selected_sha256": "d045b13a9ef1bb0b39b7700d0f9de0de0c09afeb2d5d3866e3d590a4bb503689",
+  "input_sha256": "26709763310c4402c53d0d05724c63cda25ad6febfd2c1ded57e6ec293a70648",
+  "decisions": [
+    {
+      "key": [
+        "2409.07415",
+        1
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        2
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        12
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        13
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        14
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        15
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        22
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        25
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        27
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        29
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        30
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        31
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        32
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        39
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        40
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        42
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        46
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        54
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        56
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        59
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        74
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        87
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        89
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        91
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        92
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        95
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        98
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        99
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        100
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        101
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        135
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        136
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        137
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        138
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        139
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        153
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        156
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        165
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        166
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        174
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        176
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        177
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        179
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        181
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        182
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        195
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        196
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        198
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        203
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        204
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        206
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        212
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        214
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        223
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        224
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        225
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        226
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        229
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        232
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        233
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        234
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        235
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        237
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        241
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        244
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        245
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        247
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        248
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        249
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        254
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        266
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        272
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        273
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        275
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        287
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        292
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        293
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        295
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        296
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        300
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        303
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        310
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        312
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        315
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        316
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        333
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        334
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        337
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        338
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        364
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        368
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        369
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        370
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        375
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        377
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        394
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        405
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        406
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        407
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        411
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        412
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        413
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        415
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        417
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        418
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        419
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        420
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        422
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        423
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        424
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        425
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        427
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        428
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2409.07415",
+        429
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        431
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        432
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        434
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2409.07415",
+        435
+      ],
+      "decision": "drop"
+    }
+  ],
+  "attempts": [
+    {
+      "seconds": 17.98,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1753,
+        "prompt_tokens": 14731,
+        "total_tokens": 16484,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 1, \"keep\": true},\n    {\"id\": 2, \"keep\": true},\n    {\"id\": 12, \"keep\": false},\n    {\"id\": 13, \"keep\": true},\n    {\"id\": 14, \"keep\": true},\n    {\"id\": 15, \"keep\": true},\n    {\"id\": 22, \"keep\": true},\n    {\"id\": 25, \"keep\": true},\n    {\"id\": 27, \"keep\": true},\n    {\"id\": 29, \"keep\": true},\n    {\"id\": 30, \"keep\": true},\n    {\"id\": 31, \"keep\": true},\n    {\"id\": 32, \"keep\": false},\n    {\"id\": 39, \"keep\": false},\n    {\"id\": 40, \"keep\": false},\n    {\"id\": 42, \"keep\": false},\n    {\"id\": 46, \"keep\": false},\n    {\"id\": 54, \"keep\": false},\n    {\"id\": 56, \"keep\": false},\n    {\"id\": 59, \"keep\": false},\n    {\"id\": 74, \"keep\": false},\n    {\"id\": 87, \"keep\": false},\n    {\"id\": 89, \"keep\": false},\n    {\"id\": 91, \"keep\": false},\n    {\"id\": 92, \"keep\": false},\n    {\"id\": 95, \"keep\": false},\n    {\"id\": 98, \"keep\": false},\n    {\"id\": 99, \"keep\": false},\n    {\"id\": 100, \"keep\": true},\n    {\"id\": 101, \"keep\": false},\n    {\"id\": 135, \"keep\": true},\n    {\"id\": 136, \"keep\": true},\n    {\"id\": 137, \"keep\": true},\n    {\"id\": 138, \"keep\": true},\n    {\"id\": 139, \"keep\": true},\n    {\"id\": 153, \"keep\": false},\n    {\"id\": 156, \"keep\": false},\n    {\"id\": 165, \"keep\": false},\n    {\"id\": 166, \"keep\": true},\n    {\"id\": 174, \"keep\": false},\n    {\"id\": 176, \"keep\": false},\n    {\"id\": 177, \"keep\": true},\n    {\"id\": 179, \"keep\": false},\n    {\"id\": 181, \"keep\": true},\n    {\"id\": 182, \"keep\": false},\n    {\"id\": 195, \"keep\": false},\n    {\"id\": 196, \"keep\": true},\n    {\"id\": 198, \"keep\": false},\n    {\"id\": 203, \"keep\": true},\n    {\"id\": 204, \"keep\": true},\n    {\"id\": 206, \"keep\": false},\n    {\"id\": 212, \"keep\": true},\n    {\"id\": 214, \"keep\": true},\n    {\"id\": 223, \"keep\": true},\n    {\"id\": 224, \"keep\": false},\n    {\"id\": 225, \"keep\": true},\n    {\"id\": 226, \"keep\": false},\n    {\"id\": 229, \"keep\": false},\n    {\"id\": 232, \"keep\": true},\n    {\"id\": 233, \"keep\": false},\n    {\"id\": 234, \"keep\": false},\n    {\"id\": 235, \"keep\": true},\n    {\"id\": 237, \"keep\": true},\n    {\"id\": 241, \"keep\": true},\n    {\"id\": 244, \"keep\": false},\n    {\"id\": 245, \"keep\": true},\n    {\"id\": 247, \"keep\": false},\n    {\"id\": 248, \"keep\": true},\n    {\"id\": 249, \"keep\": true},\n    {\"id\": 254, \"keep\": true},\n    {\"id\": 266, \"keep\": false},\n    {\"id\": 272, \"keep\": false},\n    {\"id\": 273, \"keep\": true},\n    {\"id\": 275, \"keep\": false},\n    {\"id\": 287, \"keep\": false},\n    {\"id\": 292, \"keep\": false},\n    {\"id\": 293, \"keep\": false},\n    {\"id\": 295, \"keep\": false},\n    {\"id\": 296, \"keep\": false},\n    {\"id\": 300, \"keep\": false},\n    {\"id\": 303, \"keep\": false},\n    {\"id\": 310, \"keep\": false},\n    {\"id\": 312, \"keep\": false},\n    {\"id\": 315, \"keep\": false},\n    {\"id\": 316, \"keep\": true},\n    {\"id\": 333, \"keep\": false},\n    {\"id\": 334, \"keep\": false},\n    {\"id\": 337, \"keep\": false},\n    {\"id\": 338, \"keep\": false},\n    {\"id\": 364, \"keep\": true},\n    {\"id\": 368, \"keep\": false},\n    {\"id\": 369, \"keep\": false},\n    {\"id\": 370, \"keep\": true},\n    {\"id\": 375, \"keep\": false},\n    {\"id\": 377, \"keep\": false},\n    {\"id\": 394, \"keep\": true},\n    {\"id\": 405, \"keep\": false},\n    {\"id\": 406, \"keep\": false},\n    {\"id\": 407, \"keep\": true},\n    {\"id\": 411, \"keep\": false},\n    {\"id\": 412, \"keep\": true},\n    {\"id\": 413, \"keep\": true},\n    {\"id\": 415, \"keep\": false},\n    {\"id\": 417, \"keep\": true},\n    {\"id\": 418, \"keep\": true},\n    {\"id\": 419, \"keep\": true},\n    {\"id\": 420, \"keep\": true},\n    {\"id\": 422, \"keep\": true},\n    {\"id\": 423, \"keep\": true},\n    {\"id\": 424, \"keep\": true},\n    {\"id\": 425, \"keep\": true},\n    {\"id\": 427, \"keep\": true},\n    {\"id\": 428, \"keep\": true},\n    {\"id\": 429, \"keep\": false},\n    {\"id\": 431, \"keep\": false},\n    {\"id\": 432, \"keep\": false},\n    {\"id\": 434, \"keep\": false},\n    {\"id\": 435, \"keep\": false}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ],
+  "reused_from": "docs/experiments/complete_split_batch_comparison_2026-11-26/val_one_21_fine_surrounding.json",
+  "source_sha256": "5e804c8a353c494afb769e681a35bcdd5c488e7b0f8c5a45c59b540ae954673b"
+}

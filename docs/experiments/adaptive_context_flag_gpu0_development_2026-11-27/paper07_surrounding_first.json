@@ -1,0 +1,260 @@
+{
+  "status": "ok",
+  "plan_sha256": "d323a3029ccae003e853f73bd73d612694919da372186c06e4a092a0c2866c69",
+  "paper": 7,
+  "layout": "surrounding",
+  "stage": "first",
+  "selected_sha256": "e3c9b97ce61d57b4053d166783fbe5d776d061a4586b1032b382578bbec5110f",
+  "input_sha256": "adf34d859a39fd2fe505019e7e8670a4218291a040eb157a74c842ae989f3bcc",
+  "decisions": [
+    {
+      "key": [
+        "2201.02967",
+        9
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        12
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        19
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        20
+      ],
+      "keep": true,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        25
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        46
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        57
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        58
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        59
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        62
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        63
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        64
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        67
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        68
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        78
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        79
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        81
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        84
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        86
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        90
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        94
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        95
+      ],
+      "keep": false,
+      "needs_more_context": false
+    },
+    {
+      "key": [
+        "2201.02967",
+        2
+      ],
+      "keep": true,
+      "needs_more_context": false
+    }
+  ],
+  "attempts": [
+    {
+      "seconds": 4.32,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 334,
+        "prompt_tokens": 3511,
+        "total_tokens": 3845,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":9,\"keep\":true,\"needs_more_context\":false},{\"id\":12,\"keep\":true,\"needs_more_context\":false},{\"id\":19,\"keep\":true,\"needs_more_context\":false},{\"id\":20,\"keep\":true,\"needs_more_context\":false},{\"id\":25,\"keep\":false,\"needs_more_context\":false},{\"id\":46,\"keep\":false,\"needs_more_context\":false},{\"id\":57,\"keep\":false,\"needs_more_context\":false},{\"id\":58,\"keep\":false,\"needs_more_context\":false},{\"id\":59,\"keep\":false,\"needs_more_context\":false},{\"id\":62,\"keep\":false,\"needs_more_context\":false},{\"id\":63,\"keep\":false,\"needs_more_context\":false},{\"id\":64,\"keep\":false,\"needs_more_context\":false},{\"id\":67,\"keep\":false,\"needs_more_context\":false},{\"id\":68,\"keep\":false,\"needs_more_context\":false},{\"id\":78,\"keep\":false,\"needs_more_context\":false},{\"id\":79,\"keep\":false,\"needs_more_context\":false},{\"id\":81,\"keep\":false,\"needs_more_context\":false},{\"id\":84,\"keep\":false,\"needs_more_context\":false},{\"id\":86,\"keep\":false,\"needs_more_context\":false},{\"id\":90,\"keep\":false,\"needs_more_context\":false},{\"id\":94,\"keep\":false,\"needs_more_context\":false},{\"id\":95,\"keep\":false,\"needs_more_context\":false}]}",
+      "error_type": "ValueError",
+      "error": "Missing or duplicate target IDs"
+    },
+    {
+      "seconds": 3.58,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 334,
+        "prompt_tokens": 3511,
+        "total_tokens": 3845,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":9,\"keep\":true,\"needs_more_context\":false},{\"id\":12,\"keep\":true,\"needs_more_context\":false},{\"id\":19,\"keep\":true,\"needs_more_context\":false},{\"id\":20,\"keep\":true,\"needs_more_context\":false},{\"id\":25,\"keep\":false,\"needs_more_context\":false},{\"id\":46,\"keep\":false,\"needs_more_context\":false},{\"id\":57,\"keep\":false,\"needs_more_context\":false},{\"id\":58,\"keep\":false,\"needs_more_context\":false},{\"id\":59,\"keep\":false,\"needs_more_context\":false},{\"id\":62,\"keep\":false,\"needs_more_context\":false},{\"id\":63,\"keep\":false,\"needs_more_context\":false},{\"id\":64,\"keep\":false,\"needs_more_context\":false},{\"id\":67,\"keep\":false,\"needs_more_context\":false},{\"id\":68,\"keep\":false,\"needs_more_context\":false},{\"id\":78,\"keep\":false,\"needs_more_context\":false},{\"id\":79,\"keep\":false,\"needs_more_context\":false},{\"id\":81,\"keep\":false,\"needs_more_context\":false},{\"id\":84,\"keep\":false,\"needs_more_context\":false},{\"id\":86,\"keep\":false,\"needs_more_context\":false},{\"id\":90,\"keep\":false,\"needs_more_context\":false},{\"id\":94,\"keep\":false,\"needs_more_context\":false},{\"id\":95,\"keep\":false,\"needs_more_context\":false}]}",
+      "error_type": "ValueError",
+      "error": "Missing or duplicate target IDs"
+    },
+    {
+      "seconds": 1.34,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 19,
+        "prompt_tokens": 692,
+        "total_tokens": 711,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":2,\"keep\":true,\"needs_more_context\":false}]}",
+      "recovery_missing_ids": [
+        2
+      ],
+      "excluded_extra_entries": []
+    }
+  ],
+  "recovered_missing_ids": [
+    2
+  ],
+  "failed_output_sha256": "e11585bd2f0750e07c97a1ee9eec67694d45e935054b578b0f519115a94d005b"
+}
