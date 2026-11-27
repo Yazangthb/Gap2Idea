@@ -1,0 +1,38 @@
+{
+  "status": "failed",
+  "plan_sha256": "609764918ed29ca3a558a2486583c7ff9caed2a2a3e0aa1e801e6e15d7b81c86",
+  "paper": 7,
+  "layout": "surrounding",
+  "stage": "first",
+  "selected_sha256": "e3c9b97ce61d57b4053d166783fbe5d776d061a4586b1032b382578bbec5110f",
+  "attempts": [
+    {
+      "seconds": 5.46,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 202,
+        "prompt_tokens": 3520,
+        "total_tokens": 3722,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":9,\"decision\":\"keep\"},{\"id\":12,\"decision\":\"keep\"},{\"id\":19,\"decision\":\"keep\"},{\"id\":20,\"decision\":\"keep\"},{\"id\":25,\"decision\":\"drop\"},{\"id\":46,\"decision\":\"drop\"},{\"id\":57,\"decision\":\"drop\"},{\"id\":58,\"decision\":\"drop\"},{\"id\":59,\"decision\":\"drop\"},{\"id\":62,\"decision\":\"drop\"},{\"id\":63,\"decision\":\"drop\"},{\"id\":64,\"decision\":\"drop\"},{\"id\":67,\"decision\":\"drop\"},{\"id\":68,\"decision\":\"drop\"},{\"id\":78,\"decision\":\"drop\"},{\"id\":79,\"decision\":\"drop\"},{\"id\":81,\"decision\":\"drop\"},{\"id\":84,\"decision\":\"drop\"},{\"id\":86,\"decision\":\"drop\"},{\"id\":90,\"decision\":\"drop\"},{\"id\":94,\"decision\":\"drop\"},{\"id\":95,\"decision\":\"drop\"}]}",
+      "error_type": "ValueError",
+      "error": "Missing or duplicated target ID"
+    },
+    {
+      "seconds": 4.06,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 202,
+        "prompt_tokens": 3520,
+        "total_tokens": 3722,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "response": "{\"results\":[{\"id\":9,\"decision\":\"keep\"},{\"id\":12,\"decision\":\"keep\"},{\"id\":19,\"decision\":\"keep\"},{\"id\":20,\"decision\":\"keep\"},{\"id\":25,\"decision\":\"drop\"},{\"id\":46,\"decision\":\"drop\"},{\"id\":57,\"decision\":\"drop\"},{\"id\":58,\"decision\":\"drop\"},{\"id\":59,\"decision\":\"drop\"},{\"id\":62,\"decision\":\"drop\"},{\"id\":63,\"decision\":\"drop\"},{\"id\":64,\"decision\":\"drop\"},{\"id\":67,\"decision\":\"drop\"},{\"id\":68,\"decision\":\"drop\"},{\"id\":78,\"decision\":\"drop\"},{\"id\":79,\"decision\":\"drop\"},{\"id\":81,\"decision\":\"drop\"},{\"id\":84,\"decision\":\"drop\"},{\"id\":86,\"decision\":\"drop\"},{\"id\":90,\"decision\":\"drop\"},{\"id\":94,\"decision\":\"drop\"},{\"id\":95,\"decision\":\"drop\"}]}",
+      "error_type": "ValueError",
+      "error": "Missing or duplicated target ID"
+    }
+  ]
+}

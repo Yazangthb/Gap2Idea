@@ -1,0 +1,432 @@
+{
+  "status": "ok",
+  "plan_sha256": "609764918ed29ca3a558a2486583c7ff9caed2a2a3e0aa1e801e6e15d7b81c86",
+  "paper": 5,
+  "layout": "no_context",
+  "stage": "baseline",
+  "selected_sha256": "ad252c87de0659e97e3579d3d29ac850453690baf009b105117544d9c1db0324",
+  "input_sha256": "1d2d7a67742c19efb080444ad80dc59656af8f9fcc64471f65477114c48e60ad",
+  "decisions": [
+    {
+      "key": [
+        "2507.17931",
+        1
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        6
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        7
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        9
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        11
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        18
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        25
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        50
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        57
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        66
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        68
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        73
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        91
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        109
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        129
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        135
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        140
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        143
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        144
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        157
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        161
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        178
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        179
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        180
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        182
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        186
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        192
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        202
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        212
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        213
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        225
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        247
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        254
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        256
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        258
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        260
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        261
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        266
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        269
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        282
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        283
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        294
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        300
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        302
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        303
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        305
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        306
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        307
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        308
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        309
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        314
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        316
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        317
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        318
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        319
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        325
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.17931",
+        328
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.17931",
+        329
+      ],
+      "decision": "keep"
+    }
+  ],
+  "attempts": [
+    {
+      "seconds": 21.94,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 806,
+        "prompt_tokens": 2770,
+        "total_tokens": 3576,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "response": "{\n\"results\": [\n{\"id\": 1, \"keep\": true},\n{\"id\": 6, \"keep\": false},\n{\"id\": 7, \"keep\": true},\n{\"id\": 9, \"keep\": true},\n{\"id\": 11, \"keep\": true},\n{\"id\": 18, \"keep\": true},\n{\"id\": 25, \"keep\": false},\n{\"id\": 50, \"keep\": false},\n{\"id\": 57, \"keep\": false},\n{\"id\": 66, \"keep\": false},\n{\"id\": 68, \"keep\": false},\n{\"id\": 73, \"keep\": false},\n{\"id\": 91, \"keep\": false},\n{\"id\": 109, \"keep\": false},\n{\"id\": 129, \"keep\": true},\n{\"id\": 135, \"keep\": false},\n{\"id\": 140, \"keep\": true},\n{\"id\": 143, \"keep\": false},\n{\"id\": 144, \"keep\": true},\n{\"id\": 157, \"keep\": true},\n{\"id\": 161, \"keep\": false},\n{\"id\": 178, \"keep\": true},\n{\"id\": 179, \"keep\": true},\n{\"id\": 180, \"keep\": true},\n{\"id\": 182, \"keep\": true},\n{\"id\": 186, \"keep\": true},\n{\"id\": 192, \"keep\": false},\n{\"id\": 202, \"keep\": false},\n{\"id\": 212, \"keep\": true},\n{\"id\": 213, \"keep\": true},\n{\"id\": 225, \"keep\": false},\n{\"id\": 247, \"keep\": false},\n{\"id\": 254, \"keep\": true},\n{\"id\": 256, \"keep\": false},\n{\"id\": 258, \"keep\": true},\n{\"id\": 260, \"keep\": false},\n{\"id\": 261, \"keep\": true},\n{\"id\": 266, \"keep\": false},\n{\"id\": 269, \"keep\": true},\n{\"id\": 282, \"keep\": true},\n{\"id\": 283, \"keep\": false},\n{\"id\": 294, \"keep\": false},\n{\"id\": 300, \"keep\": false},\n{\"id\": 302, \"keep\": false},\n{\"id\": 303, \"keep\": true},\n{\"id\": 305, \"keep\": true},\n{\"id\": 306, \"keep\": true},\n{\"id\": 307, \"keep\": true},\n{\"id\": 308, \"keep\": true},\n{\"id\": 309, \"keep\": true},\n{\"id\": 314, \"keep\": false},\n{\"id\": 316, \"keep\": true},\n{\"id\": 317, \"keep\": true},\n{\"id\": 318, \"keep\": true},\n{\"id\": 319, \"keep\": true},\n{\"id\": 325, \"keep\": true},\n{\"id\": 328, \"keep\": false},\n{\"id\": 329, \"keep\": true}\n]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

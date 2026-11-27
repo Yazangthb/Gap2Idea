@@ -1,0 +1,460 @@
+{
+  "status": "ok",
+  "plan_sha256": "609764918ed29ca3a558a2486583c7ff9caed2a2a3e0aa1e801e6e15d7b81c86",
+  "paper": 4,
+  "layout": "no_context",
+  "stage": "first",
+  "selected_sha256": "bcd4401204dcb13c4996da13839bd129ff50302dec2d4d5863f7beb8bd5272a5",
+  "input_sha256": "3387b0951fdb3e7255300fda0e48b9c8c665c393ae1ef415ae272bf63c987106",
+  "decisions": [
+    {
+      "key": [
+        "2507.19233",
+        2
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        21
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        22
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        28
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        29
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        30
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        31
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        32
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        33
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        34
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        35
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        36
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        37
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        38
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        39
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        41
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        43
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        45
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        46
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        50
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        55
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        56
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        58
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        59
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        60
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        62
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        74
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        105
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        106
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        107
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        112
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        113
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        187
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        190
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        191
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        192
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        193
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        198
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        204
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        205
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        209
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        210
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        213
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        225
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        227
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        234
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        235
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        237
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        247
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        248
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        251
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        252
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        253
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        254
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        258
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        260
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        282
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        283
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        287
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2507.19233",
+        290
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        291
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2507.19233",
+        292
+      ],
+      "decision": "keep"
+    }
+  ],
+  "attempts": [
+    {
+      "seconds": 25.85,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 977,
+        "prompt_tokens": 3050,
+        "total_tokens": 4027,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 2, \"decision\": \"keep\"},\n    {\"id\": 21, \"decision\": \"keep\"},\n    {\"id\": 22, \"decision\": \"keep\"},\n    {\"id\": 28, \"decision\": \"drop\"},\n    {\"id\": 29, \"decision\": \"drop\"},\n    {\"id\": 30, \"decision\": \"keep\"},\n    {\"id\": 31, \"decision\": \"keep\"},\n    {\"id\": 32, \"decision\": \"drop\"},\n    {\"id\": 33, \"decision\": \"drop\"},\n    {\"id\": 34, \"decision\": \"keep\"},\n    {\"id\": 35, \"decision\": \"keep\"},\n    {\"id\": 36, \"decision\": \"keep\"},\n    {\"id\": 37, \"decision\": \"drop\"},\n    {\"id\": 38, \"decision\": \"keep\"},\n    {\"id\": 39, \"decision\": \"keep\"},\n    {\"id\": 41, \"decision\": \"keep\"},\n    {\"id\": 43, \"decision\": \"keep\"},\n    {\"id\": 45, \"decision\": \"keep\"},\n    {\"id\": 46, \"decision\": \"keep\"},\n    {\"id\": 50, \"decision\": \"keep\"},\n    {\"id\": 55, \"decision\": \"keep\"},\n    {\"id\": 56, \"decision\": \"keep\"},\n    {\"id\": 58, \"decision\": \"keep\"},\n    {\"id\": 59, \"decision\": \"keep\"},\n    {\"id\": 60, \"decision\": \"keep\"},\n    {\"id\": 62, \"decision\": \"keep\"},\n    {\"id\": 74, \"decision\": \"keep\"},\n    {\"id\": 105, \"decision\": \"drop\"},\n    {\"id\": 106, \"decision\": \"drop\"},\n    {\"id\": 107, \"decision\": \"keep\"},\n    {\"id\": 112, \"decision\": \"drop\"},\n    {\"id\": 113, \"decision\": \"keep\"},\n    {\"id\": 187, \"decision\": \"drop\"},\n    {\"id\": 190, \"decision\": \"keep\"},\n    {\"id\": 191, \"decision\": \"keep\"},\n    {\"id\": 192, \"decision\": \"drop\"},\n    {\"id\": 193, \"decision\": \"drop\"},\n    {\"id\": 198, \"decision\": \"drop\"},\n    {\"id\": 204, \"decision\": \"drop\"},\n    {\"id\": 205, \"decision\": \"drop\"},\n    {\"id\": 209, \"decision\": \"drop\"},\n    {\"id\": 210, \"decision\": \"drop\"},\n    {\"id\": 213, \"decision\": \"drop\"},\n    {\"id\": 225, \"decision\": \"drop\"},\n    {\"id\": 227, \"decision\": \"drop\"},\n    {\"id\": 234, \"decision\": \"drop\"},\n    {\"id\": 235, \"decision\": \"drop\"},\n    {\"id\": 237, \"decision\": \"drop\"},\n    {\"id\": 247, \"decision\": \"drop\"},\n    {\"id\": 248, \"decision\": \"drop\"},\n    {\"id\": 251, \"decision\": \"drop\"},\n    {\"id\": 252, \"decision\": \"drop\"},\n    {\"id\": 253, \"decision\": \"drop\"},\n    {\"id\": 254, \"decision\": \"drop\"},\n    {\"id\": 258, \"decision\": \"drop\"},\n    {\"id\": 260, \"decision\": \"drop\"},\n    {\"id\": 282, \"decision\": \"drop\"},\n    {\"id\": 283, \"decision\": \"drop\"},\n    {\"id\": 287, \"decision\": \"drop\"},\n    {\"id\": 290, \"decision\": \"keep\"},\n    {\"id\": 291, \"decision\": \"keep\"},\n    {\"id\": 292, \"decision\": \"keep\"}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}

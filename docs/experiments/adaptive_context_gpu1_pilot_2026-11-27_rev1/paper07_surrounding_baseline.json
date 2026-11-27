@@ -1,0 +1,187 @@
+{
+  "status": "ok",
+  "plan_sha256": "609764918ed29ca3a558a2486583c7ff9caed2a2a3e0aa1e801e6e15d7b81c86",
+  "paper": 7,
+  "layout": "surrounding",
+  "stage": "baseline",
+  "selected_sha256": "e3c9b97ce61d57b4053d166783fbe5d776d061a4586b1032b382578bbec5110f",
+  "input_sha256": "adf34d859a39fd2fe505019e7e8670a4218291a040eb157a74c842ae989f3bcc",
+  "decisions": [
+    {
+      "key": [
+        "2201.02967",
+        2
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        9
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        12
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        19
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        20
+      ],
+      "decision": "keep"
+    },
+    {
+      "key": [
+        "2201.02967",
+        25
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        46
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        57
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        58
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        59
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        62
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        63
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        64
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        67
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        68
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        78
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        79
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        81
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        84
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        86
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        90
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        94
+      ],
+      "decision": "drop"
+    },
+    {
+      "key": [
+        "2201.02967",
+        95
+      ],
+      "decision": "drop"
+    }
+  ],
+  "attempts": [
+    {
+      "seconds": 9.89,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 333,
+        "prompt_tokens": 3426,
+        "total_tokens": 3759,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "response": "{\n  \"results\": [\n    {\"id\": 2, \"keep\": true},\n    {\"id\": 9, \"keep\": true},\n    {\"id\": 12, \"keep\": true},\n    {\"id\": 19, \"keep\": true},\n    {\"id\": 20, \"keep\": true},\n    {\"id\": 25, \"keep\": false},\n    {\"id\": 46, \"keep\": false},\n    {\"id\": 57, \"keep\": false},\n    {\"id\": 58, \"keep\": false},\n    {\"id\": 59, \"keep\": false},\n    {\"id\": 62, \"keep\": false},\n    {\"id\": 63, \"keep\": false},\n    {\"id\": 64, \"keep\": false},\n    {\"id\": 67, \"keep\": false},\n    {\"id\": 68, \"keep\": false},\n    {\"id\": 78, \"keep\": false},\n    {\"id\": 79, \"keep\": false},\n    {\"id\": 81, \"keep\": false},\n    {\"id\": 84, \"keep\": false},\n    {\"id\": 86, \"keep\": false},\n    {\"id\": 90, \"keep\": false},\n    {\"id\": 94, \"keep\": false},\n    {\"id\": 95, \"keep\": false}\n  ]\n}",
+      "excluded_extra_entries": []
+    }
+  ]
+}
