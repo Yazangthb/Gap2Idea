@@ -1,0 +1,58 @@
+{
+  "purpose": "Explore score fusion of zero-shot and fine-tuned NLI on 34 development papers, without new Qwen or NLI inference.",
+  "split": "Within arxiv and biomedical separately shuffle sorted IDs with random.Random(20261127 + is_biomedical); first half A, rest B.",
+  "score": "max over 3 type-specific entail/(entail+contradiction) scores; Stage A junk excluded.",
+  "fusion": "Empirical percentile of each model score relative to Stage-A-passing half-A scores, then weighted mean. Weights 0.25, 0.5, 0.75 on fine-tuned model.",
+  "thresholds": "For each model/fusion choose the highest score threshold with >=90% recall on all half-A gap labels including Stage A losses; freeze and evaluate on half B. OR/AND combine the two separately thresholded models.",
+  "comparisons": "Report Stage B recall, precision, F1 and number of candidates on each half; Qwen was not rerun, so these are not end-to-end metrics.",
+  "caveats": "Fine-tuned checkpoint and prior threshold selection used the entire validation pool, and these papers have prior development exposure; half B is not an independent holdout. Labels are LLM-generated.",
+  "fine_weights": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "paper_ids_A": [
+    "2004.12164",
+    "2102.03018",
+    "2202.00740",
+    "2211.03489",
+    "2301.03441",
+    "2302.07477",
+    "2305.14926",
+    "2310.15325",
+    "2401.17544",
+    "2408.08459",
+    "2409.07415",
+    "2412.01837",
+    "2502.11517",
+    "2511.18843",
+    "PMC3551748",
+    "PMC4797126",
+    "PMC5721882"
+  ],
+  "paper_ids_B": [
+    "2006.04492",
+    "2007.00128",
+    "2104.06303",
+    "2201.02967",
+    "2207.01725",
+    "2207.09511",
+    "2210.01489",
+    "2302.04972",
+    "2402.07717",
+    "2405.02631",
+    "2411.17182",
+    "2507.17931",
+    "2507.19233",
+    "2510.05092",
+    "PMC2924475",
+    "PMC5381088",
+    "PMC5704386"
+  ],
+  "rows_sha256": "e3e437e5479c3215fad55995af254886ed4bb22e6a0672b7dc6d362e7f9701ea",
+  "scores_sha256": {
+    "zero": "f2e99e7997f9b1e30baa13a186807c35756639d62a9310f2cad12348ae261a77",
+    "fine": "a3c6a124dc487048a50f76eef5b325eba2828f5cfe4ce69a6a772244815b8c8f"
+  },
+  "runner_sha256": "25a7bfb5899af01a98553ab507cecd5b939e1b5dc0e2e990dccea91c0e821790"
+}
