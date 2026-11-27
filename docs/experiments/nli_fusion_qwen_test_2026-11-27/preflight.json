@@ -1,0 +1,34 @@
+{
+  "plan_sha256": "7ea1152db65b4bde8c86e083ea3c07afe00838c4ccd39df650106dc76bf64ee7",
+  "status": "ok",
+  "entries": [
+    {
+      "index": 1,
+      "candidates": 553,
+      "input_tokens": 67035,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "index": 2,
+      "candidates": 608,
+      "input_tokens": 73686,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "index": 3,
+      "candidates": 315,
+      "input_tokens": 43231,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "index": 4,
+      "candidates": 299,
+      "input_tokens": 41021,
+      "limit": 262144,
+      "fits": true
+    }
+  ]
+}
