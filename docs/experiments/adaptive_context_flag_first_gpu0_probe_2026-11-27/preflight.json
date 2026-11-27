@@ -1,0 +1,34 @@
+{
+  "plan_sha256": "9fa7bf0e7dae10b6ad3e1b242898b3ff414862b15130e7f427286c0162cabb5d",
+  "entries": [
+    {
+      "paper": 1,
+      "layout": "no_context",
+      "tokens": 1689,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "paper": 1,
+      "layout": "surrounding",
+      "tokens": 3690,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "paper": 2,
+      "layout": "no_context",
+      "tokens": 2954,
+      "limit": 262144,
+      "fits": true
+    },
+    {
+      "paper": 2,
+      "layout": "surrounding",
+      "tokens": 8596,
+      "limit": 262144,
+      "fits": true
+    }
+  ],
+  "status": "ok"
+}
