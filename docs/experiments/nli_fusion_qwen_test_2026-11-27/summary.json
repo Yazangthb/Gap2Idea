@@ -1,0 +1,289 @@
+{
+  "plan_sha256": "7ea1152db65b4bde8c86e083ea3c07afe00838c4ccd39df650106dc76bf64ee7",
+  "thresholds": {
+    "fusion": 0.8045316839182024,
+    "fine_devtune": 0.00222133775241673,
+    "zero_devtune": 0.34246158599853516
+  },
+  "results": {
+    "stage_b": {
+      "fusion": {
+        "sentences_passed": 1775,
+        "metrics": {
+          "tp": 604,
+          "fp": 1171,
+          "positives": 664,
+          "precision": 0.3403,
+          "recall": 0.9096,
+          "f1": 0.4953
+        }
+      },
+      "fine_devtune": {
+        "sentences_passed": 1958,
+        "metrics": {
+          "tp": 607,
+          "fp": 1351,
+          "positives": 664,
+          "precision": 0.31,
+          "recall": 0.9142,
+          "f1": 0.463
+        }
+      },
+      "zero_devtune": {
+        "sentences_passed": 2579,
+        "metrics": {
+          "tp": 607,
+          "fp": 1972,
+          "positives": 664,
+          "precision": 0.2354,
+          "recall": 0.9142,
+          "f1": 0.3743
+        }
+      },
+      "fine_original": {
+        "sentences_passed": 1998,
+        "metrics": {
+          "tp": 607,
+          "fp": 1391,
+          "positives": 664,
+          "precision": 0.3038,
+          "recall": 0.9142,
+          "f1": 0.456
+        }
+      }
+    },
+    "end_to_end": {
+      "fusion": {
+        "kept": 701,
+        "metrics": {
+          "tp": 524,
+          "fp": 177,
+          "positives": 664,
+          "precision": 0.7475,
+          "recall": 0.7892,
+          "f1": 0.7678
+        },
+        "by_domain": {
+          "arxiv_cs": {
+            "tp": 420,
+            "fp": 176,
+            "positives": 527,
+            "precision": 0.7047,
+            "recall": 0.797,
+            "f1": 0.748
+          },
+          "biomed_sal": {
+            "tp": 104,
+            "fp": 1,
+            "positives": 137,
+            "precision": 0.9905,
+            "recall": 0.7591,
+            "f1": 0.8595
+          }
+        },
+        "input_tokens": 224829,
+        "output_tokens": 21666,
+        "groups": [
+          {
+            "group": 1,
+            "metrics": {
+              "tp": 225,
+              "fp": 28,
+              "positives": 302,
+              "precision": 0.8893,
+              "recall": 0.745,
+              "f1": 0.8108
+            }
+          },
+          {
+            "group": 2,
+            "metrics": {
+              "tp": 170,
+              "fp": 85,
+              "positives": 194,
+              "precision": 0.6667,
+              "recall": 0.8763,
+              "f1": 0.7572
+            }
+          },
+          {
+            "group": 3,
+            "metrics": {
+              "tp": 38,
+              "fp": 16,
+              "positives": 65,
+              "precision": 0.7037,
+              "recall": 0.5846,
+              "f1": 0.6387
+            }
+          },
+          {
+            "group": 4,
+            "metrics": {
+              "tp": 91,
+              "fp": 48,
+              "positives": 103,
+              "precision": 0.6547,
+              "recall": 0.8835,
+              "f1": 0.7521
+            }
+          }
+        ]
+      },
+      "fine_surrounding": {
+        "kept": 643,
+        "metrics": {
+          "tp": 510,
+          "fp": 133,
+          "positives": 664,
+          "precision": 0.7932,
+          "recall": 0.7681,
+          "f1": 0.7804
+        },
+        "by_domain": {
+          "arxiv_cs": {
+            "tp": 408,
+            "fp": 132,
+            "positives": 527,
+            "precision": 0.7556,
+            "recall": 0.7742,
+            "f1": 0.7648
+          },
+          "biomed_sal": {
+            "tp": 102,
+            "fp": 1,
+            "positives": 137,
+            "precision": 0.9903,
+            "recall": 0.7445,
+            "f1": 0.85
+          }
+        },
+        "input_tokens": 259776,
+        "output_tokens": 27734,
+        "groups": [
+          {
+            "group": 1,
+            "metrics": {
+              "tp": 224,
+              "fp": 17,
+              "positives": 302,
+              "precision": 0.9295,
+              "recall": 0.7417,
+              "f1": 0.825
+            }
+          },
+          {
+            "group": 2,
+            "metrics": {
+              "tp": 171,
+              "fp": 77,
+              "positives": 194,
+              "precision": 0.6895,
+              "recall": 0.8814,
+              "f1": 0.7738
+            }
+          },
+          {
+            "group": 3,
+            "metrics": {
+              "tp": 34,
+              "fp": 15,
+              "positives": 65,
+              "precision": 0.6939,
+              "recall": 0.5231,
+              "f1": 0.5965
+            }
+          },
+          {
+            "group": 4,
+            "metrics": {
+              "tp": 81,
+              "fp": 24,
+              "positives": 103,
+              "precision": 0.7714,
+              "recall": 0.7864,
+              "f1": 0.7788
+            }
+          }
+        ]
+      },
+      "full": {
+        "kept": 560,
+        "metrics": {
+          "tp": 478,
+          "fp": 82,
+          "positives": 664,
+          "precision": 0.8536,
+          "recall": 0.7199,
+          "f1": 0.781
+        },
+        "by_domain": {
+          "arxiv_cs": {
+            "tp": 376,
+            "fp": 81,
+            "positives": 527,
+            "precision": 0.8228,
+            "recall": 0.7135,
+            "f1": 0.7642
+          },
+          "biomed_sal": {
+            "tp": 102,
+            "fp": 1,
+            "positives": 137,
+            "precision": 0.9903,
+            "recall": 0.7445,
+            "f1": 0.85
+          }
+        },
+        "input_tokens": 612965,
+        "output_tokens": 134727,
+        "groups": [
+          {
+            "group": 1,
+            "metrics": {
+              "tp": 219,
+              "fp": 21,
+              "positives": 302,
+              "precision": 0.9125,
+              "recall": 0.7252,
+              "f1": 0.8081
+            }
+          },
+          {
+            "group": 2,
+            "metrics": {
+              "tp": 150,
+              "fp": 42,
+              "positives": 194,
+              "precision": 0.7812,
+              "recall": 0.7732,
+              "f1": 0.7772
+            }
+          },
+          {
+            "group": 3,
+            "metrics": {
+              "tp": 36,
+              "fp": 15,
+              "positives": 65,
+              "precision": 0.7059,
+              "recall": 0.5538,
+              "f1": 0.6207
+            }
+          },
+          {
+            "group": 4,
+            "metrics": {
+              "tp": 73,
+              "fp": 4,
+              "positives": 103,
+              "precision": 0.9481,
+              "recall": 0.7087,
+              "f1": 0.8111
+            }
+          }
+        ]
+      }
+    }
+  }
+}
