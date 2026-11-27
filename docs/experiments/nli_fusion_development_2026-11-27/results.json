@@ -1,0 +1,152 @@
+{
+  "plan_sha256": "042fa843cb1d3deb3dc021ce0b8b8393f2aa00a42446c439f4f52e32bf85eced",
+  "results": {
+    "zero": {
+      "threshold": 0.34246158599853516,
+      "A": {
+        "sentences_passed": 1081,
+        "tp": 281,
+        "fp": 800,
+        "positives": 312,
+        "precision": 0.2599,
+        "recall": 0.9006,
+        "f1": 0.4034
+      },
+      "B": {
+        "sentences_passed": 1250,
+        "tp": 331,
+        "fp": 919,
+        "positives": 387,
+        "precision": 0.2648,
+        "recall": 0.8553,
+        "f1": 0.4044
+      }
+    },
+    "fine": {
+      "threshold": 0.00222133775241673,
+      "A": {
+        "sentences_passed": 771,
+        "tp": 281,
+        "fp": 490,
+        "positives": 312,
+        "precision": 0.3645,
+        "recall": 0.9006,
+        "f1": 0.5189
+      },
+      "B": {
+        "sentences_passed": 940,
+        "tp": 344,
+        "fp": 596,
+        "positives": 387,
+        "precision": 0.366,
+        "recall": 0.8889,
+        "f1": 0.5185
+      }
+    },
+    "fusion_fine_0.25": {
+      "threshold": 0.7658419591012371,
+      "A": {
+        "sentences_passed": 842,
+        "tp": 281,
+        "fp": 561,
+        "positives": 312,
+        "precision": 0.3337,
+        "recall": 0.9006,
+        "f1": 0.487
+      },
+      "B": {
+        "sentences_passed": 985,
+        "tp": 331,
+        "fp": 654,
+        "positives": 387,
+        "precision": 0.336,
+        "recall": 0.8553,
+        "f1": 0.4825
+      }
+    },
+    "fusion_fine_0.5": {
+      "threshold": 0.7724059580913911,
+      "A": {
+        "sentences_passed": 809,
+        "tp": 281,
+        "fp": 528,
+        "positives": 312,
+        "precision": 0.3473,
+        "recall": 0.9006,
+        "f1": 0.5013
+      },
+      "B": {
+        "sentences_passed": 935,
+        "tp": 337,
+        "fp": 598,
+        "positives": 387,
+        "precision": 0.3604,
+        "recall": 0.8708,
+        "f1": 0.5098
+      }
+    },
+    "fusion_fine_0.75": {
+      "threshold": 0.8045316839182024,
+      "A": {
+        "sentences_passed": 707,
+        "tp": 281,
+        "fp": 426,
+        "positives": 312,
+        "precision": 0.3975,
+        "recall": 0.9006,
+        "f1": 0.5515
+      },
+      "B": {
+        "sentences_passed": 845,
+        "tp": 336,
+        "fp": 509,
+        "positives": 387,
+        "precision": 0.3976,
+        "recall": 0.8682,
+        "f1": 0.5455
+      }
+    },
+    "union": {
+      "threshold": null,
+      "A": {
+        "sentences_passed": 1219,
+        "tp": 292,
+        "fp": 927,
+        "positives": 312,
+        "precision": 0.2395,
+        "recall": 0.9359,
+        "f1": 0.3815
+      },
+      "B": {
+        "sentences_passed": 1426,
+        "tp": 355,
+        "fp": 1071,
+        "positives": 387,
+        "precision": 0.2489,
+        "recall": 0.9173,
+        "f1": 0.3916
+      }
+    },
+    "intersection": {
+      "threshold": null,
+      "A": {
+        "sentences_passed": 633,
+        "tp": 270,
+        "fp": 363,
+        "positives": 312,
+        "precision": 0.4265,
+        "recall": 0.8654,
+        "f1": 0.5714
+      },
+      "B": {
+        "sentences_passed": 764,
+        "tp": 320,
+        "fp": 444,
+        "positives": 387,
+        "precision": 0.4188,
+        "recall": 0.8269,
+        "f1": 0.556
+      }
+    }
+  }
+}
